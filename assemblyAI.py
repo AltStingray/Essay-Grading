@@ -8,7 +8,8 @@ def run():
     config = aai.TranscriptionConfig(speaker_labels=True)
 
     transcriber = aai.Transcriber()
-    transcript =transcriber.transcribe(
+
+    transcript = transcriber.transcribe(
         FILE_URL,
         config=config   
     )
