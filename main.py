@@ -7,7 +7,7 @@ from markupsafe import escape
 from moviepy.editor import *
 from openai import OpenAI
 
-username = (os.environ.get("userprofile"))[9:]
+username = (os.getenv("userprofile"))[9:]
 
 
 # Web application fundament
