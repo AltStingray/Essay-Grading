@@ -127,7 +127,7 @@ def main():
 
     transcription = assemblyAI.run() # Making a transcription
 
-    os.remove("video.mp3") # ensure this line is executed without error
+    #os.remove("video.mp3") # find out how to delete the video.mp3
     os.remove("audio.mp3")
 
     print("Transcription created, working on the summary report...\n")
