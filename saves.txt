@@ -1,0 +1,233 @@
+#prompt_2 = "You are given a dialogue text delimited by triple quotes on the topic of medicine. This is a dialogue between two people - candidate(who play a doctor) and teacher(who play a patient). Based on the provided dialogue generate a (detailed and structured) summary report with sections for each roleplay and one section with overall performance summary. Point out mistakes of the candidate's(doctor's) speech, grammar, lexical choices, pronunciation, accuracy and overall communication skills. Also, summarise the teacher's feedback on the candidate's performance"
+
+<input type="text" name={{name}}>
+<input type="submit" value="submit">
+
+
+
+@app.route('/<choice>')
+def own_or_def(choice):
+
+    choice = str(escape(request.args.get("choice")))
+
+    if choice == "Own":
+
+        return redirect(url_for)
+    #render_template('link.html', header="Your prompt goes here: ", name="prompt")
+    
+    return render_template('link.html', header="Prompt selected.\nPlease provide the link to the video:", name="link")
+
+@app.route('/<link>')
+def link(link):
+    link = str(escape(request.args.get("link")))
+    prompt = str(escape(request.args.get("prompt")))
+    transcription = main(link, prompt)
+    return render_template("results.html" + transcription)
+
+
+
+
+import requests
+
+def download_file(url):
+
+    dl_url = (url.replace('dl=0', 'dl=1')).replace("&amp;", "")
+
+    response = requests.get(dl_url, stream=True)
+    if response.status_code == 200:
+        with open("file.mp4", 'wb', buffering=1) as file:
+            for chunk in response.iter_content(10 * 1048):
+                file.write(chunk)
+        print("File downloaded successfully!")
+    else:
+        print("Error: Failed to download file")
+
+    return file
+
+
+
+
+
+
+import dropbox
+
+def download_file_from_dropbox(api_token, dropbox_path, local_path):
+    dbx = dropbox.Dropbox(api_token)
+
+    try:
+        with open(local_path, "wb") as f:
+            metadata, res = dbx.files_download(path=dropbox_path)
+            f.write(res.content)
+        print(f"File downloaded successfully to {local_path}")
+    except dropbox.exceptions.ApiError as err:
+        print(f"Error: {err}")
+
+# Example usage
+access_token = 'YOUR_ACCESS_TOKEN'
+dropbox_file_path = '/path/to/file/in/dropbox.txt'
+local_destination = 'downloaded_file.txt'
+download_file_from_dropbox(access_token, dropbox_file_path, local_destination)
+
+
+
+
+words_info = result.alternatives[0].words
+
+    #Printing out the output
+    for word_info in words_info:
+        print(f"speaker_tag: {word_info.speaker_tag}, word: '{word_info.word}'")
+
+
+
+
+
+#response = operation.results[-1]
+#
+    #print(response)
+#
+    #words_info = response.alternatives[0].words
+    
+##Printing out the output
+    #for word_info in words_info:
+    #    result = f"Speaker {word_info.speaker_tag}: {word_info.word}"
+    #    print(f"speaker_tag: {word_info.speaker_tag}, word: '{word_info.word}'")
+
+
+
+
+
+#Deleting uploaded audio file after operation completion
+generation_match_precondition = 1
+blob.reload()
+generation_match_precondition = blob.generation
+blob.delete(if_generation_match=generation_match_precondition)
+
+
+# `pip3 install assemblyai` (macOS)
+# `pip install assemblyai` (Windows)
+
+import assemblyai as aai
+
+aai.settings.api_key = "bc90a68cad05489689f948691bc5d3de"
+transcriber = aai.Transcriber()
+
+transcript = transcriber.transcribe("https://assembly.ai/news.mp4")
+# transcript = transcriber.transcribe("./my-local-audio-file.wav")
+
+print(transcript.text)
+
+
+
+
+
+
+Google speech-to-text
+
+from google.cloud import speech_v1p1beta1 as speech
+from google.cloud import storage
+from google.cloud.speech_v1p1beta1 import RecognitionConfig
+
+def process_transcription(audio_file):
+
+    #Upload audio file to the google bucket
+    storage_client = storage.Client()
+
+    bucket = storage_client.bucket("ai_summary_report")
+
+    blob = bucket.blob("audios/audio.mp3")
+
+    blob.upload_from_filename(audio_file)
+
+    print(f"File {audio_file} uploaded to ai_summary_report/audios/")
+    
+
+    #Making a transcription
+
+    audio = speech.RecognitionAudio(uri="gs://ai_summary_report/audios/audio.mp3")
+
+    client = speech.SpeechClient()
+    
+    diarization_config = speech.SpeakerDiarizationConfig(
+        enable_speaker_diarization=True,
+        min_speaker_count=2,
+        max_speaker_count=2
+    )
+
+    #speech_context = speech.SpeechContext()
+
+    config = RecognitionConfig(
+        encoding=speech.RecognitionConfig.AudioEncoding.MP3,
+        sample_rate_hertz=16000,
+        language_code="en-US",
+        alternative_language_codes=["en-GB", "en-AU", "en-IN"],
+        max_alternatives=1,
+        profanity_filter=False,
+        enable_automatic_punctuation=True,
+        enable_spoken_punctuation=True,
+        diarization_config=diarization_config,
+        model="latest_long",
+        use_enhanced=True,
+    )
+
+    print("Waiting for the operation to complete...")
+    operation = client.long_running_recognize(config=config, audio=audio)
+
+    transcript_builder = []
+
+    #for n, result in enumerate(operation.results):
+    #    if n % 2 == 0:
+    #        transcript_builder.append(f"\nSpeaker 2: {result.alternatives[0].transcript}\n")
+    #    else:
+    #        transcript_builder.append(f"\nSpeaker 1: {result.alternatives[0].transcript}\n")
+
+    #this line is added
+    response = operation.result()
+    #Printing out the output
+        
+    output = ""
+
+    for result in response.results:
+        words_info = result.alternatives[0].words
+
+        speaker_transcript = {}
+
+        for word_info in words_info:
+            speaker_tag = word_info.speaker_tag
+            word = word_info.word
+
+            if speaker_tag not in speaker_transcript:
+                speaker_transcript[speaker_tag] = []
+
+            speaker_transcript[speaker_tag].append(word)
+
+        for speaker, transcript in speaker_transcript.items():
+            output += (f"Speaker: {speaker}: {' '.join(transcript)}")
+
+        #transcript_builder.append(f"\nSpeaker {word_info.speaker_tag}: {words_lst}\n")
+
+    #result = "".join(transcript_builder)
+
+    return output
+
+
+
+
+    #Creating a txt file with transcription and future report
+    username = (os.environ.get("userprofile"))[9:]
+
+    for n in range(1, 100):
+        destination_file_1 = f"C:/Users/{username}/Desktop/Transcription and Summary #{n}.docx"
+        destination_file_2 = f"C:/Users/{username}/Desktop/Candidate's Summary Report #{n}.docx"
+        
+        if os.path.exists(destination_file_1):
+            pass
+        else:
+            with open(destination_file_1, "x") as file:
+                file.write(f"Transcription is as following:\n\n{transcription}\n\n")
+            with open(destination_file_2, "x") as file:
+                pass
+            break
+
+print(f"The process has been successfully completed! \n\nCheck the: \n{destination_file_1}\nand\n{destination_file_2}")
+
+

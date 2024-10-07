@@ -1,0 +1,15 @@
+#Required dependencies:
+
+Flask==3.0.3
+
+OpenAI==1.42.0
+
+MoviePy==1.0.3
+
+dropbox==12.0.2
+
+assemblyai==0.34.0
+
+MarkupSafe==2.1.5
+
+requests==2.32.3

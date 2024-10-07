@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% if name == "processing" %}
+        <h1>Processing...</h1>
+        <p1>Please wait for the operation to complete...</p1>
+        <meta http-equiv="refresh" content="0; url=http://localhost:8080/main"/>
+    {% elif name == "results" %}
+        <h1>Results</h1>
+        <p1>Operation completed successfully! All the files have been downloaded to your local storage!</p1>
+    {% endif %}
+{% endblock content %}
