@@ -2,6 +2,7 @@
 import os
 import dropbox_module
 import assemblyAI
+from celery import Celery
 from flask import Flask, request, render_template, url_for, redirect, session
 from markupsafe import escape
 from moviepy.editor import *
@@ -77,7 +78,7 @@ def processing():
 
     #Find a way to execute this function only one time
 
-    main()
+    main.delay()
 
     return render_template('results.html', name="results")
 
@@ -112,6 +113,8 @@ def register():
 
     return render_template('register.html')
 
+app_1= Celery('tasks', broker='redis://localhost:6379/0')
+@app_1.task
 def main():
     
     #Downloading the video
