@@ -2,7 +2,7 @@
 import os
 import dropbox_module
 import assemblyAI
-from celery import Celery
+import make_celery_module
 from flask import Flask, request, render_template, url_for, redirect, session
 from markupsafe import escape
 from moviepy.editor import *
@@ -13,6 +13,13 @@ username = (os.getenv("userprofile"))[9:]
 
 # Web application fundament
 app = Flask(__name__)
+
+app.config.update(
+    CELERY_BROKER_URL='redis://localhost:6379/0',   # Redis broker
+    CELERY_RESULT_BACKEND='redis://localhost:6379/0'  # Redis as result backend
+)
+
+celery = make_celery_module.make_celery(app)
 
 @app.route('/') #Use the route() decorator to bind a function to a URL.
 def index():
@@ -78,7 +85,7 @@ def processing():
 
     #Find a way to execute this function only one time
 
-    main.delay()
+    (main()).delay()
 
     return render_template('results.html', name="results")
 
@@ -113,8 +120,7 @@ def register():
 
     return render_template('register.html')
 
-app_1= Celery('tasks', broker='redis://localhost:6379/0')
-@app_1.task
+@celery.task()
 def main():
     
     #Downloading the video
