@@ -2,6 +2,8 @@
 import os
 import dropbox_module
 import assemblyAI
+import asyncio
+import aiohttp 
 from flask import Flask, request, render_template, url_for, redirect, session
 from markupsafe import escape
 from moviepy.editor import *
@@ -77,7 +79,7 @@ def processing():
 
     #Find a way to execute this function only one time
 
-    main()
+    asyncio(main())
 
     return render_template('results.html', name="results")
 
@@ -112,7 +114,7 @@ def register():
 
     return render_template('register.html')
 
-def main():
+async def main():
     
     #Downloading the video
     downloaded_video = (dropbox_module.download_file())
@@ -124,8 +126,9 @@ def main():
     video.audio.write_audiofile("audio.mp3", bitrate="100k")
 
     print("\nProcessing the transcription of the given audio file, please wait...\n")
-
-    transcription = assemblyAI.run() # Making a transcription
+    async with aiohttp.ClientSession() as session:
+        async with session.get(transcription = assemblyAI.run()) as response:
+            return await response.json() # Making a transcription
 
     #os.remove("video.mp3") # find out how to delete the video.mp3
     os.remove("audio.mp3")
