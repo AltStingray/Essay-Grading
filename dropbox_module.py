@@ -4,7 +4,7 @@ import requests
 CLIENT_ID = "shc5rkn4hixve4j"
 CLIENT_SECRET = "wejv8edxnhyelum"
 WEBAPP_LINK = "benchmark-summary-report-eae227664887.herokuapp.com"
-redirect_link = f"https://www.dropbox.com/oauth2/authorize?client_id={CLIENT_ID}&redirect_uri=http://{WEBAPP_LINK}/start&response_type=code"
+redirect_link = f"https://www.dropbox.com/oauth2/authorize?client_id={CLIENT_ID}&redirect_uri=https://{WEBAPP_LINK}/start&response_type=code"
 
 data = {}
 
