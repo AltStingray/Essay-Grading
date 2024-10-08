@@ -3,7 +3,7 @@ import requests
 
 CLIENT_ID = "shc5rkn4hixve4j"
 CLIENT_SECRET = "wejv8edxnhyelum"
-redirect_link = f"http://www.dropbox.com/oauth2/authorize?client_id={CLIENT_ID}&redirect_uri=https://benchmark-summary-report-eae227664887.herokuapp.com/start&response_type=code"
+redirect_link = f"https://www.dropbox.com/oauth2/authorize?client_id={CLIENT_ID}&redirect_uri=https://benchmark-summary-report-eae227664887.herokuapp.com/start&response_type=code"
 
 data = {}
 
@@ -22,7 +22,7 @@ def authorization(auth_code):
             "grant_type": "authorization_code",
             "client_id": CLIENT_ID,
             "client_secret": CLIENT_SECRET,
-            "redirect_uri": "http://benchmark-summary-report-eae227664887.herokuapp.com/start"
+            "redirect_uri": "https://benchmark-summary-report-eae227664887.herokuapp.com/start"
         }
     )
 
