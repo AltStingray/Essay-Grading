@@ -1,6 +1,5 @@
 import os 
 import redis
-from rq import Worker, Queue, Connection
 
 #listen = ['high', 'default', 'low']
 
@@ -14,8 +13,4 @@ try:
 except redis.ConnectionError as e:
     print(f"Redis connection failed: {e}")
 
-if __name__ =='__main__':
-    with Connection(conn):
-        queues = [Queue(name) for name in listen]
-        worker = Worker(queues)
         

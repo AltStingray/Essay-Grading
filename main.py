@@ -3,9 +3,8 @@ import os
 import dropbox_module
 import assemblyAI
 from rq import Queue
-import redis
-#from worker import conn
-from flask import Flask, request, render_template, url_for, redirect
+from worker import conn
+from flask import Flask, request, render_template, url_for, redirect, send_file
 from markupsafe import escape
 from moviepy.editor import *
 from openai import OpenAI
@@ -71,25 +70,30 @@ def results():
 
     dropbox_module.store(link, "link")
 
+
+    q = Queue(connection=conn)
+
+    job = q.enqueue(main, 'https://benchmark-summary-report-eae227664887.herokuapp.com/main') #check the end route
+
+    from rq.job import Job
+
+    job = Job.fetch(job.id, connection=conn)
+    
+    if job.is_finished:
+        result = job.result
+        print(f"Job result: {result}")
+    else:
+        print("Job not yet finished")
+
+    send_file(result, as_attachment=True) 
+
     return render_template('results.html', name="processing")
 
 
 @app.route('/main', methods=["GET", "POST"])
 def processing():
 
-    conn = redis.from_url("redis://default:wLzcQ5mI3BbsxIHoi7FV706tWzrQHi3D@redis-12778.c92.us-east-1-3.ec2.redns.redis-cloud.com:12778")
-
-    q = Queue(connection=conn)
-
-    try:
-        conn.ping()
-        print("Redis connection successful!")
-    except redis.ConnectionError as e:
-        print(f"Redis connection failed: {e}")
-
-    result = q.enqueue(main, 'https://benchmark-summary-report-eae227664887.herokuapp.com/main')
-
-    return render_template('results.html', name="results", job=result)
+    return render_template('results.html', name="results")
 
     
 @app.route('/about')
@@ -157,17 +161,22 @@ def main():
             {"role": "system", "content": prompt},
             {"role": "user", "content": f'''{transcription}'''}],
         )
-        
+
+    #send_file(transcription, as_attachment=True)   
+    #send_file(summary_report, as_attachment=True) 
     #Saving results
-    for n in range(1, 100):
-        if os.path.exists(f"C:/Users/{username}/Downloads/Transcription #{n}.docx"):
-            pass
-        else:
-            with open(f'C:/Users/{username}/Downloads/Transcription #{n}.docx', "w") as file:
-                file.write(transcription)
-            with open(f"C:/Users/{username}/Downloads/Summary report #{n}.docx", "w") as file:
-                file.write(f"{summary_report.choices[0].message.content}")
-            break
+    #for n in range(1, 100):
+    #    if os.path.exists(f"C:/Users/{username}/Downloads/Transcription #{n}.docx"):
+    #        pass
+    #    else:
+    #        with open(f'C:/Users/{username}/Downloads/Transcription #{n}.docx', "w") as file:
+    #            file.write(transcription)
+    #            send_file(file)
+    #        with open(f"C:/Users/{username}/Downloads/Summary report #{n}.docx", "w") as file:
+    #            file.write(f"{summary_report.choices[0].message.content}")
+    #            send_file(file)
+    #        break
+    return summary_report
 
 
 # These two lines tell Python to start Flask’s development server when the script is executed from the command line. 
