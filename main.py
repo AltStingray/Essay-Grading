@@ -76,7 +76,7 @@ def results():
 @app.route('/main', methods=["GET", "POST"])
 def processing():
 
-    q = Queue(connection=conn, is_async=False)
+    q = Queue(connection=conn)
 
     job = q.enqueue(main, 'https://benchmark-summary-report-eae227664887.herokuapp.com/main') #check the end route
 
