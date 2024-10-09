@@ -80,7 +80,7 @@ def processing():
 
     job = q.enqueue(main, 'https://benchmark-summary-report-eae227664887.herokuapp.com/main')
 
-    return render_template('results.html', name="results", job=job.results)
+    return render_template('results.html', name="results", job=job.id)
 
     
 @app.route('/about')
