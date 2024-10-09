@@ -3,7 +3,8 @@ import os
 import dropbox_module
 import assemblyAI
 from rq import Queue
-from worker import conn
+import redis
+#from worker import conn
 from flask import Flask, request, render_template, url_for, redirect
 from markupsafe import escape
 from moviepy.editor import *
@@ -76,11 +77,19 @@ def results():
 @app.route('/main', methods=["GET", "POST"])
 def processing():
 
+    conn = redis.from_url("redis://default:wLzcQ5mI3BbsxIHoi7FV706tWzrQHi3D@redis-12778.c92.us-east-1-3.ec2.redns.redis-cloud.com:12778")
+
     q = Queue(connection=conn)
 
-    job = q.enqueue(main, 'https://benchmark-summary-report-eae227664887.herokuapp.com/main')
+    try:
+        conn.ping()
+        print("Redis connection successful!")
+    except redis.ConnectionError as e:
+        print(f"Redis connection failed: {e}")
 
-    return render_template('results.html', name="results", job=job.id)
+    result = q.enqueue(main, 'https://benchmark-summary-report-eae227664887.herokuapp.com/main')
+
+    return render_template('results.html', name="results", job=result)
 
     
 @app.route('/about')

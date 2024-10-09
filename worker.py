@@ -2,7 +2,7 @@ import os
 import redis
 from rq import Worker, Queue, Connection
 
-listen = ['high', 'default', 'low']
+#listen = ['high', 'default', 'low']
 
 #redis_url = os.getenv("REDISCLOUD_URL")
 
@@ -16,5 +16,6 @@ except redis.ConnectionError as e:
 
 if __name__ =='__main__':
     with Connection(conn):
-        worker = Worker(map(Queue, listen))
-        worker.work
+        queues = [Queue(name) for name in listen]
+        worker = Worker(queues)
+        
