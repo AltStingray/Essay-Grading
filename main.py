@@ -70,8 +70,13 @@ def results():
 
     dropbox_module.store(link, "link")
 
+    return render_template('results.html', name="processing")
 
-    q = Queue(connection=conn)
+
+@app.route('/main', methods=["GET", "POST"])
+def processing():
+
+    q = Queue(connection=conn, is_async=False)
 
     job = q.enqueue(main, 'https://benchmark-summary-report-eae227664887.herokuapp.com/main') #check the end route
 
@@ -79,21 +84,13 @@ def results():
 
     job = Job.fetch(job.id, connection=conn)
     
-    try:
-        if job.is_finished:
-            result = job.result
-            print(f"Job result: {result}")
-        else:
-            print("Job not yet finished")
-            
-        send_file(result, as_attachment=True)
-    except: UnboundLocalError 
+    if job.is_finished:
+        result = job.result
+        print(f"Job result: {result}")
+    else:
+        print("Job not yet finished")
 
-    return render_template('results.html', name="processing")
-
-
-@app.route('/main', methods=["GET", "POST"])
-def processing():
+    send_file(result, as_attachment=True)
 
     return render_template('results.html', name="results")
 
