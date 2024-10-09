@@ -79,11 +79,13 @@ def results():
 
     job = Job.fetch(job.id, connection=conn)
     
-    if job.is_finished:
-        result = job.result
-        print(f"Job result: {result}")
-    else:
-        print("Job not yet finished")
+    try:
+        if job.is_finished:
+            result = job.result
+            print(f"Job result: {result}")
+        else:
+            print("Job not yet finished")
+    except: UnboundLocalError
 
     send_file(result, as_attachment=True) 
 
