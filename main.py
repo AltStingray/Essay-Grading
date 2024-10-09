@@ -87,10 +87,9 @@ def processing():
     if job.is_finished:
         result = job.result
         print(f"Job result: {result}")
+        send_file(result, as_attachment=True)
     else:
         print("Job not yet finished")
-
-    send_file(result, as_attachment=True)
 
     return render_template('results.html', name="results")
 
