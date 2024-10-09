@@ -78,9 +78,9 @@ def processing():
 
     q = Queue(connection=conn)
 
-    q.enqueue(main, 'https://benchmark-summary-report-eae227664887.herokuapp.com/main')
+    job = q.enqueue(main, 'https://benchmark-summary-report-eae227664887.herokuapp.com/main')
 
-    return render_template('results.html', name="results")
+    return render_template('results.html', name="results", job=job.results)
 
     
 @app.route('/about')
@@ -114,11 +114,7 @@ def register():
     return render_template('register.html')
 
 def main():
-    print("It's working!")
-    print("It's working!")
-    print("It's working!")
-    print("It's working!")
-    print("It's working!")
+
     #Downloading the video
     downloaded_video = (dropbox_module.download_file())
 
