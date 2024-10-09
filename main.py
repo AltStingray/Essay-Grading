@@ -78,9 +78,9 @@ def processing():
 
     q = Queue(connection=conn)
 
-    q.enqueue(main, 'https://benchmark-summary-report-eae227664887.herokuapp.com/main')
+    job = q.enqueue(main, 'https://benchmark-summary-report-eae227664887.herokuapp.com/main')
 
-    return render_template('results.html', name="results")
+    return render_template('results.html', name="results", job_id=job.id)
 
     
 @app.route('/about')
