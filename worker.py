@@ -1,9 +1,9 @@
 import os 
 import redis
-import logging
-from rq import Worker, Queue, Connection
+#import logging
+#from rq import Worker, Queue, Connection
 
-listen = ['high', 'default', 'low']
+#listen = ['high', 'default', 'low']
 
 #redis_url = os.getenv("REDISCLOUD_URL")
 
@@ -15,16 +15,16 @@ try:
 except redis.ConnectionError as e:
     print(f"Redis connection failed: {e}")
 
-logging.basicConfig(level=logging.INFO)
-
-if __name__ == '__main__':
-    logging.info('Starting worker...')
-    try:
-        with Connection(conn):
-            queues = [Queue(name) for name in listen]  # Create list of Queue objects
-            worker = Worker(queues)  # Pass the list of queues to the worker
-            worker.work()
-    except Exception as e:
-        logging.error(f'Worker crashed: {e}')
+#logging.basicConfig(level=logging.INFO)
+#
+#if __name__ == '__main__':
+#    logging.info('Starting worker...')
+#    try:
+#        with Connection(conn):
+#            queues = [Queue(name) for name in listen]  # Create list of Queue objects
+#            worker = Worker(queues)  # Pass the list of queues to the worker
+#            worker.work()
+#    except Exception as e:
+#        logging.error(f'Worker crashed: {e}')
 
         
