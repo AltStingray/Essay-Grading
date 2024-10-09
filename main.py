@@ -2,7 +2,7 @@
 import os
 import dropbox_module
 import assemblyAI
-from rq import Queue
+from rq import Queue, Job
 from worker import conn
 from flask import Flask, request, render_template, url_for, redirect
 from markupsafe import escape
@@ -79,8 +79,9 @@ def processing():
     q = Queue(connection=conn)
 
     job = q.enqueue(main, 'https://benchmark-summary-report-eae227664887.herokuapp.com/main')
+    job = Job.fetch(job.id, connection=conn)
 
-    return render_template('results.html', name="results", job_id=job.id)
+    return render_template('results.html', name="results", job=job.results)
 
     
 @app.route('/about')
