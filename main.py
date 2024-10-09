@@ -85,9 +85,9 @@ def results():
             print(f"Job result: {result}")
         else:
             print("Job not yet finished")
-    except: UnboundLocalError
-
-    send_file(result, as_attachment=True) 
+            
+        send_file(result, as_attachment=True)
+    except: UnboundLocalError 
 
     return render_template('results.html', name="processing")
 
