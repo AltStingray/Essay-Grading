@@ -76,9 +76,9 @@ def results():
 @app.route('/main', methods=["GET", "POST"])
 def processing():
 
-    #Find a way to execute this function only one time
+    q = Queue(connection=conn)
 
-    main()
+    q.enqueue(main, 'https://benchmark-summary-report-eae227664887.herokuapp.com/main')
 
     return render_template('results.html', name="results")
 
@@ -124,12 +124,8 @@ def main():
     video.audio.write_audiofile("audio.mp3", bitrate="100k")
 
     print("\nProcessing the transcription of the given audio file, please wait...\n")
-    
-    q = Queue(connection=conn)
 
-    #transcription = assemblyAI.run() # Making a transcription
-
-    transcription = q.enqueue(assemblyAI.run(), 'https://benchmark-summary-report-eae227664887.herokuapp.com/main')
+    transcription = assemblyAI.run() # Making a transcription
 
     #os.remove("video.mp3") # find out how to delete the video.mp3
     os.remove("audio.mp3")
