@@ -15,6 +15,8 @@ try:
 except redis.ConnectionError as e:
     print(f"Redis connection failed: {e}")
 
+logging.basicConfig(level=logging.INFO)
+
 if __name__ == '__main__':
     logging.info('Starting worker...')
     try:
