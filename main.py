@@ -2,7 +2,7 @@
 import os
 import dropbox_module
 import assemblyAI
-from rq import Queue, Job
+from rq import Queue
 from worker import conn
 from flask import Flask, request, render_template, url_for, redirect
 from markupsafe import escape
@@ -78,10 +78,9 @@ def processing():
 
     q = Queue(connection=conn)
 
-    job = q.enqueue(main, 'https://benchmark-summary-report-eae227664887.herokuapp.com/main')
-    job = Job.fetch(job.id, connection=conn)
+    q.enqueue(main, 'https://benchmark-summary-report-eae227664887.herokuapp.com/main')
 
-    return render_template('results.html', name="results", job=job.results)
+    return render_template('results.html', name="results")
 
     
 @app.route('/about')
@@ -115,6 +114,11 @@ def register():
     return render_template('register.html')
 
 def main():
+    print("It's working!")
+    print("It's working!")
+    print("It's working!")
+    print("It's working!")
+    print("It's working!")
     #Downloading the video
     downloaded_video = (dropbox_module.download_file())
 
@@ -160,7 +164,6 @@ def main():
                 file.write(f"{summary_report.choices[0].message.content}")
             break
 
-    return 0
 
 # These two lines tell Python to start Flask’s development server when the script is executed from the command line. 
 # It’ll be used only when you run the script locally.
