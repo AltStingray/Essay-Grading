@@ -2,15 +2,14 @@
 import os
 import dropbox_module
 import assemblyAI
-import asyncio
-import aiohttp 
-from flask import Flask, request, render_template, url_for, redirect, session
+from rq import Queue
+from worker import conn
+from flask import Flask, request, render_template, url_for, redirect
 from markupsafe import escape
 from moviepy.editor import *
 from openai import OpenAI
 
 username = (os.getenv("userprofile"))[9:]
-
 
 # Web application fundament
 app = Flask(__name__)
@@ -79,7 +78,7 @@ def processing():
 
     #Find a way to execute this function only one time
 
-    asyncio(main())
+    main()
 
     return render_template('results.html', name="results")
 
@@ -114,8 +113,7 @@ def register():
 
     return render_template('register.html')
 
-async def main():
-    
+def main():
     #Downloading the video
     downloaded_video = (dropbox_module.download_file())
 
@@ -126,9 +124,12 @@ async def main():
     video.audio.write_audiofile("audio.mp3", bitrate="100k")
 
     print("\nProcessing the transcription of the given audio file, please wait...\n")
-    async with aiohttp.ClientSession() as session:
-        async with session.get(transcription = assemblyAI.run()) as response:
-            return await response.json() # Making a transcription
+    
+    q = Queue(connection=conn)
+
+    #transcription = assemblyAI.run() # Making a transcription
+
+    transcription = q.enqueue(assemblyAI.run(), 'https://benchmark-summary-report-eae227664887.herokuapp.com/main')
 
     #os.remove("video.mp3") # find out how to delete the video.mp3
     os.remove("audio.mp3")
