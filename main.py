@@ -1,7 +1,9 @@
 # coding: cp1252
 import os
+import time
 import dropbox_module
 import assemblyAI
+import redis
 from rq import Queue
 from worker import conn
 from flask import Flask, request, render_template, url_for, redirect, send_file
@@ -76,20 +78,23 @@ def results():
 @app.route('/main', methods=["GET", "POST"])
 def processing():
 
+    conn = redis.from_url("redis://default:wLzcQ5mI3BbsxIHoi7FV706tWzrQHi3D@redis-12778.c92.us-east-1-3.ec2.redns.redis-cloud.com:12778")
+    
     q = Queue(connection=conn)
 
-    job = q.enqueue(main, 'https://benchmark-summary-report-eae227664887.herokuapp.com/main')
+    job = q.enqueue(main)
 
-    from rq.job import Job
+    #from rq.job import Job
 
-    job = Job.fetch(job.id, connection=conn)
+    #job = Job.fetch(job.id, connection=conn)
 
-    if job.is_finished:
-        result = job.result
-        print(f"Job result: {result}")
-        send_file(result, as_attachment=True)
-    else:
-        print("Job not yet finished")
+    time.sleep(5)
+
+    result = job.result
+
+    print(f"Job result: {result}")
+    
+    send_file(result, as_attachment=True)
 
     return render_template('results.html', name="results")
 
