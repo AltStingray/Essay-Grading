@@ -70,10 +70,15 @@ def results():
 
     dropbox_module.store(link, "link")
 
+    return render_template('results.html', name="processing")
+
+
+@app.route('/main', methods=["GET", "POST"])
+def processing():
 
     q = Queue(connection=conn)
 
-    job = q.enqueue(main, 'https://benchmark-summary-report-eae227664887.herokuapp.com/results')
+    job = q.enqueue(main, 'https://benchmark-summary-report-eae227664887.herokuapp.com/main')
 
     from rq.job import Job
 
@@ -85,12 +90,6 @@ def results():
         send_file(result, as_attachment=True)
     else:
         print("Job not yet finished")
-
-    return render_template('results.html', name="processing")
-
-
-@app.route('/main', methods=["GET", "POST"])
-def processing():
 
     return render_template('results.html', name="results")
 
