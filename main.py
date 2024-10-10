@@ -164,10 +164,9 @@ def main():
         )
     print(summary_report)
     print(type(summary_report))
-    #send_file(transcription, as_attachment=True)   
-    #send_file(summary_report, as_attachment=True) 
+
     #Saving results
-    with open("summary_report.docx", "w") as file:
+    with open("summary_report.docx", "wb") as file:
         file.write(summary_report)
     return file
 
