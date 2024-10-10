@@ -162,22 +162,14 @@ def main():
             {"role": "system", "content": prompt},
             {"role": "user", "content": f'''{transcription}'''}],
         )
-
+    print(summary_report)
+    print(type(summary_report))
     #send_file(transcription, as_attachment=True)   
     #send_file(summary_report, as_attachment=True) 
     #Saving results
-    #for n in range(1, 100):
-    #    if os.path.exists(f"C:/Users/{username}/Downloads/Transcription #{n}.docx"):
-    #        pass
-    #    else:
-    #        with open(f'C:/Users/{username}/Downloads/Transcription #{n}.docx', "w") as file:
-    #            file.write(transcription)
-    #            send_file(file)
-    #        with open(f"C:/Users/{username}/Downloads/Summary report #{n}.docx", "w") as file:
-    #            file.write(f"{summary_report.choices[0].message.content}")
-    #            send_file(file)
-    #        break
-    return summary_report
+    with open("summary_report.docx", "w") as file:
+        file.write(summary_report)
+    return file
 
 
 # These two lines tell Python to start Flask’s development server when the script is executed from the command line. 
