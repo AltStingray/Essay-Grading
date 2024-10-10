@@ -77,8 +77,6 @@ def results():
 
 @app.route('/main', methods=["GET", "POST"])
 def processing():
-
-    conn = redis.from_url("redis://default:wLzcQ5mI3BbsxIHoi7FV706tWzrQHi3D@redis-12778.c92.us-east-1-3.ec2.redns.redis-cloud.com:12778")
     
     q = Queue(connection=conn)
 
