@@ -168,7 +168,7 @@ def main():
     #Saving results
     with open("summary_report.docx", "w") as file:
         file.write(summary_report)
-    return file
+    return summary_report
 
 
 # These two lines tell Python to start Flask’s development server when the script is executed from the command line. 
