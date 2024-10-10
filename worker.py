@@ -6,7 +6,7 @@ import logging
 
 #redis_url = os.getenv("REDISCLOUD_URL")
 
-conn = redis.from_url("redis://default:wLzcQ5mI3BbsxIHoi7FV706tWzrQHi3D@redis-12778.c92.us-east-1-3.ec2.redns.redis-cloud.com:12778")
+conn = redis.from_url("rediss://:p12c44fffdc8c8c946d2ff90391affe0b7bdcd87e15565f1feeab19cd6d93c7a6@ec2-54-146-141-60.compute-1.amazonaws.com:12410")
 
 try:
     conn.ping()
