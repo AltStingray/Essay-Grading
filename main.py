@@ -92,7 +92,7 @@ def processing():
 
     print(f"Job result: {result}")
     
-    send_file(result, as_attachment=True)
+    send_file(download_name="summary_report.docx", as_attachment=True)
 
     return render_template('results.html', name="results")
 
@@ -166,7 +166,7 @@ def main():
     print(type(summary_report))
 
     #Saving results
-    with open("summary_report.docx", "wb") as file:
+    with open("summary_report.docx", "w") as file:
         file.write(summary_report)
     return file
 
