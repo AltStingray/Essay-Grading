@@ -88,16 +88,16 @@ def results():
 
         #send_file(path_or_file=result, download_name="summary_report.docx", as_attachment=True)
 
-        return render_template('results.html', name="results", job_id=job.get_id())
+        return render_template('results.html', name="results")
     else:
 
         return render_template('results.html', name="processing")
 
 
-#@app.route('/main', methods=["GET", "POST"])
-#def processing():
-#
-#    return render_template('results.html', name="results")
+@app.route('/main', methods=["GET", "POST"])
+def processing():
+
+    return render_template('results.html', name="results")
 
     
 @app.route('/about')
