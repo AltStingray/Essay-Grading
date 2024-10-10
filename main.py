@@ -67,37 +67,37 @@ def default():
 @app.route('/results', methods=["GET", "POST"])
 def results():
 
-    link = request.args.get("link")
+    if request.method == "POST":   
 
-    dropbox_module.store(link, "link")
+        link = request.args.get("link")
 
-    q = Queue(connection=conn)
+        dropbox_module.store(link, "link")
 
-    job = q.enqueue(main)
+        q = Queue(connection=conn)
 
-    #from rq.job import Job
+        job = q.enqueue(main)
 
-    #job = Job.fetch(job.id, connection=conn)
+        #from rq.job import Job
 
-    time.sleep(5)
+        #job = Job.fetch(job.id, connection=conn)
 
-    result = job.result
-    print(f"Job result: {result}")
+        time.sleep(5)
 
-    time.sleep(15)
+        result = job.result
+        print(f"Job result: {result}")
 
-    result = job.result
-    print(f"Job result: {result}")
-    
-    send_file(path_or_file=result, download_name="summary_report.docx", as_attachment=True)
+        #send_file(path_or_file=result, download_name="summary_report.docx", as_attachment=True)
 
-    return render_template('results.html', name="processing")
+        return render_template('results.html', name="results", job_id=job.get_id())
+    else:
+
+        return render_template('results.html', name="processing")
 
 
-@app.route('/main', methods=["GET", "POST"])
-def processing():
-
-    return render_template('results.html', name="results")
+#@app.route('/main', methods=["GET", "POST"])
+#def processing():
+#
+#    return render_template('results.html', name="results")
 
     
 @app.route('/about')
