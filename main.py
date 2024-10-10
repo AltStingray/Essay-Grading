@@ -97,7 +97,7 @@ def results():
 @app.route('/main', methods=["GET", "POST"])
 def processing():
 
-    return render_template('results.html', name="results", job=result)
+    return render_template('results.html', name="results")
 
     
 @app.route('/about')
