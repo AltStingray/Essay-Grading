@@ -1,6 +1,6 @@
 import redis
-#import logging
-#from rq import Worker, Queue, Connection
+import logging
+from rq import Worker, Queue, Connection
 
 #listen = ['high', 'default', 'low']
 
@@ -14,9 +14,9 @@ try:
 except redis.ConnectionError as e:
     print(f"Redis connection failed: {e}")
 
-#with Connection(conn):
-#        worker = Worker(map(Queue, "default"))
-#        logging.info("Worker is starting...")
-#        worker.work()
+with Connection(conn):
+        worker = Worker(map(Queue, "default"))
+        logging.info("Worker is starting...")
+        worker.work()
 
         

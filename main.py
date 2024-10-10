@@ -92,9 +92,9 @@ def processing():
 
     print(f"Job result: {result}")
     
-    send_file(path_or_file=result, download_name="summary_report.docx", as_attachment=True)
+    #send_file(path_or_file=result, download_name="summary_report.docx", as_attachment=True)
 
-    return render_template('results.html', name="results")
+    return render_template('results.html', name="results", job=result)
 
     
 @app.route('/about')
