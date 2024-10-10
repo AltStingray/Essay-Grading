@@ -3,7 +3,6 @@ import os
 import time
 import dropbox_module
 import assemblyAI
-import redis
 from rq import Queue
 from worker import conn
 from flask import Flask, request, render_template, url_for, redirect, send_file
@@ -72,12 +71,6 @@ def results():
 
     dropbox_module.store(link, "link")
 
-    return render_template('results.html', name="processing")
-
-
-@app.route('/main', methods=["GET", "POST"])
-def processing():
-    
     q = Queue(connection=conn)
 
     job = q.enqueue(main)
@@ -89,10 +82,20 @@ def processing():
     time.sleep(5)
 
     result = job.result
+    print(f"Job result: {result}")
 
+    time.sleep(15)
+
+    result = job.result
     print(f"Job result: {result}")
     
-    #send_file(path_or_file=result, download_name="summary_report.docx", as_attachment=True)
+    send_file(path_or_file=result, download_name="summary_report.docx", as_attachment=True)
+
+    return render_template('results.html', name="processing")
+
+
+@app.route('/main', methods=["GET", "POST"])
+def processing():
 
     return render_template('results.html', name="results", job=result)
 
