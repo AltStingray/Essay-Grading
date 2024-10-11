@@ -86,11 +86,15 @@ def results():
 
     job_id=job.get_id() #okay, we're getting id
 
+    session["job_id"] = job_id
+
     return render_template('results.html', name="processing", job_id=job_id)
 
 
-@app.route('/main/<job_id>', methods=["GET", "POST"])
-def processing(job_id):
+@app.route('/main', methods=["GET", "POST"])
+def processing():
+
+    job_id = session["job_id"]
 
     print(job_id)
 
