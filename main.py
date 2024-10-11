@@ -81,15 +81,14 @@ def results():
 
     job_id=job.get_id()
     print(job_id)
-    session["job_id"] = job_id
 
-    return render_template('results.html', name="processing")
+    return render_template('results.html', name="processing", job_id=job_id)
 
 
 @app.route('/main', methods=["GET", "POST"])
 def processing():
-
-    job_id = session.get("job_id", None)
+    
+    job_id = request.args.get("job_id")
 
     job = Job.fetch(job_id, connection=conn)
             
