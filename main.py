@@ -104,6 +104,7 @@ def waiting():
 
         return redirect(url_for("results"))
     else:
+        time.sleep(5)
         return render_template('processing.html')
     #you can try to reload the page every time waiting for it to complete, but find a way to do it so the main function won't be executed again
 
@@ -112,8 +113,6 @@ def waiting():
 def results():
 
     result = session["result"]
-
-    print(result)
 
     send_file(path_or_file=result, download_name="summary_report.docx", as_attachment=True)
 
