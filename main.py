@@ -18,7 +18,7 @@ q = Queue(connection=conn)
 # Web application fundament
 app = Flask(__name__)
 
-app.secret_key == b"32I4g1&g%J+*2o)"
+app.secret_key = b"32I4g1&g%J+*2o)"
 
 app.config['SESSION_TYPE'] = 'redis'
 
