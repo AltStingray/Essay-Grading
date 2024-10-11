@@ -88,6 +88,8 @@ def processing():
 
     session["job"] = job
 
+    time.sleep(5)
+
     return redirect(url_for("waiting"))
 
 @app.route('/waiting', methods=["GET", "POST"])
