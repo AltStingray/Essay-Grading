@@ -205,7 +205,7 @@ def main(link, access_token):
     summary_report = summary_report.choices[0].message.content #tapping into the content of response
 
     #Saving results
-    with open("summary_report.docx", "w") as file:
+    with open("/app/summary_report.docx", "w") as file:
 
         file.write(summary_report)
     return summary_report
