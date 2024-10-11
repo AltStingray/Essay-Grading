@@ -104,7 +104,7 @@ def waiting():
 
         return redirect(url_for("results"))
     else:
-        time.sleep(5)
+        time.sleep(1)
         return render_template('processing.html')
     #you can try to reload the page every time waiting for it to complete, but find a way to do it so the main function won't be executed again
 
@@ -114,7 +114,7 @@ def results():
 
     result = session["result"]
 
-    send_file(path_or_file=result, download_name="summary_report.docx", as_attachment=True)
+    send_file(path_or_file="summary_report.docx", download_name="summary_report.docx", as_attachment=True)
 
     return render_template('results.html')
 
@@ -205,7 +205,7 @@ def main(link, access_token):
     summary_report = summary_report.choices[0].message.content #tapping into the content of response
 
     #Saving results
-    with open("summary_report.docx", "w") as file:
+    with open("app/summary_report.docx", "w") as file:
 
         file.write(summary_report)
     return summary_report
