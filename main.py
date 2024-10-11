@@ -84,18 +84,18 @@ def processing():
 
     job = q.enqueue(main, link, access_token) # enque is working
 
-    #job_id=job.get_id() #okay, we're getting id
+    job_id=job.get_id() #okay, we're getting id
 
-    session["job"] = job
-
-    time.sleep(5)
+    session["job_id"] = job_id
 
     return redirect(url_for("waiting"))
 
 @app.route('/waiting', methods=["GET", "POST"])
 def waiting():
 
-    job = session["job"]
+    job_id = session["job_id"]
+
+    job = Job.fetch(job_id, connection=conn)
 
     if job.is_finished:
         result = job.return_value()
