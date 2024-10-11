@@ -88,9 +88,9 @@ def processing():
 
     session["job"] = job
 
-    return redirect(url_for("waiting_for_completion"))
+    return redirect(url_for("waiting"))
 
-@app.route('/waiting_for_completion', methods=["GET", "POST"])
+@app.route('/waiting', methods=["GET", "POST"])
 def waiting():
 
     job = session["job"]
