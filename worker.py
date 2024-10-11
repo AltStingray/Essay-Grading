@@ -12,9 +12,9 @@ try:
     print("Redis connection successful!")
 except redis.ConnectionError as e:
     print(f"Redis connection failed: {e}")
-
-with Connection(conn):
-        worker = Worker(list(map(Queue, listen)))
-        worker.work()
+if __name__ == '__main__':
+    with Connection(conn):
+            worker = Worker(list(map(Queue, listen)))
+            worker.work()
 
         
