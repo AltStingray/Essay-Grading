@@ -18,6 +18,8 @@ q = Queue(connection=conn)
 # Web application fundament
 app = Flask(__name__)
 
+app.secret_key == "BAD_SECRET_KEY"
+
 @app.route('/') #Use the route() decorator to bind a function to a URL.
 def index():
     
@@ -36,10 +38,12 @@ def start():
     auth_code = str(escape(request.args.get("code")))
 
     access_token = dropbox_module.authorization(auth_code)
-    
+
+    session["access_token"] = access_token
+
     dropbox_module.store(access_token, "access_token")
 
-    return render_template('index.html', name="choice", a_t=access_token)
+    return render_template('index.html', name="choice")
 
 
 @app.route('/choice')
@@ -67,15 +71,17 @@ def default():
     
     return render_template('index.html', name="link")
 
-@app.route('/results/<a_t>', methods=["GET", "POST"])
-def results(a_t):
+@app.route('/results', methods=["GET", "POST"])
+def results():
 
     link = request.args.get("link")
+
+    access_token = session.get("access_token")
 
     dropbox_module.store(link, "link")
 
     print("Okay")
-    job = q.enqueue(main, link, a_t) # enque is working
+    job = q.enqueue(main, link, access_token) # enque is working
 
     #time.sleep(5)
 
