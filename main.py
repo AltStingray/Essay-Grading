@@ -6,7 +6,7 @@ import assemblyAI
 from rq import Queue
 from rq.job import Job
 from worker import conn
-from flask import Flask, request, render_template, url_for, redirect, send_file, jsonify
+from flask import Flask, request, render_template, url_for, redirect, send_file, jsonify, session
 from markupsafe import escape
 from moviepy.editor import *
 from openai import OpenAI
@@ -82,13 +82,16 @@ def results():
 
         job_id=job.get_id()
         print(job_id)
+        session["job_id"] = job_id
 
     return render_template('results.html', name="processing")
 
 
-@app.route('/main<job_id>', methods=["GET", "POST"])
-def processing(job_id):
+@app.route('/main', methods=["GET", "POST"])
+def processing():
 
+    job_id = session.get("job_id", None)
+    
     job = Job.fetch(job_id, connection=conn)
             
     if job.is_finished:
