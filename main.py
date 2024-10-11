@@ -75,20 +75,17 @@ def results():
     dropbox_module.store(link, "link")
 
     print("Okay")
-    job = q.enqueue(main)
+    job = q.enqueue(main) # enque is working
 
-    time.sleep(5)
+    #time.sleep(5)
 
-    job_id=job.get_id()
-    print(job_id)
+    job_id=job.get_id() #okay, we're getting id
 
     return render_template('results.html', name="processing", job_id=job_id)
 
 
-@app.route('/main', methods=["GET", "POST"])
-def processing():
-    
-    job_id = request.args.get("job_id")
+@app.route('/main/<job_id>', methods=["GET", "POST"])
+def processing(job_id):
 
     job = Job.fetch(job_id, connection=conn)
             
