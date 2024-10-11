@@ -29,7 +29,6 @@ def authorization(auth_code):
     if response.status_code==200:
         token_data = response.json()
         access_token = token_data["access_token"]
-        print(access_token)
     else:
         print(f"Error: {response.status_code}")
         print(response.text)
@@ -37,11 +36,11 @@ def authorization(auth_code):
     return access_token
 
 
-def download_file():
+def download_file(url, access_token):
 
-    access_token = data["access_token"]
+    #access_token = data["access_token"]
     
-    url = data["link"]
+    #url = data["link"]
 
     dbx = dropbox.Dropbox(access_token, app_key="shc5rkn4hixve4j" , app_secret="wejv8edxnhyelum")
 

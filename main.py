@@ -37,11 +37,9 @@ def start():
 
     access_token = dropbox_module.authorization(auth_code)
     
-    print(access_token)
-    
     dropbox_module.store(access_token, "access_token")
 
-    return render_template('index.html', name="choice")
+    return render_template('index.html', name="choice", a_t=access_token)
 
 
 @app.route('/choice')
@@ -69,15 +67,15 @@ def default():
     
     return render_template('index.html', name="link")
 
-@app.route('/results', methods=["GET", "POST"])
-def results():
+@app.route('/results/<a_t>', methods=["GET", "POST"])
+def results(a_t):
 
     link = request.args.get("link")
 
     dropbox_module.store(link, "link")
 
     print("Okay")
-    job = q.enqueue(main) # enque is working
+    job = q.enqueue(main, link, a_t) # enque is working
 
     #time.sleep(5)
 
@@ -88,6 +86,7 @@ def results():
 
 @app.route('/main/<job_id>', methods=["GET", "POST"])
 def processing(job_id):
+
     print(job_id)
 
     job = Job.fetch(job_id, connection=conn)
@@ -133,10 +132,10 @@ def register():
 
     return render_template('register.html')
 
-def main():
+def main(link, access_token):
 
     #Downloading the video
-    downloaded_video = (dropbox_module.download_file())
+    downloaded_video = (dropbox_module.download_file(link, access_token))
 
     #Making a usable object out of the VideoFileClip(video) class
     video = VideoFileClip(downloaded_video.name)
