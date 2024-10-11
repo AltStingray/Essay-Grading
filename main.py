@@ -86,7 +86,14 @@ def processing():
 
     #job_id=job.get_id() #okay, we're getting id
 
-    #session["job_id"] = job_id
+    session["job"] = job
+
+    return redirect("/waiting_for_completion")
+
+@app.route('/waiting_for_completion', methods=["GET", "POST"])
+def waiting():
+
+    job = session["job"]
 
     if job.is_finished:
         result = job.return_value()
@@ -96,6 +103,7 @@ def processing():
         return redirect("/results")
     else:
         return render_template('processing.html')
+    #you can try to reload the page every time waiting for it to complete, but find a way to do it so the main function won't be executed again
 
 
 @app.route('/results', methods=["GET", "POST"])
