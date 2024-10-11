@@ -74,15 +74,14 @@ def results():
 
     dropbox_module.store(link, "link")
 
-    if request.method == "POST":
-        print("Okay")
-        job = q.enqueue(main)
+    print("Okay")
+    job = q.enqueue(main)
 
-        time.sleep(5)
+    time.sleep(5)
 
-        job_id=job.get_id()
-        print(job_id)
-        session["job_id"] = job_id
+    job_id=job.get_id()
+    print(job_id)
+    session["job_id"] = job_id
 
     return render_template('results.html', name="processing")
 
@@ -91,7 +90,7 @@ def results():
 def processing():
 
     job_id = session.get("job_id", None)
-    
+
     job = Job.fetch(job_id, connection=conn)
             
     if job.is_finished:
