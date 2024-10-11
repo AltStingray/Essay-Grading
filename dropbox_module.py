@@ -29,6 +29,7 @@ def authorization(auth_code):
     if response.status_code==200:
         token_data = response.json()
         access_token = token_data["access_token"]
+        print(access_token)
     else:
         print(f"Error: {response.status_code}")
         print(response.text)
