@@ -4,13 +4,16 @@ import time
 import dropbox_module
 import assemblyAI
 from rq import Queue
-from worker import q
+from rq.job import Job
+from worker import conn
 from flask import Flask, request, render_template, url_for, redirect, send_file, jsonify
 from markupsafe import escape
 from moviepy.editor import *
 from openai import OpenAI
 
 username = (os.getenv("userprofile"))[9:]
+
+q = Queue(connection=conn)
 
 # Web application fundament
 app = Flask(__name__)
@@ -67,33 +70,33 @@ def default():
 @app.route('/results', methods=["GET", "POST"])
 def results():
 
-    if request.method == "GET":   
+    link = request.args.get("link")
 
-        link = request.args.get("link")
+    dropbox_module.store(link, "link")
 
-        dropbox_module.store(link, "link")
+    return render_template('results.html', name="processing")
 
+
+@app.route('/main', methods=["GET", "POST"])
+def processing():
+    if request.method == "POST":
+            
         job = q.enqueue(main)
 
         time.sleep(5)
 
         job_id=job.get_id()
+        print(job_id)
 
-        job = q.fetch_job(job_id)
-        
+        job = Job.fetch(job_id, connection=conn)
+            
         if job.is_finished:
-            print("Job is finished!")
             result = jsonify(result=job.result)
             print(result)
             send_file(path_or_file=result, download_name="summary_report.docx", as_attachment=True)
+            return "Job is finished!" + result
         else:
-            print("Job is not finished yet.")
-
-        return render_template('results.html', name="processing")
-
-
-@app.route('/main', methods=["GET", "POST"])
-def processing():
+            return "Job is not finished yet."
 
     return render_template('results.html', name="results")
 
