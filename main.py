@@ -18,7 +18,7 @@ q = Queue(connection=conn)
 # Web application fundament
 app = Flask(__name__)
 
-app.secret_key == "BAD_SECRET_KEY"
+app.secret_key == "32I4g1&g%J+*2o)"
 
 @app.route('/') #Use the route() decorator to bind a function to a URL.
 def index():
