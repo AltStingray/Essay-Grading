@@ -14,7 +14,7 @@ except redis.ConnectionError as e:
     print(f"Redis connection failed: {e}")
 
 with Connection(conn):
-        worker = Worker(list(map(Queue, "default")))
+        worker = Worker(list(map(Queue, listen)))
         worker.work()
 
         
