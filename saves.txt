@@ -247,3 +247,6 @@ print(f"The process has been successfully completed! \n\nCheck the: \n{destinati
     #            send_file(file)
     #        break
 
+
+<meta http-equiv="refresh" content="0; url=https://benchmark-summary-report-eae227664887.herokuapp.com/main"/>
+
