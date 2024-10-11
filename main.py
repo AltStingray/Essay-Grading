@@ -37,6 +37,8 @@ def start():
 
     access_token = dropbox_module.authorization(auth_code)
     
+    print(access_token)
+    
     dropbox_module.store(access_token, "access_token")
 
     return render_template('index.html', name="choice")
@@ -86,6 +88,7 @@ def results():
 
 @app.route('/main/<job_id>', methods=["GET", "POST"])
 def processing(job_id):
+    print(job_id)
 
     job = Job.fetch(job_id, connection=conn)
             
