@@ -82,10 +82,7 @@ def results():
 
     dropbox_module.store(link, "link")
 
-    print("Okay")
     job = q.enqueue(main, link, access_token) # enque is working
-
-    #time.sleep(5)
 
     job_id=job.get_id() #okay, we're getting id
 
@@ -103,11 +100,10 @@ def processing(job_id):
         result = jsonify(result=job.result)
         print(result)
         send_file(path_or_file=result, download_name="summary_report.docx", as_attachment=True)
-        return "Job is finished!" + result
+
+        return render_template('results.html', name="results")
     else:
         return "Job is not finished yet.", 202
-
-    return render_template('results.html', name="results")
 
     
 @app.route('/about')
@@ -175,11 +171,12 @@ def main(link, access_token):
             {"role": "system", "content": prompt},
             {"role": "user", "content": f'''{transcription}'''}],
         )
-    print(summary_report)
-    print(type(summary_report))
+    
+    summary_report = summary_report.choices[0].message.content #tapping into the content of response
 
     #Saving results
     with open("summary_report.docx", "w") as file:
+
         file.write(summary_report)
     return summary_report
 
