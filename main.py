@@ -73,8 +73,8 @@ def default():
     
     return render_template('index.html', name="link")
 
-@app.route('/results', methods=["GET", "POST"])
-def results():
+@app.route('/processing', methods=["GET", "POST"])
+def processing():
 
     link = request.args.get("link")
 
@@ -84,15 +84,30 @@ def results():
 
     job = q.enqueue(main, link, access_token) # enque is working
 
-    job_id=job.get_id() #okay, we're getting id
+    #job_id=job.get_id() #okay, we're getting id
 
-    session["job_id"] = job_id
+    #session["job_id"] = job_id
 
-    return render_template('results.html', name="processing", job_id=job_id)
+    if job.is_finished:
+        result = job.return_value()
+
+        session["result"] = result
+
+        return redirect("/results")
+    else:
+        return render_template('processing.html')
 
 
-@app.route('/main', methods=["GET", "POST"])
-def processing():
+@app.route('/results', methods=["GET", "POST"])
+def results():
+
+    result = session["result"]
+
+    print(result)
+
+    send_file(path_or_file=result, download_name="summary_report.docx", as_attachment=True)
+
+    return render_template('results.html')
 
     job_id = session["job_id"]
 
@@ -102,10 +117,12 @@ def processing():
             
     if job.is_finished:
         result = jsonify(result=job.result)
+
         print(result)
+
         send_file(path_or_file=result, download_name="summary_report.docx", as_attachment=True)
 
-        return render_template('results.html', name="results")
+        return render_template('results.html')
     else:
         return "Job is not finished yet.", 202
 
