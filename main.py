@@ -20,6 +20,8 @@ app = Flask(__name__)
 
 app.secret_key == b"32I4g1&g%J+*2o)"
 
+app.config['SESSION_TYPE'] = 'redis'
+
 @app.route('/') #Use the route() decorator to bind a function to a URL.
 def index():
     
@@ -39,7 +41,7 @@ def start():
 
     access_token = dropbox_module.authorization(auth_code)
 
-    session["access_token"] = access_token
+    session["access_token", ] = access_token
 
     dropbox_module.store(access_token, "access_token")
 
