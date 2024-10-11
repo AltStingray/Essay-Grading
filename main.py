@@ -74,13 +74,8 @@ def results():
 
     dropbox_module.store(link, "link")
 
-    return render_template('results.html', name="processing")
-
-
-@app.route('/main', methods=["GET", "POST"])
-def processing():
     if request.method == "POST":
-            
+        print("Okay")
         job = q.enqueue(main)
 
         time.sleep(5)
@@ -88,15 +83,21 @@ def processing():
         job_id=job.get_id()
         print(job_id)
 
-        job = Job.fetch(job_id, connection=conn)
+    return render_template('results.html', name="processing")
+
+
+@app.route('/main<job_id>', methods=["GET", "POST"])
+def processing(job_id):
+
+    job = Job.fetch(job_id, connection=conn)
             
-        if job.is_finished:
-            result = jsonify(result=job.result)
-            print(result)
-            send_file(path_or_file=result, download_name="summary_report.docx", as_attachment=True)
-            return "Job is finished!" + result
-        else:
-            return "Job is not finished yet."
+    if job.is_finished:
+        result = jsonify(result=job.result)
+        print(result)
+        send_file(path_or_file=result, download_name="summary_report.docx", as_attachment=True)
+        return "Job is finished!" + result
+    else:
+        return "Job is not finished yet.", 202
 
     return render_template('results.html', name="results")
 
