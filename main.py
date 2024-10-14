@@ -98,15 +98,15 @@ def waiting():
 
     job = Job.fetch(job_id, connection=conn)
 
-    if job.is_finished:
+    while job.is_started:
+        time.sleep(1)
+        return render_template('processing.html')
+    else:
         result = job.return_value()
 
         session["result"] = result
 
         return redirect(url_for("results"))
-    else:
-        time.sleep(1)
-        return render_template('processing.html')
 
 
 @app.route('/results', methods=["GET", "POST"])

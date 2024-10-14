@@ -265,3 +265,15 @@ file.write(result[0])
     uploads = os.path.join(app.root_path, app.config["UPLOAD_FOLDER"])
 
     send_from_directory(uploads, "summary_report.docx")
+
+
+
+ if job.is_finished:
+        result = job.return_value()
+
+        session["result"] = result
+
+        return redirect(url_for("results"))
+    else:
+        time.sleep(1)
+        return render_template('processing.html')
