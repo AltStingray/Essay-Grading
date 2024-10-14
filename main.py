@@ -114,6 +114,10 @@ def results():
 
     result = session["result"]
 
+    file = request.files[result[0]] 
+    filename = "summary_report.docx" #secure_filename(file.filename)
+    file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+
     uploads = os.path.join(app.root_path, app.config["UPLOAD_FOLDER"])
 
     send_from_directory(uploads, "summary_report.docx")
@@ -209,9 +213,8 @@ def main(link, access_token):
     summary_report = summary_report.choices[0].message.content #tapping into the content of response
 
     #Saving results
-    file = request.files[f"{summary_report}"]
-    filename = secure_filename(file.filename)
-    file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+
+    f_list = [summary_report, transcription]
 
     #with open("uploads/summary_report.docx", "w") as file:
     #    #file_path = os.path.join(app.config["UPLOAD_FOLDER"], file)
@@ -222,7 +225,7 @@ def main(link, access_token):
 #
     #    file.write(transcription)
 
-    return 0
+    return f_list
 
 
 # These two lines tell Python to start Flask’s development server when the script is executed from the command line. 
