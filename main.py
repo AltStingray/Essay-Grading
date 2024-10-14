@@ -43,7 +43,7 @@ def start():
 
     session["access_token"] = access_token
 
-    dropbox_module.store(access_token, "access_token")
+    #dropbox_module.store(access_token, "access_token")
 
     return render_template('index.html', name="choice")
 
