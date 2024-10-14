@@ -98,10 +98,12 @@ def waiting():
 
     job = Job.fetch(job_id, connection=conn)
 
-    while job.is_started:
-        time.sleep(1)
+    if job.is_queued or job.is_started:
+
+        #time.sleep(1)
         return render_template('processing.html')
-    else:
+    
+    elif job.is_finished:
         result = job.return_value()
 
         session["result"] = result
