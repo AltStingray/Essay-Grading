@@ -202,17 +202,16 @@ def main(link, access_token):
     summary_report = summary_report.choices[0].message.content #tapping into the content of response
 
     #Saving results
-    f_list = [summary_report, transcription]
 
-    def create_file(f_list):
-        for one in f_list:
-            with open(f"{str(one)}.docx", "w") as file:
+    with open(f"summary_report.docx", "w") as file:
 
-                file.write(one)
+        file.write(summary_report)
 
-    create_file(f_list)
+    with open(f"transcription.docx", "w") as file:
 
-    return f_list
+        file.write(transcription)
+
+    return 0
 
 
 # These two lines tell Python to start Flask’s development server when the script is executed from the command line. 
