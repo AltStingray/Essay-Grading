@@ -250,3 +250,18 @@ print(f"The process has been successfully completed! \n\nCheck the: \n{destinati
 
 <meta http-equiv="refresh" content="0; url=https://benchmark-summary-report-eae227664887.herokuapp.com/main"/>
 
+
+
+
+
+
+file.write(result[0])
+        file = request.files[file] 
+        print(file)
+        filename = secure_filename(file.filename)
+        print(filename)
+        file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+
+    uploads = os.path.join(app.root_path, app.config["UPLOAD_FOLDER"])
+
+    send_from_directory(uploads, "summary_report.docx")
