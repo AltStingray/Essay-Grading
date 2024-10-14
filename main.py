@@ -10,6 +10,7 @@ from flask import Flask, request, render_template, url_for, redirect, send_file,
 from markupsafe import escape
 from moviepy.editor import *
 from openai import OpenAI
+from werkzeug.utils import secure_filename
 
 q = Queue(connection=conn)
 
@@ -117,7 +118,7 @@ def results():
 
     send_from_directory(uploads, "summary_report.docx")
 
-    send_from_directory(uploads, "transcription.docx")
+    #send_from_directory(uploads, "transcription.docx")
 
     return render_template('results.html')
 
@@ -208,15 +209,18 @@ def main(link, access_token):
     summary_report = summary_report.choices[0].message.content #tapping into the content of response
 
     #Saving results
+    file = request.files[f"{summary_report}"]
+    filename = secure_filename(file.filename)
+    file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
 
-    with open("uploads/summary_report.docx", "w") as file:
-        #file_path = os.path.join(app.config["UPLOAD_FOLDER"], file)
-        
-        file.write(summary_report)
-
-    with open("uploads/sranscription.docx", "w") as file:
-
-        file.write(transcription)
+    #with open("uploads/summary_report.docx", "w") as file:
+    #    #file_path = os.path.join(app.config["UPLOAD_FOLDER"], file)
+    #    
+    #    file.write(summary_report)
+#
+    #with open("uploads/sranscription.docx", "w") as file:
+#
+    #    file.write(transcription)
 
     return 0
 
@@ -225,7 +229,7 @@ def main(link, access_token):
 # It’ll be used only when you run the script locally.
 if __name__ == "__main__":
 
-    #os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
     app.run(host="127.0.0.1", port=8080, debug=True)
     
