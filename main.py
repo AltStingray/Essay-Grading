@@ -113,12 +113,13 @@ def waiting():
 def results():
 
     result = session["result"]
-
-    file = request.files[result[0]] 
-    print(file)
-    filename = secure_filename(file.filename)
-    print(filename)
-    file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+    with open("summary_report.docx", "w") as file:
+        file.write(result[0])
+        file = request.files[file] 
+        print(file)
+        filename = secure_filename(file.filename)
+        print(filename)
+        file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
 
     uploads = os.path.join(app.root_path, app.config["UPLOAD_FOLDER"])
 
