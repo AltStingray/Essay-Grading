@@ -109,9 +109,9 @@ def results():
 
     result = session["result"]
 
-    send_file(path_or_file="summary_report.docx", download_name="summary_report.docx", as_attachment=True)
+    send_file(path_or_file="./app/summary_report.docx", download_name="summary_report.docx", as_attachment=True)
 
-    send_file(path_or_file="transcription.docx", download_name="transcription.docx", as_attachment=True)
+    send_file(path_or_file="./app/transcription.docx", download_name="transcription.docx", as_attachment=True)
 
     return render_template('results.html')
 
@@ -203,11 +203,11 @@ def main(link, access_token):
 
     #Saving results
 
-    with open(f"summary_report.docx", "w") as file:
+    with open(f"./app/summary_report.docx", "w") as file:
 
         file.write(summary_report)
 
-    with open(f"transcription.docx", "w") as file:
+    with open(f"./app/transcription.docx", "w") as file:
 
         file.write(transcription)
 
