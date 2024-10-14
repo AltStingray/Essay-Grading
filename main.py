@@ -43,8 +43,6 @@ def start():
 
     session["access_token"] = access_token
 
-    #dropbox_module.store(access_token, "access_token")
-
     return render_template('index.html', name="choice")
 
 
@@ -80,8 +78,6 @@ def processing():
 
     access_token = session.get("access_token")
 
-    #dropbox_module.store(link, "link")
-
     job = q.enqueue(main, link, access_token) # enque is working
 
     job_id=job.get_id() #okay, we're getting id
@@ -99,7 +95,7 @@ def waiting():
 
     if job.is_finished:
         result = job.return_value()
-        print("Whooray! Job is finished!")
+
         session["result"] = result
 
         return redirect(url_for("results"))
@@ -208,13 +204,13 @@ def main(link, access_token):
     #Saving results
     f_list = [summary_report, transcription]
 
-    #def create_file(f_list):
-    #    for one in f_list:
-    #        with open(f"{one}.docx", "w") as file:
-#
-    #            file.write(one)
-#
-    #create_file(f_list)
+    def create_file(f_list):
+        for one in f_list:
+            with open(f"{one}.docx", "w") as file:
+
+                file.write(one)
+
+    create_file(f_list)
 
     return f_list
 

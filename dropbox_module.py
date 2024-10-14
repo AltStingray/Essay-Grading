@@ -5,13 +5,6 @@ CLIENT_ID = "shc5rkn4hixve4j"
 CLIENT_SECRET = "wejv8edxnhyelum"
 redirect_link = f"https://www.dropbox.com/oauth2/authorize?client_id={CLIENT_ID}&redirect_uri=https://benchmark-summary-report-eae227664887.herokuapp.com/start&response_type=code"
 
-#data = {}
-
-#def store(value, access_token_or_link):
-
-    #data[access_token_or_link] = value
-
-
 def authorization(auth_code):
     token_url = "https://api.dropboxapi.com/oauth2/token"
 
@@ -37,10 +30,6 @@ def authorization(auth_code):
 
 
 def download_file(url, access_token):
-
-    #access_token = data["access_token"]
-    
-    #url = data["link"]
 
     dbx = dropbox.Dropbox(access_token, app_key="shc5rkn4hixve4j" , app_secret="wejv8edxnhyelum")
 
