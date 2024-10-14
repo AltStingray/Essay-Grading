@@ -115,7 +115,9 @@ def results():
     result = session["result"]
 
     file = request.files[result[0]] 
-    filename = "summary_report.docx" #secure_filename(file.filename)
+    print(file)
+    filename = secure_filename(file.filename)
+    print(filename)
     file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
 
     uploads = os.path.join(app.root_path, app.config["UPLOAD_FOLDER"])
