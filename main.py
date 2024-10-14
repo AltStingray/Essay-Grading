@@ -6,21 +6,25 @@ import assemblyAI
 from rq import Queue
 from rq.job import Job
 from worker import conn
-from flask import Flask, request, render_template, url_for, redirect, send_file, jsonify, session
+from flask import Flask, request, render_template, url_for, redirect, send_file, send_from_directory, jsonify, session
 from markupsafe import escape
 from moviepy.editor import *
 from openai import OpenAI
-
-username = (os.getenv("userprofile"))[9:]
 
 q = Queue(connection=conn)
 
 # Web application fundament
 app = Flask(__name__)
 
+UPLOAD_FOLDER = "uploads/"
+
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
 app.secret_key = "32I4g1&g%J+*2o)"
 
 app.config['SESSION_TYPE'] = 'redis'
+
+username = (os.getenv("userprofile"))[9:]
 
 @app.route('/') #Use the route() decorator to bind a function to a URL.
 def index():
@@ -109,9 +113,11 @@ def results():
 
     result = session["result"]
 
-    send_file(path_or_file="/summary_report.docx", as_attachment=True)
+    uploads = os.path.join(app.root_path, app.config["UPLOAD_FOLDER"])
 
-    send_file(path_or_file="/transcription.docx", as_attachment=True)
+    send_from_directory(uploads, "summary_report.docx", as_attachment=True)
+
+    send_from_directory(uploads, "transcription.docx", as_attachment=True)
 
     return render_template('results.html')
 
@@ -203,11 +209,11 @@ def main(link, access_token):
 
     #Saving results
 
-    with open(f"summary_report.docx", "w") as file:
+    with open(f"uploads/summary_report.docx", "w") as file:
 
         file.write(summary_report)
 
-    with open(f"transcription.docx", "w") as file:
+    with open(f"uploads/sranscription.docx", "w") as file:
 
         file.write(transcription)
 
@@ -217,5 +223,8 @@ def main(link, access_token):
 # These two lines tell Python to start Flask’s development server when the script is executed from the command line. 
 # It’ll be used only when you run the script locally.
 if __name__ == "__main__":
+
+    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
     app.run(host="127.0.0.1", port=8080, debug=True)
     
