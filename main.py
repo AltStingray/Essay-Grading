@@ -115,7 +115,7 @@ def results():
     result = session["result"]
 
     send_file(path_or_file=f"{result[0]}.docx", download_name="summary_report.docx", as_attachment=True)
-    
+
     send_file(path_or_file=f"{result[1]}.docx", download_name="transcription.docx", as_attachment=True)
 
     return render_template('results.html')
@@ -209,12 +209,13 @@ def main(link, access_token):
     #Saving results
     f_list = [summary_report, transcription]
 
-    def create_file(file_t):
-        with open(f"{file_t}.docx", "w") as file:
-
-            file.write(file_t)
-
-    create_file(f_list)
+    #def create_file(f_list):
+    #    for one in f_list:
+    #        with open(f"{one}.docx", "w") as file:
+#
+    #            file.write(one)
+#
+    #create_file(f_list)
 
     return f_list
 
