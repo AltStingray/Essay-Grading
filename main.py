@@ -113,9 +113,10 @@ def waiting():
 def results():
 
     result = session["result"]
+    print(result)
     with open("summary_report.docx", "w") as file:
         file.write(result[0])
-        send_file(file)
+        send_file(file, mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
     return render_template('results.html')
 
     job_id = session["job_id"]
@@ -184,7 +185,7 @@ def main(link, access_token):
     #os.remove("video.mp3") # find out how to delete the video.mp3
     os.remove("audio.mp3")
 
-    print("Transcription created, working on the summary report...\n")
+    print("Transcription created, working on the summary report...")
 
     #my key: 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
     # NP's: sk-xBdlGJMujfH_NsjBc0K3ym5tTLyEjJN3o-DaMLuYhgT3BlbkFJOvq20KiNWlZLAQN4yn03pECwsNb0b3oGnZ62Dd3WMA
