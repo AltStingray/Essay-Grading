@@ -114,7 +114,7 @@ def results():
 
     result = session["result"]
     print(result)
-    with open("summary_report.docx", "w") as file:
+    with open("summary_report.docx", "wb") as file:
         file.write(result[0])
         send_file(file, mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
     return render_template('results.html')
