@@ -114,7 +114,9 @@ def results():
 
     result = session["result"]
 
-    send_file(path_or_file="summary_report.docx", download_name="summary_report.docx", as_attachment=True)
+    send_file(path_or_file=f"{result[0]}.docx", download_name="summary_report.docx", as_attachment=True)
+    
+    send_file(path_or_file=f"{result[1]}.docx", download_name="transcription.docx", as_attachment=True)
 
     return render_template('results.html')
 
@@ -205,10 +207,16 @@ def main(link, access_token):
     summary_report = summary_report.choices[0].message.content #tapping into the content of response
 
     #Saving results
-    with open("/app/summary_report.docx", "w") as file:
+    f_list = [summary_report, transcription]
 
-        file.write(summary_report)
-    return summary_report
+    def create_file(file_t):
+        with open(f"{file_t}.docx", "w") as file:
+
+            file.write(file_t)
+
+    create_file(f_list)
+
+    return f_list
 
 
 # These two lines tell Python to start Flask’s development server when the script is executed from the command line. 
