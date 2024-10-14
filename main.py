@@ -80,7 +80,7 @@ def processing():
 
     access_token = session.get("access_token")
 
-    dropbox_module.store(link, "link")
+    #dropbox_module.store(link, "link")
 
     job = q.enqueue(main, link, access_token) # enque is working
 
@@ -99,14 +99,13 @@ def waiting():
 
     if job.is_finished:
         result = job.return_value()
-
+        print("Whooray! Job is finished!")
         session["result"] = result
 
         return redirect(url_for("results"))
     else:
         time.sleep(1)
         return render_template('processing.html')
-    #you can try to reload the page every time waiting for it to complete, but find a way to do it so the main function won't be executed again
 
 
 @app.route('/results', methods=["GET", "POST"])

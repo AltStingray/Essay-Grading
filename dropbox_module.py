@@ -5,11 +5,11 @@ CLIENT_ID = "shc5rkn4hixve4j"
 CLIENT_SECRET = "wejv8edxnhyelum"
 redirect_link = f"https://www.dropbox.com/oauth2/authorize?client_id={CLIENT_ID}&redirect_uri=https://benchmark-summary-report-eae227664887.herokuapp.com/start&response_type=code"
 
-data = {}
+#data = {}
 
-def store(value, access_token_or_link):
+#def store(value, access_token_or_link):
 
-    data[access_token_or_link] = value
+    #data[access_token_or_link] = value
 
 
 def authorization(auth_code):
