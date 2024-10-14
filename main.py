@@ -89,25 +89,27 @@ def processing():
 
     session["job_id"] = job_id
 
-    return redirect(url_for("waiting"))
-
-@app.route('/waiting', methods=["GET", "POST"])
-def waiting():
-
-    job_id = session["job_id"]
-
-    job = Job.fetch(job_id, connection=conn)
-
-    session["job"] = job
-
     return redirect(url_for("results"))
+
+#@app.route('/waiting', methods=["GET", "POST"])
+#def waiting():
+#
+#    job_id = session["job_id"]
+#
+#    job = Job.fetch(job_id, connection=conn)
+#
+#    session["job"] = job
+#
+#    return redirect(url_for("results"))
 
 
 @app.route('/results', methods=["GET", "POST"])
 def results():
     print("OKAY MATE IT's Directing to results")
 
-    job = session["job"]
+    job_id = session["job_id"]
+
+    job = Job.fetch(job_id, connection=conn)
 
     if job.is_finished:
         result = job.return_value()
