@@ -111,7 +111,7 @@ def waiting():
 
 @app.route('/results', methods=["GET", "POST"])
 def results():
-
+    print("OKAY MATE IT's Directing to results")
     result = session["result"]
     print(result)
     with open("summary_report.docx", "wb") as file:
