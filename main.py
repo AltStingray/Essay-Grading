@@ -16,7 +16,7 @@ q = Queue(connection=conn)
 # Web application fundament
 app = Flask(__name__)
 
-UPLOAD_FOLDER = "uploads/"
+UPLOAD_FOLDER = "uploads"
 
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
@@ -115,9 +115,9 @@ def results():
 
     uploads = os.path.join(app.root_path, app.config["UPLOAD_FOLDER"])
 
-    send_from_directory(uploads, "summary_report.docx", as_attachment=True)
+    send_from_directory(uploads, "summary_report.docx")
 
-    send_from_directory(uploads, "transcription.docx", as_attachment=True)
+    send_from_directory(uploads, "transcription.docx")
 
     return render_template('results.html')
 
@@ -209,11 +209,12 @@ def main(link, access_token):
 
     #Saving results
 
-    with open(f"uploads/summary_report.docx", "w") as file:
-
+    with open("uploads/summary_report.docx", "w") as file:
+        #file_path = os.path.join(app.config["UPLOAD_FOLDER"], file)
+        
         file.write(summary_report)
 
-    with open(f"uploads/sranscription.docx", "w") as file:
+    with open("uploads/sranscription.docx", "w") as file:
 
         file.write(transcription)
 
@@ -224,7 +225,7 @@ def main(link, access_token):
 # It’ll be used only when you run the script locally.
 if __name__ == "__main__":
 
-    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+    #os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
     app.run(host="127.0.0.1", port=8080, debug=True)
     
