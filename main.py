@@ -98,28 +98,27 @@ def waiting():
 
     job = Job.fetch(job_id, connection=conn)
 
-    if job.is_queued or job.is_started:
+    session["job"] = job
 
-        #time.sleep(1)
-        return render_template('processing.html')
-    
-    elif job.is_finished:
-        result = job.return_value()
-
-        session["result"] = result
-
-        return redirect(url_for("results"))
+    return redirect(url_for("results"))
 
 
 @app.route('/results', methods=["GET", "POST"])
 def results():
     print("OKAY MATE IT's Directing to results")
-    result = session["result"]
-    print(result)
-    with open("summary_report.docx", "wb") as file:
-        file.write(result[0])
-        send_file(file, mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-    return render_template('results.html')
+
+    job = session["job"]
+
+    if job.is_finished:
+        result = job.return_value()
+        print(result)
+        with open("summary_report.docx", "wb") as file:
+            file.write(result[0])
+            send_file(file, mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+        return render_template('results.html')
+    else:
+        time.sleep(1)
+        return render_template('processing.html')
 
     job_id = session["job_id"]
 

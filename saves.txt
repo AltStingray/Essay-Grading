@@ -277,3 +277,7 @@ file.write(result[0])
     else:
         time.sleep(1)
         return render_template('processing.html')
+
+
+
+<meta http-equiv="refresh" content="0; url=https://benchmark-summary-report-eae227664887.herokuapp.com/waiting"/>
