@@ -1,5 +1,11 @@
 {% extends "layout.html" %}
 {% block content %}
     <h1>Results</h1>
-    <p1>Operation completed successfully! All the files have been downloaded to your local storage "Downloads" directory!</p1>
+    <p1>Operation completed successfully! Please select options to download the files:</p1>
+    <form action="/download_summary" method="get">
+        <input type="button" value="Summary report">
+    </form>
+    <form action="/download_transcription" method="get">
+        <input type="button" value="Summary report">
+    </form>
 {% endblock content %}

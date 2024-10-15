@@ -113,34 +113,36 @@ def results():
 
     if job.is_finished:
         result = job.return_value()
-        print(type(result[0]))
-        file_object = io.BytesIO()
-        file_object.write(result[0].encode('utf-8'))
-        file_object.seek(0)
-        return send_file(file_object, as_attachment=True, download_name="summary_report.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+
+        session["result"] = result
+
         return render_template('results.html')
     else:
         time.sleep(1)
         return render_template('processing.html')
 
-    job_id = session["job_id"]
+@app.route('/download_summary', method=["GET"])
+def download_summary():
 
-    print(job_id)
+    result = session["result"]
 
-    job = Job.fetch(job_id, connection=conn)
-            
-    if job.is_finished:
-        result = jsonify(result=job.result)
+    file_object = io.BytesIO()
+    file_object.write(result[0].encode('utf-8'))
+    file_object.seek(0)
 
-        print(result)
+    return send_file(file_object, as_attachment=True, download_name="summary_report.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
 
-        send_file(path_or_file=result, download_name="summary_report.docx", as_attachment=True)
+@app.route('/download_transcription', method=["GET"])
+def download_transcription():
 
-        return render_template('results.html')
-    else:
-        return "Job is not finished yet.", 202
+    result = session["result"]
 
-    
+    file_object = io.BytesIO()
+    file_object.write(result[1].encode('utf-8'))
+    file_object.seek(0)
+
+    return send_file(file_object, as_attachment=True, download_name="transcription.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+
 @app.route('/about')
 def about():
 
