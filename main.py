@@ -18,10 +18,6 @@ q = Queue(connection=conn)
 # Web application fundament
 app = Flask(__name__)
 
-UPLOAD_FOLDER = "uploads"
-
-app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
-
 app.secret_key = "32I4g1&g%J+*2o)"
 
 app.config['SESSION_TYPE'] = 'redis'
@@ -121,7 +117,7 @@ def results():
         time.sleep(1)
         return render_template('processing.html')
 
-@app.route('/download_summary', method=["GET"])
+@app.route('/download_summary', methods=["GET"])
 def download_summary():
 
     result = session["result"]
@@ -132,7 +128,7 @@ def download_summary():
 
     return send_file(file_object, as_attachment=True, download_name="summary_report.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
 
-@app.route('/download_transcription', method=["GET"])
+@app.route('/download_transcription', methods=["GET"])
 def download_transcription():
 
     result = session["result"]
@@ -230,8 +226,6 @@ def main(link, access_token):
 # These two lines tell Python to start Flask’s development server when the script is executed from the command line. 
 # It’ll be used only when you run the script locally.
 if __name__ == "__main__":
-
-    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
     app.run(host="127.0.0.1", port=8080, debug=True)
     
