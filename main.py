@@ -1,5 +1,6 @@
 # coding: cp1252
 import os
+import io
 import time
 import dropbox_module
 import assemblyAI
@@ -113,10 +114,12 @@ def results():
 
     if job.is_finished:
         result = job.return_value()
-        print(result)
-        with open("summary_report.docx", "wb") as file:
-            file.write(result[0])
-            send_file(file, mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+
+        file_object = io.BytesIO()
+        file_object.write(result)
+        file_object.seek(0)
+
+        send_file(file_object, download_name="summary_report.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
         return render_template('results.html')
     else:
         time.sleep(1)
