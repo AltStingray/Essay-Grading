@@ -116,9 +116,10 @@ def results():
 
         file_object = io.BytesIO()
         file_object.write(result[0].encode('utf-8'))
+        print(file_object)
         file_object.seek(0)
-
-        send_file(file_object, download_name="summary_report.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+        print(file_object)
+        send_file(file_object, as_attachment=True, download_name="summary_report.txt", mimetype="text/plain")
         return render_template('results.html')
     else:
         time.sleep(1)
