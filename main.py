@@ -117,27 +117,27 @@ def results():
         time.sleep(1)
         return render_template('processing.html')
 
-@app.route('/download_summary', methods=["GET"])
+@app.route('/download', methods=["GET"])
 def download_summary():
 
     result = session["result"]
 
-    file_object = io.BytesIO()
-    file_object.write(result[0].encode('utf-8'))
-    file_object.seek(0)
+    pick_one = request.args.get("pick_one")
 
-    return send_file(file_object, as_attachment=True, download_name="summary_report.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+    if pick_one == "Summary report":
 
-@app.route('/download_transcription', methods=["GET"])
-def download_transcription():
+        file_object = io.BytesIO()
+        file_object.write(result[0].encode('utf-8'))
+        file_object.seek(0)
 
-    result = session["result"]
+        return send_file(file_object, as_attachment=True, download_name="summary_report.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+    else:
+        file_object = io.BytesIO()
+        file_object.write(result[1].encode('utf-8'))
+        file_object.seek(0)
 
-    file_object = io.BytesIO()
-    file_object.write(result[1].encode('utf-8'))
-    file_object.seek(0)
+        return send_file(file_object, as_attachment=True, download_name="transcription.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
 
-    return send_file(file_object, as_attachment=True, download_name="transcription.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
 
 @app.route('/about')
 def about():
