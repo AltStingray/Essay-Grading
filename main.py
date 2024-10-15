@@ -106,7 +106,6 @@ def processing():
 
 @app.route('/results', methods=["GET", "POST"])
 def results():
-    print("OKAY MATE IT's Directing to results")
 
     job_id = session["job_id"]
 
@@ -116,7 +115,7 @@ def results():
         result = job.return_value()
 
         file_object = io.BytesIO()
-        file_object.write(result.encode('utf-8'))
+        file_object.write(result[0].encode('utf-8'))
         file_object.seek(0)
 
         send_file(file_object, download_name="summary_report.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
