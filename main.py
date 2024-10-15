@@ -208,17 +208,7 @@ def main(link, access_token):
     summary_report = summary_report.choices[0].message.content #tapping into the content of response
 
     #Saving results
-
     f_list = [summary_report, transcription]
-
-    #with open("uploads/summary_report.docx", "w") as file:
-    #    #file_path = os.path.join(app.config["UPLOAD_FOLDER"], file)
-    #    
-    #    file.write(summary_report)
-#
-    #with open("uploads/sranscription.docx", "w") as file:
-#
-    #    file.write(transcription)
 
     return f_list
 
