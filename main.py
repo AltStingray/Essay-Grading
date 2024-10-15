@@ -113,13 +113,11 @@ def results():
 
     if job.is_finished:
         result = job.return_value()
-
+        print(type(result[0]))
         file_object = io.BytesIO()
         file_object.write(result[0].encode('utf-8'))
-        print(file_object)
         file_object.seek(0)
-        print(file_object)
-        send_file(file_object, as_attachment=True, download_name="summary_report.txt", mimetype="text/plain")
+        return send_file(file_object, as_attachment=True, download_name="summary_report.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
         return render_template('results.html')
     else:
         time.sleep(1)
