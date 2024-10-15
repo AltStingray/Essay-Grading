@@ -116,7 +116,7 @@ def results():
         result = job.return_value()
 
         file_object = io.BytesIO()
-        file_object.write(result)
+        file_object.write(result.encode('utf-8'))
         file_object.seek(0)
 
         send_file(file_object, download_name="summary_report.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
