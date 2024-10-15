@@ -21,8 +21,8 @@ app = Flask(__name__)
 app.secret_key = "32I4g1&g%J+*2o)"
 
 app.config['SESSION_TYPE'] = 'redis'
-
-username = (os.getenv("userprofile"))[9:]
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_USE_SIGNER"] = True
 
 @app.route('/') #Use the route() decorator to bind a function to a URL.
 def index():
@@ -88,17 +88,6 @@ def processing():
 
     return redirect(url_for("results"))
 
-#@app.route('/waiting', methods=["GET", "POST"])
-#def waiting():
-#
-#    job_id = session["job_id"]
-#
-#    job = Job.fetch(job_id, connection=conn)
-#
-#    session["job"] = job
-#
-#    return redirect(url_for("results"))
-
 
 @app.route('/results', methods=["GET", "POST"])
 def results():
@@ -108,9 +97,6 @@ def results():
     job = Job.fetch(job_id, connection=conn)
 
     if job.is_finished:
-        result = job.return_value()
-
-        session["result"] = result
 
         return render_template('results.html')
     else:
@@ -120,7 +106,11 @@ def results():
 @app.route('/download', methods=["GET"])
 def download_summary():
 
-    result = session["result"]
+    job_id = session["job_id"]
+
+    job = Job.fetch(job_id, connection=conn)
+
+    result = job.return_value()
 
     pick_one = request.args.get("pick_one")
 
