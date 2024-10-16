@@ -83,12 +83,8 @@ def processing():
     try:
         user_prompt = session["user_prompt"]
     except: KeyError
-
-    if user_prompt:
-        pass
-    else:
-        session.pop("user_prompt")
-        
+    
+    session.pop("user_prompt")
     job = q.enqueue(main, link, access_token, user_prompt) # enque is working
 
     job_id=job.get_id() #okay, we're getting id
