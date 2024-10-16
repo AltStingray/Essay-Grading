@@ -68,6 +68,8 @@ def own():
 def default():
 
     prompt = request.args.get("prompt")
+    
+    session.pop["user_prompt"]
 
     session["user_prompt"] = prompt
     
@@ -75,8 +77,6 @@ def default():
 
 @app.route('/processing', methods=["GET", "POST"])
 def processing():
-    
-    session.pop["user_prompt"]
 
     link = request.args.get("link")
 
