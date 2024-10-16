@@ -66,19 +66,27 @@ def own():
 
 @app.route('/default')
 def default():
+
+    prompt = request.args.get("prompt")
+
+    session["prompt"] = prompt
     
     return render_template('index.html', name="link")
 
 @app.route('/processing', methods=["GET", "POST"])
 def processing():
-
-    prompt = request.args.get("prompt")
     
     link = request.args.get("link")
 
     access_token = session.get("access_token")
+    
+    try:
+        prompt = session["prompt"]
+    except: KeyError
 
     job = q.enqueue(main, link, access_token, prompt) # enque is working
+
+    session.pop("prompt", None)
 
     job_id=job.get_id() #okay, we're getting id
 
