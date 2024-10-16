@@ -84,10 +84,13 @@ def processing():
         prompt = session["prompt"]
     except: KeyError
 
-    if prompt != None:
-        pass
-    else:
-        prompt = ""
+    try:
+        if prompt != None:
+            pass
+        else:
+            prompt = ""
+    except: UnboundLocalError
+    
     job = q.enqueue(main, link, access_token, prompt) # enque is working
 
     session.pop("prompt", None)
