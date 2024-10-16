@@ -24,7 +24,7 @@ app.config['SESSION_TYPE'] = 'redis'
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_USE_SIGNER"] = True
 
-session.pop("user_prompt")
+session.clear()
 
 @app.route('/') #Use the route() decorator to bind a function to a URL.
 def index():
