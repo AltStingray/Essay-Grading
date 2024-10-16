@@ -85,7 +85,7 @@ def processing():
         if prompt:
             pass
         else:
-            prompt == ""
+            prompt = ""
     except: KeyError
 
     job = q.enqueue(main, link, access_token, prompt) # enque is working
