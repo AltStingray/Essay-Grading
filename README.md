@@ -1,6 +1,6 @@
 This program web application is developed using Flask and Python programming language.
 
-The program contains the following API functionality: Flask, Dropbox, MoviePy, AssemblyAI, OpenAI, requests, MarkupSafe .
+The program contains the following API functionality: Flask, Dropbox, MoviePy, AssemblyAI, OpenAI, requests, MarkupSafe, Gunicorn, RQ, Redis.
 
 1.Flask - The main web framework used to connect backend logic and frontend HTML+CSS of the applicaton.
 
