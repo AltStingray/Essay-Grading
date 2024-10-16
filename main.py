@@ -24,6 +24,8 @@ app.config['SESSION_TYPE'] = 'redis'
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_USE_SIGNER"] = True
 
+session.pop("user_prompt")
+
 @app.route('/') #Use the route() decorator to bind a function to a URL.
 def index():
     
@@ -68,8 +70,6 @@ def own():
 def default():
 
     prompt = request.args.get("prompt")
-
-    session.pop("user_prompt")
 
     session["user_prompt"] = prompt
     
