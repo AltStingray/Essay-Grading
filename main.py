@@ -68,6 +68,7 @@ def own():
 def default():
 
     prompt = request.args.get("prompt")
+    
     session["user_prompt"] = prompt
     
     return render_template('index.html', name="link")
@@ -79,7 +80,9 @@ def processing():
 
     access_token = session.get("access_token")
 
-    job = q.enqueue(main, link, access_token) # enque is working
+    user_prompt = session["user_prompt"]
+
+    job = q.enqueue(main, link, access_token, user_prompt) # enque is working
 
     job_id=job.get_id() #okay, we're getting id
 
@@ -158,7 +161,7 @@ def register():
 
     return render_template('register.html')
 
-def main(link, access_token):
+def main(link, access_token, user_prompt):
 
     #Downloading the video
     downloaded_video = (dropbox_module.download_file(link, access_token))
@@ -181,7 +184,7 @@ def main(link, access_token):
     #my key: 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
     # NP's: sk-xBdlGJMujfH_NsjBc0K3ym5tTLyEjJN3o-DaMLuYhgT3BlbkFJOvq20KiNWlZLAQN4yn03pECwsNb0b3oGnZ62Dd3WMA
     client = OpenAI(api_key="sk-xBdlGJMujfH_NsjBc0K3ym5tTLyEjJN3o-DaMLuYhgT3BlbkFJOvq20KiNWlZLAQN4yn03pECwsNb0b3oGnZ62Dd3WMA")
-    user_prompt = session["user_prompt"]
+
     if len(user_prompt) > 0:
         prompt = user_prompt
     else:
