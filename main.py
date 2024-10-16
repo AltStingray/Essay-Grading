@@ -80,17 +80,9 @@ def processing():
 
     access_token = session.get("access_token")
     
-    try:
-        prompt = session["prompt"]
-        if prompt != None and len(prompt) > 0:
-            pass
-        else:
-            prompt = ""
-    except: KeyError, UnboundLocalError
+    prompt = session.pop("prompt", None)
 
     job = q.enqueue(main, link, access_token, prompt) # enque is working
-
-    session.pop("prompt", None)
 
     job_id=job.get_id() #okay, we're getting id
 
