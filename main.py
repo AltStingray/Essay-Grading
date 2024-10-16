@@ -68,7 +68,7 @@ def own():
 def default():
 
     prompt = request.args.get("prompt")
-    
+
     session["user_prompt"] = prompt
     
     return render_template('index.html', name="link")
@@ -80,7 +80,9 @@ def processing():
 
     access_token = session.get("access_token")
 
-    user_prompt = session["user_prompt"]
+    try:
+        user_prompt = session["user_prompt"]
+    except: KeyError
 
     job = q.enqueue(main, link, access_token, user_prompt) # enque is working
 
