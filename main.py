@@ -68,8 +68,8 @@ def own():
 def default():
 
     prompt = request.args.get("prompt")
-    
-    session.pop["user_prompt"]
+
+    session.pop("user_prompt")
 
     session["user_prompt"] = prompt
     
