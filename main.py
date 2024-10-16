@@ -82,13 +82,12 @@ def processing():
     
     try:
         prompt = session["prompt"]
+        if prompt:
+            pass
+        else:
+            prompt == ""
     except: KeyError
 
-    if prompt:
-        pass
-    else:
-        prompt == ""
-        
     job = q.enqueue(main, link, access_token, prompt) # enque is working
 
     session.pop("prompt", None)
