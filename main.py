@@ -116,20 +116,31 @@ def download_summary():
 
     pick_one = request.args.get("pick_one")
 
-    if pick_one == "Summary report":
+    if pick_one == "Summary report.docx":
 
         file_object = io.BytesIO()
         file_object.write(result[0].encode('utf-8'))
         file_object.seek(0)
 
         return send_file(file_object, as_attachment=True, download_name="summary_report.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-    else:
+    elif pick_one == "Transcription.docx":
         file_object = io.BytesIO()
         file_object.write(result[1].encode('utf-8'))
         file_object.seek(0)
 
         return send_file(file_object, as_attachment=True, download_name="transcription.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+    elif pick_one == "Summary report.odt":
+        file_object = io.BytesIO()
+        file_object.write(result[0].encode('utf-8'))
+        file_object.seek(0)
 
+        return send_file(file_object, as_attachment=True, download_name="summary_report.odt", mimetype="application/vnd.oasis.opendocument.text")
+    else:
+        file_object = io.BytesIO()
+        file_object.write(result[1].encode('utf-8'))
+        file_object.seek(0)
+
+        return send_file(file_object, as_attachment=True, download_name="transcription.odt", mimetype="application/vnd.oasis.opendocument.text")
 
 @app.route('/about')
 def about():
