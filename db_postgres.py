@@ -5,7 +5,7 @@ import os
 DATABASE = os.environ.get("DATABASE_URL")
 
 # Establish connection with database
-db_conn = psycopg2.connect(host=DATABASE)
+db_conn = psycopg2.connect(DATABASE)
 
 # Create cursor to execute queries
 cursor = db_conn.cursor()
