@@ -4,13 +4,15 @@ import os
 # Get environmental variable URL from Heroku
 DATABASE = os.environ.get("DATABASE_URL")
 
-# Establish connection with database
-db_conn = psycopg2.connect(DATABASE)
-
-# Create cursor to execute queries
-cursor = db_conn.cursor()
 
 def db(command):
+
+    # Establish connection with database
+    db_conn = psycopg2.connect(DATABASE)
+
+    # Create cursor to execute queries
+    cursor = db_conn.cursor()
+
     # Creating a PostgreSQL table to store the data in
     if command == "create":
         cursor.execute("""CREATE TABLE IF NOT EXISTS Log(
@@ -40,6 +42,10 @@ def db(command):
 
 def db_store(summary_report, transcription):
 
+    db_conn = psycopg2.connect(DATABASE)
+
+    cursor = db_conn.cursor()
+
     def create_file(text, name):
         with open(name, "w") as file:
             file.write(text)
@@ -55,7 +61,13 @@ def db_store(summary_report, transcription):
     cursor.close()
     db_conn.close()
 
+
 def db_retrieve():
+
+    db_conn = psycopg2.connect(DATABASE)
+
+    cursor = db_conn.cursor()
+
     #SELECT * FROM Log WHERE id = {id}
     cursor.execute(f'SELECT * FROM Log;')
 

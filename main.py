@@ -125,13 +125,13 @@ def download():
 
     result = job.return_value()
 
+    db_store(result[0], result[1])
+
     summary_report = retrieve(result, 0)
     transcription = retrieve(result, 1)
 
-    db_store(result[0], result[1])
-
     pick_one = request.args.get("pick_one")
-    
+
     if pick_one == "Summary report":
         return send_file(summary_report, as_attachment=True, download_name="summary_report.odt", mimetype="application/vnd.oasis.opendocument.text")
     else:
