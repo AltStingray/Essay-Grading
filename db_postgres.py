@@ -12,7 +12,7 @@ cursor = db_conn.cursor()
 
 def create_db():
     # Creating a PostgreSQL table to store the data in
-    cursor.execute("""CREATE TABLE Log(
+    cursor.execute("""CREATE TABLE IF NOT EXISTS Log(
                 id serial primary key,
                 summary_report VARCHAR(10000) NOT NULL,
                 transcription VARCHAR(10000) NOT NULL
