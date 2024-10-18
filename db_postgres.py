@@ -15,8 +15,8 @@ def create_db():
     cursor.execute("""CREATE TABLE Log(
                 id serial primary key,
                 summary_report VARCHAR(10000) NOT NULL,
-                transcription VARCHAR(10000) NOT NULL,
-                );""")
+                transcription VARCHAR(10000) NOT NULL
+                    )""")
         
     db_conn.commit() # Commiting to make changes persistent 
 
