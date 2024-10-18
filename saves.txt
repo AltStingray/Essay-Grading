@@ -281,3 +281,9 @@ file.write(result[0])
 
 
 <meta http-equiv="refresh" content="0; url=https://benchmark-summary-report-eae227664887.herokuapp.com/waiting"/>
+
+
+
+
+<a href="file:"{sf}>Summary Report</a>
+        <a href="file:"{tf}>Transcription</a>

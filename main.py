@@ -7,18 +7,20 @@ import assemblyAI
 from rq import Queue
 from rq.job import Job
 from worker import conn
-from flask import Flask, request, render_template, url_for, redirect, send_file, send_from_directory, jsonify, session
+from flask import Flask, request, render_template, url_for, redirect, send_file, session
 from markupsafe import escape
 from moviepy.editor import *
 from openai import OpenAI
-from werkzeug.utils import secure_filename
+from db_postgres import *
 
 q = Queue(connection=conn)
 
 # Web application fundament
 app = Flask(__name__)
 
-app.secret_key = "32I4g1&g%J+*2o)"
+create_db()
+
+app.secret_key = os.environ.get("FLASK_SESSION_SECRET") # "32I4g1&g%J+*2o)"
 
 app.config['SESSION_TYPE'] = 'redis'
 app.config["SESSION_PERMANENT"] = False
@@ -64,6 +66,7 @@ def own():
     
     return render_template('index.html', name="prompt")
 
+
 @app.route('/default')
 def default():
 
@@ -73,6 +76,7 @@ def default():
     
     return render_template('index.html', name="link")
 
+
 @app.route('/processing', methods=["GET", "POST"])
 def processing():
     
@@ -80,11 +84,11 @@ def processing():
 
     access_token = session.get("access_token")
     
-    prompt = session.pop("prompt", None)
+    prompt = session.pop("prompt", None) # because of the pop() this line won't trigger TypeError. It deletes the value in a session and returns it. Specified None here means that the value of "prompt" key doesn't matter. If the value is None or Str - doesn't matter.
 
-    job = q.enqueue(main, link, access_token, prompt) # enque is working
+    job = q.enqueue(main, link, access_token, prompt) # enque main function to execute in the background
 
-    job_id=job.get_id() #okay, we're getting id
+    job_id=job.get_id() # get id of the job that in process 
 
     session["job_id"] = job_id
 
@@ -105,8 +109,17 @@ def results():
         time.sleep(1)
         return render_template('processing.html')
 
+
 @app.route('/download', methods=["GET"])
-def download_summary():
+def download():
+
+    def retrieve(result, n):
+
+        file_object = io.BytesIO()
+        file_object.write(result[n].encode('utf-8'))
+        file_object.seek(0)
+
+        return file_object
 
     job_id = session["job_id"]
 
@@ -114,53 +127,31 @@ def download_summary():
 
     result = job.return_value()
 
+    summary_report = retrieve(result, 0)
+    transcription = retrieve(result, 1)
+
+    db_store(summary_report, transcription)
+
     pick_one = request.args.get("pick_one")
-
-    if pick_one == "Summary report.docx":
-
-        file_object = io.BytesIO()
-        file_object.write(result[0].encode('utf-8'))
-        file_object.seek(0)
-
-        return send_file(file_object, as_attachment=True, download_name="summary_report.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-    elif pick_one == "Transcription.docx":
-        file_object = io.BytesIO()
-        file_object.write(result[1].encode('utf-8'))
-        file_object.seek(0)
-
-        return send_file(file_object, as_attachment=True, download_name="transcription.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-    elif pick_one == "Summary report.odt":
-        file_object = io.BytesIO()
-        file_object.write(result[0].encode('utf-8'))
-        file_object.seek(0)
-
-        return send_file(file_object, as_attachment=True, download_name="summary_report.odt", mimetype="application/vnd.oasis.opendocument.text")
+    
+    if pick_one == "Summary report":
+        return send_file(summary_report, as_attachment=True, download_name="summary_report.odt", mimetype="application/vnd.oasis.opendocument.text")
     else:
-        file_object = io.BytesIO()
-        file_object.write(result[1].encode('utf-8'))
-        file_object.seek(0)
+        return send_file(transcription, as_attachment=True, download_name="transcription.odt", mimetype="application/vnd.oasis.opendocument.text")
 
-        return send_file(file_object, as_attachment=True, download_name="transcription.odt", mimetype="application/vnd.oasis.opendocument.text")
+
+@app.route('/history')
+def history():
+
+    logs = db_retrieve()
+
+    return render_template("history.html", logs=logs)
+
 
 @app.route('/about')
 def about():
 
     return render_template('about.html')
-
-@app.route("/teacher's")
-def teacher():
-
-    return render_template("teacher's.html")
-
-@app.route("/candidate's")
-def candidate():
-
-    return render_template("candidate's.html")
-
-@app.route('/history')
-def history():
-
-    return render_template("history.html")
 
 @app.route('/login')
 def login():
@@ -171,6 +162,7 @@ def login():
 def register():
 
     return render_template('register.html')
+
 
 def main(link, access_token, user_prompt):
 
@@ -194,7 +186,7 @@ def main(link, access_token, user_prompt):
 
     #my key: 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
     # NP's: sk-xBdlGJMujfH_NsjBc0K3ym5tTLyEjJN3o-DaMLuYhgT3BlbkFJOvq20KiNWlZLAQN4yn03pECwsNb0b3oGnZ62Dd3WMA
-    client = OpenAI(api_key="sk-xBdlGJMujfH_NsjBc0K3ym5tTLyEjJN3o-DaMLuYhgT3BlbkFJOvq20KiNWlZLAQN4yn03pECwsNb0b3oGnZ62Dd3WMA")
+    client = OpenAI(api_key="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")
 
     if user_prompt != None:
         prompt = user_prompt
