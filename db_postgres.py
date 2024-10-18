@@ -13,11 +13,11 @@ cursor = db_conn.cursor()
 def create_db():
     # Creating a PostgreSQL table to store the data in
     cursor.execute("""CREATE TABLE Log(
-                id INT NOT NULL AUTO_INCREMENT,
+                id serial primary key,
                 summary_report VARCHAR(10000) NOT NULL,
                 transcription VARCHAR(10000) NOT NULL,
-                PRIMARY KEY (id);
-                )""")
+                PRIMARY KEY (id)
+                );""")
         
     db_conn.commit() # Commiting to make changes persistent 
 
