@@ -128,7 +128,7 @@ def download():
     summary_report = retrieve(result, 0)
     transcription = retrieve(result, 1)
 
-    db_store(summary_report, transcription)
+    db_store(result[0], result[1])
 
     pick_one = request.args.get("pick_one")
     
