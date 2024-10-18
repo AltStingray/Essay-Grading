@@ -18,8 +18,6 @@ q = Queue(connection=conn)
 # Web application fundament
 app = Flask(__name__)
 
-create_db()
-
 app.secret_key = os.environ.get("FLASK_SESSION_SECRET") # "32I4g1&g%J+*2o)"
 
 app.config['SESSION_TYPE'] = 'redis'
@@ -211,6 +209,8 @@ def main(link, access_token, user_prompt):
 # These two lines tell Python to start Flask’s development server when the script is executed from the command line. 
 # It’ll be used only when you run the script locally.
 if __name__ == "__main__":
+
+    db() #can be used to create postgres table only for the first time; to make update to the existing table or to delete it, nothing will happen if None specified
 
     app.run(host="127.0.0.1", port=8080, debug=True)
     

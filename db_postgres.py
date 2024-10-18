@@ -10,19 +10,32 @@ db_conn = psycopg2.connect(DATABASE)
 # Create cursor to execute queries
 cursor = db_conn.cursor()
 
-def create_db():
+def db(command):
     # Creating a PostgreSQL table to store the data in
-    cursor.execute("""CREATE TABLE IF NOT EXISTS Log(
-                id serial primary key,
-                summary_report VARCHAR(10000) NOT NULL,
-                transcription VARCHAR(10000) NOT NULL
-                    )""")
-        
-    db_conn.commit() # Commiting to make changes persistent 
+    if command == "create":
+        cursor.execute("""CREATE TABLE IF NOT EXISTS Log(
+                    id serial primary key,
+                    summary_report VARCHAR(10000) NOT NULL,
+                    transcription VARCHAR(10000) NOT NULL
+                        )""")
+            
+        db_conn.commit() # Commiting to make changes persistent 
 
-    cursor.close()
-    db_conn.close()
-    print("DB created successfully!")
+        cursor.close()
+        db_conn.close()
+        print("DB created successfully!")
+
+    elif command == "update":
+        #update table
+        pass
+
+    elif command == "delete":
+        #delete table
+        pass
+
+    else:
+        pass
+
 
 
 def db_store(summary_report, transcription):
