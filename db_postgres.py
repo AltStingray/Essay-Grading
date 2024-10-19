@@ -48,7 +48,7 @@ def db_store(summary_report, transcription):
 
     def create_file(text, name):
         with open(name, "wb") as file:
-            file.write(text)
+            file.write(text.encode('utf-8'))
         return file
     
     summary_report_file = create_file(summary_report, "summary_report.odt")
