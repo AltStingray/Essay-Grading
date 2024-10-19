@@ -17,8 +17,8 @@ def db(command):
     if command == "create":
         cursor.execute("""CREATE TABLE IF NOT EXISTS Log(
                     id serial primary key,
-                    summary_report VARCHAR(10000) NOT NULL,
-                    transcription VARCHAR(10000) NOT NULL
+                    summary_report bytea NOT NULL,
+                    transcription bytea NOT NULL
                         )""")
             
         db_conn.commit() # Commiting to make changes persistent 
