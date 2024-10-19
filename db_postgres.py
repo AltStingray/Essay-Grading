@@ -47,7 +47,7 @@ def db_store(summary_report, transcription):
     cursor = db_conn.cursor()
 
     def create_file(text, name):
-        with open(name, "w") as file:
+        with open(name, "wb") as file:
             file.write(text)
         return file
     

@@ -125,10 +125,10 @@ def download():
 
     result = job.return_value()
 
+    db_store(result[0], result[1])
+
     summary_report = retrieve(result, 0)
     transcription = retrieve(result, 1)
-
-    db_store(summary_report, transcription)
 
     pick_one = request.args.get("pick_one")
 
