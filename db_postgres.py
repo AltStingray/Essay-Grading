@@ -16,9 +16,9 @@ def db(command):
     # Creating a PostgreSQL table to store the data in
     if command == "create":
         cursor.execute("""CREATE TABLE IF NOT EXISTS Log(
-                    id serial primary key,
-                    summary_report bytea NOT NULL,
-                    transcription bytea NOT NULL
+                    id SERIAL PRIMARY KEY,
+                    summary BYTEA NOT NULL,
+                    transcription BYTEA NOT NULL,
                         )""")
             
         db_conn.commit() # Commiting to make changes persistent 
@@ -46,20 +46,23 @@ def db_store(summary_report, transcription):
 
     cursor = db_conn.cursor()
 
-    def create_file(text, name):
-        with open(name, "wb") as file:
-            file.write(text.encode('utf-8'))
-        return file
+    #def create_file(text, name):
+    #    with open(name, "wb") as file:
+    #        file.write(text.encode('utf-8'))
+    #    return file
     
-    summary_report_file = create_file(summary_report, "summary_report.odt")
-    transcription_file =  create_file(transcription, "transcription.odt")
+    #summary_report_file = create_file(summary_report, "summary_report.odt")
+    #transcription_file =  create_file(transcription, "transcription.odt")
 
-    cursor.execute(f"INSERT INTO Log(summary_report, transcription) VALUES('{summary_report_file}', '{transcription_file}');")
+    cursor.execute(f"INSERT INTO Log (summary, transcription) VALUES('{psycopg2.Binary(summary_report)}', '{psycopg2.Binary(transcription)}');")
+    #cursor.execute(f"INSERT INTO Log (summary_report, transcription) VALUES('transcription.odt', '{psycopg2.Binary(transcription)}');")
 
     db_conn.commit()
 
     cursor.close()
     db_conn.close()
+
+    return "File uploaded to the database successfully!"
 
 
 def db_retrieve():
