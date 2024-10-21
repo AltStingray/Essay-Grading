@@ -287,3 +287,12 @@ file.write(result[0])
 
 <a href="file:"{sf}>Summary Report</a>
         <a href="file:"{tf}>Transcription</a>
+
+
+
+<form action="/logs_download" method="GET"></form>
+            <label for="Logs">Log {{id}}:</label>
+            <input type="submit" value="Summary report" name="choice" id={{id}}>
+            <input type="submit" value="Transcription" name="choice" id={{id}}>
+            <br>
+        </form>

@@ -72,6 +72,23 @@ def db_store(summary_report, transcription):
     return "File uploaded to the database successfully!"
 
 
+def db_get_ids():
+
+    db_conn = psycopg2.connect(DATABASE)
+
+    cursor = db_conn.cursor()
+
+    cursor.execute("SELECT id FROM Logs")
+
+    ids = cursor.fetchall()
+    print(ids)
+
+    cursor.close()
+    db_conn.close()
+
+    return ids
+
+
 def db_retrieve(file_id):
 
     db_conn = psycopg2.connect(DATABASE)
@@ -80,7 +97,6 @@ def db_retrieve(file_id):
 
     cursor.execute("SELECT summary, transcription FROM Logs WHERE id = %s", (file_id))
 
-    print(cursor.fetchone())
     file = cursor.fetchone()
 
     if file:

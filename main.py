@@ -143,21 +143,22 @@ def download():
 @app.route('/history')
 def history():
 
-    return render_template("history.html")
+    ids = db_get_ids()
 
-@app.route('/logs_download')
-def logs_download():
+    return render_template("history.html", ids)
 
-    logs = db_retrieve(file_id=1)
+@app.route('/logs_download/<int:id>/<name>')
+def logs_download(id, name):
 
-    choice = request.args.get("Logs")
+    logs = db_retrieve(file_id=id)
 
-    if choice == "Summary report":
+    if name == "Summary report":
         return send_file(logs[0], as_attachment=True, download_name="summary_report.odt", mimetype="application/vnd.oasis.opendocument.text")
-    elif choice == "Transcription":
+    elif name == "Transcription":
         return send_file(logs[1], as_attachment=True, download_name="transcription.odt", mimetype="application/vnd.oasis.opendocument.text")
     else:
         return logs
+
 
 @app.route('/about')
 def about():
