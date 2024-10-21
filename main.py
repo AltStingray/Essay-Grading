@@ -157,9 +157,9 @@ def logs_download(id, name):
     logs = db_retrieve(file_id=id)
 
     if name == "Summary report":
-        return send_file(logs[0], as_attachment=True, download_name=f"summary_report_{logs[2]}.odt", mimetype="application/vnd.oasis.opendocument.text")
+        return send_file(logs[0], as_attachment=True, download_name=f"summary_report.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif name == "Transcription":
-        return send_file(logs[1], as_attachment=True, download_name=f"transcription_{logs[2]}.odt", mimetype="application/vnd.oasis.opendocument.text")
+        return send_file(logs[1], as_attachment=True, download_name=f"transcription.odt", mimetype="application/vnd.oasis.opendocument.text")
     else:
         return logs
 
