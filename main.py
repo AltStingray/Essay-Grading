@@ -14,7 +14,7 @@ from openai import OpenAI
 from db_postgres import *
 
 q = Queue(connection=conn)
-db("delete")
+
 db("create") #can be used to create postgres table only for the first time; to make update to the existing table or to delete it, nothing will happen if None specified
 
 # Web application fundament
