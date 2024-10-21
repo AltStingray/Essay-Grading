@@ -145,7 +145,7 @@ def history():
 
     ids = db_get_ids()
 
-    return render_template("history.html", ids)
+    return render_template("history.html", ids=ids)
 
 @app.route('/logs_download/<int:id>/<name>')
 def logs_download(id, name):
