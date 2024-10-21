@@ -84,9 +84,9 @@ def db_get_ids():
     ids = cursor.fetchall()
     
     ids_lst = []
-    
+
     for id in ids:
-        ids_lst.append(id)
+        ids_lst.append(id[0])
 
     print(ids_lst)
 
