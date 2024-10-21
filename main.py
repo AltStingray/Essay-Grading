@@ -15,7 +15,7 @@ from db_postgres import *
 
 q = Queue(connection=conn)
 
-#db("create") #can be used to create postgres table only for the first time; to make update to the existing table or to delete it
+db("create") #can be used to create postgres table only for the first time; to make update to the existing table or to delete it
 
 # Web application fundament
 app = Flask(__name__)
@@ -109,9 +109,11 @@ def results():
         time.sleep(1)
         return render_template('processing.html')
 
+has_executed = False # Global flag
 
 @app.route('/download', methods=["GET"])
 def download():
+    global has_executed
 
     def retrieve(result, n):
 
@@ -127,7 +129,9 @@ def download():
 
     result = job.return_value()
 
-    db_store(result[0], result[1])
+    if not has_executed:
+        db_store(result[0], result[1])
+        has_executed = True
 
     summary_report = retrieve(result, 0)
     transcription = retrieve(result, 1)
@@ -153,9 +157,9 @@ def logs_download(id, name):
     logs = db_retrieve(file_id=id)
 
     if name == "Summary report":
-        return send_file(logs[0], as_attachment=True, download_name="summary_report.odt", mimetype="application/vnd.oasis.opendocument.text")
+        return send_file(logs[0], as_attachment=True, download_name=f"summary_report_{logs[2]}.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif name == "Transcription":
-        return send_file(logs[1], as_attachment=True, download_name="transcription.odt", mimetype="application/vnd.oasis.opendocument.text")
+        return send_file(logs[1], as_attachment=True, download_name=f"transcription_{logs[2]}.odt", mimetype="application/vnd.oasis.opendocument.text")
     else:
         return logs
 

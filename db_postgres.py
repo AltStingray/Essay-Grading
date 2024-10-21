@@ -5,7 +5,6 @@ import io
 # Get environmental variable URL from Heroku
 DATABASE = os.environ.get("DATABASE_URL")
 
-
 def db(command):
 
     # Establish connection with database
@@ -19,7 +18,7 @@ def db(command):
         cursor.execute("""CREATE TABLE Logs(
                     id SERIAL PRIMARY KEY,
                     summary BYTEA NOT NULL,
-                    transcription BYTEA NOT NULL.
+                    transcription BYTEA NOT NULL,
                     upload_time TIMESTAMP DEFAULT NOW()
                             )""")
             
@@ -54,16 +53,7 @@ def db_store(summary_report, transcription):
 
     cursor = db_conn.cursor()
 
-    #def create_file(text, name):
-    #    with open(name, "wb") as file:
-    #        file.write(text.encode('utf-8'))
-    #    return file
-    
-    #summary_report_file = create_file(summary_report, "summary_report.odt")
-    #transcription_file =  create_file(transcription, "transcription.odt")
-
     cursor.execute(f"INSERT INTO Logs(summary, transcription) VALUES(%s, %s);", (summary_report, transcription))
-    #cursor.execute(f"INSERT INTO Log (summary_report, transcription) VALUES('transcription.odt', '{psycopg2.Binary(transcription)}');")
 
     db_conn.commit()
 
@@ -109,11 +99,13 @@ def db_retrieve(file_id):
     if file:
         summary = file[0]
         transcription = file[1]
+        upload_time = file[2]
 
         file_obj_s = io.BytesIO(summary)
         file_obj_t = io.BytesIO(transcription)
+        file_obj_ut = io.BytesIO(upload_time)
 
-        return [file_obj_s, file_obj_t]
+        return [file_obj_s, file_obj_t, file_obj_ut]
 
     cursor.close()
     db_conn.close()
