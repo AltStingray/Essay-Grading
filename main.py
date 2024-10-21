@@ -15,6 +15,8 @@ from db_postgres import *
 
 q = Queue(connection=conn)
 
+db("create") #can be used to create postgres table only for the first time; to make update to the existing table or to delete it, nothing will happen if None specified
+
 # Web application fundament
 app = Flask(__name__)
 
@@ -145,6 +147,19 @@ def history():
 
     return render_template("history.html", logs=logs)
 
+@app.route('/logs_download')
+def logs_download():
+
+    logs = db_retrieve(file_id=1)
+
+    choice = request.args.get("Logs")
+
+    if choice == "Summary report":
+        return send_file(logs[0], as_attachment=True, download_name="summary_report.odt", mimetype="application/vnd.oasis.opendocument.text")
+    elif choice == "Transcription":
+        return send_file(logs[1], as_attachment=True, download_name="transcription.odt", mimetype="application/vnd.oasis.opendocument.text")
+    else:
+        return logs
 
 @app.route('/about')
 def about():
@@ -209,8 +224,6 @@ def main(link, access_token, user_prompt):
 # These two lines tell Python to start Flask’s development server when the script is executed from the command line. 
 # It’ll be used only when you run the script locally.
 if __name__ == "__main__":
-
-    #db("create") #can be used to create postgres table only for the first time; to make update to the existing table or to delete it, nothing will happen if None specified
 
     app.run(host="127.0.0.1", port=8080, debug=True)
     

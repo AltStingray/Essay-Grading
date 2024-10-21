@@ -1,15 +1,14 @@
 {% extends "layout.html" %}
 {% block content %}
     <h1>Logs History</h1>
+    <br>
     <p1>List of all available Summary Reports and Transcriptions:</p1>
-    <br><br>
-    <form action="/history" method="GET">
-        <label for="Logs">Logs:</label>
+    <br>
+    <form action="/logs_download" method="GET">
+        <label for="Logs">Log 1:</label>
         <select name="Logs" id="logs_dropdown">
-            {% for log in logs %}
-                <option value="{{ log }}">{{summary_report}}</option>
-                <option value="{{ log }}">{{transcription}}</option>
-            {% endfor %}
+            <option value="Summary report">Summary report</option>
+            <option value="Transcription">Transcription</option>
         </select>
     </form>
 {% endblock content %}

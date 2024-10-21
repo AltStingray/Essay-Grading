@@ -1,5 +1,6 @@
 import psycopg2
 import os
+import io
 
 # Get environmental variable URL from Heroku
 DATABASE = os.environ.get("DATABASE_URL")
@@ -15,7 +16,7 @@ def db(command):
 
     # Creating a PostgreSQL table to store the data in
     if command == "create":
-        cursor.execute("""CREATE TABLE IF NOT EXISTS Log(
+        cursor.execute("""CREATE TABLE Logs(
                     id SERIAL PRIMARY KEY,
                     summary BYTEA NOT NULL,
                     transcription BYTEA NOT NULL,
@@ -54,7 +55,7 @@ def db_store(summary_report, transcription):
     #summary_report_file = create_file(summary_report, "summary_report.odt")
     #transcription_file =  create_file(transcription, "transcription.odt")
 
-    cursor.execute(f"INSERT INTO Log (summary, transcription) VALUES(%s, %s);", (summary_report, transcription))
+    cursor.execute(f"INSERT INTO Logs(summary, transcription) VALUES(%s, %s);", (summary_report, transcription))
     #cursor.execute(f"INSERT INTO Log (summary_report, transcription) VALUES('transcription.odt', '{psycopg2.Binary(transcription)}');")
 
     db_conn.commit()
@@ -65,21 +66,27 @@ def db_store(summary_report, transcription):
     return "File uploaded to the database successfully!"
 
 
-def db_retrieve():
+def db_retrieve(file_id):
 
     db_conn = psycopg2.connect(DATABASE)
 
     cursor = db_conn.cursor()
 
-    #SELECT * FROM Log WHERE id = {id}
-    cursor.execute(f'SELECT * FROM Log;')
+    cursor.execute("SELECT summary, transcription FROM Logs WHERE id = %s", (file_id))
 
-    print(cursor.fetchall())
-    logs = cursor.fetchall()
+    print(cursor.fetchone())
+    file = cursor.fetchone()
 
-    db_conn.commit()
+    if file:
+        summary = file[0]
+        transcription = file[1]
+
+        file_obj_s = io.BytesIO(summary)
+        file_obj_t = io.BytesIO(transcription)
+
+        return [file_obj_s, file_obj_t]
 
     cursor.close()
     db_conn.close()
 
-    return logs
+    return "File not found!", 404
