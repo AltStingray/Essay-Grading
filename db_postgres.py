@@ -54,7 +54,7 @@ def db_store(summary_report, transcription):
     #summary_report_file = create_file(summary_report, "summary_report.odt")
     #transcription_file =  create_file(transcription, "transcription.odt")
 
-    cursor.execute(f"INSERT INTO Log (summary, transcription) VALUES('{summary_report}', '{transcription}');")
+    cursor.execute(f"INSERT INTO Log (summary, transcription) VALUES(%s, %s);", (summary_report, transcription))
     #cursor.execute(f"INSERT INTO Log (summary_report, transcription) VALUES('transcription.odt', '{psycopg2.Binary(transcription)}');")
 
     db_conn.commit()
