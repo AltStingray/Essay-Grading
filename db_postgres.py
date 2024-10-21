@@ -16,7 +16,7 @@ def db(command):
 
     # Creating a PostgreSQL table to store the data in
     if command == "create":
-        cursor.execute("""CREATE TABLE Logs(
+        cursor.execute("""UPDATE TABLE Logs(
                     id SERIAL PRIMARY KEY,
                     summary BYTEA NOT NULL,
                     transcription BYTEA NOT NULL,
