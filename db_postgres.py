@@ -99,13 +99,13 @@ def db_retrieve(file_id):
     if file:
         summary = file[0]
         transcription = file[1]
-        upload_time = file[2]
+        #upload_time = file[2]
 
         file_obj_s = io.BytesIO(summary)
         file_obj_t = io.BytesIO(transcription)
-        file_obj_ut = io.BytesIO(upload_time)
+        #file_obj_ut = io.BytesIO(upload_time)
 
-        return [file_obj_s, file_obj_t, file_obj_ut]
+        return [file_obj_s, file_obj_t]
 
     cursor.close()
     db_conn.close()
