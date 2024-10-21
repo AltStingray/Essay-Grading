@@ -19,7 +19,8 @@ def db(command):
         cursor.execute("""CREATE TABLE Logs(
                     id SERIAL PRIMARY KEY,
                     summary BYTEA NOT NULL,
-                    transcription BYTEA NOT NULL
+                    transcription BYTEA NOT NULL.
+                    upload_time TIMESTAMP DEFAULT NOW()
                             )""")
             
         db_conn.commit() # Commiting to make changes persistent 
@@ -83,11 +84,12 @@ def db_get_ids():
     ids = cursor.fetchall()
     
     ids_lst = []
-    for one in range(len(ids)):
-        ids_lst.append(ids[one])
+    
+    for id in ids:
+        ids_lst.append(id)
 
     print(ids_lst)
-    
+
     cursor.close()
     db_conn.close()
 
