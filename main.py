@@ -143,9 +143,7 @@ def download():
 @app.route('/history')
 def history():
 
-    logs = db_retrieve()
-
-    return render_template("history.html", logs=logs)
+    return render_template("history.html")
 
 @app.route('/logs_download')
 def logs_download():
