@@ -16,7 +16,7 @@ def db(command):
 
     # Creating a PostgreSQL table to store the data in
     if command == "create":
-        cursor.execute("""UPDATE TABLE Logs(
+        cursor.execute("""CREATE TABLE Logs(
                     id SERIAL PRIMARY KEY,
                     summary BYTEA NOT NULL,
                     transcription BYTEA NOT NULL,
@@ -34,7 +34,13 @@ def db(command):
 
     elif command == "delete":
         #delete table
-        pass
+        cursor.execute("""DELETE TABLE Log""")
+            
+        db_conn.commit() # Commiting to make changes persistent 
+
+        cursor.close()
+        db_conn.close()
+        print("DB deleted successfully!")
 
     else:
         pass
