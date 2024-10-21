@@ -184,7 +184,7 @@ def main(link, access_token, user_prompt):
 
     #my key: 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
     # NP's: sk-xBdlGJMujfH_NsjBc0K3ym5tTLyEjJN3o-DaMLuYhgT3BlbkFJOvq20KiNWlZLAQN4yn03pECwsNb0b3oGnZ62Dd3WMA
-    client = OpenAI(api_key="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")
+    client = OpenAI(api_key="sk-xBdlGJMujfH_NsjBc0K3ym5tTLyEjJN3o-DaMLuYhgT3BlbkFJOvq20KiNWlZLAQN4yn03pECwsNb0b3oGnZ62Dd3WMA")
 
     if user_prompt != None:
         prompt = user_prompt
