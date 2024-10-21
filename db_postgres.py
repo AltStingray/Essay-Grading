@@ -102,7 +102,7 @@ def db_retrieve(file_id):
 
     cursor = db_conn.cursor()
 
-    cursor.execute("SELECT summary, transcription FROM Logs WHERE id = %s", (file_id))
+    cursor.execute("SELECT summary, transcription FROM Logs WHERE id = %s", (str(file_id)))
 
     file = cursor.fetchone()
 

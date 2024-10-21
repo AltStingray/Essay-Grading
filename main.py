@@ -147,7 +147,7 @@ def history():
 
     return render_template("history.html", ids=ids)
 
-@app.route('/logs_download/<str:id>/<name>')
+@app.route('/logs_download/<int:id>/<name>')
 def logs_download(id, name):
 
     logs = db_retrieve(file_id=id)
