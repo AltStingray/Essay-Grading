@@ -15,7 +15,7 @@ from db_postgres import *
 
 q = Queue(connection=conn)
 
-db("create") #can be used to create postgres table only for the first time; to make update to the existing table or to delete it
+#db("create") #can be used to create postgres table only for the first time; to make update to the existing table or to delete it
 
 # Web application fundament
 app = Flask(__name__)
