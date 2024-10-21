@@ -4,11 +4,12 @@
     <p1>List of all available Summary Reports and Transcriptions:</p1>
     <br><br>
     <form action="/history" method="GET">
-    <select name="Logs" id="logs_dropdown">
-        {% for log in logs %}
-            <option value="{{ log }}">{{summary_report}}</option>
-            <option value="{{ log }}">{{transcription}}</option>
-        {% endfor %}
+        <label for="Logs">Logs:</label>
+        <select name="Logs" id="logs_dropdown">
+            {% for log in logs %}
+                <option value="{{ log }}">{{summary_report}}</option>
+                <option value="{{ log }}">{{transcription}}</option>
+            {% endfor %}
+        </select>
     </form>
-    </select>
 {% endblock content %}
