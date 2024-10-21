@@ -19,8 +19,8 @@ def db(command):
         cursor.execute("""CREATE TABLE Logs(
                     id SERIAL PRIMARY KEY,
                     summary BYTEA NOT NULL,
-                    transcription BYTEA NOT NULL,
-                        )""")
+                    transcription BYTEA NOT NULL
+                            )""")
             
         db_conn.commit() # Commiting to make changes persistent 
 
