@@ -34,7 +34,7 @@ def db(command):
 
     elif command == "delete":
         #delete table
-        cursor.execute("""DELETE TABLE Log""")
+        cursor.execute("""DROP DATABASE IF EXISTS Log""")
             
         db_conn.commit() # Commiting to make changes persistent 
 
