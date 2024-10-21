@@ -86,6 +86,8 @@ def db_get_ids():
     for one in range(len(ids)):
         ids_lst.append(ids[one])
 
+    print(ids_lst)
+    
     cursor.close()
     db_conn.close()
 
