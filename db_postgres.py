@@ -81,12 +81,15 @@ def db_get_ids():
     cursor.execute("SELECT id FROM Logs")
 
     ids = cursor.fetchall()
-    print(ids)
+    
+    ids_lst = []
+    for one in range(len(ids)):
+        ids_lst.append(ids[one])
 
     cursor.close()
     db_conn.close()
 
-    return ids
+    return ids_lst
 
 
 def db_retrieve(file_id):
