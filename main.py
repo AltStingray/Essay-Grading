@@ -132,10 +132,10 @@ def download():
 
             return file_object
         else:
-            with open(f"summary_report.pdf", "wb") as pdf_file:
-                pdf_file.write(result[n])
-                pdf_file = io.BytesIO(pdf_file.read)
-                pdf_file.seek(0)
+            pdf_file = io.BytesIO()
+            pdf_file.write(bytes(f"{result[n]}"))
+            pdf_file.seek(0)
+
             return pdf_file
         
     job_id = session["job_id"]
@@ -179,10 +179,10 @@ def logs_download(id, name):
 
     logs = db_retrieve(file_id=id)
     def pdf(logs, n):
-        with open(f"summary_report.pdf", "wb") as pdf_file:
-            pdf_file.write(logs[n])
-            pdf_file = io.BytesIO(pdf_file.read)
-            pdf_file.seek(0)
+        pdf_file = io.BytesIO()
+        pdf_file.write(bytes(f"{logs[n]}"))
+        pdf_file.seek(0)
+
         return pdf_file
 
     if name == "Summary report.odt":
