@@ -12,6 +12,7 @@ from markupsafe import escape
 from moviepy.editor import *
 from openai import OpenAI
 from db_postgres import *
+from fpdf import FPDF
 
 
 OPENAI_API_KEY = os.environ.get("N_OPENAI_API_KEY")
@@ -123,20 +124,14 @@ has_executed = False # Global flag
 def download():
     global has_executed
 
-    def retrieve(result, n, format):
+    def retrieve(result):
 
-        if format != "pdf":
-            file_object = io.BytesIO()
-            file_object.write(result[n].encode('utf-8'))
-            file_object.seek(0)
+        file_object = io.BytesIO()
+        file_object.write(result.encode('utf-8'))
+        file_object.seek(0)
 
-            return file_object
-        else:
-            pdf_file = io.BytesIO()
-            pdf_file.write(bytes(f"{result[n]}"))
-            pdf_file.seek(0)
-
-            return pdf_file
+        return file_object
+            
         
     job_id = session["job_id"]
 
@@ -148,8 +143,8 @@ def download():
         db_store(result[0], result[1])
         has_executed = True
 
-    summary_report = retrieve(result, 0)
-    transcription = retrieve(result, 1)
+    summary_report = retrieve(result[0])
+    transcription = retrieve(result[1])
 
     pick_one = request.args.get("pick_one")
 
@@ -162,9 +157,9 @@ def download():
     elif pick_one == "Transcription.docx":
         return send_file(transcription, as_attachment=True, download_name="transcription.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
     elif pick_one == "Summary report.pdf":
-        return send_file(retrieve(result, 0, "pdf"), as_attachment=True, download_name="summary_report.pdf", mimetype="application/pdf")
+        return send_file(pdf(result[0]), as_attachment=True, download_name="summary_report.pdf", mimetype="application/pdf")
     else:
-        return send_file(retrieve(result, 1, "pdf"), as_attachment=True, download_name="transcription.pdf", mimetype="application/pdf")
+        return send_file(pdf(result[1]), as_attachment=True, download_name="transcription.pdf", mimetype="application/pdf")
 
 
 @app.route('/history')
@@ -178,21 +173,15 @@ def history():
 def logs_download(id, name):
 
     logs = db_retrieve(file_id=id)
-    def pdf(logs, n):
-        pdf_file = io.BytesIO()
-        pdf_file.write(logs[n].encode('UTF-16BE'))
-        pdf_file.seek(0)
-
-        return pdf_file
 
     if name == "Summary report.odt":
         return send_file(logs[0], as_attachment=True, download_name=f"summary_report.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif name == "Transcription.odt":
         return send_file(logs[1], as_attachment=True, download_name=f"transcription.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif name == "Summary report.pdf":
-        return send_file(pdf(logs, 0), as_attachment=True, download_name=f"summary_report.pdf", mimetype="application/pdf")
+        return send_file(pdf(logs[0]), as_attachment=True, download_name=f"summary_report.pdf", mimetype="application/pdf")
     elif name == "Transcription.pdf":
-        return send_file(pdf(logs, 1), as_attachment=True, download_name=f"transcription.pdf", mimetype="application/pdf")
+        return send_file(pdf(logs[1]), as_attachment=True, download_name=f"transcription.pdf", mimetype="application/pdf")
     else:
         return logs
 
@@ -253,6 +242,20 @@ def main(link, access_token, user_prompt):
     f_list = [summary_report, transcription]
 
     return f_list
+
+
+def pdf(text):
+
+        pdf = FPDF()
+
+        pdf.add_page()
+
+        pdf.set_font("Arial", size=13)
+
+        pdf.multi_cell(0, 10, text)
+
+        return pdf
+
 
 
 # These two lines tell Python to start Flask’s development server when the script is executed from the command line. 
