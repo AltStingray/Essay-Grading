@@ -252,7 +252,7 @@ def pdf(text):
 
     pdf.set_font("Arial", size=13)
 
-    pdf.multi_cell(0, 10, text)
+    pdf.multi_cell(0, 10, str(text))
 
     pdf_file = io.BytesIO()
 
