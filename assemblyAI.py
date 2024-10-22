@@ -1,6 +1,9 @@
 import assemblyai as aai
+import os
 
-aai.settings.api_key = "bc90a68cad05489689f948691bc5d3de"
+API_KEY = os.environ.get("ASSEMBLYAI_API_KEY")
+
+aai.settings.api_key = API_KEY
 
 FILE_URL = "audio.mp3"
 

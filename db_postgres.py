@@ -46,6 +46,21 @@ def db(command):
         pass
 
 
+def delete_data_from_table(id):
+
+    db_conn = psycopg2.connect(DATABASE)
+
+    cursor = db_conn.cursor()
+
+    cursor.execute(f"DELETE FROM Logs WHERE id IS {id}")
+
+    db_conn.commit()
+
+    cursor.close()
+    db_conn.close()
+
+    return "Data has been deleted from the database successfully!"
+
 
 def db_store(summary_report, transcription):
 

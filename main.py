@@ -13,18 +13,27 @@ from moviepy.editor import *
 from openai import OpenAI
 from db_postgres import *
 
-q = Queue(connection=conn)
 
-#db("create") #can be used to create postgres table only for the first time; to make update to the existing table or to delete it
+OPENAI_API_KEY = os.environ.get("N_OPENAI_API_KEY")
+
+FLASK_SESSION_SECRET = os.environ.get("FLASK_SESSION_SECRET")
+
 
 # Web application fundament
 app = Flask(__name__)
 
-app.secret_key = os.environ.get("FLASK_SESSION_SECRET") # "32I4g1&g%J+*2o)"
+app.secret_key = FLASK_SESSION_SECRET
 
 app.config['SESSION_TYPE'] = 'redis'
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_USE_SIGNER"] = True
+
+q = Queue(connection=conn)
+
+delete_data_from_table(id=3)
+
+#db("create") #can be used to create postgres table only for the first time; to make update to an existing table or to delete it
+
 
 @app.route('/') #Use the route() decorator to bind a function to a URL.
 def index():
@@ -86,9 +95,9 @@ def processing():
     
     prompt = session.pop("prompt", None) # because of the pop() this line won't trigger TypeError. It deletes the value in a session and returns it. Specified None here means that the value of "prompt" key doesn't matter. If the value is None or Str - doesn't matter.
 
-    job = q.enqueue(main, link, access_token, prompt) # enque main function to execute in the background
+    job = q.enqueue(main, link, access_token, prompt) # enque main function and it's parameters to execute in the background
 
-    job_id=job.get_id() # get id of the job that in process 
+    job_id=job.get_id() # get id of the job that is in process 
 
     session["job_id"] = job_id
 
@@ -103,7 +112,6 @@ def results():
     job = Job.fetch(job_id, connection=conn)
 
     if job.is_finished:
-
         return render_template('results.html')
     else:
         time.sleep(1)
@@ -138,10 +146,18 @@ def download():
 
     pick_one = request.args.get("pick_one")
 
-    if pick_one == "Summary report":
+    if pick_one == "Summary report.odt":
         return send_file(summary_report, as_attachment=True, download_name="summary_report.odt", mimetype="application/vnd.oasis.opendocument.text")
-    else:
+    elif pick_one == "Transcription.odt":
         return send_file(transcription, as_attachment=True, download_name="transcription.odt", mimetype="application/vnd.oasis.opendocument.text")
+    elif pick_one == "Summary_report.docx":
+        return send_file(summary_report, as_attachment=True, download_name="summary_report.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+    elif pick_one == "Transcription.docx":
+        return send_file(transcription, as_attachment=True, download_name="transcription.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+    elif pick_one == "Summary report.pdf":
+        return send_file(summary_report, as_attachment=True, download_name="summary_report.pdf", mimetype="application/pdf")
+    else:
+        return send_file(transcription, as_attachment=True, download_name="transcription.pdf", mimetype="application/pdf")
 
 
 @app.route('/history')
@@ -156,10 +172,14 @@ def logs_download(id, name):
 
     logs = db_retrieve(file_id=id)
 
-    if name == "Summary report":
+    if name == "Summary report.odt":
         return send_file(logs[0], as_attachment=True, download_name=f"summary_report.odt", mimetype="application/vnd.oasis.opendocument.text")
-    elif name == "Transcription":
+    elif name == "Transcription.odt":
         return send_file(logs[1], as_attachment=True, download_name=f"transcription.odt", mimetype="application/vnd.oasis.opendocument.text")
+    elif name == "Summary report.pdf":
+        return send_file(logs[0], as_attachment=True, download_name=f"summary_report.pdf", mimetype="application/pdf")
+    elif name == "Transcription.pdf":
+        return send_file(logs[1], as_attachment=True, download_name=f"transcription.pdf", mimetype="application/pdf")
     else:
         return logs
 
@@ -200,9 +220,7 @@ def main(link, access_token, user_prompt):
 
     print("Transcription created, working on the summary report...")
 
-    #my key: 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
-    # NP's: sk-xBdlGJMujfH_NsjBc0K3ym5tTLyEjJN3o-DaMLuYhgT3BlbkFJOvq20KiNWlZLAQN4yn03pECwsNb0b3oGnZ62Dd3WMA
-    client = OpenAI(api_key="sk-xBdlGJMujfH_NsjBc0K3ym5tTLyEjJN3o-DaMLuYhgT3BlbkFJOvq20KiNWlZLAQN4yn03pECwsNb0b3oGnZ62Dd3WMA")
+    client = OpenAI(api_key=OPENAI_API_KEY)
 
     if user_prompt != None:
         prompt = user_prompt

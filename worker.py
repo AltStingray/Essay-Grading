@@ -1,11 +1,12 @@
 import redis
+import os
 from rq import Worker, Queue, Connection
+
+REDIS_CONN = os.environ.get("REDISCLOUD_URL")
 
 listen = ['default']
 
-#redis_url = os.getenv("REDISCLOUD_URL")
-
-conn = redis.from_url("redis://default:wLzcQ5mI3BbsxIHoi7FV706tWzrQHi3D@redis-12778.c92.us-east-1-3.ec2.redns.redis-cloud.com:12778")
+conn = redis.from_url(REDIS_CONN)
 
 try:
     conn.ping()
@@ -15,7 +16,7 @@ except redis.ConnectionError as e:
     
 if __name__ == '__main__':
     with Connection(conn):
-            worker = Worker(list(map(Queue, listen)))
-            worker.work()
+        worker = Worker(list(map(Queue, listen)))
+        worker.work()
 
         
