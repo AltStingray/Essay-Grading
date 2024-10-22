@@ -184,6 +184,12 @@ def logs_download(id, name):
         return send_file(pdf(logs[1]), as_attachment=True, download_name=f"transcription.pdf", mimetype="application/pdf")
     else:
         return logs
+    
+
+@app.route('/grading')
+def grading():
+
+    return render_template('grading.html')
 
 
 @app.route('/about')
@@ -246,15 +252,13 @@ def main(link, access_token, user_prompt):
 
 def pdf(text):
 
-    decoded_text = text.getvalue().decode("latin-1", errors="replace")
-
     pdf = FPDF()
 
     pdf.add_page()
 
     pdf.set_font("Arial", size=13)
 
-    pdf.multi_cell(0, 10, decoded_text)
+    pdf.multi_cell(0, 10, text)
 
     pdf_file = io.BytesIO()
 
