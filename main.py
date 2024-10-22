@@ -175,9 +175,9 @@ def logs_download(id, name):
     logs = db_retrieve(file_id=id)
 
     if name == "Summary report.odt":
-        return send_file(io.BytesIO(logs[0]), as_attachment=True, download_name=f"summary_report.odt", mimetype="application/vnd.oasis.opendocument.text")
+        return send_file(logs[0], as_attachment=True, download_name=f"summary_report.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif name == "Transcription.odt":
-        return send_file(io.BytesIO(logs[1]), as_attachment=True, download_name=f"transcription.odt", mimetype="application/vnd.oasis.opendocument.text")
+        return send_file(logs[1], as_attachment=True, download_name=f"transcription.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif name == "Summary report.pdf":
         return send_file(pdf(logs[0]), as_attachment=True, download_name=f"summary_report.pdf", mimetype="application/pdf")
     elif name == "Transcription.pdf":
@@ -246,13 +246,15 @@ def main(link, access_token, user_prompt):
 
 def pdf(text):
 
+    decoded_text = text.getvalue().decode("utf-8", errors="replace")
+
     pdf = FPDF()
 
     pdf.add_page()
 
     pdf.set_font("Arial", size=13)
 
-    pdf.multi_cell(0, 10, str(text))
+    pdf.multi_cell(0, 10, decoded_text)
 
     pdf_file = io.BytesIO()
 
