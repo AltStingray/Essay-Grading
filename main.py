@@ -123,14 +123,21 @@ has_executed = False # Global flag
 def download():
     global has_executed
 
-    def retrieve(result, n):
+    def retrieve(result, n, format):
 
-        file_object = io.BytesIO()
-        file_object.write(result[n].encode('utf-8'))
-        file_object.seek(0)
+        if format != "pdf":
+            file_object = io.BytesIO()
+            file_object.write(result[n].encode('utf-8'))
+            file_object.seek(0)
 
-        return file_object
+            return file_object
+        else:
+            pdf_file = io.BytesIO(b"")
+            pdf_file.write(f"{result[n]}")
+            pdf_file.seek(0)
 
+            return pdf_file
+        
     job_id = session["job_id"]
 
     job = Job.fetch(job_id, connection=conn)
@@ -155,9 +162,9 @@ def download():
     elif pick_one == "Transcription.docx":
         return send_file(transcription, as_attachment=True, download_name="transcription.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
     elif pick_one == "Summary report.pdf":
-        return send_file(summary_report, as_attachment=True, download_name="summary_report.pdf", mimetype="application/pdf")
+        return send_file(retrieve(result, 0, "pdf"), as_attachment=True, download_name="summary_report.pdf", mimetype="application/pdf")
     else:
-        return send_file(transcription, as_attachment=True, download_name="transcription.pdf", mimetype="application/pdf")
+        return send_file(retrieve(result, 1, "pdf"), as_attachment=True, download_name="transcription.pdf", mimetype="application/pdf")
 
 
 @app.route('/history')
@@ -171,15 +178,21 @@ def history():
 def logs_download(id, name):
 
     logs = db_retrieve(file_id=id)
+    def pdf(logs, n):
+        pdf_file = io.BytesIO(b"")
+        pdf_file.write(f"{logs[n]}")
+        pdf_file.seek(0)
+
+        return pdf_file
 
     if name == "Summary report.odt":
         return send_file(logs[0], as_attachment=True, download_name=f"summary_report.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif name == "Transcription.odt":
         return send_file(logs[1], as_attachment=True, download_name=f"transcription.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif name == "Summary report.pdf":
-        return send_file(logs[0], as_attachment=True, download_name=f"summary_report.pdf", mimetype="application/pdf")
+        return send_file(pdf(logs, 0), as_attachment=True, download_name=f"summary_report.pdf", mimetype="application/pdf")
     elif name == "Transcription.pdf":
-        return send_file(logs[1], as_attachment=True, download_name=f"transcription.pdf", mimetype="application/pdf")
+        return send_file(pdf(logs, 1), as_attachment=True, download_name=f"transcription.pdf", mimetype="application/pdf")
     else:
         return logs
 
