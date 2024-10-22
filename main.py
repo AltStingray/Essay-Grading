@@ -246,7 +246,7 @@ def main(link, access_token, user_prompt):
 
 def pdf(text):
 
-    decoded_text = text.getvalue().decode("utf-8", errors="replace")
+    decoded_text = text.decode("utf-8", errors="ignore")
 
     pdf = FPDF()
 
