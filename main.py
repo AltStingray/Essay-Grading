@@ -180,7 +180,7 @@ def logs_download(id, name):
     logs = db_retrieve(file_id=id)
     def pdf(logs, n):
         pdf_file = io.BytesIO()
-        pdf_file.write(bytes(f"{logs[n]}"))
+        pdf_file.write(bytes(logs[n].encode('UTF-16BE')))
         pdf_file.seek(0)
 
         return pdf_file
