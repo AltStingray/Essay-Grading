@@ -52,7 +52,7 @@ def delete_data_from_table(id):
 
     cursor = db_conn.cursor()
 
-    cursor.execute(f"DELETE FROM Logs WHERE id IS {id}")
+    cursor.execute(f"DELETE FROM Logs WHERE id=('{id}')")
 
     db_conn.commit()
 
