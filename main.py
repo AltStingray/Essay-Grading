@@ -246,15 +246,21 @@ def main(link, access_token, user_prompt):
 
 def pdf(text):
 
-        pdf = FPDF()
+    pdf = FPDF()
 
-        pdf.add_page()
+    pdf.add_page()
 
-        pdf.set_font("Arial", size=13)
+    pdf.set_font("Arial", size=13)
 
-        pdf.multi_cell(0, 10, text)
+    pdf.multi_cell(0, 10, text)
 
-        return pdf
+    pdf.output("pdf_file.pdf")
+
+    with open("pdf_file.pdf", "rb") as file:
+        pdf_data = io.BytesIO(file.read())
+        pdf_data.seek(0)
+
+    return pdf_data
 
 
 
