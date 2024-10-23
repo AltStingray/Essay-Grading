@@ -147,19 +147,19 @@ def download():
     transcription = retrieve(result[1])
 
     pick_one = request.args.get("pick_one")
-
+    #io.BytesIO(result[0]
     if pick_one == "Summary report.odt":
         return send_file(summary_report, as_attachment=True, download_name="summary_report.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif pick_one == "Transcription.odt":
         return send_file(transcription, as_attachment=True, download_name="transcription.odt", mimetype="application/vnd.oasis.opendocument.text")
-    elif pick_one == "Summary_report.docx":
+    elif pick_one == "Summary report.docx":
         return send_file(summary_report, as_attachment=True, download_name="summary_report.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
     elif pick_one == "Transcription.docx":
         return send_file(transcription, as_attachment=True, download_name="transcription.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
     elif pick_one == "Summary report.pdf":
-        return send_file(pdf(result[0]), as_attachment=True, download_name="summary_report.pdf", mimetype="application/pdf")
+        return send_file(pdf(summary_report), as_attachment=True, download_name="summary_report.pdf", mimetype="application/pdf")
     else:
-        return send_file(pdf(result[1]), as_attachment=True, download_name="transcription.pdf", mimetype="application/pdf")
+        return send_file(pdf(transcription), as_attachment=True, download_name="transcription.pdf", mimetype="application/pdf")
 
 
 @app.route('/history')
