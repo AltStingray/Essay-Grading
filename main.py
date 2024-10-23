@@ -31,7 +31,7 @@ app.config["SESSION_USE_SIGNER"] = True
 
 q = Queue(connection=conn)
 
-delete_data_from_table(id=3)
+delete_data_from_table(id1=4, id2=5)
 
 #db("create") #can be used to create postgres table only for the first time; to make update to an existing table or to delete it
 
@@ -141,7 +141,7 @@ def download():
 
     if not has_executed:
         db_store(result[0], result[1])
-        has_executed = True
+        has_executed == True
 
     summary_report = retrieve(result[0])
     transcription = retrieve(result[1])
