@@ -229,21 +229,12 @@ def main(link, access_token, user_prompt):
 
     print("Transcription created, working on the summary report...")
 
-    client = OpenAI(api_key=OPENAI_API_KEY)
-
     if user_prompt != None:
         prompt = user_prompt
     else:
         prompt = "I run an online OET speaking mock test service where candidates act as doctors, nurses or other medical practitioners and practice roleplay scenarios with a teacher who acts as the patient or the patient's relative. After each session, we provide a detailed report to the candidate, highlighting their performance. You are given a dialogue text delimited by triple quotes on the topic of medicine. Please summarise the teacher's feedback on the candidate's grammar, lexical choices, pronunciation, and overall communication skills. In the overall communication skills section, use the five categories in the clinical communication criteria table in the knowledge file delimited by triple quotes. Summarise the teacher's feedback on the candidate's performance. Structure the report with sections for each roleplay and an overall performance summary which includes a table with 2 columns called areas that you are doing well and areas that you need to improve. The output text will be stored in a docx format file, so make the table relevant to this format. You are not limited by a particular range of words, so provide detailed report with at least 4000 charaters." 
 
-    summary_report = client.chat.completions.create(
-        model="gpt-4o-2024-08-06",
-        messages=[
-            {"role": "system", "content": prompt},
-            {"role": "user", "content": f'''{transcription}'''}],
-        )
-    
-    summary_report = summary_report.choices[0].message.content #tapping into the content of response
+    summary_report = OpenAI(prompt, transcription)
 
     #Saving results
     f_list = [summary_report, transcription]
@@ -251,9 +242,27 @@ def main(link, access_token, user_prompt):
     return f_list
 
 
+def OpenAI(prompt, content):
+
+    client = OpenAI(api_key=OPENAI_API_KEY)
+
+    response = client.chat.completions.create(
+        model="gpt-4o-2024-08-06",
+        messages=[
+            {"role": "system", "content": prompt},
+            {"role": "user", "content": f'''{content}'''}],
+        )
+    
+    response = response.choices[0].message.content #tapping into the content of response
+    
+    return response
+
+
 def pdf(text):
 
     decoded_text = text.getvalue().decode("utf-8", errors="replace")
+
+    decoded_text = decoded_text.replace("\u", "'")
 
     pdf = FPDF()
 
