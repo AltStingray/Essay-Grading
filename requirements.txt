@@ -22,4 +22,4 @@ redis==5.1.1
 
 psycopg2==2.9.10
 
-FPDF==1.7.2
+reportlab==4.2.5

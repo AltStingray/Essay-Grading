@@ -12,7 +12,8 @@ from markupsafe import escape
 from moviepy.editor import *
 from openai import OpenAI
 from db_postgres import *
-from fpdf import FPDF
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
 
 
 OPENAI_API_KEY = os.environ.get("N_OPENAI_API_KEY")
@@ -191,7 +192,7 @@ def grading():
 
     return render_template('grading.html')
 
-
+#@app.route('/')
 
 @app.route('/about')
 def about():
@@ -260,28 +261,23 @@ def OpenAI(prompt, content):
 
 def pdf(text):
 
+    c = canvas.Canvas(text, pagesize=letter)
+    width, height = letter
+
+    c.setFont("Arial", 12)
+
     decoded_text = text.getvalue().decode("utf-8", errors="replace")
 
-    decoded_text = decoded_text.replace("\u", "'")
+    y_position = height = 40
+    for line in decoded_text.split('\n'):
+        c.drawString(40, y_position, line)
+        y_position -= 15
 
-    pdf = FPDF()
+    c.save
 
-    pdf.add_page()
+    text.seek(0)
 
-    pdf.set_font("Arial", size=13)
-
-    pdf.multi_cell(0, 10, decoded_text)
-
-    with open('output.pdf', 'wb') as f:
-        pdf.output(f)
-
-    pdf_file = io.BytesIO()
-
-    pdf.output(pdf_file)
-    
-    pdf_file.seek(0)
-
-    return pdf_file
+    return text
 
 
 
