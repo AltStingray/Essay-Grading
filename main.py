@@ -220,10 +220,10 @@ def waiting():
 
         job = Job.fetch(job_id, connection=conn)
 
-        if job.is_finished:
-            return redirect(url_for("grading"))
-        else:
-            return render_template('grading.html', name="wait")
+    if job.is_finished:
+        return redirect(url_for("grading"))
+    else:
+        return render_template('grading.html', name="wait")
 
 
 @app.route('/about')
