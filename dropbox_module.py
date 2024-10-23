@@ -38,7 +38,8 @@ def download_file(url, access_token):
 
         try:
             metadata, res = dbx.sharing_get_shared_link_file(url)
-            print(f"Name of the video: {metadata["name"]}")
+            print(metadata)
+            print(f"\n\nName of the video: {metadata[1]["name"]}\n\n")
             file.write(res.content)
             print("File downloaded successfully!")
 
