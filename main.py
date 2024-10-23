@@ -283,7 +283,7 @@ def pdf(text):
         c.drawString(40, y_position, line)
         y_position -= 15
 
-    c.save
+    c.save()
 
     pdf_file.seek(0)
 
