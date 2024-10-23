@@ -220,13 +220,13 @@ def waiting():
             session["job_id_2"] = job_id
 
             job = Job.fetch(job_id, connection=conn)
-            
-    except: TypeError, UnboundLocalError
 
-    if job.is_finished:
-        return redirect(url_for("grading"))
-    else:
-        return render_template('grading.html', name="wait")
+        if job.is_finished:
+            return redirect(url_for("grading"))
+        else:
+            return render_template('grading.html', name="wait")
+
+    except: TypeError, UnboundLocalError
 
 
 @app.route('/about')
