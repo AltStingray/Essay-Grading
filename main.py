@@ -14,7 +14,8 @@ from openai import OpenAI
 from db_postgres import *
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
-
+from reportlab.platypus import SimpleDocTemplate, Paragraph
+from reportlab.lib.styles import getSampleStyleSheet
 
 OPENAI_API_KEY = os.environ.get("N_OPENAI_API_KEY")
 
@@ -269,23 +270,30 @@ def pdf(text):
 
     pdf_file = io.BytesIO()
 
-    c = canvas.Canvas(pdf_file, pagesize=letter)
+    doc = SimpleDocTemplate(pdf_file, pagesize=letter)
+    styles = getSampleStyleSheet()
+    flowables = []
+
     width, height = letter
 
-    c.setFont("Helvetica", 11)
+    #c.setFont("Helvetica", 11)
 
     decoded_text = text.getvalue().decode("utf-8", errors="replace")
 
-    y_position = height - 40
-    for line in decoded_text.split('\n'):
-        if y_position <= 40: # add new page
-            c.showPage()
-            c.setFont("Helvetica", 11)
-            y_position = height - 40
-        c.drawString(40, y_position, line)
-        y_position -= 15
+    flowables.append(Paragraph(decoded_text, styles["Normal"]))
 
-    c.save()
+    #y_position = height - 40
+    #for line in decoded_text.split('\n'):
+    #    if y_position <= 40: # add new page
+    #        c.showPage()
+    #        c.setFont("Helvetica", 11)
+    #        y_position = height - 40
+    #    c.drawString(40, y_position, line)
+    #    y_position -= 15
+
+    #c.save()
+
+    doc.build(flowables)
 
     pdf_file.seek(0)
 
