@@ -204,7 +204,9 @@ def grading():
 @app.route('/waiting')
 def waiting():
 
-    job_id = session.pop("job_id_2", None)
+    try:
+        job_id = session["job_id_2"]
+    except: TypeError
 
     if job_id == None:
 
