@@ -267,7 +267,7 @@ def OpenAI(prompt, content):
 
 def pdf(text):
 
-    pdf_file = io.BytesIO
+    pdf_file = io.BytesIO()
 
     c = canvas.Canvas(pdf_file, pagesize=letter)
     width, height = letter
@@ -275,8 +275,6 @@ def pdf(text):
     c.setFont("Helvetica", 12)
 
     decoded_text = text.getvalue().decode("utf-8", errors="replace")
-    
-    print(type(decoded_text))
 
     y_position = height - 40
     for line in decoded_text.split('\n'):
