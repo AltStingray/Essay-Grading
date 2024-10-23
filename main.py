@@ -278,7 +278,7 @@ def pdf(text):
 
     print(decoded_text)
 
-    y_position = height = 40
+    y_position = height - 40
     for line in decoded_text.split('\n'):
         c.drawString(40, y_position, line)
         y_position -= 15
