@@ -52,8 +52,9 @@ def delete_data_from_table(id_list):
 
     cursor = db_conn.cursor()
 
-
-    cursor.execute(f"DELETE FROM Logs WHERE id IN ('{id_list}')")
+    query = "DELETE FROM Logs WHERE id IN %s"
+    
+    cursor.execute(query, (tuple(id_list)))
 
     db_conn.commit()
 
