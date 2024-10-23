@@ -252,7 +252,7 @@ def main(link, access_token, user_prompt):
 
 def pdf(text):
 
-    decoded_text = text.get_value().decode("utf-8")
+    decoded_text = text.getvalue().decode("utf-8")
 
     pdf = FPDF()
 
@@ -264,7 +264,7 @@ def pdf(text):
 
     with open('output.pdf', 'wb') as f:
         pdf.output(f)
-    
+
     pdf_file = io.BytesIO()
 
     pdf.output(pdf_file)
