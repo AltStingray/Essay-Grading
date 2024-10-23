@@ -275,8 +275,8 @@ def pdf(text):
     c.setFont("Helvetica", 12)
 
     decoded_text = text.getvalue().decode("utf-8", errors="replace")
-
-    print(decoded_text)
+    
+    print(type(decoded_text))
 
     y_position = height - 40
     for line in decoded_text.split('\n'):
