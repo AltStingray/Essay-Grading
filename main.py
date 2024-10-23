@@ -272,12 +272,16 @@ def pdf(text):
     c = canvas.Canvas(pdf_file, pagesize=letter)
     width, height = letter
 
-    c.setFont("Helvetica", 12)
+    c.setFont("Helvetica", 11)
 
     decoded_text = text.getvalue().decode("utf-8", errors="replace")
 
     y_position = height - 40
     for line in decoded_text.split('\n'):
+        if y_position <= 40: # add new page
+            c.showPage()
+            c.setFont("Helvetica", 11)
+            y_position = height - 40
         c.drawString(40, y_position, line)
         y_position -= 15
 
