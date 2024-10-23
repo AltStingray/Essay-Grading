@@ -192,6 +192,7 @@ def grading():
     return render_template('grading.html')
 
 
+
 @app.route('/about')
 def about():
 
@@ -252,7 +253,7 @@ def main(link, access_token, user_prompt):
 
 def pdf(text):
 
-    decoded_text = text.getvalue().decode("utf-8")
+    decoded_text = text.getvalue().decode("utf-8", errors="replace")
 
     pdf = FPDF()
 
