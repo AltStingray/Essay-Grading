@@ -264,7 +264,7 @@ def pdf(text):
     c = canvas.Canvas(text, pagesize=letter)
     width, height = letter
 
-    c.setFont("Arial", 12)
+    c.setFont("Helvetica", 12)
 
     decoded_text = text.getvalue().decode("utf-8", errors="replace")
 
