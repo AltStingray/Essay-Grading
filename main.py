@@ -14,8 +14,6 @@ from openai import OpenAI
 from db_postgres import *
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
-from reportlab.platypus import SimpleDocTemplate, Paragraph
-from reportlab.lib.styles import getSampleStyleSheet
 
 OPENAI_API_KEY = os.environ.get("N_OPENAI_API_KEY")
 
@@ -191,15 +189,37 @@ def logs_download(id, name):
 @app.route('/grading')
 def grading():
 
+    job_id = session["job_id_2"]
+
+    job = Job.fetch(job_id, connection=conn)
+
+    result = job.return_value()
+
+    if result:
+        return render_template('grading.html', name="finish", result=result)
+    else:
+        return render_template('grading.html')
+
+@app.route('/waiting')
+def waiting():
+
     text = request.args.get("text")
 
     prompt = "You are an IETLS teacher that provides feedback on candidate's essays. In the section 'Grammar Mistakes' you point out grammar mistakes and in the section 'Improvement Suggestions' you provide improvement suggestions on the candidate's essay. Mark mistakes with the red color, cross line and red highlight color; display the correct words beside them with a green color and a green highlight color. The same way display punctuation mistakes. Make a pop-up window appear once clicked on the wrong word. The information in the pop-up window have to address the mistake. This should be accomplished in HTML format. After it provide the corrected version of the essay. Next, provide candidate with the feedback based on the following parameters, where parameters are bold and feedback is green colored: Task Fulfillment, Relevance & Completeness of Information, Grammatical Usage, Vocabulary Usage, Connections & Coherence, Connection between Lecture & Reading. "
-    
-    #grade = OpenAI(prompt, text)
 
-    return render_template('grading.html')
+    job_queue = q.enqueue(OpenAI, prompt, text)
 
-#@app.route('/')
+    job_id = job_queue.get_id()
+
+    session["job_id_2"] = job_id
+
+    job = Job.fetch(job_id, connection=conn)
+
+    if job.is_finished:
+        return redirect(url_for("grading"))
+    else:
+        return render_template('grading.html', name="wait")
+
 
 @app.route('/about')
 def about():
@@ -269,31 +289,31 @@ def OpenAI(prompt, content):
 def pdf(text):
 
     pdf_file = io.BytesIO()
-
-    doc = SimpleDocTemplate(pdf_file, pagesize=letter)
-    styles = getSampleStyleSheet()
-    flowables = []
-
+    c = canvas.Canvas(pdf_file, pagesize=letter)
     width, height = letter
 
-    #c.setFont("Helvetica", 11)
+    left_margin = 40
+    right_margin = width - 40
+    top_margin = height - 40
+    bottom_margin = 40
+
+    c.setFont("Helvetica", 12)
 
     decoded_text = text.getvalue().decode("utf-8", errors="replace")
 
-    flowables.append(Paragraph(decoded_text, styles["Normal"]))
+    y_position = top_margin
+    line_height = 15
 
-    #y_position = height - 40
-    #for line in decoded_text.split('\n'):
-    #    if y_position <= 40: # add new page
-    #        c.showPage()
-    #        c.setFont("Helvetica", 11)
-    #        y_position = height - 40
-    #    c.drawString(40, y_position, line)
-    #    y_position -= 15
+    for line in decoded_text.split('\n'):
+        if y_position <= bottom_margin: # add new page
+            c.showPage()
+            c.setFont("Helvetica", 12)
+            y_position = top_margin
+        c.drawString(left_margin, y_position, line)
 
-    #c.save()
+        y_position -= 15
 
-    doc.build(flowables)
+    c.save()
 
     pdf_file.seek(0)
 
