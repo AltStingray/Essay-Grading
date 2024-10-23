@@ -46,13 +46,13 @@ def db(command):
         pass
 
 
-def delete_data_from_table(id1, id2):
+def delete_data_from_table(id):
 
     db_conn = psycopg2.connect(DATABASE)
 
     cursor = db_conn.cursor()
 
-    cursor.execute(f"DELETE FROM Logs WHERE id=('{id1}', '{id2}')")
+    cursor.execute(f"DELETE FROM Logs WHERE id=('{id}')")
 
     db_conn.commit()
 
