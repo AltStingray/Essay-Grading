@@ -252,14 +252,19 @@ def main(link, access_token, user_prompt):
 
 def pdf(text):
 
+    decoded_text = text.get_value().decode("utf-8")
+
     pdf = FPDF()
 
     pdf.add_page()
 
     pdf.set_font("Arial", size=13)
 
-    pdf.multi_cell(0, 10, text)
+    pdf.multi_cell(0, 10, decoded_text)
 
+    with open('output.pdf', 'wb') as f:
+        pdf.output(f)
+    
     pdf_file = io.BytesIO()
 
     pdf.output(pdf_file)
