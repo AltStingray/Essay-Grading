@@ -208,7 +208,7 @@ def waiting():
 
     prompt = "You are an IETLS teacher that provides feedback on candidate's essays. In the section 'Grammar Mistakes' you point out grammar mistakes and in the section 'Improvement Suggestions' you provide improvement suggestions on the candidate's essay. Mark mistakes with the red color, cross line and red highlight color; display the correct words beside them with a green color and a green highlight color. The same way display punctuation mistakes. Make a pop-up window appear once clicked on the wrong word. The information in the pop-up window have to address the mistake. This should be accomplished in HTML format. After it provide the corrected version of the essay. Next, provide candidate with the feedback based on the following parameters, where parameters are bold and feedback is green colored: Task Fulfillment, Relevance & Completeness of Information, Grammatical Usage, Vocabulary Usage, Connections & Coherence, Connection between Lecture & Reading. "
 
-    job_queue = q.enqueue(OpenAI, prompt, text)
+    job_queue = q.enqueue(RunOpenAI, prompt, text)
 
     job_id = job_queue.get_id()
 
@@ -263,7 +263,7 @@ def main(link, access_token, user_prompt):
     else:
         prompt = "I run an online OET speaking mock test service where candidates act as doctors, nurses or other medical practitioners and practice roleplay scenarios with a teacher who acts as the patient or the patient's relative. After each session, we provide a detailed report to the candidate, highlighting their performance. You are given a dialogue text delimited by triple quotes on the topic of medicine. Please summarise the teacher's feedback on the candidate's grammar, lexical choices, pronunciation, and overall communication skills. In the overall communication skills section, use the five categories in the clinical communication criteria table in the knowledge file delimited by triple quotes. Summarise the teacher's feedback on the candidate's performance. Structure the report with sections for each roleplay and an overall performance summary which includes a table with 2 columns called areas that you are doing well and areas that you need to improve. The output text will be stored in a docx format file, so make the table relevant to this format. You are not limited by a particular range of words, so provide detailed report with at least 4000 charaters." 
 
-    summary_report = OpenAI(prompt, transcription)
+    summary_report = RunOpenAI(prompt, transcription)
 
     #Saving results
     f_list = [summary_report, transcription]
@@ -271,7 +271,7 @@ def main(link, access_token, user_prompt):
     return f_list
 
 
-def OpenAI(prompt, content):
+def RunOpenAI(prompt, content):
 
     client = OpenAI(api_key=OPENAI_API_KEY)
 
