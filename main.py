@@ -188,14 +188,15 @@ def logs_download(id, name):
 
 @app.route('/grading')
 def grading():
+    
+    job_id = session.pop("job_id_2", None)
 
-    job_id = session["job_id_2"]
+    if job_id != None:
 
-    job = Job.fetch(job_id, connection=conn)
+        job = Job.fetch(job_id, connection=conn)
 
-    result = job.return_value()
+        result = job.return_value()
 
-    if result:
         return render_template('grading.html', name="finish", result=result)
     else:
         return render_template('grading.html')
