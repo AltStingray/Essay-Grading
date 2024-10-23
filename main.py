@@ -190,6 +190,12 @@ def logs_download(id, name):
 @app.route('/grading')
 def grading():
 
+    text = request.args.get("text")
+
+    prompt = "You are an IETLS teacher that provides feedback on candidate's essays. In the section 'Grammar Mistakes' you point out grammar mistakes and in the section 'Improvement Suggestions' you provide improvement suggestions on the candidate's essay. Mark mistakes with the red color, cross line and red highlight color; display the correct words beside them with a green color and a green highlight color. The same way display punctuation mistakes. Make a pop-up window appear once clicked on the wrong word. The information in the pop-up window have to address the mistake. This should be accomplished in HTML format. After it provide the corrected version of the essay. Next, provide candidate with the feedback based on the following parameters, where parameters are bold and feedback is green colored: Task Fulfillment, Relevance & Completeness of Information, Grammatical Usage, Vocabulary Usage, Connections & Coherence, Connection between Lecture & Reading. "
+    
+    #grade = OpenAI(prompt, text)
+
     return render_template('grading.html')
 
 #@app.route('/')
@@ -261,12 +267,16 @@ def OpenAI(prompt, content):
 
 def pdf(text):
 
-    c = canvas.Canvas(text, pagesize=letter)
+    pdf_file = io.BytesIO
+
+    c = canvas.Canvas(pdf_file, pagesize=letter)
     width, height = letter
 
     c.setFont("Helvetica", 12)
 
     decoded_text = text.getvalue().decode("utf-8", errors="replace")
+
+    print(decoded_text)
 
     y_position = height = 40
     for line in decoded_text.split('\n'):
@@ -275,9 +285,9 @@ def pdf(text):
 
     c.save
 
-    text.seek(0)
+    pdf_file.seek(0)
 
-    return text
+    return pdf_file
 
 
 

@@ -6,4 +6,68 @@
         <input type="text" name="text">
         <input type="submit" value="Submit"
     </form>
+    <title>Essay Feedback</title>
+    <style>
+          .red {
+              color: red;
+              background-color: yellow;
+              text-decoration: line-through;
+          }
+          .green {
+              color: green;
+              background-color: lightgreen;
+          }
+          .popup {
+              position: relative;
+              display: inline-block;
+              cursor: pointer;
+          }
+          .popup .popuptext {
+              visibility: hidden;
+              width: 200px;
+              background-color: #555;
+              color: #fff;
+              text-align: center;
+              border-radius: 6px;
+              padding: 8px 0;
+              position: absolute;
+              z-index: 1;
+              bottom: 125%;
+              left: 50%;
+              margin-left: -100px;
+          }
+          .popup .popuptext::after {
+              content: "";
+              position: absolute;
+              top: 100%;
+              left: 50%;
+              margin-left: -5px;
+              border-width: 5px;
+              border-style: solid;
+              border-color: #555 transparent transparent transparent;
+          }
+          .popup:hover .popuptext {
+              visibility: visible;
+          }
+      </style>
+  </head>
+  <body>
+      <h2>Essay with Feedback</h2>
+      <p>
+          Several <span class="popup red">doubt<span class="popuptext">Use plural 'doubts' as it is referring to multiple items.</span></span> <span class="green">doubts</span> about the accuracy of the memoir <span class="popup red">writting<span class="popuptext">Incorrect spelling, should be 'written'.</span></span> <span class="green">written</span> by the Chevalier de Seingalt are raised in the reading but the professor <span class="popup red">clarify<span class="popuptext">Subject-verb agreement issue. The correct form is 'clarifies'.</span></span> <span class="green">clarifies</span> the seeming contradictions in the Chevalier's accounts to defend the memoir. The professor <span class="popup red">explain<span class="popuptext">Subject-verb agreement issue. The correct form is 'explains'.</span></span> <span class="green">explains</span> that the Chevalier <span class="popup red">rich<span class="popuptext">Missing verb. Should be 'was rich'.</span></span> <span class="green">was rich</span> in assets, but poor in <span class="popup red">the<span class="popuptext">Unnecessary article 'the'.</span></span> <span class="green">(remove 'the')</span> cash, while he lived in Switzerland and had to occasionally borrow funds while waiting for <span class="popup red">its<span class="popuptext">Incorrect pronoun. Use 'his'.</span></span> <span class="green">his</span> assets to <span class="popup red">selling<span class="popuptext">Incorrect form. Should be 'be sold'.</span></span> <span class="green">be sold</span>. Accordingly, <span class="popup red">to the professor,<span class="popuptext">Incorrect phrase. Should be 'according to the professor'.</span></span> <span class="green">according to the professor</span>, being low on cash <span class="popup red">fund<span class="popuptext">Unnecessary noun 'fund'.</span></span> <span class="green">(remove 'fund')</span> is not <span class="popup red">same<span class="popuptext">Missing article. Should be 'the same'.</span></span> <span class="green">the same</span> as being financially <span class="popup red">poors<span class="popuptext">Incorrect form. Should be 'poor'.</span></span> <span class="green">poor</span>. However, in reading someone who <span class="popup red">borrowing<span class="popuptext">Incorrect participle. Should be 'borrows'.</span></span> <span class="green">borrows</span> large <span class="popup red">of<span class="popuptext">Incorrect phrase. Should be 'amounts of'.</span></span> <span class="green">amounts of</span> money could not be <span class="popup red">wealth<span class="popuptext">Incorrect form. Should be 'wealthy'.</span></span> <span class="green">wealthy</span>, therefore the Chevalier must have <span class="popup red">lied<span class="popuptext">Incorrect verb choice. Use 'lied about'.</span></span> <span class="green">lied about</span> his wealthy life in Switzerland. The skepticism <span class="popup red">regards<span class="popuptext">Incorrect preposition. Should be 'regarding'.</span></span> <span class="green">regarding</span> the reliability of the recorded conversations with Voltaire is <span class="popup red">challenging<span class="popuptext">Incorrect form. Should be 'challenged'.</span></span> <span class="green">challenged</span> by the professor as well. She explains that, due to habit of recording each conversation with Voltaire immediately afterward, the Chevalier was able to recall those discussions in detail even after several years had <span class="popup red">passing<span class="popuptext">Incorrect form. Should be 'passed'.</span></span> <span class="green">passed</span>. Finally, the professor <span class="popup red">refute<span class="popuptext">Incorrect form. Should be 'refutes'.</span></span> <span class="green">refutes</span> the idea <span class="popup red">briber<span class="popuptext">Incorrect noun form. Should be 'bribery'.</span></span> <span class="green">bribery</span> was how the Chevalier got out of prison. She <span class="popup red">point<span class="popuptext">Subject-verb agreement issue. The correct form is 'points'.</span></span> <span class="green">points</span> out that because even the other prisoners who had better resources were unable to successfully bribe their way out of prison it was very unlikely that bribery was how he escaped. Also, she notes the <span class="popup red">existences<span class="popuptext">Incorrect form. Should be 'existence'.</span></span> <span class="green">existence</span> of government papers recording repair work done to the <span class="popup red">Chevaliers<span class="popuptext">Possessive form should be 'Chevalier's'.</span></span> <span class="green">Chevalier's</span> prison cell ceiling as strong evidence that his <span class="popup red">escaping<span class="popuptext">Use 'escape' in this context.</span></span> <span class="green">escape</span> from the prison was accurately recorded.
+      </p>
+      <h2>Corrected Essay</h2>
+      <p>
+          Several doubts about the accuracy of the memoir written by the Chevalier de Seingalt are raised in the reading, but the professor clarifies the seeming contradictions in the Chevalier's accounts to defend the memoir. The professor explains that the Chevalier was rich in assets, but poor in cash, while he lived in Switzerland and had to occasionally borrow funds while waiting for his assets to be sold. According to the professor, being low on cash is not the same as being financially poor. However, in reading, someone who borrows large amounts of money could not be wealthy, therefore the Chevalier must have lied about his wealthy life in Switzerland. The skepticism regarding the reliability of the recorded conversations with Voltaire is challenged by the professor as well. She explains that, due to the habit of recording each conversation with Voltaire immediately afterward, the Chevalier was able to recall those discussions in detail even after several years had passed. Finally, the professor refutes the idea that bribery was how the Chevalier got out of prison. She points out that because even the other prisoners who had better resources were unable to successfully bribe their way out of prison, it was very unlikely that bribery was how he escaped. Also, she notes the existence of government papers recording repair work done to the Chevalier's prison cell ceiling as strong evidence that his escape from the prison was accurately recorded.
+      </p>
+      <h2>Feedback</h2>
+      <ul>
+          <li><strong style="color:green">Task Fulfillment:</strong> The essay sufficiently addresses the prompt by comparing the reading with the professor's perspective.</li>
+          <li><strong style="color:green">Relevance & Completeness of Information:</strong> The candidate includes all relevant information discussed by both the reading and professor, though some fine details may need enhancement.</li>
+          <li><strong style="color:green">Grammatical Usage:</strong> Several grammatical errors were found, particularly with subject-verb agreement and incorrect forms. Addressing these will improve the clarity of the essay.</li>
+          <li><strong style="color:green">Vocabulary Usage:</strong> Vocabulary choice is generally appropriate, though there are instances of incorrect word forms that slightly impede comprehension.</li>
+          <li><strong style="color:green">Connections & Coherence:</strong> The essay flows logically, yet improving transitions between points will enhance coherence.</li>
+          <li><strong style="color:green">Connection between Lecture & Reading:</strong> Adequately connects the professor's arguments to the points raised in the reading passage.</li>
+      </ul>
+  </body>
 {% endblock content %}
