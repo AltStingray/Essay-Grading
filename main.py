@@ -31,7 +31,7 @@ app.config["SESSION_USE_SIGNER"] = True
 
 q = Queue(connection=conn)
 
-delete_data_from_table([6, 7, 8, 9, 10, 11])
+delete_data_from_table(id1=6, id2=7)
 
 #db("create") #can be used to create postgres table only for the first time; to make update to an existing table or to delete it
 
