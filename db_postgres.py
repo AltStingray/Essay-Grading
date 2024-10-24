@@ -31,13 +31,14 @@ def db(command):
 
     elif command == "alter":
         #alter/update table
-        #cursor.execute("""ALTER TABLE Logs ADD filename VARCHAR(255)""")
+        
+        cursor.execute("""ALTER TABLE Logs ADD filename VARCHAR(255)""")
         cursor.execute("""ALTER SEQUENCE Logs RESTART WITH 3""")
         #"""SELECT setval('id', 2)"""
 
     elif command == "delete":
         #delete table
-        cursor.execute("""DROP DATABASE IF EXISTS Log""")
+        cursor.execute("""DROP DATABASE Logs""")
             
         db_conn.commit() # Commiting to make changes persistent 
 

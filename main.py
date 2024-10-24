@@ -32,9 +32,9 @@ app.config["SESSION_USE_SIGNER"] = True
 q = Queue(connection=conn)
 
 #delete_data_from_table(id1=8, id2=9, id3=10, id4=11)
-
+db("delete")
+db("create")
 db("print")
-db("alter")
 
 
 @app.route('/') #Use the route() decorator to bind a function to a URL.
