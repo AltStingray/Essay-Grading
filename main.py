@@ -233,7 +233,6 @@ def grading_results():
     print(result)
 
     #result = result.replace("```", "")
-    return render_template('essay.html', result=result)
     return render_template('grading.html', name="finish", result=result)
 
 
