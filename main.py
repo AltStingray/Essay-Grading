@@ -218,6 +218,7 @@ def grading_processing():
     if job.is_finished:
         return redirect(url_for("grading_results"))
     else:
+        time.sleep(1)
         return render_template('grading.html', name="wait")
     
 @app.route('/grading/results')
@@ -276,7 +277,7 @@ def main(link, access_token, user_prompt):
     if user_prompt != None:
         prompt = user_prompt
     else:
-        prompt = "I run an online OET speaking mock test service where candidates act as doctors, nurses or other medical practitioners and practice roleplay scenarios with a teacher who acts as the patient or the patient's relative. After each session, we provide a detailed report to the candidate, highlighting their performance. You are given a dialogue text delimited by triple quotes on the topic of medicine. Please summarise the teacher's feedback on the candidate's grammar, lexical choices, pronunciation, and overall communication skills. In the overall communication skills section, use the five categories in the clinical communication criteria table in the knowledge file delimited by triple quotes. Summarise the teacher's feedback on the candidate's performance. Structure the report with sections for each roleplay and an overall performance summary which includes a table with 2 columns called areas that you are doing well and areas that you need to improve. The output text will be stored in a docx format file, so make the table relevant to this format. You are not limited by a particular range of words, so provide detailed report with at least 4000 charaters." 
+        prompt = "You are an IETLS teacher that provides feedback on a candidate's essays. You are given an essay text delimited by triple quotes. In the section ‘Grammar Mistakes’ you point out grammar mistakes and in the section ‘Improvement Suggestions’ you provide improvement suggestions. Mark grammar mistakes with a red underline. The same way display punctuation mistakes. Make a pop-up window appear once hover over with a mouse on the mistake(grammar or punctuation). The information in the pop-up window has to address the mistake, displaying the correct word/symbol in green first, then a little description. With a light yellow colour highlight the repetitive words. With a light green colour highlight linking words. This should be accomplished in a raw HTML format. After that, provide the corrected version of the essay. Next, provide candidate with the feedback based on the following parameters, where the parameter words are bold and black and the feedback description is green colored: Task Fulfillment, Relevance & Completeness of Information, Grammatical Usage, Vocabulary Usage, Connections & Coherence, Connection between Lecture & Reading" 
 
     summary_report = RunOpenAI(prompt, transcription)
 
