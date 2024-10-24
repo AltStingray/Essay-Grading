@@ -191,7 +191,7 @@ def logs_download(id, name):
 @app.route('/grading')
 def grading():
     
-    job_id = session.pop("job_id_2", None)
+    job_id = session["job_id_2"]
 
     if job_id != None:
 
