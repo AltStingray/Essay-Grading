@@ -191,17 +191,7 @@ def logs_download(id, name):
 @app.route('/grading')
 def grading():
     
-    job_id = session["job_id_2"]
-
-    if job_id != None:
-
-        job = Job.fetch(job_id, connection=conn)
-
-        result = job.return_value()
-
-        return render_template('grading.html', name="finish", result=result)
-    else:
-        return render_template('grading.html')
+    return render_template('grading.html')
 
 @app.route('/grading/queue')
 def grading_queue():
@@ -226,9 +216,22 @@ def grading_processing():
     job = Job.fetch(job_id, connection=conn)
 
     if job.is_finished:
-        return redirect(url_for("grading"))
+        return redirect(url_for("grading_results"))
     else:
         return render_template('grading.html', name="wait")
+    
+@app.route('/grading/results')
+def grading_results():
+
+    job_id = session["job_id_2"]
+
+    job = Job.fetch(job_id, connection=conn)
+
+    result = job.return_value()
+    print(type(result))
+
+    return render_template('grading.html', name="finish", result=str(result))
+
 
 
 @app.route('/about')
