@@ -32,6 +32,7 @@ app.config["SESSION_USE_SIGNER"] = True
 q = Queue(connection=conn)
 
 #delete_data_from_table(id1=8, id2=9, id3=10, id4=11)
+db("create")
 db("print")
 
 
