@@ -228,7 +228,6 @@ def grading_results():
     job = Job.fetch(job_id, connection=conn)
 
     result = job.return_value()
-    print(type(result))
 
     return render_template('grading.html', name="finish", result=str(result))
 
