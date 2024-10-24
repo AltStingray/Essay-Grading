@@ -31,7 +31,7 @@ def db(command):
 
     elif command == "Alter":
         #alter/update table
-        cursor.execute("""ALTER TABLE Logs ADD filename VARCHAR(255) NOT NULL)""")
+        cursor.execute("""ALTER TABLE Logs ADD filename VARCHAR(255) NOT NULL""")
         cursor.execute("""ALTER SEQUENCE id RESTART 3""")
         #"""SELECT setval('id', 2)"""
 
