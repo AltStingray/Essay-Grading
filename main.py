@@ -113,13 +113,12 @@ def results():
     job = Job.fetch(job_id, connection=conn)
 
     if job.is_finished:
+        executed = False
+        session["executed"] = executed
         return render_template('results.html')
     else:
         time.sleep(1)
         return render_template('processing.html')
-
-executed = False
-session["executed"] = executed
 
 @app.route('/download', methods=["GET"])
 def download():
