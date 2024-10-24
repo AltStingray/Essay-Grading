@@ -206,7 +206,7 @@ def grading_queue():
 
     session["job_id_2"] = job_id
 
-    return redirect(url_for("grading_processing"))
+    return redirect(url_for("grading/processing"))
 
 @app.route('/grading/processing')
 def grading_processing():
