@@ -19,6 +19,7 @@ def db(command):
                     id SERIAL PRIMARY KEY,
                     summary BYTEA NOT NULL,
                     transcription BYTEA NOT NULL,
+                    filename VARCHAR(255) NOT NULL,
                     upload_time TIMESTAMP DEFAULT NOW()
                             )""")
             
@@ -28,9 +29,11 @@ def db(command):
         db_conn.close()
         print("DB created successfully!")
 
-    elif command == "update":
-        #update table
-        pass
+    elif command == "Alter":
+        #alter/update table
+        cursor.execute("""ALTER TABLE Logs ADD filename VARCHAR(255) NOT NULL)""")
+        cursor.execute("""ALTER SEQUENCE id RESTART 3""")
+        #"""SELECT setval('id', 2)"""
 
     elif command == "delete":
         #delete table
@@ -62,13 +65,13 @@ def delete_data_from_table(id1, id2, id3, id4):
     return "Data has been deleted from the database successfully!"
 
 
-def db_store(summary_report, transcription):
+def db_store(summary_report, transcription, filename):
 
     db_conn = psycopg2.connect(DATABASE)
 
     cursor = db_conn.cursor()
 
-    cursor.execute(f"INSERT INTO Logs(summary, transcription) VALUES(%s, %s);", (summary_report, transcription))
+    cursor.execute(f"INSERT INTO Logs(summary, transcription, filename) VALUES(%s, %s, %s);", (summary_report, transcription, filename))
 
     db_conn.commit()
 
@@ -107,7 +110,7 @@ def db_retrieve(file_id):
 
     cursor = db_conn.cursor()
 
-    cursor.execute("SELECT summary, transcription FROM Logs WHERE id = %s", (str(file_id)))
+    cursor.execute("SELECT summary, transcription, filename FROM Logs WHERE id = %s", (str(file_id)))
 
     file = cursor.fetchone()
 

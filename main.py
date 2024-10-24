@@ -31,7 +31,7 @@ app.config["SESSION_USE_SIGNER"] = True
 
 q = Queue(connection=conn)
 
-delete_data_from_table(id1=8, id2=9, id3=10, id4=11)
+delete_data_from_table("Alter") #id1=8, id2=9, id3=10, id4=11
 
 #db("create") #can be used to create postgres table only for the first time; to make update to an existing table or to delete it
 
@@ -113,8 +113,13 @@ def results():
     job = Job.fetch(job_id, connection=conn)
 
     if job.is_finished:
-        executed = False
-        session["executed"] = executed
+
+        job = Job.fetch(job_id, connection=conn)
+
+        result = job.return_value()
+
+        db_store(result[0], result[1], result[2])
+
         return render_template('results.html')
     else:
         time.sleep(1)
@@ -122,7 +127,6 @@ def results():
 
 @app.route('/download', methods=["GET"])
 def download():
-    global has_executed
 
     def retrieve(result):
 
@@ -132,37 +136,30 @@ def download():
 
         return file_object
             
-        
     job_id = session["job_id"]
 
     job = Job.fetch(job_id, connection=conn)
 
     result = job.return_value()
 
-    executed = session["executed"]
-
-    if executed == False:
-        db_store(result[0], result[1])
-        executed = True
-        session["executed"] = executed
-
     summary_report = retrieve(result[0])
     transcription = retrieve(result[1])
+    filename = result[2]
 
     pick_one = request.args.get("pick_one")
 
     if pick_one == "Summary report.odt":
-        return send_file(summary_report, as_attachment=True, download_name="summary_report.odt", mimetype="application/vnd.oasis.opendocument.text")
+        return send_file(summary_report, as_attachment=True, download_name=f"summary_report_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif pick_one == "Transcription.odt":
-        return send_file(transcription, as_attachment=True, download_name="transcription.odt", mimetype="application/vnd.oasis.opendocument.text")
+        return send_file(transcription, as_attachment=True, download_name=f"transcription_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif pick_one == "Summary report.docx":
-        return send_file(summary_report, as_attachment=True, download_name="summary_report.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+        return send_file(summary_report, as_attachment=True, download_name=f"summary_report_{filename}.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
     elif pick_one == "Transcription.docx":
-        return send_file(transcription, as_attachment=True, download_name="transcription.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+        return send_file(transcription, as_attachment=True, download_name=f"transcription_{filename}.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
     elif pick_one == "Summary report.pdf":
-        return send_file(pdf(summary_report), as_attachment=True, download_name="summary_report.pdf", mimetype="application/pdf")
+        return send_file(pdf(summary_report), as_attachment=True, download_name=f"summary_report_{filename}.pdf", mimetype="application/pdf")
     else:
-        return send_file(pdf(transcription), as_attachment=True, download_name="transcription.pdf", mimetype="application/pdf")
+        return send_file(pdf(transcription), as_attachment=True, download_name=f"transcription_{filename}.pdf", mimetype="application/pdf")
 
 
 @app.route('/history')
@@ -176,6 +173,8 @@ def history():
 def logs_download(id, name):
 
     logs = db_retrieve(file_id=id)
+
+    filename = logs[2]
 
     if name == "Summary report.odt":
         return send_file(logs[0], as_attachment=True, download_name=f"summary_report.odt", mimetype="application/vnd.oasis.opendocument.text")
@@ -250,7 +249,7 @@ def register():
 def main(link, access_token, user_prompt):
 
     #Downloading the video
-    downloaded_video = (dropbox_module.download_file(link, access_token))
+    downloaded_video, filename = (dropbox_module.download_file(link, access_token))
 
     #Making a usable object out of the VideoFileClip(video) class
     video = VideoFileClip(downloaded_video.name)
@@ -275,7 +274,7 @@ def main(link, access_token, user_prompt):
     summary_report = RunOpenAI(prompt, transcription)
 
     #Saving results
-    f_list = [summary_report, transcription]
+    f_list = [summary_report, transcription, filename]
 
     return f_list
 

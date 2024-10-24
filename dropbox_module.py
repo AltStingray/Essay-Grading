@@ -38,11 +38,10 @@ def download_file(url, access_token):
 
         try:
             metadata, res = dbx.sharing_get_shared_link_file(url)
-            print(f"\n\nName of the video: {metadata.name}\n\n")
             file.write(res.content)
             print("File downloaded successfully!")
 
         except dropbox.exceptions.ApiError as err:
             print(f"Error: {err}")
 
-    return file
+    return file, metadata.name
