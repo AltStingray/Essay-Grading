@@ -118,7 +118,8 @@ def results():
         time.sleep(1)
         return render_template('processing.html')
 
-has_executed = False # Global flag
+executed = False
+session["executed"] = executed
 
 @app.route('/download', methods=["GET"])
 def download():
@@ -139,15 +140,18 @@ def download():
 
     result = job.return_value()
 
-    if not has_executed:
+    executed = session["executed"]
+
+    if executed == False:
         db_store(result[0], result[1])
-        has_executed == True
+        executed = True
+        session["executed"] = executed
 
     summary_report = retrieve(result[0])
     transcription = retrieve(result[1])
 
     pick_one = request.args.get("pick_one")
-    #io.BytesIO(result[0]
+
     if pick_one == "Summary report.odt":
         return send_file(summary_report, as_attachment=True, download_name="summary_report.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif pick_one == "Transcription.odt":
@@ -206,27 +210,26 @@ def waiting():
 
     try:
         job_id = session["job_id_2"]
+    except: TypeError
 
-        if job_id == None:
+    if job_id == None:
 
-            text = request.args.get("text")
+        text = request.args.get("text")
 
-            prompt = "You are an IETLS teacher that provides feedback on candidate's essays. In the section 'Grammar Mistakes' you point out grammar mistakes and in the section 'Improvement Suggestions' you provide improvement suggestions on the candidate's essay. Mark mistakes with the red color, cross line and red highlight color; display the correct words beside them with a green color and a green highlight color. The same way display punctuation mistakes. Make a pop-up window appear once clicked on the wrong word. The information in the pop-up window have to address the mistake. This should be accomplished in HTML format. After it provide the corrected version of the essay. Next, provide candidate with the feedback based on the following parameters, where parameters are bold and feedback is green colored: Task Fulfillment, Relevance & Completeness of Information, Grammatical Usage, Vocabulary Usage, Connections & Coherence, Connection between Lecture & Reading. "
+        prompt = "You are an IETLS teacher that provides feedback on candidate's essays. In the section 'Grammar Mistakes' you point out grammar mistakes and in the section 'Improvement Suggestions' you provide improvement suggestions on the candidate's essay. Mark mistakes with the red color, cross line and red highlight color; display the correct words beside them with a green color and a green highlight color. The same way display punctuation mistakes. Make a pop-up window appear once clicked on the wrong word. The information in the pop-up window have to address the mistake. This should be accomplished in HTML format. After it provide the corrected version of the essay. Next, provide candidate with the feedback based on the following parameters, where parameters are bold and feedback is green colored: Task Fulfillment, Relevance & Completeness of Information, Grammatical Usage, Vocabulary Usage, Connections & Coherence, Connection between Lecture & Reading. "
 
-            job_queue = q.enqueue(RunOpenAI, prompt, text)
+        job_queue = q.enqueue(RunOpenAI, prompt, text)
 
-            job_id = job_queue.get_id()
+        job_id = job_queue.get_id()
 
-            session["job_id_2"] = job_id
+        session["job_id_2"] = job_id
 
-            job = Job.fetch(job_id, connection=conn)
+        job = Job.fetch(job_id, connection=conn)
 
-        if job.is_finished:
-            return redirect(url_for("grading"))
-        else:
-            return render_template('grading.html', name="wait")
-
-    except: TypeError, UnboundLocalError
+    if job.is_finished:
+        return redirect(url_for("grading"))
+    else:
+        return render_template('grading.html', name="wait")
 
 
 @app.route('/about')
