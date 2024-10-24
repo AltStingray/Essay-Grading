@@ -193,7 +193,7 @@ def grading():
     
     return render_template('grading.html')
 
-@app.route('/grading/queue')
+@app.route('/grading_queue')
 def grading_queue():
 
     text = request.args.get("text")
@@ -208,7 +208,7 @@ def grading_queue():
 
     return redirect(url_for("grading_processing"))
 
-@app.route('/grading/processing')
+@app.route('/grading_processing')
 def grading_processing():
     
     job_id = session["job_id_2"]
@@ -220,7 +220,7 @@ def grading_processing():
     else:
         return render_template('grading.html', name="wait")
     
-@app.route('/grading/results')
+@app.route('/grading_results')
 def grading_results():
 
     job_id = session["job_id_2"]
