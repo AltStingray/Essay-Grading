@@ -2,7 +2,9 @@
 {% block content %}
     {% if name == "finish" %}
         <h1>Essay Grading</h1>
-        {{ result | safe }}
+        <div>
+            {{ result | safe }}
+        </div>
     {% elif name == "wait" %}
         <h1>Essay Grading</h1>
         <h1>Processing the submitted text, please wait...</h1>

@@ -198,7 +198,7 @@ def grading_queue():
 
     text = request.args.get("text")
 
-    prompt = "You are an IETLS teacher that provides feedback on a candidate's essays. You are given an essay text delimited by triple quotes. In the section ‘Grammar Mistakes’ you point out grammar mistakes and in the section ‘Improvement Suggestions’ you provide improvement suggestions. Mark grammar mistakes with a red underline. The same way display punctuation mistakes. Make a pop-up window appear once hover over with a mouse on the mistake(grammar or punctuation). The information in the pop-up window has to address the mistake, displaying the correct word/symbol in green first, then a little description. With a light yellow colour highlight the repetitive words. With a light green colour highlight linking words. This should be accomplished in a raw HTML format. After that, provide the corrected version of the essay. Next, provide candidate with the feedback based on the following parameters, where the parameter words are bold and black and the feedback description is green colored: Task Fulfillment, Relevance & Completeness of Information, Grammatical Usage, Vocabulary Usage, Connections & Coherence, Connection between Lecture & Reading."
+    prompt = "You are an IETLS teacher that provides feedback on a candidate's essays. You are given an essay text delimited by triple quotes. In the section ‘Grammar Mistakes’ you point out grammar mistakes and in the section ‘Improvement Suggestions’ you provide improvement suggestions. Mark grammar mistakes with a red underline. The same way display punctuation mistakes. Make a pop-up window appear once hover over with a mouse on the mistake(grammar or punctuation). The information in the pop-up window has to address the mistake, displaying the correct word/symbol in green first, then a little description. With a light yellow colour highlight the repetitive words. With a light green colour highlight linking words. This should be accomplished in HTML format. After that, provide the corrected version of the essay. Next, provide candidate with the feedback based on the following parameters, where the parameter words are bold and black and the feedback description is green colored: Task Fulfillment, Relevance & Completeness of Information, Grammatical Usage, Vocabulary Usage, Connections & Coherence, Connection between Lecture & Reading."
 
     job_queue = q.enqueue(RunOpenAI, prompt, text)
 
@@ -232,7 +232,7 @@ def grading_results():
 
     print(result)
 
-    result = result.replace("```", "")
+    #result = result.replace("```", "")
 
     return render_template('grading.html', name="finish", result=result)
 
