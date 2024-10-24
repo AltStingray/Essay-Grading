@@ -203,26 +203,27 @@ def grading():
     else:
         return render_template('grading.html')
 
-@app.route('/waiting')
-def waiting():
+@app.route('/grading/queue')
+def grading_queue():
 
-    try:
-        job_id = session["job_id_2"]
-    except: TypeError
+    text = request.args.get("text")
 
-    if job_id == None:
+    prompt = "You are an IETLS teacher that provides feedback on candidate's essays. In the section 'Grammar Mistakes' you point out grammar mistakes and in the section 'Improvement Suggestions' you provide improvement suggestions on the candidate's essay. Mark mistakes with the red color, cross line and red highlight color; display the correct words beside them with a green color and a green highlight color. The same way display punctuation mistakes. Make a pop-up window appear once clicked on the wrong word. The information in the pop-up window have to address the mistake. This should be accomplished in HTML format. After it provide the corrected version of the essay. Next, provide candidate with the feedback based on the following parameters, where parameters are bold and feedback is green colored: Task Fulfillment, Relevance & Completeness of Information, Grammatical Usage, Vocabulary Usage, Connections & Coherence, Connection between Lecture & Reading. "
 
-        text = request.args.get("text")
+    job_queue = q.enqueue(RunOpenAI, prompt, text)
 
-        prompt = "You are an IETLS teacher that provides feedback on candidate's essays. In the section 'Grammar Mistakes' you point out grammar mistakes and in the section 'Improvement Suggestions' you provide improvement suggestions on the candidate's essay. Mark mistakes with the red color, cross line and red highlight color; display the correct words beside them with a green color and a green highlight color. The same way display punctuation mistakes. Make a pop-up window appear once clicked on the wrong word. The information in the pop-up window have to address the mistake. This should be accomplished in HTML format. After it provide the corrected version of the essay. Next, provide candidate with the feedback based on the following parameters, where parameters are bold and feedback is green colored: Task Fulfillment, Relevance & Completeness of Information, Grammatical Usage, Vocabulary Usage, Connections & Coherence, Connection between Lecture & Reading. "
+    job_id = job_queue.get_id()
 
-        job_queue = q.enqueue(RunOpenAI, prompt, text)
+    session["job_id_2"] = job_id
 
-        job_id = job_queue.get_id()
+    return redirect(url_for("grading/processing"))
 
-        session["job_id_2"] = job_id
+@app.route('/grading/processing')
+def grading_processing():
+    
+    job_id = session["job_id_2"]
 
-        job = Job.fetch(job_id, connection=conn)
+    job = Job.fetch(job_id, connection=conn)
 
     if job.is_finished:
         return redirect(url_for("grading"))
