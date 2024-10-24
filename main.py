@@ -229,7 +229,11 @@ def grading_results():
 
     result = job.return_value()
 
-    return render_template('grading.html', name="finish", result=str(result))
+    print(result)
+
+    result = result.replace('"""', '')
+
+    return render_template('grading.html', name="finish", result=result)
 
 
 
