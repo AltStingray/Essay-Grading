@@ -220,7 +220,7 @@ def grading_processing():
     else:
         return render_template('grading.html', name="wait")
     
-@app.route('/grading_results')
+@app.route('/grading/results')
 def grading_results():
 
     job_id = session["job_id_2"]
