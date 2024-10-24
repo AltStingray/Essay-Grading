@@ -177,13 +177,13 @@ def logs_download(id, name):
     filename = logs[2]
 
     if name == "Summary report.odt":
-        return send_file(logs[0], as_attachment=True, download_name=f"summary_report.odt", mimetype="application/vnd.oasis.opendocument.text")
+        return send_file(logs[0], as_attachment=True, download_name=f"summary_report_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif name == "Transcription.odt":
-        return send_file(logs[1], as_attachment=True, download_name=f"transcription.odt", mimetype="application/vnd.oasis.opendocument.text")
+        return send_file(logs[1], as_attachment=True, download_name=f"transcription_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif name == "Summary report.pdf":
-        return send_file(pdf(logs[0]), as_attachment=True, download_name=f"summary_report.pdf", mimetype="application/pdf")
+        return send_file(pdf(logs[0]), as_attachment=True, download_name=f"summary_report_{filename}.pdf", mimetype="application/pdf")
     elif name == "Transcription.pdf":
-        return send_file(pdf(logs[1]), as_attachment=True, download_name=f"transcription.pdf", mimetype="application/pdf")
+        return send_file(pdf(logs[1]), as_attachment=True, download_name=f"transcription_{filename}.pdf", mimetype="application/pdf")
     else:
         return logs
     

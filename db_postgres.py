@@ -31,7 +31,7 @@ def db(command):
 
     elif command == "alter":
         #alter/update table
-        
+
         cursor.execute("""ALTER TABLE Logs ADD filename VARCHAR(255)""")
         cursor.execute("""ALTER SEQUENCE Logs RESTART WITH 3""")
         #"""SELECT setval('id', 2)"""
@@ -108,8 +108,6 @@ def db_get_ids():
     for id in ids:
         ids_lst.append(id[0])
 
-    print(ids_lst)
-
     cursor.close()
     db_conn.close()
 
@@ -129,13 +127,14 @@ def db_retrieve(file_id):
     if file:
         summary = file[0]
         transcription = file[1]
+        filename = file[2]
         #upload_time = file[2]
 
         file_obj_s = io.BytesIO(summary)
         file_obj_t = io.BytesIO(transcription)
         #file_obj_ut = io.BytesIO(upload_time)
 
-        return [file_obj_s, file_obj_t]
+        return [file_obj_s, file_obj_t, filename]
 
     cursor.close()
     db_conn.close()
