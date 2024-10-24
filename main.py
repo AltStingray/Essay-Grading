@@ -232,7 +232,7 @@ def grading_results():
 
     print(result)
 
-    result = result.replace('"""', '')
+    result = result.replace("'''", "")
 
     return render_template('grading.html', name="finish", result=result)
 
