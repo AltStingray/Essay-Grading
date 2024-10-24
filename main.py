@@ -33,7 +33,8 @@ q = Queue(connection=conn)
 
 #delete_data_from_table(id1=8, id2=9, id3=10, id4=11)
 
-db("Alter")
+db("print")
+db("alter")
 
 
 @app.route('/') #Use the route() decorator to bind a function to a URL.

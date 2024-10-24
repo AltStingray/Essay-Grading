@@ -29,10 +29,10 @@ def db(command):
         db_conn.close()
         print("DB created successfully!")
 
-    elif command == "Alter":
+    elif command == "alter":
         #alter/update table
         cursor.execute("""ALTER TABLE Logs ADD filename VARCHAR(255)""")
-        cursor.execute("""ALTER SEQUENCE id RESTART 3""")
+        cursor.execute("""ALTER SEQUENCE id RESTART WITH 3""")
         #"""SELECT setval('id', 2)"""
 
     elif command == "delete":
@@ -44,6 +44,17 @@ def db(command):
         cursor.close()
         db_conn.close()
         print("DB deleted successfully!")
+
+    elif command == "print":
+        cursor.execute("SELECT * FROM Logs")
+
+        rows = cursor.fetchall()
+
+        for row in rows:
+            print(row)
+
+        cursor.close()
+        db_conn.close()
 
     else:
         pass
