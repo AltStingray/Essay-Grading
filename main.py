@@ -146,6 +146,7 @@ def download():
     summary_report = retrieve(result[0])
     transcription = retrieve(result[1])
     filename = result[2]
+    filename = filename.replace(".mp4", "")
 
     pick_one = request.args.get("pick_one")
 
@@ -314,17 +315,7 @@ def pdf(text):
     text = c.beginText(40, 750)
     text.setFont("Helvetica", 12)
     width, height = letter
-
-    from textwrap import wrap
-    for line in wrap(decoded_text, width=80):
-        text.textLine(line)
     
-    c.drawText(text)
-    c.save()
-
-    pdf_file.seek(0)
-
-    return pdf_file
     left_margin = 40
     right_margin = width - 40
     top_margin = height - 40
@@ -333,13 +324,21 @@ def pdf(text):
     line_height = 15
 
     for line in decoded_text.split('\n'):
-        if y_position <= bottom_margin: # add new page
-            c.showPage()
-            c.setFont("Helvetica", 12)
-            y_position = top_margin
-        c.drawString(left_margin, 40, line)
 
-        y_position -= 15
+        for word in decoded_text.split(" "):
+
+            if text.getX() > width:
+                c.drawString(left_margin, y_position)
+                y_position -= 14
+            
+            elif y_position <= bottom_margin: # add new page
+
+                c.showPage()
+                c.setFont("Helvetica", 12)
+                y_position = top_margin
+                c.drawString(left_margin, 40, line)
+
+            y_position -= 15
 
     c.save()
 
