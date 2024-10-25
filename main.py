@@ -327,7 +327,7 @@ def pdf(text):
             c.showPage()
             c.setFont("Helvetica", 12)
             y_position = top_margin
-            c.drawString(left_margin, 40, line)
+            c.drawString(left_margin, y_position, line)
 
         y_position -= 15
 
