@@ -313,7 +313,7 @@ def pdf(text):
     c = canvas.Canvas(pdf_file, pagesize=letter)
     width, height = letter
 
-    left_margin = 80
+    left_margin = 20
     right_margin = width - 40
     top_margin = height - 40
     bottom_margin = 40
