@@ -312,10 +312,9 @@ def pdf(text):
 
     pdf_file = io.BytesIO()
     c = canvas.Canvas(pdf_file, pagesize=letter)
-    text = c.beginText(40, 750)
-    text.setFont("Helvetica", 12)
+    c.setFont("Helvetica", 12)
     width, height = letter
-    
+
     left_margin = 40
     right_margin = width - 40
     top_margin = height - 40
@@ -325,20 +324,13 @@ def pdf(text):
 
     for line in decoded_text.split('\n'):
 
-        for word in decoded_text.split(" "):
+        if y_position <= bottom_margin: # add new page
+            c.showPage()
+            c.setFont("Helvetica", 12)
+            y_position = top_margin
+        c.drawString(left_margin, 40, line)
 
-            if text.getX() > width:
-                c.drawString(left_margin, y_position)
-                y_position -= 14
-            
-            elif y_position <= bottom_margin: # add new page
-
-                c.showPage()
-                c.setFont("Helvetica", 12)
-                y_position = top_margin
-                c.drawString(left_margin, 40, line)
-
-            y_position -= 15
+        y_position -= 15
 
     c.save()
 
