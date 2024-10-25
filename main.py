@@ -14,6 +14,7 @@ from openai import OpenAI
 from db_postgres import *
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
+from reportlab.platypus import SimpleDocTemplate
 
 OPENAI_API_KEY = os.environ.get("N_OPENAI_API_KEY")
 
@@ -232,7 +233,7 @@ def grading_results():
 
     print(result)
 
-    #result = result.replace("```html", "")
+    result = result.replace("```html", "")
 
     return render_template('grading.html', name="finish", result=result)
 
@@ -306,21 +307,20 @@ def RunOpenAI(prompt, content):
 
 def pdf(text):
 
+    decoded_text = text.getvalue().decode("utf-8", errors="replace")
+
     pdf_file = io.BytesIO()
     c = canvas.Canvas(pdf_file, pagesize=letter)
     width, height = letter
 
-    left_margin = 40
+    left_margin = 80
     right_margin = width - 40
     top_margin = height - 40
     bottom_margin = 40
-
-    c.setFont("Helvetica", 12)
-
-    decoded_text = text.getvalue().decode("utf-8", errors="replace")
-
     y_position = top_margin
     line_height = 15
+
+    c.setFont("Helvetica", 12)
 
     for line in decoded_text.split('\n'):
         if y_position <= bottom_margin: # add new page
