@@ -320,7 +320,6 @@ def pdf(text):
     top_margin = height - 40
     bottom_margin = 40
     y_position = top_margin
-    line_height = 15
 
     for line in decoded_text.split('\n'):
 
@@ -328,7 +327,7 @@ def pdf(text):
             c.showPage()
             c.setFont("Helvetica", 12)
             y_position = top_margin
-        c.drawString(left_margin, 40, line)
+            c.drawString(left_margin, 40, line)
 
         y_position -= 15
 
