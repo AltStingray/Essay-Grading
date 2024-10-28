@@ -34,7 +34,7 @@ q = Queue(connection=conn)
 
 #delete_data_from_table(id1=8, id2=9, id3=10, id4=11)
 #db("create")
-db("print")
+#db("print")
 
 
 @app.route('/') #Use the route() decorator to bind a function to a URL.
@@ -185,7 +185,7 @@ def logs_download(id, name):
     elif name == "Transcription.odt":
         return send_file(transcription, as_attachment=True, download_name=f"transcription_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif name == "Summary report.html":
-        summary_report = summary_report + "\n\n AI-generated content may be inaccurate or misleading. Always check for accuracy."
+        summary_report = str(summary_report) + "\n\n AI-generated content may be inaccurate or misleading. Always check for accuracy."
         html = summary_report.replace('\n', '<br>')
         return render_template("summary_report.html", html=html)
     else:
