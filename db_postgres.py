@@ -84,9 +84,9 @@ def db_store(summary_report, transcription, filename):
 
     cursor = db_conn.cursor()
 
-    columns = summary_report.keys()
+    columns = dict(summary_report).keys()
 
-    values = [summary_report[column] for column in columns]
+    values = [summary_report[column] for column in columns] # good one
 
     cursor.execute(f"INSERT INTO Logs(summary.keys(), transcription, filename) VALUES(%s, %s, %s);", (AsIs(','.join(columns), tuple(values)), transcription, filename))
 
