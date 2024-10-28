@@ -296,3 +296,17 @@ file.write(result[0])
             <input type="submit" value="Transcription" name="choice" id={{id}}>
             <br>
         </form>
+
+
+
+
+PDF:
+
+elif name == "Summary report.pdf":
+        return send_file(pdf(logs[0]), as_attachment=True, download_name=f"summary_report_{filename}.pdf", mimetype="application/pdf")
+    elif name == "Transcription.pdf":
+        return send_file(pdf(logs[1]), as_attachment=True, download_name=f"transcription_{filename}.pdf", mimetype="application/pdf")
+
+
+<li><a href="{{ url_for('logs_download', id=id, name='Summary report.pdf')}}">Summary report.pdf</a></li>
+<li><a href="{{ url_for('logs_download', id=id, name='Transcription.pdf')}}">Transcription.pdf</a></li>

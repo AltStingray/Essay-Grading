@@ -176,16 +176,17 @@ def logs_download(id, name):
 
     logs = db_retrieve(file_id=id)
 
+    summary_report = logs[0]
+    transcription = logs[1]
     filename = logs[2]
-
+    
     if name == "Summary report.odt":
-        return send_file(logs[0], as_attachment=True, download_name=f"summary_report_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
+        return send_file(summary_report, as_attachment=True, download_name=f"summary_report_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif name == "Transcription.odt":
-        return send_file(logs[1], as_attachment=True, download_name=f"transcription_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
-    elif name == "Summary report.pdf":
-        return send_file(pdf(logs[0]), as_attachment=True, download_name=f"summary_report_{filename}.pdf", mimetype="application/pdf")
-    elif name == "Transcription.pdf":
-        return send_file(pdf(logs[1]), as_attachment=True, download_name=f"transcription_{filename}.pdf", mimetype="application/pdf")
+        return send_file(transcription, as_attachment=True, download_name=f"transcription_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
+    elif name == "Summary report.html":
+        html = summary_report.replace('\n', '<br>')
+        return render_template("summary_report.html", html=html)
     else:
         return logs
     
@@ -200,7 +201,7 @@ def grading_queue():
 
     text = request.args.get("text")
 
-    prompt = "You are an IETLS teacher that provides feedback on a candidate's essays. You are given an essay text delimited by triple quotes. In the section ‘Grammar Mistakes’ you point out grammar mistakes and in the section ‘Improvement Suggestions’ you provide improvement suggestions. Mark grammar mistakes with a red underline. The same way display punctuation mistakes. Make a built-in box pop-up window appear once hover over with a cursor on the mistake(grammar or punctuation). The information in the pop-up window has to address the mistake, displaying the correct word/symbol in green first, then a description about the mistake. By clicking on the correct green word in the built-in pop-up window, the underline mistake word should be replaced with a correct one, and the red underline should disappear. With a light bland yellow colour highlight all repetitive words. With a light bland green colour highlight all linking words. Provide the fully corrected version of the essay below, without any marks, just a simple corrected text. Next, provide candidate with the feedback based on the following parameters, where the parameter words are bold and black and the feedback description is green colored: Task Fulfillment, Relevance & Completeness of Information, Grammatical Usage, Vocabulary Usage, Connections & Coherence, Connection between Lecture & Reading. Display the overall band score number based on the IELTS grading system as well. All of this should be accomplished in a correct and structured HTML format, so your response can be inserted into an html file to display on the webpage. Everything should be in a 14 font size."
+    prompt = "You are an IETLS teacher that provides feedback on a candidate's essays. You are given an essay text delimited by triple quotes. In the section 'Grammar Mistakes' you point out grammar mistakes and in the section 'Improvement Suggestions' you provide improvement suggestions. Mark grammar mistakes with a red underline. The same way display punctuation mistakes. Make a built-in box pop-up window appear once hover over with a cursor on the mistake(grammar or punctuation). The information in the pop-up window has to address the mistake, displaying the correct word/symbol in green first, then a description about the mistake. By clicking on the correct green word in the built-in pop-up window, the underline mistake word should be replaced with a correct one, and the red underline should disappear. With a light bland yellow colour highlight all repetitive words. With a light bland green colour highlight all linking words. Provide the fully corrected version of the essay below, without any marks, just a simple corrected text. Next, provide candidate with the feedback based on the following parameters, where the parameter words are bold and black and the feedback description is green colored: Task Fulfillment, Relevance & Completeness of Information, Grammatical Usage, Vocabulary Usage, Connections & Coherence, Connection between Lecture & Reading. Display the overall band score number based on the IELTS grading system as well. All of this should be accomplished in a correct and structured HTML format, so your response can be inserted into an html file to display on the webpage. Everything should be in a 14 font size."
 
     job_queue = q.enqueue(RunOpenAI, prompt, text)
 
