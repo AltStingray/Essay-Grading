@@ -121,10 +121,10 @@ def results():
 
         result = job.return_value()
 
-        summary_report = result.replace("{\n  ", "{").replace("\n}", "}")
+        summary_report = str(result).replace("{\n  ", "{").replace("\n}", "}")
         print(summary_report)
 
-        summary_report = dict(result[0])
+        summary_report = dict(list(result)[0])
         print(summary_report)
 
         db_store(summary_report["text"], result[1], result[2], summary_report["html"])
