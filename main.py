@@ -15,6 +15,7 @@ from db_postgres import *
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from reportlab.platypus import SimpleDocTemplate
+from datetime import date
 
 OPENAI_API_KEY = os.environ.get("N_OPENAI_API_KEY")
 
@@ -142,8 +143,7 @@ def download():
     job = Job.fetch(job_id, connection=conn)
 
     result = job.return_value()
-
-    summary_report = retrieve(result[0]["text"])
+    summary_report = retrieve(dict(result[0].replace("```python", ""))["text"])
     transcription = retrieve(result[1])
     filename = result[2]
     filename = filename.replace(".mp4", "")
@@ -185,7 +185,7 @@ def logs_download(id, name):
         html = None
 
         try:
-            html = logs[0]["html"]
+            html = dict(logs[0].replace("```python", ""))["html"]
         except: NameError
 
         if html != None:
@@ -208,7 +208,7 @@ def grading():
 def grading_queue():
 
     text = request.args.get("text")
-
+    
     prompt = "You are an IETLS teacher that provides feedback on a candidate's essays. You are given an essay text delimited by triple quotes. In the section 'Grammar Mistakes' you point out grammar mistakes and in the section 'Improvement Suggestions' you provide improvement suggestions. Mark grammar mistakes with a red underline. The same way display punctuation mistakes. Make a built-in box pop-up window appear once hover over with a cursor on the mistake(grammar or punctuation). The information in the pop-up window has to address the mistake, displaying the correct word/symbol in green first, then a description about the mistake. By clicking on the correct green word in the built-in pop-up window, the underline mistake word should be replaced with a correct one, and the red underline should disappear. With a light bland yellow colour highlight all repetitive words. With a light bland green colour highlight all linking words. Provide the fully corrected version of the essay below, without any marks, just a simple corrected text. Next, provide candidate with the feedback based on the following parameters, where the parameter words are bold and black and the feedback description is green colored: Task Fulfillment, Relevance & Completeness of Information, Grammatical Usage, Vocabulary Usage, Connections & Coherence, Connection between Lecture & Reading. Display the overall band score number based on the IELTS grading system as well. All of this should be accomplished in a correct and structured HTML format, so your response can be inserted into an html file to display on the webpage. Everything should be in a 14 font size."
 
     job_queue = q.enqueue(RunOpenAI, prompt, text)
@@ -285,10 +285,12 @@ def main(link, access_token, user_prompt):
 
     print("Transcription created, working on the summary report...")
 
+    today = date.today()
+
     if user_prompt != None:
         prompt = user_prompt
     else:
-        prompt = "I run an online OET speaking mock test service where candidates act as doctors, nurses or other medical practitioners and practice roleplay scenarios with a teacher who acts as the patient or the patient's relative. After each session, we provide a detailed report to the candidate, highlighting their performance. You are given a dialogue text delimited by triple quotes on the topic of medicine. At the beginning of the report specify the header title 'OET Speaking Mock Test Session's Summary'; below specify 'Date: [relevant month & year]' and 'Teacher: [name of the teacher mentioned in dialogue]'. Please summarise the teacher's feedback on the candidate's grammar, lexical choices, pronunciation, and overall communication skills. In the overall communication skills section, use the five categories in the clinical communication criteria table in the knowledge file delimited by triple quotes. Summarise the teacher's feedback on the candidate's performance. Structure the report with sections for each roleplay and an overall performance summary which includes a table with 2 columns called areas that you are doing well and areas that you need to improve. You are not limited by a particular range of words, so provide detailed report with at least 4000 charaters. Provide the second version but in the stuctured HTML format. Wrap those two versions as values in a dictionary with the following keys: text and html ." 
+        prompt = f"I run an online OET speaking mock test service where candidates act as doctors, nurses or other medical practitioners and practice roleplay scenarios with a teacher who acts as the patient or the patient's relative. After each session, we provide a detailed report to the candidate, highlighting their performance. You are given a dialogue text delimited by triple quotes on the topic of medicine. At the beginning of the report specify the header title 'OET Speaking Mock Test Session's Summary'; below specify 'Date: {today}' and 'Teacher: [name of the teacher from the Mock Test session]'. Please summarise the teacher's feedback on the candidate's grammar, lexical choices, pronunciation, and overall communication skills. In the overall communication skills section, use the five categories in the clinical communication criteria table in the knowledge file delimited by triple quotes. Summarise the teacher's feedback on the candidate's performance. Structure the report with sections for each roleplay and an overall performance summary which includes a table with 2 columns called areas that you are doing well and areas that you need to improve. Add the following line at the end of the report in italic style: 'AI-generated content may be inaccurate or misleading. Always check for accuracy.' You are not limited by a particular range of words, so provide detailed report with at least 4000 charaters. Provide the second version but in the stuctured HTML format. Wrap those two versions as values in a dictionary with the following keys: text and html ." 
 
     summary_report = RunOpenAI(prompt, transcription)
 
