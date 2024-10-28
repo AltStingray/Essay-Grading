@@ -83,7 +83,7 @@ def db_store(summary_report, transcription, filename):
 
     cursor = db_conn.cursor()
 
-    cursor.execute(f"INSERT INTO Logs(summary, transcription, filename) VALUES(%s, %s, %s);", (summary_report, transcription, filename))
+    cursor.execute(f"INSERT INTO Logs(summary.keys(), transcription, filename) VALUES(%s, %s, %s);", (summary_report, transcription, filename))
 
     db_conn.commit()
 
