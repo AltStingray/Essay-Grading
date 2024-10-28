@@ -181,7 +181,9 @@ def logs_download(id, name):
     elif name == "Transcription.odt":
         return send_file(transcription, as_attachment=True, download_name=f"transcription_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif name == "Summary report.html":
-
+        
+        html = None
+        
         try:
             html = logs[0]["html"]
         except: NameError
