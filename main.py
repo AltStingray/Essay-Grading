@@ -176,16 +176,16 @@ def logs_download(id, name):
 
     logs = db_retrieve(file_id=id)
 
-    summary_report = logs[0]
+    summary_report = io.BytesIO(logs[0])
     transcription = io.BytesIO(logs[1])
     filename = logs[2]
     
     if name == "Summary report.odt":
-        return send_file(io.BytesIO(summary_report), as_attachment=True, download_name=f"summary_report_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
+        return send_file(summary_report, as_attachment=True, download_name=f"summary_report_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif name == "Transcription.odt":
         return send_file(transcription, as_attachment=True, download_name=f"transcription_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif name == "Summary report.html":
-        summary_report = str(summary_report) + "\n\n AI-generated content may be inaccurate or misleading. Always check for accuracy."
+        summary_report += "\n\n AI-generated content may be inaccurate or misleading. Always check for accuracy."
         html = summary_report.replace('\n', '<br>')
         return render_template("summary_report.html", html=html)
     else:
