@@ -122,9 +122,11 @@ def results():
         result = job.return_value()
 
         print(result)
-        print(type(result[0]))
+        
+        summary_report = result[0].replace("{\n", "{").replace("\n}", "}")
 
-        db_store(result[0]["text"], result[1], result[2], result[0]["html"])
+
+        db_store(summary_report["text"], result[1], result[2], summary_report["html"])
 
         return render_template('results.html')
     else:
