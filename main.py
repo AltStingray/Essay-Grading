@@ -143,7 +143,7 @@ def download():
 
     result = job.return_value()
 
-    summary_report = retrieve(result[0])
+    summary_report = retrieve(result[0]["text"])
     transcription = retrieve(result[1])
     filename = result[2]
     filename = filename.replace(".mp4", "")
@@ -181,8 +181,17 @@ def logs_download(id, name):
     elif name == "Transcription.odt":
         return send_file(transcription, as_attachment=True, download_name=f"transcription_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif name == "Summary report.html":
-        summary_report = (str(summary_report, "utf-8")) + "\n\n <em>AI-generated content may be inaccurate or misleading. Always check for accuracy</em>.\n"
-        html = '<p>' + summary_report.replace('\n', '<strong><br></strong>') + '</p>'
+
+        try:
+            html = logs[0]["html"]
+        except: NameError
+
+        if html != None:
+            html = html.replace("```html", "")
+        else:
+            summary_report = (str(summary_report, "utf-8")) + "\n\n <em>AI-generated content may be inaccurate or misleading. Always check for accuracy</em>.\n"
+            html = '<p>' + summary_report.replace('\n', '<br>') + '</p>'
+
         return render_template("summary_report.html", html=html)
     else:
         return logs
@@ -277,7 +286,7 @@ def main(link, access_token, user_prompt):
     if user_prompt != None:
         prompt = user_prompt
     else:
-        prompt = "I run an online OET speaking mock test service where candidates act as doctors, nurses or other medical practitioners and practice roleplay scenarios with a teacher who acts as the patient or the patient's relative. After each session, we provide a detailed report to the candidate, highlighting their performance. You are given a dialogue text delimited by triple quotes on the topic of medicine. Please summarise the teacher's feedback on the candidate's grammar, lexical choices, pronunciation, and overall communication skills. In the overall communication skills section, use the five categories in the clinical communication criteria table in the knowledge file delimited by triple quotes. Summarise the teacher's feedback on the candidate's performance. Structure the report with sections for each roleplay and an overall performance summary which includes a table with 2 columns called areas that you are doing well and areas that you need to improve. The output text will be stored in a docx format file, so make the table relevant to this format. You are not limited by a particular range of words, so provide detailed report with at least 4000 charaters." 
+        prompt = "I run an online OET speaking mock test service where candidates act as doctors, nurses or other medical practitioners and practice roleplay scenarios with a teacher who acts as the patient or the patient's relative. After each session, we provide a detailed report to the candidate, highlighting their performance. You are given a dialogue text delimited by triple quotes on the topic of medicine. Please summarise the teacher's feedback on the candidate's grammar, lexical choices, pronunciation, and overall communication skills. In the overall communication skills section, use the five categories in the clinical communication criteria table in the knowledge file delimited by triple quotes. Summarise the teacher's feedback on the candidate's performance. Structure the report with sections for each roleplay and an overall performance summary which includes a table with 2 columns called areas that you are doing well and areas that you need to improve. The output text will be stored in a docx format file, so make the table relevant to this format. You are not limited by a particular range of words, so provide detailed report with at least 4000 charaters. Provide the second version but in the stuctured HTML format. Wrap those two versions as values in a dictionary with the following keys: text and html ." 
 
     summary_report = RunOpenAI(prompt, transcription)
 
@@ -300,6 +309,8 @@ def RunOpenAI(prompt, content):
         )
     
     response = response.choices[0].message.content #tapping into the content of response
+
+    print(response)
     
     return response
 
