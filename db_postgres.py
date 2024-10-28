@@ -1,6 +1,7 @@
 import psycopg2
 import os
 import io
+from psycopg2.extensions import AsIs
 
 # Get environmental variable URL from Heroku
 DATABASE = os.environ.get("DATABASE_URL")
@@ -83,7 +84,11 @@ def db_store(summary_report, transcription, filename):
 
     cursor = db_conn.cursor()
 
-    cursor.execute(f"INSERT INTO Logs(summary.keys(), transcription, filename) VALUES(%s, %s, %s);", (summary_report, transcription, filename))
+    columns = summary_report.keys()
+
+    values = [summary_report[column] for column in columns]
+
+    cursor.execute(f"INSERT INTO Logs(summary.keys(), transcription, filename) VALUES(%s, %s, %s);", (AsIs(','.join(columns), tuple(values)), transcription, filename))
 
     db_conn.commit()
 
