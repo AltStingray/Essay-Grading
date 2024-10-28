@@ -36,6 +36,7 @@ q = Queue(connection=conn)
 #delete_data_from_table(id1=8, id2=9, id3=10, id4=11)
 #db("create")
 #db("print")
+db("alter")
 
 
 @app.route('/') #Use the route() decorator to bind a function to a URL.
@@ -120,7 +121,7 @@ def results():
 
         result = job.return_value()
 
-        db_store(result[0], result[1], result[2])
+        db_store(dict(result)[0]["text"], result[1], result[2], dict(result)[0]["html"])
 
         return render_template('results.html')
     else:
