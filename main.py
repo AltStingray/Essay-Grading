@@ -121,7 +121,10 @@ def results():
 
         result = job.return_value()
 
-        db_store(dict(result[0])["text"], result[1], result[2], dict(result[0])["html"])
+        print(result)
+        print(type(result[0]))
+
+        db_store(result[0]["text"], result[1], result[2], result[0]["html"])
 
         return render_template('results.html')
     else:
@@ -299,7 +302,7 @@ def main(link, access_token, user_prompt):
     filename = filename.replace(".mp4", "")
 
     f_list = [summary_report, transcription, filename]
-
+    
     return f_list
 
 
