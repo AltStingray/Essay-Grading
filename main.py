@@ -185,11 +185,11 @@ def logs_download(id, name):
         html = None
 
         try:
-            html = dict(logs[0].replace("```python", ""))["html"]
+            html = dict(logs[0].replace("```", ""))["html"]
         except: NameError
 
         if html != None:
-            html = html.replace("```html", "")
+            pass
         else:
             summary_report = (str(summary_report, "utf-8")) + "\n\n <em>AI-generated content may be inaccurate or misleading. Always check for accuracy</em>.\n"
             html = '<p>' + summary_report.replace('\n', '<br>') + '</p>'
