@@ -185,8 +185,8 @@ def logs_download(id, name):
     elif name == "Transcription.odt":
         return send_file(transcription, as_attachment=True, download_name=f"transcription_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif name == "Summary report.html":
-        summary_report = (str(summary_report, "utf-8")) + "\n\n AI-generated content may be inaccurate or misleading. Always check for accuracy."
-        html = summary_report.replace('\n', '<br>')
+        summary_report = (str(summary_report, "utf-8")) + "\n\n AI-generated content may be inaccurate or misleading. Always check for accuracy.\n"
+        html = '<p>' + summary_report.replace('\n', '<br>') + '</p>'
         return render_template("summary_report.html", html=html)
     else:
         return logs
