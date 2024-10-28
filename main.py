@@ -121,7 +121,7 @@ def results():
 
         result = job.return_value()
 
-        db_store(dict(result)[0]["text"], result[1], result[2], dict(result)[0]["html"])
+        db_store(dict(result[0])["text"], result[1], result[2], dict(result[0])["html"])
 
         return render_template('results.html')
     else:
