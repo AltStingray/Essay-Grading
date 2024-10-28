@@ -120,12 +120,10 @@ def results():
         job = Job.fetch(job_id, connection=conn)
 
         result = job.return_value()
-
-        print(result)
         
-        summary_report = result[0].replace("{\n", "{").replace("\n}", "}")
-
-
+        summary_report = dict(result[0].replace("{\n", "{").replace("\n}", "}"))
+        print(summary_report)
+        
         db_store(summary_report["text"], result[1], result[2], summary_report["html"])
 
         return render_template('results.html')
