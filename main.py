@@ -158,10 +158,6 @@ def download():
         return send_file(summary_report, as_attachment=True, download_name=f"summary_report_{filename}.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
     elif pick_one == "Transcription.docx":
         return send_file(transcription, as_attachment=True, download_name=f"transcription_{filename}.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-    elif pick_one == "Summary report.pdf":
-        return send_file(pdf(summary_report), as_attachment=True, download_name=f"summary_report_{filename}.pdf", mimetype="application/pdf")
-    else:
-        return send_file(pdf(transcription), as_attachment=True, download_name=f"transcription_{filename}.pdf", mimetype="application/pdf")
 
 
 @app.route('/history')
@@ -185,8 +181,8 @@ def logs_download(id, name):
     elif name == "Transcription.odt":
         return send_file(transcription, as_attachment=True, download_name=f"transcription_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif name == "Summary report.html":
-        summary_report = (str(summary_report, "utf-8")) + "\n\n AI-generated content may be inaccurate or misleading. Always check for accuracy.\n"
-        html = '<p>' + summary_report.replace('\n', '<br>') + '</p>'
+        summary_report = (str(summary_report, "utf-8")) + "\n\n <em>AI-generated content may be inaccurate or misleading. Always check for accuracy</em>.\n"
+        html = '<p>' + summary_report.replace('\n', '<strong><br>') + '</p>'
         return render_template("summary_report.html", html=html)
     else:
         return logs
