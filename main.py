@@ -183,7 +183,7 @@ def logs_download(id, name):
     elif name == "Summary report.html":
         
         html = None
-        
+
         try:
             html = logs[0]["html"]
         except: NameError
@@ -288,7 +288,7 @@ def main(link, access_token, user_prompt):
     if user_prompt != None:
         prompt = user_prompt
     else:
-        prompt = "I run an online OET speaking mock test service where candidates act as doctors, nurses or other medical practitioners and practice roleplay scenarios with a teacher who acts as the patient or the patient's relative. After each session, we provide a detailed report to the candidate, highlighting their performance. You are given a dialogue text delimited by triple quotes on the topic of medicine. Please summarise the teacher's feedback on the candidate's grammar, lexical choices, pronunciation, and overall communication skills. In the overall communication skills section, use the five categories in the clinical communication criteria table in the knowledge file delimited by triple quotes. Summarise the teacher's feedback on the candidate's performance. Structure the report with sections for each roleplay and an overall performance summary which includes a table with 2 columns called areas that you are doing well and areas that you need to improve. The output text will be stored in a docx format file, so make the table relevant to this format. You are not limited by a particular range of words, so provide detailed report with at least 4000 charaters. Provide the second version but in the stuctured HTML format. Wrap those two versions as values in a dictionary with the following keys: text and html ." 
+        prompt = "I run an online OET speaking mock test service where candidates act as doctors, nurses or other medical practitioners and practice roleplay scenarios with a teacher who acts as the patient or the patient's relative. After each session, we provide a detailed report to the candidate, highlighting their performance. You are given a dialogue text delimited by triple quotes on the topic of medicine. At the beginning of the report specify the header title 'OET Speaking Mock Test Session's Summary'; below specify 'Date: [relevant month & year]' and 'Teacher: [name of the teacher mentioned in dialogue]'. Please summarise the teacher's feedback on the candidate's grammar, lexical choices, pronunciation, and overall communication skills. In the overall communication skills section, use the five categories in the clinical communication criteria table in the knowledge file delimited by triple quotes. Summarise the teacher's feedback on the candidate's performance. Structure the report with sections for each roleplay and an overall performance summary which includes a table with 2 columns called areas that you are doing well and areas that you need to improve. You are not limited by a particular range of words, so provide detailed report with at least 4000 charaters. Provide the second version but in the stuctured HTML format. Wrap those two versions as values in a dictionary with the following keys: text and html ." 
 
     summary_report = RunOpenAI(prompt, transcription)
 
