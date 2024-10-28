@@ -144,7 +144,8 @@ def download():
     job = Job.fetch(job_id, connection=conn)
 
     result = job.return_value()
-    summary_report = retrieve(dict(result[0].replace("```", ""))["text"])
+
+    summary_report = retrieve(dict(result[0])["text"])
     transcription = retrieve(result[1])
     filename = result[2]
     filename = filename.replace(".mp4", "")
@@ -186,7 +187,7 @@ def logs_download(id, name):
         html = None
 
         try:
-            html = dict(logs[0].replace("```", ""))["html"]
+            html = dict(logs[0])["html"]
         except: NameError
 
         if html != None:
