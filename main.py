@@ -197,7 +197,7 @@ def logs_download(id, name):
         html = logs[3]
 
         if html != None:
-            html_data = html.tobytes().decode('utf-8')
+            html_data = (html.tobytes().decode('utf-8')).strip("{ }")
         else:
             summary_report = (str(summary_report, "utf-8")) + "\n\n <em>AI-generated content may be inaccurate or misleading. Always check for accuracy</em>.\n"
             html = '<p>' + summary_report.replace('\n', '<br>') + '</p>'
