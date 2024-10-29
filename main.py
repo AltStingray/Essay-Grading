@@ -154,7 +154,7 @@ def download():
 
     result = job.return_value()
 
-    summary_report = retrieve(json.loads(result[0]))
+    summary_report = retrieve(json.loads(result[0])["text"])
     transcription = retrieve(result[1])
     filename = result[2]
     filename = filename.replace(".mp4", "")
@@ -162,15 +162,15 @@ def download():
     pick_one = request.args.get("pick_one")
 
     if pick_one == "Summary report.odt":
-        return send_file(summary_report["text"], as_attachment=True, download_name=f"summary_report_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
+        return send_file(summary_report, as_attachment=True, download_name=f"summary_report_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif pick_one == "Transcription.odt":
         return send_file(transcription, as_attachment=True, download_name=f"transcription_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif pick_one == "Summary report.docx":
-        return send_file(summary_report["text"], as_attachment=True, download_name=f"summary_report_{filename}.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+        return send_file(summary_report, as_attachment=True, download_name=f"summary_report_{filename}.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
     elif pick_one == "Transcription.docx":
         return send_file(transcription, as_attachment=True, download_name=f"transcription_{filename}.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
     elif pick_one == "Summary report preview":
-        return render_template("grading.html", summary_report["html"])
+        return render_template("grading.html", json.loads(result[0])["html"])
 
 @app.route('/history')
 def history():
@@ -193,12 +193,9 @@ def logs_download(id, name):
     elif name == "Transcription.odt":
         return send_file(io.BytesIO(transcription), as_attachment=True, download_name=f"transcription_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif name == "Summary report.html":
-        
-        html = None
 
-        try:
-            html = logs[3]
-        except: NameError
+
+        html = str(logs[3])
 
         if html != None:
             pass
