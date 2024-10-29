@@ -34,8 +34,8 @@ app.config["SESSION_USE_SIGNER"] = True
 q = Queue(connection=conn)
 
 #db("create")
-#db("delete_data")
-#db("alter")
+db("delete_data")
+db("alter")
 db("print")
 
 
@@ -194,9 +194,9 @@ def logs_download(id, name):
         return send_file(io.BytesIO(transcription), as_attachment=True, download_name=f"transcription_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif name == "Summary report.html":
 
-
-        html = io.BytesIO(logs[3])
+        html = logs[3]
         print(html)
+        print(summary_report)
 
         if html != None:
             pass
