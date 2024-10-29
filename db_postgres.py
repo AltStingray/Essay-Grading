@@ -39,6 +39,10 @@ def db(command):
         #cursor.execute("""ALTER SEQUENCE Logs RESTART WITH 3""")
         #"""SELECT setval('id', 2)"""
 
+        cursor.close()
+        db_conn.close()
+        print("Altered successfully!")
+
     elif command == "delete":
         #delete table
         cursor.execute("""DROP DATABASE Logs""")
