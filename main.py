@@ -120,7 +120,7 @@ def results():
         job = Job.fetch(job_id, connection=conn)
 
         result = job.return_value()
-
+        print(result[0].get("html"))
         summary_report = result[0]
         print(summary_report)
 
