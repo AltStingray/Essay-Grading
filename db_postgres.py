@@ -49,7 +49,7 @@ def db(command):
 
     elif command == "delete_data":
 
-        cursor.execute(f"DELETE FROM Logs WHERE id IN ('5', '34')")
+        cursor.execute(f"DELETE FROM Logs WHERE id IN ('5')")
 
         db_conn.commit()
 

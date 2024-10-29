@@ -15,7 +15,6 @@ from openai import OpenAI
 from db_postgres import *
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
-from reportlab.platypus import SimpleDocTemplate
 from datetime import date
 
 OPENAI_API_KEY = os.environ.get("N_OPENAI_API_KEY")
@@ -125,7 +124,7 @@ def results():
         if result[0].startswith("```python"):
             result = result[0].replace("```python\n", "").strip()
         else:
-            result = result[0].replace("```\n", "").strip()
+            result = result[0].replace("```\n", "").replace("```", "").strip()
         
         print(result)
 
