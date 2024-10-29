@@ -121,7 +121,7 @@ def results():
 
         result = job.return_value()
 
-        summary_report = dict(result[0])
+        summary_report = result[0]
         print(summary_report)
 
         db_store(summary_report["text"], result[1], result[2], summary_report["html"])
