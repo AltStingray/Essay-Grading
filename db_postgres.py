@@ -84,13 +84,13 @@ def delete_data_from_table(id1, id2, id3, id4):
     return "Data has been deleted from the database successfully!"
 
 
-def db_store(summary_report, transcription, filename, summary_html):
+def db_store(summary_report, transcription, filename):
 
     db_conn = psycopg2.connect(DATABASE)
 
     cursor = db_conn.cursor()
 
-    cursor.execute(f"INSERT INTO Logs(summary, transcription, filename, summary_html) VALUES(%s, %s, %s, %s);", (summary_report, transcription, filename, summary_html))
+    cursor.execute(f"INSERT INTO Logs(summary, transcription, filename) VALUES(%s, %s, %s);", (summary_report, transcription, filename))
 
     db_conn.commit()
 
