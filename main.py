@@ -195,7 +195,8 @@ def logs_download(id, name):
     elif name == "Summary report.html":
 
 
-        html = str(logs[3])
+        html = logs[3]
+        print(html)
 
         if html != None:
             pass
