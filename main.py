@@ -202,7 +202,7 @@ def logs_download(id, name):
             summary_report = (str(summary_report, "utf-8")) + "\n\n <em>AI-generated content may be inaccurate or misleading. Always check for accuracy</em>.\n"
             html = '<p>' + summary_report.replace('\n', '<br>') + '</p>'
 
-        return render_template("summary_report.html", html_data)
+        return render_template("summary_report.html", html=html_data)
     else:
         return logs
     
