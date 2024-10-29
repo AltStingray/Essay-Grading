@@ -37,7 +37,7 @@ q = Queue(connection=conn)
 #delete_data_from_table(id1=8, id2=9, id3=10, id4=11)
 #db("create")
 #db("alter")
-#db("print")
+db("print")
 
 
 @app.route('/') #Use the route() decorator to bind a function to a URL.
@@ -131,6 +131,8 @@ def results():
 
         summary_report = json.loads(result)
 
+        print(type(summary_report))
+
         db_store(summary_report["text"], result[1], result[2], summary_report["html"])
 
         return render_template('results.html')
@@ -155,7 +157,7 @@ def download():
 
     result = job.return_value()
 
-    summary_report = retrieve(result[0]["text"])
+    summary_report = retrieve(json.loads(result[0]))
     transcription = retrieve(result[1])
     filename = result[2]
     filename = filename.replace(".mp4", "")
@@ -163,15 +165,15 @@ def download():
     pick_one = request.args.get("pick_one")
 
     if pick_one == "Summary report.odt":
-        return send_file(summary_report, as_attachment=True, download_name=f"summary_report_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
+        return send_file(summary_report["text"], as_attachment=True, download_name=f"summary_report_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif pick_one == "Transcription.odt":
         return send_file(transcription, as_attachment=True, download_name=f"transcription_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif pick_one == "Summary report.docx":
-        return send_file(summary_report, as_attachment=True, download_name=f"summary_report_{filename}.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+        return send_file(summary_report["text"], as_attachment=True, download_name=f"summary_report_{filename}.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
     elif pick_one == "Transcription.docx":
         return send_file(transcription, as_attachment=True, download_name=f"transcription_{filename}.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
     elif pick_one == "Summary report preview":
-        return render_template("grading.html", html=result[0]["html"])
+        return render_template("grading.html", summary_report["html"])
 
 @app.route('/history')
 def history():
@@ -186,13 +188,13 @@ def logs_download(id, name):
     logs = db_retrieve(file_id=id)
 
     summary_report = logs[0]
-    transcription = io.BytesIO(logs[1])
+    transcription = logs[1]
     filename = logs[2]
 
     if name == "Summary report.odt":
         return send_file(io.BytesIO(summary_report), as_attachment=True, download_name=f"summary_report_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif name == "Transcription.odt":
-        return send_file(transcription, as_attachment=True, download_name=f"transcription_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
+        return send_file(io.BytesIO(transcription), as_attachment=True, download_name=f"transcription_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif name == "Summary report.html":
         
         html = None
