@@ -122,8 +122,10 @@ def results():
 
         result = job.return_value()
         result = result[0].replace("\n", "").strip()
+        print(result)
 
         summary_report = json.loads(result)
+        print(summary_report)
 
         db_store(summary_report["text"], result[1], result[2], summary_report["html"])
 
