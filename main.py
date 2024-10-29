@@ -4,7 +4,7 @@ import io
 import time
 import dropbox_module
 import assemblyAI
-import json
+import ast
 from rq import Queue
 from rq.job import Job
 from worker import conn
@@ -121,15 +121,12 @@ def results():
         job = Job.fetch(job_id, connection=conn)
 
         result = job.return_value()
-        print(result)
-        if result[0].startswith("json\n"):
-            result = result[0].replace("json\n", "").strip()
-        else:
-            result = result[0].replace("\n", "").strip()
+
+        result = result[0].replace("\n", "").strip()
         
         print(result)
 
-        summary_report = json.loads(result)
+        summary_report = ast.literal_eval(result)
 
         db_store(summary_report["text"], result[1], result[2], summary_report["html"])
 
