@@ -170,7 +170,7 @@ def download():
     elif pick_one == "Transcription.docx":
         return send_file(transcription, as_attachment=True, download_name=f"transcription_{filename}.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
     elif pick_one == "Summary report preview":
-        return render_template("grading.html", json.loads(result[0])["html"])
+        return render_template("summary_report.html", html=json.loads(result[0])["html"])
 
 @app.route('/history')
 def history():
@@ -195,16 +195,14 @@ def logs_download(id, name):
     elif name == "Summary report.html":
 
         html = logs[3]
-        print(html)
-        print(summary_report)
 
         if html != None:
-            pass
+            html_data = html.tobytes().decode('utf-8')
         else:
             summary_report = (str(summary_report, "utf-8")) + "\n\n <em>AI-generated content may be inaccurate or misleading. Always check for accuracy</em>.\n"
             html = '<p>' + summary_report.replace('\n', '<br>') + '</p>'
 
-        return render_template("summary_report.html", html=html)
+        return render_template("summary_report.html", html_data)
     else:
         return logs
     
