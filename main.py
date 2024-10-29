@@ -123,10 +123,7 @@ def results():
         result = job.return_value()
         result = result[0].replace("\n", "").strip()
 
-        try:
-            summary_report = json.loads(result)
-        except json.JSONDecodeError as err:
-            print(err)
+        summary_report = json.loads(result)
 
         db_store(summary_report["text"], result[1], result[2], summary_report["html"])
 
