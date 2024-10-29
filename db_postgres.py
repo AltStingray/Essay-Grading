@@ -39,9 +39,12 @@ def db(command):
         #cursor.execute("""ALTER SEQUENCE Logs RESTART WITH 3""")
         #"""SELECT setval('id', 2)"""
 
+        db_conn.commit()
+
         cursor.close()
         db_conn.close()
-        print("Altered successfully!")
+
+        return "Altered successfully!"
 
     elif command == "delete":
         #delete table
@@ -84,13 +87,13 @@ def delete_data_from_table(id1, id2, id3, id4):
     return "Data has been deleted from the database successfully!"
 
 
-def db_store(summary_report, transcription, filename):
+def db_store(summary_report, transcription, filename, summary_html):
 
     db_conn = psycopg2.connect(DATABASE)
 
     cursor = db_conn.cursor()
 
-    cursor.execute(f"INSERT INTO Logs(summary, transcription, filename) VALUES(%s, %s, %s);", (summary_report, transcription, filename))
+    cursor.execute(f"INSERT INTO Logs(summary, transcription, filename, summary_html) VALUES(%s, %s, %s, %s);", (summary_report, transcription, filename, summary_html))
 
     db_conn.commit()
 

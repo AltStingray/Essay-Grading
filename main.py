@@ -36,8 +36,8 @@ q = Queue(connection=conn)
 
 #delete_data_from_table(id1=8, id2=9, id3=10, id4=11)
 #db("create")
-#db("print")
-#db("alter")
+db("alter")
+db("print")
 
 
 @app.route('/') #Use the route() decorator to bind a function to a URL.
@@ -125,11 +125,10 @@ def results():
 
         try:
             summary_report = json.loads(result)
-            print(summary_report)
         except json.JSONDecodeError as err:
             print(err)
 
-        db_store(summary_report, result[1], result[2])
+        db_store(summary_report["text"], result[1], result[2], summary_report["html"])
 
         return render_template('results.html')
     else:
@@ -153,7 +152,7 @@ def download():
 
     result = job.return_value()
 
-    summary_report = retrieve(dict(result[0])["text"])
+    summary_report = retrieve(result[0]["text"])
     transcription = retrieve(result[1])
     filename = result[2]
     filename = filename.replace(".mp4", "")
@@ -168,7 +167,8 @@ def download():
         return send_file(summary_report, as_attachment=True, download_name=f"summary_report_{filename}.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
     elif pick_one == "Transcription.docx":
         return send_file(transcription, as_attachment=True, download_name=f"transcription_{filename}.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-
+    elif pick_one == "Summary report preview":
+        return render_template("grading.html", html=result[0]["html"])
 
 @app.route('/history')
 def history():
@@ -195,7 +195,7 @@ def logs_download(id, name):
         html = None
 
         try:
-            html = dict(logs[0])["html"]
+            html = logs[3]
         except: NameError
 
         if html != None:
