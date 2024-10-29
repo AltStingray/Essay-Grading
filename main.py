@@ -121,11 +121,11 @@ def results():
         job = Job.fetch(job_id, connection=conn)
 
         result = job.return_value()
-        result = result.replace("\n", "").strip()
+        result = result[0].replace("\n", "").strip()
         print(result)
 
         try:
-            summary_report = json.loads(result[0])
+            summary_report = json.loads(result)
             print(summary_report)
         except json.JSONDecodeError as err:
             print(err)
