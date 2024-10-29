@@ -37,7 +37,7 @@ def db(command):
 
         #cursor.execute("""ALTER TABLE Logs ADD filename VARCHAR(255)""")
 
-        cursor.execute("""ALTER SEQUENCE Logs RESTART WITH 4""")
+        cursor.execute("""ALTER SEQUENCE id RESTART WITH 4""")
         #"""SELECT setval('id', 2)"""
 
         db_conn.commit()
