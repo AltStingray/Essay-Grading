@@ -195,7 +195,7 @@ def logs_download(id, name):
     elif name == "Summary report.html":
 
 
-        html = logs[3]
+        html = io.BytesIO(logs[3])
         print(html)
 
         if html != None:
