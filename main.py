@@ -4,6 +4,7 @@ import io
 import time
 import dropbox_module
 import assemblyAI
+import json
 from rq import Queue
 from rq.job import Job
 from worker import conn
@@ -121,7 +122,7 @@ def results():
 
         result = job.return_value()
         print(result)
-        summary_report = result[0]
+        summary_report = json.loads(result[0])
         print(summary_report)
 
         db_store(summary_report["text"], result[1], result[2], summary_report["html"])
@@ -216,7 +217,7 @@ def grading_queue():
     
     prompt = "You are an IETLS teacher that provides feedback on a candidate's essays. You are given an essay text delimited by triple quotes. In the section 'Grammar Mistakes' you point out grammar mistakes and in the section 'Improvement Suggestions' you provide improvement suggestions. Mark grammar mistakes with a red underline. The same way display punctuation mistakes. Make a built-in box pop-up window appear once hover over with a cursor on the mistake(grammar or punctuation). The information in the pop-up window has to address the mistake, displaying the correct word/symbol in green first, then a description about the mistake. By clicking on the correct green word in the built-in pop-up window, the underline mistake word should be replaced with a correct one, and the red underline should disappear. With a light bland yellow colour highlight all repetitive words. With a light bland green colour highlight all linking words. Provide the fully corrected version of the essay below, without any marks, just a simple corrected text. Next, provide candidate with the feedback based on the following parameters, where the parameter words are bold and black and the feedback description is green colored: Task Fulfillment, Relevance & Completeness of Information, Grammatical Usage, Vocabulary Usage, Connections & Coherence, Connection between Lecture & Reading. Display the overall band score number based on the IELTS grading system as well. All of this should be accomplished in a correct and structured HTML format, so your response can be inserted into an html file to display on the webpage. Everything should be in a 14 font size."
 
-    job_queue = q.enqueue(RunOpenAI, prompt, text, type="text")
+    job_queue = q.enqueue(RunOpenAI, prompt, text)
 
     job_id = job_queue.get_id()
 
@@ -295,9 +296,10 @@ def main(link, access_token, user_prompt):
     if user_prompt != None:
         prompt = user_prompt
     else:
-        prompt = f"I run an online OET speaking mock test service where candidates act as doctors, nurses or other medical practitioners and practice roleplay scenarios with a teacher who acts as the patient or the patient's relative. After each session, we provide a detailed report to the candidate, highlighting their performance. You are given a dialogue text delimited by triple quotes on the topic of medicine. At the beginning of the report specify the header title 'OET Speaking Mock Test Session's Summary'; below specify 'Date: {today}' and teacher's name(who act as a patient) coming from the dialogue analysis. Please summarise the teacher's feedback on the candidate's grammar, lexical choices, pronunciation, and overall communication skills. In the overall communication skills section, use the five categories in the clinical communication criteria table in the knowledge file delimited by triple quotes. Summarise the teacher's feedback on the candidate's performance. Structure the report with sections for each roleplay and an overall performance summary which includes a table with 2 columns called areas that you are doing well and areas that you need to improve. Add the following line at the end of the report in italic style: 'AI-generated content may be inaccurate or misleading. Always check for accuracy.' You are not limited by a particular range of words, so provide detailed report with at least 4000 charaters. Provide two versions of the report. First one is a simple text respond. Second one is a structured HTML. Wrap those two versions as values in a single pure dictionary with the following keys: text and html. Do not include '```something' at the beginning and at the end of your response. I need to take your response as a pure dictionary variable." 
+        prompt = f"I run an online OET speaking mock test service where candidates act as doctors, nurses or other medical practitioners and practice roleplay scenarios with a teacher who acts as the patient or the patient's relative. After each session, we provide a detailed report to the candidate, highlighting their performance. You are given a dialogue text delimited by triple quotes on the topic of medicine. At the beginning of the report specify the header title 'OET Speaking Mock Test Session's Summary'; below specify 'Date: {today}' and teacher's name(who act as a patient) coming from the dialogue analysis. Please summarise the teacher's feedback on the candidate's grammar, lexical choices, pronunciation, and overall communication skills. In the overall communication skills section, use the five categories in the clinical communication criteria table in the knowledge file delimited by triple quotes. Summarise the teacher's feedback on the candidate's performance. Structure the report with sections for each roleplay and an overall performance summary which includes a table with 2 columns called areas that you are doing well and areas that you need to improve. Add the following line at the end of the report in italic style: 'AI-generated content may be inaccurate or misleading. Always check for accuracy.' You are not limited by a particular range of words, so provide detailed report with at least 4000 charaters. Please provide a response in the following dictionary format:{'text': 'The first text goes here.', 'html': 'Structured HTML response format goes here.'}"
 
-    summary_report = RunOpenAI(prompt, transcription, type="dict")
+
+    summary_report = dict(RunOpenAI(prompt, transcription))
 
     filename = filename.replace(".mp4", "")
 
@@ -306,7 +308,7 @@ def main(link, access_token, user_prompt):
     return f_list
 
 
-def RunOpenAI(prompt, content, type):
+def RunOpenAI(prompt, content):
 
     client = OpenAI(api_key=OPENAI_API_KEY)
 
@@ -314,8 +316,7 @@ def RunOpenAI(prompt, content, type):
         model="gpt-4o-2024-08-06",
         messages=[
             {"role": "system", "content": prompt},
-            {"role": "user", "content": [{"type": type, "text": f'''{content}'''}]}
-                ],
+            {"role": "user", "content": f'''{content}'''}],
         )
     
     response = response.choices[0].message.content #tapping into the content of response

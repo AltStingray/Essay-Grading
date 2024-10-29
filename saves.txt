@@ -336,3 +336,5 @@ html = '<p>' + summary_report.replace('\n', '<br>') + '</p>'
     values = [summary_report[column] for column in columns] # good one
 
     cursor.execute(f"INSERT INTO Logs(summary.keys(), transcription, filename) VALUES(%s, %s, %s);", (AsIs(','.join(columns), tuple(values)), transcription, filename))
+
+Provide two versions of the report. First one is a simple text respond. Second one is a structured HTML. Wrap those two versions as values in a single pure dictionary with the following keys: text and html. Do not include '```something' at the beginning and at the end of your response. I need to take your response as a pure dictionary variable." 
