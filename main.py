@@ -122,7 +122,10 @@ def results():
 
         result = job.return_value()
 
-        result = result[0].replace("\n", "").strip()
+        if result[0].startswith("```python"):
+            result = result[0].replace("python\n", "").strip()
+        else:
+            result = result[0].replace("\n", "").strip()
         
         print(result)
 
