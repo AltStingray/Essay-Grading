@@ -33,10 +33,11 @@ def db(command):
     elif command == "alter":
         #alter/update table
 
-        cursor.execute("""ALTER TABLE Logs ADD summary_html BYTEA""")
+        #cursor.execute("""ALTER TABLE Logs ADD summary_html BYTEA""")
 
         #cursor.execute("""ALTER TABLE Logs ADD filename VARCHAR(255)""")
-        #cursor.execute("""ALTER SEQUENCE Logs RESTART WITH 3""")
+
+        cursor.execute("""ALTER SEQUENCE Logs RESTART WITH 4""")
         #"""SELECT setval('id', 2)"""
 
         db_conn.commit()
@@ -46,7 +47,18 @@ def db(command):
 
         return "Altered successfully!"
 
-    elif command == "delete":
+    elif command == "delete_data":
+
+        cursor.execute(f"DELETE FROM Logs WHERE id IN ('5', '34')")
+
+        db_conn.commit()
+
+        cursor.close()
+        db_conn.close()
+
+        return "Data has been deleted from the database successfully!"
+
+    elif command == "delete_table":
         #delete table
         cursor.execute("""DROP DATABASE Logs""")
             
@@ -69,22 +81,6 @@ def db(command):
 
     else:
         pass
-
-
-def delete_data_from_table(id1, id2, id3, id4):
-
-    db_conn = psycopg2.connect(DATABASE)
-
-    cursor = db_conn.cursor()
-
-    cursor.execute(f"DELETE FROM Logs WHERE id IN ('{id1}', '{id2}', '{id3}', '{id4}')")
-
-    db_conn.commit()
-
-    cursor.close()
-    db_conn.close()
-
-    return "Data has been deleted from the database successfully!"
 
 
 def db_store(summary_report, transcription, filename, summary_html):
