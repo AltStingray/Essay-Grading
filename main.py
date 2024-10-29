@@ -130,8 +130,6 @@ def results():
 
         summary_report = json.loads(result)
 
-        print(type(summary_report))
-
         db_store(summary_report["text"], result[1], result[2], summary_report["html"])
 
         return render_template('results.html')
