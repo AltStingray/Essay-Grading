@@ -121,10 +121,12 @@ def results():
         job = Job.fetch(job_id, connection=conn)
 
         result = job.return_value()
-        if "json" in result[0]:
+        print(result)
+        if result[0].startswith("json\n"):
             result = result[0].replace("json\n", "").strip()
         else:
             result = result[0].replace("\n", "").strip()
+        
         print(result)
 
         summary_report = json.loads(result)
