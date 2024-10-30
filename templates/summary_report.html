@@ -20,8 +20,10 @@
     {% elif name == "link" %}
         <h2>Prompt selected. Please provide link to the Dropbox video:</h2>
         <form action="/processing" method="get">
-            <input type="text" name="link" size="50">
-            <input type="submit" value="submit">
+            <input type="text" name="link" size="40">
+            <input type="text" name="date" placeholder="Date(optional):" size="30">
+            <input type="text" name="teacher" placeholder="Teacher's name(optional):" size="20">
+            <input type="submit" class="button" value="submit">
         </form>
     {% endif %}
 {% endblock content %}

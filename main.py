@@ -101,11 +101,15 @@ def processing():
     
     link = request.args.get("link")
 
+    date = request.args.get("date")
+
+    teacher_name = request.args.get("teacher")
+
     access_token = session.get("access_token")
     
     prompt = session.pop("prompt", None) # because of the pop() this line won't trigger TypeError. It deletes the value in a session and returns it. Specified None here means that the value of "prompt" key doesn't matter. If the value is None or Str - doesn't matter.
 
-    job = q.enqueue(main, link, access_token, prompt) # enque main function and it's parameters to execute in the background
+    job = q.enqueue(main, link, date, teacher_name, access_token, prompt) # enque main function and it's parameters to execute in the background
 
     job_id=job.get_id() # get id of the job that is in process 
 
@@ -279,7 +283,7 @@ def register():
     return render_template('register.html')
 
 
-def main(link, access_token, user_prompt):
+def main(link, specified_date, teacher_name, access_token, user_prompt):
 
     #Downloading the video
     downloaded_video, filename = (dropbox_module.download_file(link, access_token))
@@ -299,12 +303,15 @@ def main(link, access_token, user_prompt):
 
     print("Transcription created, working on the summary report...")
 
-    today = date.today()
+    if specified_date != None:
+        pass
+    else:
+        specified_date = date.today()
 
     if user_prompt != None:
         prompt = user_prompt
     else:
-        prompt = f"I run an online OET speaking mock test service where candidates act as doctors, nurses or other medical practitioners and practice roleplay scenarios with a teacher who acts as the patient or the patient's relative. After each session, we provide a detailed report to the candidate, highlighting their performance. You are given a dialogue text delimited by triple quotes on the topic of medicine. At the beginning of the report specify the header title 'OET Speaking Mock Test Session's Summary'; below specify 'Date: {today}' and teacher's name(who act as a patient) coming from the dialogue analysis. Please summarise the teacher's feedback on the candidate's grammar, lexical choices, pronunciation, and overall communication skills. In the overall communication skills section, use the five categories in the clinical communication criteria table in the knowledge file delimited by triple quotes. Summarise the teacher's feedback on the candidate's performance. Structure the report with sections for each roleplay and an overall performance summary which includes a table with 2 columns called areas that you are doing well and areas that you need to improve. Add the following line at the end of the report in italic style: 'AI-generated content may be inaccurate or misleading. Always check for accuracy.' You are not limited by a particular range of words, so provide detailed report with at least 4000 charaters. Provide two versions of the report. First one is a simple text respond. Second one is a structured HTML. Wrap those two versions as values in a single pure dictionary with the following keys: text and html. Do not include anything like 'json' that goes after and before the ``` at the beginning and at the end of your response."
+        prompt = f"I run an online OET speaking mock test service where candidates act as doctors, nurses or other medical practitioners and practice roleplay scenarios with a teacher who acts as the patient or the patient's relative. After each session, we provide a detailed report to the candidate, highlighting their performance. You are given a dialogue text delimited by triple quotes on the topic of medicine. At the beginning of the report specify the header title 'OET Speaking Mock Test Session's Summary'; below specify 'Date: {specified_date}' and teacher's name(who acts as a patient): '{teacher_name}'. If 'None' specified, get teacher name coming from the dialogue analysis. Please summarise the teacher's feedback on the candidate's grammar, lexical choices, pronunciation, and overall communication skills. In the overall communication skills section, use the five categories in the clinical communication criteria table in the knowledge file delimited by triple quotes. Summarise the teacher's feedback on the candidate's performance. Structure the report with sections for each roleplay and an overall performance summary which includes a table with 2 columns called areas that you are doing well and areas that you need to improve. Add the following line at the end of the report in italic style: 'AI-generated content may be inaccurate or misleading. Always check for accuracy.' You are not limited by a particular range of words, so provide detailed report with at least 4000 charaters. Provide two versions of the report. First one is a simple text respond. Second one is a structured HTML. Wrap those two versions as values in a single pure dictionary with the following keys: text and html. Do not include anything like 'json' that goes after and before the ``` at the beginning and at the end of your response."
 
 
     summary_report = RunOpenAI(prompt, transcription)
