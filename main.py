@@ -132,15 +132,15 @@ def results():
         result = job.return_value()
 
         if result[0].startswith("```python"):
-            result = result[0].replace("```python\n", "").strip()
+            summary_report = result[0].replace("```python\n", "").strip()
         elif result[0].startswith("```json"):
-            result = result[0].replace("```json\n", "").strip()
+            summary_report = result[0].replace("```json\n", "").strip()
         else:
-            result = result[0].replace("```\n", "").replace("```", "").strip()
+            summary_report = result[0].replace("```\n", "").replace("```", "").strip()
         
         print(result)
 
-        summary_report = json.loads(result)
+        summary_report = json.loads(summary_report)
 
         filename = result[2].replace(".mp4", "")
 
