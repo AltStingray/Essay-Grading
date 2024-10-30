@@ -2,6 +2,7 @@ body {
   background: #fafafa;
   color: #333333;
   margin-top: 5rem;
+  width:125%
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -81,7 +82,7 @@ a.article-title:hover {
 }
 
 .button {
-  background-color: #428bca;
+  background-color: #5080aa;
   border: none;
   color: white;
   padding: 12px 28px;
