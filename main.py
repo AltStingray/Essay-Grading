@@ -132,15 +132,16 @@ def results():
         result = job.return_value()
 
         if result[0].startswith("```python"):
-            summary_report = result[0].replace("```python\n", "").strip()
+            strip_summary = result[0].replace("```python\n", "").strip()
         elif result[0].startswith("```json"):
-            summary_report = result[0].replace("```json\n", "").strip()
+            strip_summary = result[0].replace("```json\n", "").strip()
         else:
-            summary_report = result[0].replace("```\n", "").replace("```", "").strip()
+            strip_summary = result[0].replace("```\n", "").replace("```", "").strip()
         
         print(result)
+        print(len(result))
 
-        summary_report = json.loads(summary_report)
+        summary_report = json.loads(strip_summary)
 
         filename = result[2].replace(".mp4", "")
 
@@ -168,7 +169,14 @@ def download():
 
     result = job.return_value()
 
-    summary_report = retrieve(json.loads(result[0])["text"])
+    if result[0].startswith("```python"):
+        strip_summary = result[0].replace("```python\n", "").strip()
+    elif result[0].startswith("```json"):
+        strip_summary = result[0].replace("```json\n", "").strip()
+    else:
+        strip_summary = result[0].replace("```\n", "").replace("```", "").strip()
+
+    summary_report = retrieve(json.loads(strip_summary)["text"])
     transcription = retrieve(result[1])
     filename = result[2]
 
@@ -183,7 +191,7 @@ def download():
     elif pick_one == "Transcription.docx":
         return send_file(transcription, as_attachment=True, download_name=f"transcription_{filename}.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
     elif pick_one == "Summary report preview":
-        return render_template("preview_report.html", html=json.load(result[0])["html"])
+        return render_template("preview_report.html", html=json.load(strip_summary)["html"])
 
 @app.route('/history')
 def history():
@@ -290,8 +298,6 @@ def main(link, specified_date, teacher_name, access_token, user_prompt):
 
     #Downloading the video
     downloaded_video, filename = (dropbox_module.download_file(link, access_token))
-
-    print(f"\n\nfilename\n\n")
 
     #Making a usable object out of the VideoFileClip(video) class
     video = VideoFileClip(downloaded_video.name)
