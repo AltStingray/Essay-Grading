@@ -37,7 +37,7 @@ def db(command):
 
         #cursor.execute("""ALTER TABLE Logs ADD filename VARCHAR(255)""")
 
-        cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 5""")
+        cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 6""")
         #"""SELECT setval('id', 2)"""
 
         db_conn.commit()
@@ -49,7 +49,7 @@ def db(command):
 
     elif command == "delete_data":
 
-        cursor.execute(f"DELETE FROM Logs WHERE id IN ('5')")
+        cursor.execute(f"DELETE FROM Logs WHERE id IN ('6')")
 
         db_conn.commit()
 

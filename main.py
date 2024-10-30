@@ -34,8 +34,8 @@ app.config["SESSION_USE_SIGNER"] = True
 q = Queue(connection=conn)
 
 #db("create")
-#db("delete_data")
-#db("alter")
+db("delete_data")
+db("alter")
 db("print")
 
 
@@ -142,7 +142,9 @@ def results():
 
         summary_report = json.loads(result)
 
-        db_store(summary_report["text"], result[1], result[2], summary_report["html"])
+        filename = result[2].replace(".mp4", "")
+
+        db_store(summary_report["text"], result[1], filename, summary_report["html"])
 
         return render_template('results.html')
     else:
@@ -166,10 +168,9 @@ def download():
 
     result = job.return_value()
 
-    summary_report = retrieve(json.loads(result[0])["text"])
+    summary_report = retrieve(result[0]["text"])
     transcription = retrieve(result[1])
     filename = result[2]
-    filename = filename.replace(".mp4", "")
 
     pick_one = request.args.get("pick_one")
 
@@ -182,7 +183,7 @@ def download():
     elif pick_one == "Transcription.docx":
         return send_file(transcription, as_attachment=True, download_name=f"transcription_{filename}.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
     elif pick_one == "Summary report preview":
-        return render_template("preview_report.html", html=json.loads(result[0])["html"])
+        return render_template("preview_report.html", html=result[0]["html"])
 
 @app.route('/history')
 def history():
