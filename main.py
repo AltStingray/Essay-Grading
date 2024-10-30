@@ -168,7 +168,7 @@ def download():
 
     result = job.return_value()
 
-    summary_report = retrieve(result[0]["text"])
+    summary_report = retrieve(json.loads(result[0])["text"])
     transcription = retrieve(result[1])
     filename = result[2]
 
@@ -183,7 +183,7 @@ def download():
     elif pick_one == "Transcription.docx":
         return send_file(transcription, as_attachment=True, download_name=f"transcription_{filename}.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
     elif pick_one == "Summary report preview":
-        return render_template("preview_report.html", html=result[0]["html"])
+        return render_template("preview_report.html", html=json.load(result[0])["html"])
 
 @app.route('/history')
 def history():
@@ -290,6 +290,8 @@ def main(link, specified_date, teacher_name, access_token, user_prompt):
 
     #Downloading the video
     downloaded_video, filename = (dropbox_module.download_file(link, access_token))
+
+    print(f"\n\nfilename\n\n")
 
     #Making a usable object out of the VideoFileClip(video) class
     video = VideoFileClip(downloaded_video.name)
