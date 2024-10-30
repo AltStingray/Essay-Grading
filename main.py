@@ -34,8 +34,8 @@ app.config["SESSION_USE_SIGNER"] = True
 q = Queue(connection=conn)
 
 #db("create")
-db("delete_data")
-db("alter")
+#db("delete_data")
+#db("alter")
 db("print")
 
 
@@ -176,22 +176,22 @@ def download():
     else:
         strip_summary = result[0].replace("```\n", "").replace("```", "").strip()
 
-    summary_report = retrieve(json.loads(strip_summary)["text"])
+    summary_report = retrieve(json.loads(strip_summary))
     transcription = retrieve(result[1])
     filename = result[2]
 
     pick_one = request.args.get("pick_one")
 
     if pick_one == "Summary report.odt":
-        return send_file(summary_report, as_attachment=True, download_name=f"summary_report_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
+        return send_file(summary_report["text"], as_attachment=True, download_name=f"summary_report_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif pick_one == "Transcription.odt":
         return send_file(transcription, as_attachment=True, download_name=f"transcription_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif pick_one == "Summary report.docx":
-        return send_file(summary_report, as_attachment=True, download_name=f"summary_report_{filename}.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+        return send_file(summary_report["text"], as_attachment=True, download_name=f"summary_report_{filename}.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
     elif pick_one == "Transcription.docx":
         return send_file(transcription, as_attachment=True, download_name=f"transcription_{filename}.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
     elif pick_one == "Summary report preview":
-        return render_template("preview_report.html", html=json.load(strip_summary)["html"])
+        return render_template("preview_report.html", html=summary_report["html"])
 
 @app.route('/history')
 def history():
