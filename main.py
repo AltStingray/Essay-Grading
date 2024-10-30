@@ -35,7 +35,7 @@ q = Queue(connection=conn)
 
 #db("create")
 #db("delete_data")
-#db("alter")
+db("alter")
 db("print")
 
 
@@ -133,6 +133,8 @@ def results():
 
         if result[0].startswith("```python"):
             result = result[0].replace("```python\n", "").strip()
+        elif result[0].startswith("```json"):
+            result = result[0].replace("```json\n", "").strip()
         else:
             result = result[0].replace("```\n", "").replace("```", "").strip()
         
