@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
     <h1>Available tools:</h1>
-    <a href="{{ url_for(summary_report) }}" class="button">Summary Report</a>
-    <a href="{{ url_for(grading) }}" class="button">Essay Grading</a>
+    <a href="{{ url_for('summary_report') }}" class="button">Summary Report</a>
+    <a href="{{ url_for('grading') }}" class="button">Essay Grading</a>
 {% endblock content %}
