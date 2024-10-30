@@ -74,7 +74,7 @@ def choice():
 
     choice = str(escape(request.args.get("choice", "")))
 
-    if choice == "Own":
+    if choice == "Custom GPT Prompt":
         return redirect(url_for('own'))
     else:
         return render_template('summary_report.html', name="link")
