@@ -1,6 +1,27 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div>
-        {{ html|safe }}
-    </div>
+    {% if name == "start" %}
+        <h2>Please complete Dropbox authorization to continue: </h2>
+        <form action="/authorize" method="get">
+            <input type="submit" value="Authorize">
+        </form>
+    {% elif name == "choice" %}
+        <h2>Choose prompt of the GPT model for the summary report:</h2>
+        <form action="/choice" method="get">
+            <input type="submit" value="Default GPT Prompt" name="choice">
+            <input type="submit" value="Custom GPT Prompt" name="choice">
+        </form>
+    {% elif name == "prompt" %}
+        <h2>Specify your custom prompt: </h2>
+        <form action="/default" method="get">
+            <input type="text" name="prompt" size="50">
+            <input type="submit" value="submit">
+        </form>
+    {% elif name == "link" %}
+        <h2>Prompt selected. Please provide link to the Dropbox video:</h2>
+        <form action="/processing" method="get">
+            <input type="text" name="link" size="50">
+            <input type="submit" value="submit">
+        </form>
+    {% endif %}
 {% endblock content %}

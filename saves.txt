@@ -337,4 +337,19 @@ html = '<p>' + summary_report.replace('\n', '<br>') + '</p>'
 
     cursor.execute(f"INSERT INTO Logs(summary.keys(), transcription, filename) VALUES(%s, %s, %s);", (AsIs(','.join(columns), tuple(values)), transcription, filename))
 
-Provide two versions of the report. First one is a simple text respond. Second one is a structured HTML. Wrap those two versions as values in a single pure dictionary with the following keys: text and html. Do not include '```something' at the beginning and at the end of your response. I need to take your response as a pure dictionary variable." 
+
+
+
+Sidebar
+
+<div class="col-md-4">
+            <div class="content-section">
+              <h3>Sidebar</h3>
+              <p class='text-muted'>Navigate through different menus
+                <ul class="list-group">
+                  <a class="list-group-item list-group-item-light" href="/history">Logs History</a>
+                  <a class="list-group-item list-group-item-light" href="/grading">Essay Grading</a>
+                </ul>
+              </p>
+            </div>
+          </div>

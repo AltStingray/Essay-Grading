@@ -42,7 +42,13 @@ db("print")
 @app.route('/') #Use the route() decorator to bind a function to a URL.
 def index():
     
-    return render_template('index.html', name="start")
+    return render_template('index.html')
+
+
+@app.route('/summary_report')
+def summary_report():
+
+    return render_template('summary_report.html', name="start")
 
 
 @app.route('/authorize')
@@ -60,7 +66,7 @@ def start():
 
     session["access_token"] = access_token
 
-    return render_template('index.html', name="choice")
+    return render_template('summary_report.html', name="choice")
 
 
 @app.route('/choice')
@@ -71,13 +77,13 @@ def choice():
     if choice == "Own":
         return redirect(url_for('own'))
     else:
-        return render_template('index.html', name="link")
+        return render_template('summary_report.html', name="link")
     
 
 @app.route('/own')
 def own():
     
-    return render_template('index.html', name="prompt")
+    return render_template('summary_report.html', name="prompt")
 
 
 @app.route('/default')
@@ -87,7 +93,7 @@ def default():
 
     session["prompt"] = prompt
     
-    return render_template('index.html', name="link")
+    return render_template('summary_report.html', name="link")
 
 
 @app.route('/processing', methods=["GET", "POST"])
@@ -170,7 +176,7 @@ def download():
     elif pick_one == "Transcription.docx":
         return send_file(transcription, as_attachment=True, download_name=f"transcription_{filename}.docx", mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
     elif pick_one == "Summary report preview":
-        return render_template("summary_report.html", html=json.loads(result[0])["html"])
+        return render_template("preview_report.html", html=json.loads(result[0])["html"])
 
 @app.route('/history')
 def history():
@@ -202,7 +208,7 @@ def logs_download(id, name):
             summary_report = (str(summary_report, "utf-8")) + "\n\n <em>AI-generated content may be inaccurate or misleading. Always check for accuracy</em>.\n"
             html_data = '<p>' + summary_report.replace('\n', '<br>') + '</p>'
 
-        return render_template("summary_report.html", html=html_data)
+        return render_template("preview_report.html", html=html_data)
     else:
         return logs
     
