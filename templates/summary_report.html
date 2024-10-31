@@ -14,8 +14,9 @@
     {% elif name == "prompt" %}
         <h2>Specify your custom prompt: </h2>
         <form action="/default" method="get">
-            <input type="text" name="prompt" size="50">
-            <input type="submit" class="button2" value="submit">
+            <textarea type="text" name="prompt" size="50"></textarea>
+            <input type="submit" class="button2" value="Submit"><br>
+            Default prompt example:{{default_prompt}}
         </form>
     {% elif name == "link" %}
         <h2>Prompt selected.</h2>
