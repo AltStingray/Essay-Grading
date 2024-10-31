@@ -178,7 +178,7 @@ def download():
         strip_summary = result[0].replace("```\n", "").replace("```", "").strip()
 
     summary_report_text = retrieve(json.loads(strip_summary)["text"])
-    summary_report_html = strip_summary["html"].tobytes().decode('utf-8').strip("{ }")
+    summary_report_html = json.loads(strip_summary)["html"].tobytes().decode('utf-8').strip("{ }")
     transcription = retrieve(result[1])
     filename = result[2]
 
