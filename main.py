@@ -134,9 +134,9 @@ def results():
         result = job.return_value()
 
         if result[0].startswith("```python"):
-            strip_summary = result[0].replace("```python\n", "").strip()
+            strip_summary = result[0].replace("```python\n", "").replace("```", "").strip()
         elif result[0].startswith("```json"):
-            strip_summary = result[0].replace("```json\n", "").strip()
+            strip_summary = result[0].replace("```json\n", "").replace("```", "").strip()
         else:
             strip_summary = result[0].replace("```\n", "").replace("```", "").strip()
 
@@ -171,9 +171,9 @@ def download():
     result = job.return_value()
 
     if result[0].startswith("```python"):
-        strip_summary = result[0].replace("```python\n", "").strip()
+        strip_summary = result[0].replace("```python\n", "").replace("```", "").strip()
     elif result[0].startswith("```json"):
-        strip_summary = result[0].replace("```json\n", "").strip()
+        strip_summary = result[0].replace("```json\n", "").replace("```", "").strip()
     else:
         strip_summary = result[0].replace("```\n", "").replace("```", "").strip()
 
