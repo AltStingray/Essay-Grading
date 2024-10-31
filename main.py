@@ -233,7 +233,7 @@ def logs_download(id, name):
 @app.route('/grading')
 def grading():
     
-    return render_template('grading.html')
+    return render_template('grading.html', name="finish")
 
 @app.route('/grading/queue')
 def grading_queue():
@@ -276,9 +276,9 @@ def grading_results():
 
     result = job.return_value()
 
-    print(result)
+    result = result.replace("```html\n", "").replace("\nhtml```", "").strip()
 
-    result = result.replace("```html", "")
+    print(result)
 
     return render_template('grading.html', name="finish", result=result)
 
