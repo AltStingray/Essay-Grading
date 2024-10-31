@@ -12,9 +12,10 @@
         <meta http-equiv="refresh" content="0; url=https://benchmark-summary-report-eae227664887.herokuapp.com/grading/processing"/>
     {% else %}
         <h1>Essay Grading</h1><br><br>
-        <h2>Paste your essay text here:</h2>
         <form action="/grading/queue" method="get">
-            <textarea type="text" name="text" rows="8", cols="100" placeholder="Essay text:"></textarea><br><br>
+            <h2>Paste your topic and essay text here:</h2>
+            <textarea type="text" name="topic" rows="8", cols="100" placeholder="Your topic:"></textarea><br><br>
+            <textarea type="text" name="essay" rows="8", cols="100" placeholder="Your essay:"></textarea><br><br>
             <input type="submit" class="button2" value="Submit">
         </form>
     {% endif %}

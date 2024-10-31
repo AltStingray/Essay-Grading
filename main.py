@@ -238,11 +238,15 @@ def grading():
 @app.route('/grading/queue')
 def grading_queue():
 
-    text = request.args.get("text")
+    topic = request.args.get("topic")
+
+    essay = request.args.get("essay")
+
+    essay = f"The topic of the essay: {topic}.\nThe essay: {essay}"
     
     prompt = "You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading report based on the IELTS standards. Create and fill two sections: ‘Grammar Mistakes’ and ‘Improvement Suggestions’. Mark grammar mistakes words with a red underline. Make a built-in box pop-up window appear once hover over with a cursor on the mistake(grammar or punctuation). The information in the pop-up window has to address the mistake displaying the correct word/symbol in green color first, then a short description about the mistake. By clicking on the correct green word in the built-in pop-up window, the underline mistake word should be replaced with a correct one, and the red underline should disappear. With a light bland yellow colour highlight all repetitive words. With a light bland green colour highlight all linking words. Next, provide candidate with the feedback based on the following parameters, where the parameter words are bold and black and the feedback description is green colored: Task Fulfillment, Relevance & Completeness of Information, Grammatical Usage, Vocabulary Usage, Connections & Coherence, Connection between Lecture & Reading. Display the overall band score number based on the IELTS grading system as well. Provide the fully corrected version of the essay in the bottom, without any marks, just a simple corrected text. All of this should be accomplished in a correct and structured HTML format, so your response can be inserted into an html file to display on the webpage."
 
-    job_queue = q.enqueue(RunOpenAI, prompt, text)
+    job_queue = q.enqueue(RunOpenAI, prompt, essay)
 
     job_id = job_queue.get_id()
 
