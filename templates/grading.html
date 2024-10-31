@@ -1,4 +1,5 @@
-
+{% extends "layout.html" %}
+{% block content %}
     {% if name == "finish" %}
         <h1>Essay Grading</h1>
         <!DOCTYPE html>
@@ -81,3 +82,4 @@
             <input type="submit" class="button2" value="Submit">
         </form>
     {% endif %}
+{% endblock content %}
