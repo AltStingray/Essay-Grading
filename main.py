@@ -220,7 +220,7 @@ def logs_download(id, name):
         html = logs[3]
 
         if html != None:
-            html_data = (html.tobytes().decode('utf-8')).strip("{ }")
+            html_data = (html.tobytes().decode('utf-8')).strip("{ }") #decoding the memory value from database into a string
         else:
             summary_report = (str(summary_report, "utf-8")) + "\n\n <em>AI-generated content may be inaccurate or misleading. Always check for accuracy</em>.\n"
             html_data = '<p>' + summary_report.replace('\n', '<br>') + '</p>'
@@ -240,7 +240,7 @@ def grading_queue():
 
     text = request.args.get("text")
     
-    prompt = "You are an IETLS teacher that provides feedback on a candidate's essays. You are given an essay text delimited by triple quotes. In the section 'Grammar Mistakes' you point out grammar mistakes and in the section 'Improvement Suggestions' you provide improvement suggestions. Mark grammar mistakes with a red underline. The same way display punctuation mistakes. Make a built-in box pop-up window appear once hover over with a cursor on the mistake(grammar or punctuation). The information in the pop-up window has to address the mistake, displaying the correct word/symbol in green first, then a description about the mistake. By clicking on the correct green word in the built-in pop-up window, the underline mistake word should be replaced with a correct one, and the red underline should disappear. With a light bland yellow colour highlight all repetitive words. With a light bland green colour highlight all linking words. Provide the fully corrected version of the essay below, without any marks, just a simple corrected text. Next, provide candidate with the feedback based on the following parameters, where the parameter words are bold and black and the feedback description is green colored: Task Fulfillment, Relevance & Completeness of Information, Grammatical Usage, Vocabulary Usage, Connections & Coherence, Connection between Lecture & Reading. Display the overall band score number based on the IELTS grading system as well. All of this should be accomplished in a correct and structured HTML format, so your response can be inserted into an html file to display on the webpage. Everything should be in a 14 font size."
+    prompt = "You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading report based on the IELTS standards. Create and fill two sections: ‘Grammar Mistakes’ and ‘Improvement Suggestions’. Mark grammar mistakes words with a red underline. Make a built-in box pop-up window appear once hover over with a cursor on the mistake(grammar or punctuation). The information in the pop-up window has to address the mistake displaying the correct word/symbol in green color first, then a short description about the mistake. By clicking on the correct green word in the built-in pop-up window, the underline mistake word should be replaced with a correct one, and the red underline should disappear. With a light bland yellow colour highlight all repetitive words. With a light bland green colour highlight all linking words. Next, provide candidate with the feedback based on the following parameters, where the parameter words are bold and black and the feedback description is green colored: Task Fulfillment, Relevance & Completeness of Information, Grammatical Usage, Vocabulary Usage, Connections & Coherence, Connection between Lecture & Reading. Display the overall band score number based on the IELTS grading system as well. Provide the fully corrected version of the essay in the bottom, without any marks, just a simple corrected text. All of this should be accomplished in a correct and structured HTML format, so your response can be inserted into an html file to display on the webpage."
 
     job_queue = q.enqueue(RunOpenAI, prompt, text)
 
@@ -316,7 +316,7 @@ def main(link, specified_date, teacher_name, access_token, user_prompt):
 
     print("Transcription created, working on the summary report...")
 
-    if specified_date != None:
+    if specified_date != None or specified_date != "":
         pass
     else:
         specified_date = date.today()
@@ -350,39 +350,6 @@ def RunOpenAI(prompt, content):
     response = response.choices[0].message.content #tapping into the content of response
     
     return response
-
-
-def pdf(text):
-
-    decoded_text = text.getvalue().decode("utf-8", errors="replace")
-
-    pdf_file = io.BytesIO()
-    c = canvas.Canvas(pdf_file, pagesize=letter)
-    c.setFont("Helvetica", 12)
-    width, height = letter
-
-    left_margin = 40
-    right_margin = width - 40
-    top_margin = height - 40
-    bottom_margin = 40
-    y_position = top_margin
-
-    for line in decoded_text.split('\n'):
-
-        if y_position <= bottom_margin: # add new page
-            c.showPage()
-            c.setFont("Helvetica", 12)
-            y_position = top_margin
-        c.drawString(left_margin, y_position, line)
-
-        y_position -= 15
-
-    c.save()
-
-    pdf_file.seek(0)
-
-    return pdf_file
-
 
 
 # These two lines tell Python to start Flask’s development server when the script is executed from the command line. 

@@ -2,6 +2,7 @@
 {% block content %}
     {% if name == "finish" %}
         <h1>Essay Grading</h1>
+        <div class="jsx-2993038294 highlight-legends"><div class="jsx-2993038294 highlight-legends__item highlight-legends__item_linkingwords"><span class="jsx-2993038294 highlight-legends__item-counter">12</span><div class="jsx-2993038294"><div class="jsx-2993038294 highlight-legends__item-name">Linking words</div><div class="jsx-2993038294 highlight-legends__item-dscr">meeting the goal of 7 or more</div></div></div><div class="jsx-2993038294 highlight-legends__item highlight-legends__item_repeatedwords"><span class="jsx-2993038294 highlight-legends__item-counter">3</span><div class="jsx-2993038294"><div class="jsx-2993038294 highlight-legends__item-name">Word repetition</div><div class="jsx-2993038294 highlight-legends__item-dscr">meeting the goal of 3 or fewer</div></div></div><div class="jsx-2993038294 highlight-legends__item highlight-legends__item_mistake"><span class="jsx-2993038294 highlight-legends__item-counter">3</span><div class="jsx-2993038294"><div class="jsx-2993038294 highlight-legends__item-name">Grammar mistakes</div><div class="jsx-2993038294 highlight-legends__item-dscr"> </div></div></div></div>
         <div>
             {{ result|safe }}
         </div>
@@ -10,10 +11,10 @@
         <h1>Processing the submitted text, please wait...</h1>
         <meta http-equiv="refresh" content="0; url=https://benchmark-summary-report-eae227664887.herokuapp.com/grading/processing"/>
     {% else %}
-        <h1>Essay Grading</h1>
-        <p1>Paste your essay text here:</p1>
+        <h1>Essay Grading</h1><br><br>
+        <h2>Paste your essay text here:</h2>
         <form action="/grading/queue" method="get">
-            <input type="text" placeholder="Essay text:" name="text">
+            <textarea type="text" name="text" rows="8", cols="100" placeholder="Essay text:"></textarea><br><br>
             <input type="submit" class="button2" value="Submit">
         </form>
     {% endif %}
