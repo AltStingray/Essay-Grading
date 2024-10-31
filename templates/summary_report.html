@@ -14,7 +14,7 @@
     {% elif name == "prompt" %}
         <h2>Specify your custom prompt: </h2>
         <form action="/default" method="get">
-            <textarea type="text" name="prompt" rows="5", cols="15" placeholder="Custom GPT prompt:"></textarea><br><br>
+            <textarea type="text" name="prompt" rows="15", cols="30" placeholder="Custom GPT prompt:"></textarea><br><br>
             <input type="submit" class="button2" value="Submit"><br><br>
             Default GPT prompt example:<br>
             {{default_prompt}}
