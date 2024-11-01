@@ -7,6 +7,12 @@
     z-index: 1000; 
 }
 
+.navbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .logo { 
     height: 40px; 
     width: auto; 
@@ -27,6 +33,13 @@
 }
 .nav-link:hover { 
     color: #0077ff; 
+}
+
+.nav-link-icon {
+    transition: transform 0.3s;
+}
+.nav-item:hover .nav-link-icon {
+    transform: rotate(180deg);
 }
 
 .dropdown { 
