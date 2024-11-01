@@ -14,28 +14,59 @@
  </head>
 
 <body>
-  <header class="site-header">
-    <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-      <div class="container">
-          <a class="navbar-brand mr-3" href="/">Benchmark Tools</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarToggle">
-              <div class="navbar-nav mr-auto">
-                 <a class="nav-item nav-link" href="/history">Report Logs</a>
-                 <a class="nav-item nav-link" href="/about">About</a>
-              </div>
-              <!-- Navbar Right Side -->
-              <div class="navbar-nav">
-                 <a class="nav-item nav-link" href="/login">Login</a>
-                 <a class="nav-item nav-link" href="/register">Register</a>
-              </div>
-          </div>
+  <div class="navbar">
+    <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="webflow-native-navbar w-nav">
+      ::before
+      <div class="navbar-outer">
+        <div class="navbar-inner">
+          <a href="/" aria-current="page" class="navbar-logo-div w-nav-brand w--current" aria-label="home">
+            <img loading="eager" alt="Logo" class="logo" src="/static/FinalBlue.png">
+          </a>
+          <nav role="navigation" class="nav-menu-wrapper w-nav-menu">
+            <ul role="list" class="nav-menu-right w-list-unstyled">
+              <li class="nav-item is-dropdown-d">
+                <a fs-mirrorclick-element="target-2" href="#" class="nav-link w-inline-block">
+                  <div class="copytext is-15px">Use Cases</div>
+                  <img loading="lazy" alt class="nav-link-icon" src="/static/dropdown_chevron.png" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(-180deg) skew(0deg, 0deg); transform-style: preserve-3d;">
+                </a>
+                <div class="dropdown" style="display: flex;">
+                  <a href="/" class="nav-link in-drop-down">Founders</a>
+                  <a href="/" class="nav-link in-drop-down">Management</a>
+                  <a href="/" class="nav-link in-drop-down">Investors</a>
+                  <a href="/" class="nav-link in-drop-down">Sales</a>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a href="/history" class="nav-link">Logs</a>
+              </li>
+              <li class="nav-item">
+                <a href="/about" class="nav-link">About</a>
+              </li>
+              <li class="nav-item is-btn is-demo">
+                <a href="/login" target="_blank" class="primary-btn w-inline-block">
+                  <div class="btn-txt-container">
+                    <div class="btn-txt" style="transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;">Log In</div>
+                    <div class="btn-txt" style="transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;">Log In</div>
+                  </div>
+                </a>
+              </li>
+              <li class="nav-item is-btn">
+                <a href="/register" class="primary-btn with-img-bg w-inline-block">
+                  <div class="btn-txt-container">
+                    <div class="btn-txt is-white" style="transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;">Sign up</div>
+                    <div class="btn-txt is-white" style="transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;">Sign up<br></div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </div>
-    </nav>
-  </header>
-
+      <div class="w-nav-overlay" data-wf-ignore id="w-nav-overlay-0"></div>
+      ::after
+    </div>
+    <div fs-mirrorclick-element="trigger-2" data-w-id="70545d62-ae56-2d43-1615-7ef5bd248749" class="dropdown-closing-trigger" style="display: none;"></div>
+  </div>
   <main role="main" class="container">
       <div class="row">
         <div class="col-md-4"></div>
