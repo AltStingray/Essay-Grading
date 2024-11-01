@@ -9,3 +9,15 @@
 .logo{
     height:50px; width: auto;
 }
+
+.nav-menu-right{
+    display: flex; list-style-type: none;
+}
+
+.nav-link{
+    color: #333; padding: 10px; text-decoration: none;
+}
+
+.nav-link:hover{
+    color: #007bff
+}
