@@ -14,25 +14,27 @@
  </head>
 
 <body>
-  <div class="container">
-    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-          <div class="col-md-3 mb-2 mb-md-0">
-            <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
-              <svg class="bi" width="40" height="32" role="img" aria-label="Benchmark"><use xlink:href="static/FinalBlue.png"></use></svg>
-            </a>
+  <header class="site-header">
+    <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+      <div class="container">
+          <a class="navbar-brand mr-3" href="/">Benchmark Tools</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarToggle">
+              <div class="navbar-nav mr-auto">
+                 <a class="nav-item nav-link" href="/history">Report Logs</a>
+                 <a class="nav-item nav-link" href="/about">About</a>
+              </div>
+              <!-- Navbar Right Side -->
+              <div class="navbar-nav">
+                 <a class="nav-item nav-link" href="/login">Login</a>
+                 <a class="nav-item nav-link" href="/register">Register</a>
+              </div>
           </div>
-
-          <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="/history" class="nav-link px-2">Report Logs</a></li>
-            <li><a href="/about" class="nav-link px-2">About</a></li>
-          </ul>
-
-          <div class="col-md-3 text-end">
-            <button class="btn btn-outline-primary me-2" href="/login">Login</button>
-            <button class="btn btn-primary" href="/register">Sign-up</button>
-          </div>
-    </header>
-  </div>
+      </div>
+    </nav>
+  </header>
 
   <main role="main" class="container">
       <div class="row">
