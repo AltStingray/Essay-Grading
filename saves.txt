@@ -473,3 +473,12 @@ the header I wanted to have, but simply don't know how to define all this css fo
     </div>
     <div fs-mirrorclick-element="trigger-2" data-w-id="70545d62-ae56-2d43-1615-7ef5bd248749" class="dropdown-closing-trigger" style="display: none;"></div>
   </div>
+
+
+
+<div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+          {% block content %}{% endblock %}
+        </div>
+      </div>
