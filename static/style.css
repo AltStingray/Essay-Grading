@@ -225,3 +225,43 @@ a.article-title:hover {
 .highlight-legends__item_mistake.jsx-2993038294 {
   background: rgb(248, 148, 148, 0.3);
 }
+
+.h4.jsx-3594441866 {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 21px;
+  line-height: 138.77%;
+}
+
+.page-text__text.jsx-3307320108 {
+  position: relative;
+  margin-top: 20px;
+  color: #1c1e29;
+  white-space: pre-line;
+  word-break: break-word;
+}
+
+.t18.jsx-242105113 {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 194%;
+}
+
+.content-editable.jsx-319668748 {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+  -webkit-transition: border-color 200ms;
+  transition: border-color 200ms;
+  padding-bottom: 40px;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  resize: none;
+  cursor: text;
+}
+
+.create-date.jsx-3307320108 {
+  text-align: right;
+  font-size: 12px;
+  margin-top: 5px;
+}
