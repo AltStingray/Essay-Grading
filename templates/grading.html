@@ -11,19 +11,6 @@
         <h1>Essay Grading</h1>
 
         <p>The main text goes here</p>
-        {% block content2 %}
-            <aside class="sidebar">
-                <div class="jsx-2993038294 highlight-legends">
-                    <div class="jsx-2993038294 highlight-legends__item highlight-legends__item_linkingwords">
-                        <span class="jsx-2993038294 highlight-legends__item-counter">12</span>
-                        <div class="jsx-2993038294">
-                            <div class="jsx-2993038294 highlight-legends__item-name">Linking words</div>
-                            <div class="jsx-2993038294 highlight-legends__item-dscr">meeting the goal of 7 or more</div>
-                        </div>
-                    </div>
-                </div>
-            </aside>
-        {% endblock %}
     {% elif name == "wait" %}
         <h1>Essay Grading</h1>
         <h1>Processing the submitted text, please wait...</h1>
@@ -38,3 +25,19 @@
         </form>
     {% endif %}
 {% endblock content %}
+
+{% block content2 %}
+    {% if name == "finish" %}
+        <aside class="sidebar">
+            <div class="jsx-2993038294 highlight-legends">
+                <div class="jsx-2993038294 highlight-legends__item highlight-legends__item_linkingwords">
+                    <span class="jsx-2993038294 highlight-legends__item-counter">12</span>
+                    <div class="jsx-2993038294">
+                        <div class="jsx-2993038294 highlight-legends__item-name">Linking words</div>
+                        <div class="jsx-2993038294 highlight-legends__item-dscr">meeting the goal of 7 or more</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    {% endif %}
+{% endblock %}
