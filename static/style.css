@@ -209,3 +209,15 @@ a.article-title:hover {
   color: #aaa;
   font-size: 14px;
 }
+
+.legends__item_repeatedwords.jsx-2993038294 {
+  background: rgb(207, 214, 170, 0.3);
+}
+
+.highlight-legends__item_mistake.jsx-2993038294 {
+  background: rgb(248, 148, 148, 0.3);
+}
+
+.highlight-legends__item.jsx-2993038294:last-child {
+  margin-bottom: 0;
+}
