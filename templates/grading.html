@@ -1,43 +1,36 @@
 {% extends "layout.html" %}
-{% block content3 %}
-    {% if name == "finish" %}
-        <div class="row">
-            <div class="col-lg-8">
-                <style>
-                    * {
-                        box-sizing: border-box;
-                        outline: none;
-                        font-family: -apple-technique, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
-                    }
-                </style>
-                <h1>Essay grading results</h1>
-                <article class="jsx-3307320108 page-text__essay">
-                    <div class="jsx-3307320108 page-text__question">
-                        <div class="h4.jsx-3594441866">
-                            “The Impact of Social Media on Society”
-                        </div>
-                    </div>
-                    <div class="jsx-3307320108 page-text__text">
-                        <span class="jsx-242105113 t18 ">
-                            <div contenteditable="false" spellcheck="false" data-gramm-editor="false" class="jsx-319668748 content-editable undefined">
-                                Social media have changed the way people communicate and interact with each other, it has become a very important part of daily life. Nowadays, platforms like Facebook, Instagram, and Twitter are used not only for entertainment, but for information and business as well. However, while social media brings people closer together, it also creates many issues. One main problem is addiction, many people spend hours scrolling on social media every day, they often find it difficult to control how much time they spend online.
-                                In addition, social media sometimes causes depression and anxiety. Many studies shown that people who use social media excessively feel more lonely and isolated. They compare themselves to others, which making them feel insecure about their lives and appearance. For example, when a person see a post of someone on vacation, they may feel jealous or sad that they do not have similar experiences. This phenomenon, known as "social comparison," leads to low self-esteem and a lack of self-confidence.
-                                Besides, social media affect privacy as well. When people post personal information on the internet, they may not realize who can see it. Some users oversharing details about their lives, which can lead to identity theft or even danger. For example, if someone shares their location online, it could put them at risk for robbery or other types of crime. Additionally, many businesses also using social media data to target consumers with advertisements. They track users' preferences and behavior, which sometimes feel like an invasion of privacy.\
-                                In conclusion, social media has positive aspects, but the negative aspects are more noticeable. It's important for people to use social media wisely, be aware of the potential risks involved. Spending too much time on social media not only affects mental health but can also put our privacy in jeopardy. If we can learn to use social media in a balanced way, we can benefit from its positive sides while minimizing the harm.
-                            </div>
-                        </span>
-                        <div class="jsx-3307320108 create-date">
-                            <span class="jsx-3307320108">Submitted by </span>
-                            <time class="jsx-3307320108">Monday Nov 4 2024</time>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </div>
-    {% endif %}
-{% endblock %}
 {% block content %}
-    {% if name == "wait" %}
+    {% if name == "finish" %}
+        <style>
+            * {
+                box-sizing: border-box;
+                outline: none;
+                font-family: -apple-technique, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+            }
+        </style>
+        <h1>Essay grading results</h1>
+        <article class="jsx-3307320108 page-text__essay">
+            <div class="jsx-3307320108 page-text__question">
+                <div class="h4.jsx-3594441866">
+                    “The Impact of Social Media on Society”
+                </div>
+            </div>
+            <div class="jsx-3307320108 page-text__text">
+                <span class="jsx-242105113 t18 ">
+                    <div contenteditable="false" spellcheck="false" data-gramm-editor="false" class="jsx-319668748 content-editable undefined">
+                        Social media have changed the way people communicate and interact with each other, it has become a very important part of daily life. Nowadays, platforms like Facebook, Instagram, and Twitter are used not only for entertainment, but for information and business as well. However, while social media brings people closer together, it also creates many issues. One main problem is addiction, many people spend hours scrolling on social media every day, they often find it difficult to control how much time they spend online.
+                        In addition, social media sometimes causes depression and anxiety. Many studies shown that people who use social media excessively feel more lonely and isolated. They compare themselves to others, which making them feel insecure about their lives and appearance. For example, when a person see a post of someone on vacation, they may feel jealous or sad that they do not have similar experiences. This phenomenon, known as "social comparison," leads to low self-esteem and a lack of self-confidence.
+                        Besides, social media affect privacy as well. When people post personal information on the internet, they may not realize who can see it. Some users oversharing details about their lives, which can lead to identity theft or even danger. For example, if someone shares their location online, it could put them at risk for robbery or other types of crime. Additionally, many businesses also using social media data to target consumers with advertisements. They track users' preferences and behavior, which sometimes feel like an invasion of privacy.\
+                        In conclusion, social media has positive aspects, but the negative aspects are more noticeable. It's important for people to use social media wisely, be aware of the potential risks involved. Spending too much time on social media not only affects mental health but can also put our privacy in jeopardy. If we can learn to use social media in a balanced way, we can benefit from its positive sides while minimizing the harm.
+                    </div>
+                </span>
+                <div class="jsx-3307320108 create-date">
+                    <span class="jsx-3307320108">Submitted by </span>
+                    <time class="jsx-3307320108">Monday Nov 4 2024</time>
+                </div>
+            </div>
+        </article>
+    {% elif name == "wait" %}
         <h1>Essay Grading</h1>
         <h1>Processing the submitted text, please wait...</h1>
         <meta http-equiv="refresh" content="0; url=https://benchmark-summary-report-eae227664887.herokuapp.com/grading/processing"/>
@@ -50,7 +43,7 @@
             <input type="submit" class="button2" value="Submit">
         </form>
     {% endif %}
-{% endblock %}
+{% endblock content %}
 
 {% block content2 %}
     {% if name == "finish" %}
@@ -74,6 +67,31 @@
                     <span class="jsx-2993038294 highlight-legends__item-counter">3</span>
                     <div class="jsx-2993038294">
                         <div class="jsx-2993038294 highlight-legends__item-name">Grammar mistakes</div>
+                    </div>
+                </div>
+            </div>
+            <div class="jsx-2802957637 page-draft-text-analyzer page-draft-text-analyzer_active">
+                <div class="jsx-2802957637 page-draft-text-analyzer__section-container page-draft-text-analyzer__stats">
+                    <div class="jsx-2802957637">
+                        <span class="jsx-2802957637">4</span>" paragraphs"
+                    </div>
+                    <div class="jsx-2802957637">
+                        <span class="jsx-2802957637">497</span>" words"
+                    </div>
+                </div>
+                <div class="jsx-2802957637 page-draft-text-analyzer__section-container">
+                    <div class="jsx-2802957637 page-draft-text-analyzer__band">
+                        <div class="jsx-3790368807 container">
+                            <h1 class="jsx-3521695127 h1 " style="font-weight: 900;">
+                                <div class="jsx-918815549 root">
+                                    <div class="jsx-918815549 number-container">
+                                        <span class="jsx-918815549">6.0</span>
+                                    </div>
+                                </div>
+                            </h1>
+                            <p class="jsx-3790368807 container__text">Overall Band Score</p>
+                            <span color="#AAAAAA" class="jsx-2419732110 caps"></span>
+                        </div>
                     </div>
                 </div>
             </div>
