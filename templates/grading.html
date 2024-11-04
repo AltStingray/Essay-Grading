@@ -9,8 +9,9 @@
             }
         </style>
         <h1>Essay Grading</h1>
+
         <p>The main text goes here</p>
-        <div class="col-md-4">
+        {% block content2 %}
             <aside class="sidebar">
                 <div class="jsx-2993038294 highlight-legends">
                     <div class="jsx-2993038294 highlight-legends__item highlight-legends__item_linkingwords">
@@ -22,7 +23,7 @@
                     </div>
                 </div>
             </aside>
-        </div>
+        {% endblock %}
     {% elif name == "wait" %}
         <h1>Essay Grading</h1>
         <h1>Processing the submitted text, please wait...</h1>
