@@ -199,3 +199,13 @@ a.article-title:hover {
   flex-shrink: 0;
   margin-right: 15px;
 }
+
+.highlight-legends__item-name.jsx-2993038294 {
+  color: #1c1e29;
+  font-weight: 600;
+}
+
+.highlight-legends__item-dscr.jsx-2993038294 {
+  color: #aaa;
+  font-size: 14px;
+}
