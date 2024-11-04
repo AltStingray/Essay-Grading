@@ -12,13 +12,15 @@
             <input type="submit" value="Custom GPT Prompt" class="button2" name="choice">
         </form>
     {% elif name == "prompt" %}
-        <h2>Specify your custom prompt: </h2>
-        <form action="/default" method="get">
-            <textarea type="text" name="prompt" rows="8", cols="100" placeholder="Custom GPT prompt:"></textarea><br><br>
-            <input type="submit" class="button2" value="Submit"><br><br>
-            Default GPT prompt example:<br>
-            {{default_prompt}}
-        </form>
+        <h2 style="align-content: center;">Specify your custom prompt:
+            <form action="/default" method="get">
+                <textarea type="text" name="prompt" rows="8", cols="100" placeholder="Custom GPT prompt:"></textarea><br><br>
+                <input type="submit" class="button2" value="Submit"><br><br>
+                Default GPT prompt example:<br>
+                {{default_prompt}}
+                <br><br>
+            </form>
+        </h2>
     {% elif name == "link" %}
         <h2>Prompt selected.</h2>
         <form action="/processing" method="get">

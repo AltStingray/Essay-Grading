@@ -265,3 +265,16 @@ a.article-title:hover {
   font-size: 12px;
   margin-top: 5px;
 }
+
+.page-text__question.jsx-3307320108 {
+  margin: 10px 0;
+  color: #1c1e29;
+  word-break: break-word;
+  white-space: pre-wrap;
+  line-height: 0px;
+}
+
+.page-text__essay.jsx-3307320108 {
+  max-width: 980px;
+  padding-right: 50px;
+}
