@@ -1,35 +1,41 @@
 {% extends "layout.html" %}
-{% block content %}
+{% block content3 %}
     {% if name == "finish" %}
-        <style>
-            * {
-                box-sizing: border-box;
-                outline: none;
-                font-family: -apple-technique, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
-            }
-        </style>
-        <h1>Essay grading results</h1>
-        <article class="jsx-3307320108 page-text__essay">
-            <div class="jsx-3307320108 page-text__question">
-                <div class="h4.jsx-3594441866">
-                    “The Impact of Social Media on Society”
-                </div>
-            </div>
-            <div class="jsx-3307320108 page-text__text">
-                <span class="jsx-242105113 t18 ">
-                    <div contenteditable="false" spellcheck="false" data-gramm-editor="false" class="jsx-319668748 content-editable undefined">
-                        Social media have changed the way people communicate and interact with each other, it has become a very important part of daily life. Nowadays, platforms like Facebook, Instagram, and Twitter are used not only for entertainment, but for information and business as well. However, while social media brings people closer together, it also creates many issues. One main problem is addiction, many people spend hours scrolling on social media every day, they often find it difficult to control how much time they spend online.
-                        In addition, social media sometimes causes depression and anxiety. Many studies shown that people who use social media excessively feel more lonely and isolated. They compare themselves to others, which making them feel insecure about their lives and appearance. For example, when a person see a post of someone on vacation, they may feel jealous or sad that they do not have similar experiences. This phenomenon, known as "social comparison," leads to low self-esteem and a lack of self-confidence.
-                        Besides, social media affect privacy as well. When people post personal information on the internet, they may not realize who can see it. Some users oversharing details about their lives, which can lead to identity theft or even danger. For example, if someone shares their location online, it could put them at risk for robbery or other types of crime. Additionally, many businesses also using social media data to target consumers with advertisements. They track users' preferences and behavior, which sometimes feel like an invasion of privacy.\
-                        In conclusion, social media has positive aspects, but the negative aspects are more noticeable. It's important for people to use social media wisely, be aware of the potential risks involved. Spending too much time on social media not only affects mental health but can also put our privacy in jeopardy. If we can learn to use social media in a balanced way, we can benefit from its positive sides while minimizing the harm.
+    <div class="row">
+        <div class="col-lg-8">
+            <style>
+                * {
+                    box-sizing: border-box;
+                    outline: none;
+                    font-family: -apple-technique, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+                }
+            </style>
+            <h1>Essay grading results</h1>
+            <article class="jsx-3307320108 page-text__essay">
+                <div class="jsx-3307320108 page-text__question">
+                    <div class="h4.jsx-3594441866">
+                        “The Impact of Social Media on Society”
                     </div>
-                </span>
-                <div class="jsx-3307320108 create-date">
-                    <span class="jsx-3307320108">Submitted by </span>
-                    <time class="jsx-3307320108">Monday Nov 4 2024</time>
                 </div>
-            </div>
-        </article>
+                <div class="jsx-3307320108 page-text__text">
+                    <span class="jsx-242105113 t18 ">
+                        <div contenteditable="false" spellcheck="false" data-gramm-editor="false" class="jsx-319668748 content-editable undefined">
+                            Social media have changed the way people communicate and interact with each other, it has become a very important part of daily life. Nowadays, platforms like Facebook, Instagram, and Twitter are used not only for entertainment, but for information and business as well. However, while social media brings people closer together, it also creates many issues. One main problem is addiction, many people spend hours scrolling on social media every day, they often find it difficult to control how much time they spend online.
+                            In addition, social media sometimes causes depression and anxiety. Many studies shown that people who use social media excessively feel more lonely and isolated. They compare themselves to others, which making them feel insecure about their lives and appearance. For example, when a person see a post of someone on vacation, they may feel jealous or sad that they do not have similar experiences. This phenomenon, known as "social comparison," leads to low self-esteem and a lack of self-confidence.
+                            Besides, social media affect privacy as well. When people post personal information on the internet, they may not realize who can see it. Some users oversharing details about their lives, which can lead to identity theft or even danger. For example, if someone shares their location online, it could put them at risk for robbery or other types of crime. Additionally, many businesses also using social media data to target consumers with advertisements. They track users' preferences and behavior, which sometimes feel like an invasion of privacy.\
+                            In conclusion, social media has positive aspects, but the negative aspects are more noticeable. It's important for people to use social media wisely, be aware of the potential risks involved. Spending too much time on social media not only affects mental health but can also put our privacy in jeopardy. If we can learn to use social media in a balanced way, we can benefit from its positive sides while minimizing the harm.
+                        </div>
+                    </span>
+                    <div class="jsx-3307320108 create-date">
+                        <span class="jsx-3307320108">Submitted by </span>
+                        <time class="jsx-3307320108">Monday Nov 4 2024</time>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+{% endblock %}
+{% block content %}
     {% elif name == "wait" %}
         <h1>Essay Grading</h1>
         <h1>Processing the submitted text, please wait...</h1>
