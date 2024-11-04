@@ -2,68 +2,20 @@
 {% block content %}
     {% if name == "finish" %}
         <h1>Essay Grading</h1>
-        <title>Article Template</title>
-        <style>
-                body {
-                    font-family: Arial, sans-serif;
-                    margin: 0;
-                    padding: 0;
-                    display: flex;
-                    justify-content: center;
-                    background-color: #f4f4f4;
-
-                }
-                .container {
-                    width: 80%;
-                    max-width: 800px;
-                    background: #ffffff ;
-                    padding: 20px;
-                    margin-top: 20px;
-                    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-                    border-radius: 15px;
-                }
-                .header, .content {
-                    margin-bottom: 20px;
-                }
-                .header h1 {
-                    font-size: 24px;
-                    margin: 0;
-                    color: #333;
-                }
-                .content p {
-                    line-height: 1.6;
-                    color: #666;
-                }
-                .sidebar {
-                    margin-top: 20px;
-                    padding: 15px;
-                    background-color: #eaeaea;
-                    border-radius: 5px;
-                }
-                .sidebar h3 {
-                    font-size: 18px;
-                    color: #444;
-                }
-        </style>
-        <body>
-            <div class="container">
-                <div class="header">
-                    <h1>Article Title</h1>
-                    <p>By Author - Published on Date</p>
+        <p>The main text goes here</p>
+        <div class="col-md-4">
+            <aside class="sidebar">
+                <div class="jsx-2993038294 highlight-legends">
+                    <div class="jsx-2993038294 highlight-legends__item highlight-legends__item_linkingwords">
+                        <span class="jsx-2993038294 highlight-legends__item-counter">12</span>
+                        <div class="jsx-2993038294">
+                            <div class="jsx-2993038294 highlight-legends__item-name">Linking words</div>
+                            <div class="jsx-2993038294 highlight-legends__item-dscr">meeting the goal of 7 or more</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="content">
-                    <p>Welcome to this article. This is where the main content will go. You can write paragraphs or add images, lists, and more here.</p>
-                    <p>Each paragraph is neatly formatted to keep things readable and enjoyable.</p>
-                </div>
-                <div class="sidebar">
-                    <ul>
-                        <li><a href="#">L</a></li>
-                        <li><a href="#">Topic 2</a></li>
-                        <li><a href="#">Topic 3</a></li>
-                    </ul>
-                </div>
-            </div>
-        </body>
+            </aside>
+        </div>
     {% elif name == "wait" %}
         <h1>Essay Grading</h1>
         <h1>Processing the submitted text, please wait...</h1>
