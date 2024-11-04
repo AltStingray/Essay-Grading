@@ -274,8 +274,18 @@ a.article-title:hover {
   line-height: 0px;
 }
 
+.page-text__question {
+  margin: 20px 0;
+}
+
 .page-text__essay.jsx-3307320108 {
   max-width: 980px;
+}
+
+.page-text__essay.jsx-3307320108 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
 }
 
 .page-draft-text-analyzer__stats.jsx-2802957637 {
@@ -311,6 +321,7 @@ a.article-title:hover {
   font-weight: 700;
   font-size: 80px;
   line-height: 100%;
+  color: #019E43;
 }
 
 .number-container.jsx-918815549 {
