@@ -38,9 +38,13 @@
   <main role="main" class="container-fluid">
     <div class="row">
       <div class="col-lg-9">
-        <div class="center">
-          {% block content %}{% endblock %}
-        </div>
+        {% if href=="https://benchmark-summary-report-eae227664887.herokuapp.com/grading" %}
+          {% block content3 %}{% endblock %}
+        {% else %}
+          <div class="center">
+            {% block content %}{% endblock %}
+          </div>
+        {% endif %}
       </div>
       <div class="col-lg-3">
         <br><br><br><br><br><br>
