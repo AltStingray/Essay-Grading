@@ -10,6 +10,12 @@ body {
   padding: 10px;
 }
 
+.left {
+  margin-right: 400px;
+  width: 60%;
+  padding: 10px;
+}
+
 h1, h2, h3, h4, h5, h6 {
   color: #444444;
 }
