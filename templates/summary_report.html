@@ -1,6 +1,14 @@
 {% extends "layout.html" %}
 {% block content %}
-    <body style="margin-left: 100;">
+    <style>
+        .center {
+        margin: auto;
+        width: 60%;
+        border: 3px solid #73AD21;
+        padding: 10px;
+        }
+    </style>
+    <div class="center">
         {% if name == "start" %}
             <h2>Please complete Dropbox authorization to continue: </h2>
             <form action="/authorize" method="get">
@@ -42,5 +50,5 @@
                 <input type="submit" class="button2" value="Submit">
             </form>
         {% endif %}
-    </body>
+    </div>
 {% endblock content %}
