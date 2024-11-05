@@ -13,8 +13,6 @@ from markupsafe import escape
 from moviepy.editor import *
 from openai import OpenAI
 from db_postgres import *
-from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
 from datetime import date
 
 OPENAI_API_KEY = os.environ.get("N_OPENAI_API_KEY")
@@ -96,7 +94,7 @@ def own():
     password = request.args.get("password", "")
 
     if password == None or password != PASSWORD:
-        return redirect(url_for("password", "fail"))
+        return redirect(url_for("password", values="fail"))
     else:
         default_prompt = "I run an online OET speaking mock test service where candidates act as doctors, nurses or other medical practitioners and practice roleplay scenarios with a teacher who acts as the patient or the patient's relative. After each session, we provide a detailed report to the candidate, highlighting their performance. You are given a dialogue text delimited by triple quotes on the topic of medicine.  Please summarise the teacher's feedback on the candidate's grammar, lexical choices, pronunciation, and overall communication skills. In the overall communication skills section, use the five categories in the clinical communication criteria table in the knowledge file delimited by triple quotes. Summarise the teacher's feedback on the candidate's performance. Structure the report with sections for each roleplay and an overall performance summary which includes a table with 2 columns called areas that you are doing well and areas that you need to improve."
         
