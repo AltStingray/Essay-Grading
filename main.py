@@ -81,7 +81,7 @@ def choice():
     
 @app.route('/password')
 def password():
-    fail = request.args.get("fail", "")
+    fail = request.args.get("values", "")
     if fail:
         return render_template('summary_report.html', name="password", fail="fail")
     else:
