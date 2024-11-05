@@ -83,6 +83,7 @@ def choice():
 def password():
     fail = request.args.get("values", "")
     if fail:
+        print("Fail!")
         return render_template('summary_report.html', name="password", fail="fail")
     else:
         return render_template('summary_report.html', name="password")
