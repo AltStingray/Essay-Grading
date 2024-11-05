@@ -6,7 +6,7 @@ body {
 
 .center {
   margin-left: 500px;
-  width: 50%;
+  width: 60%;
   padding: 10px;
 }
 
@@ -394,13 +394,7 @@ p {
 }
 
 /* Sidebar comments */
-.sidebar-comments {
-  position: absolute;
-  right: -240px;
-  top: 0;
-  width: 220px;
-  font-size: 0.9em;
-}
+
 .comment-box {
   background-color: #ffcccb;
   border: 1px solid #dcdcdc;
