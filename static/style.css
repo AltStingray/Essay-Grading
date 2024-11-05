@@ -6,7 +6,7 @@ body {
 
 .center {
   margin-left: 500px;
-  width: 70%;
+  width: 50%;
   padding: 10px;
 }
 
@@ -369,4 +369,50 @@ a.article-title:hover {
   line-height: 100%;
   text-transform: uppercase;
   color: #AAAAAA;
+}
+
+
+p {
+  font-size: 1em;
+  line-height: 1.6;
+  margin: 1em 0;
+  position: relative;
+}
+.highlight {
+  background-color: #ffdd57;
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  font-weight: bold;
+}
+.strikethrough {
+  text-decoration: line-through;
+  color: red;
+}
+.red {
+  color: red;
+}
+
+/* Sidebar comments */
+.sidebar-comments {
+  position: absolute;
+  right: -240px;
+  top: 0;
+  width: 220px;
+  font-size: 0.9em;
+}
+.comment-box {
+  background-color: #ffcccb;
+  border: 1px solid #dcdcdc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 0.9em;
+}
+.comment-box.highlight {
+  background-color: #ff6666;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.comment-box em {
+  font-style: italic;
 }
