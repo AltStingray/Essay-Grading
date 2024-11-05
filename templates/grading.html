@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
-{% block content %}
-    <div class="left">
+<div class="left">
+    {% block content %}
         {% if name == "finish" %}
             <style>
                 * {
@@ -92,5 +92,5 @@
                 </div>
             </aside>
         {% endif %}
-    </div>
-{% endblock %}
+    {% endblock %}
+</div>
