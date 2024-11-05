@@ -143,7 +143,7 @@ a.article-title:hover {
 .sidebar {
   width: 300px;
   margin-top: -20px;
-  margin-right: auto;
+  margin-right: 20;
 }
 
 .highlight-legends__item_linkingwords.jsx-2993038294 {
