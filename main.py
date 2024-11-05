@@ -19,7 +19,7 @@ from datetime import date
 
 OPENAI_API_KEY = os.environ.get("N_OPENAI_API_KEY")
 
-PASSWORD = os.environget("CUSTOM_PROMPT_PASSWORD")
+PASSWORD = os.environ.get("CUSTOM_PROMPT_PASSWORD")
 
 FLASK_SESSION_SECRET = os.environ.get("FLASK_SESSION_SECRET")
 
