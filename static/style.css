@@ -5,11 +5,11 @@ body {
 }
 
 .center {
-  margin-right: 100;
+  margin-left: 100;
   width: 60%;
   border: 3px solid #73AD21;
   padding: 10px;
-  }
+}
 
 h1, h2, h3, h4, h5, h6 {
   color: #444444;
