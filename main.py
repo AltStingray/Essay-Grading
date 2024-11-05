@@ -19,6 +19,8 @@ from datetime import date
 
 OPENAI_API_KEY = os.environ.get("N_OPENAI_API_KEY")
 
+PASSWORD = os.environget("CUSTOM_PROMPT_PASSWORD")
+
 FLASK_SESSION_SECRET = os.environ.get("FLASK_SESSION_SECRET")
 
 
@@ -75,17 +77,30 @@ def choice():
     choice = str(escape(request.args.get("choice", "")))
 
     if choice == "Custom GPT Prompt":
-        return redirect(url_for('own'))
+        return redirect(url_for('password'))
     else:
         return render_template('summary_report.html', name="link")
+    
+@app.route('/password')
+def password():
+    fail = request.args.get("fail", "")
+    if fail:
+        return render_template('summary_report.html', name="password", fail="fail")
+    else:
+        return render_template('summary_report.html', name="password")
     
 
 @app.route('/own')
 def own():
 
-    default_prompt = "I run an online OET speaking mock test service where candidates act as doctors, nurses or other medical practitioners and practice roleplay scenarios with a teacher who acts as the patient or the patient's relative. After each session, we provide a detailed report to the candidate, highlighting their performance. You are given a dialogue text delimited by triple quotes on the topic of medicine.  Please summarise the teacher's feedback on the candidate's grammar, lexical choices, pronunciation, and overall communication skills. In the overall communication skills section, use the five categories in the clinical communication criteria table in the knowledge file delimited by triple quotes. Summarise the teacher's feedback on the candidate's performance. Structure the report with sections for each roleplay and an overall performance summary which includes a table with 2 columns called areas that you are doing well and areas that you need to improve."
-    
-    return render_template('summary_report.html', name="prompt", default_prompt=default_prompt)
+    password = request.args.get("password", "")
+
+    if password == None or password != PASSWORD:
+        return redirect(url_for("password", "fail"))
+    else:
+        default_prompt = "I run an online OET speaking mock test service where candidates act as doctors, nurses or other medical practitioners and practice roleplay scenarios with a teacher who acts as the patient or the patient's relative. After each session, we provide a detailed report to the candidate, highlighting their performance. You are given a dialogue text delimited by triple quotes on the topic of medicine.  Please summarise the teacher's feedback on the candidate's grammar, lexical choices, pronunciation, and overall communication skills. In the overall communication skills section, use the five categories in the clinical communication criteria table in the knowledge file delimited by triple quotes. Summarise the teacher's feedback on the candidate's performance. Structure the report with sections for each roleplay and an overall performance summary which includes a table with 2 columns called areas that you are doing well and areas that you need to improve."
+        
+        return render_template('summary_report.html', name="prompt", default_prompt=default_prompt)
 
 
 @app.route('/default')

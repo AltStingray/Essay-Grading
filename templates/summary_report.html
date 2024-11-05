@@ -11,6 +11,19 @@
             <input type="submit" value="Default GPT Prompt" class="button2" name="choice">
             <input type="submit" value="Custom GPT Prompt" class="button2" name="choice">
         </form>
+    {% elif name == "password" %}
+        <h2>Provide secret password to access the Custom Prompt function: </h2>
+        <form action="/own" method="get">
+            <input type="text" name="password" placeholder="Password:"><br><br>
+            <input type="submit" class="button2" value="Verify">
+        </form>
+        {% if fail == "fail" %}
+            <script>
+                function myFunction() {
+                    alert("Wrong password!")
+                }
+            </script>
+        {% endif %}
     {% elif name == "prompt" %}
         <h2 style="text-align: center;">Specify your custom prompt: </h2>
         <form action="/default" method="get">
