@@ -288,8 +288,7 @@ def grading_results():
     print(job_result)
 
     if job_result.startswith("```"):
-        strip_result = strip([job_result])
-        result = json.loads(strip_result)
+        result = strip([job_result])
     else:
         result = job_result
 
