@@ -419,8 +419,8 @@ p {
 
 /* Image styling */
 .image-section img {
-  width: 100%;
+  width: 10%;
   height: auto;
   display: block;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }

@@ -146,14 +146,7 @@ def results():
 
         result = job.return_value()
 
-        if result[0].startswith("```python"):
-            strip_summary = result[0].replace("```python\n", "").replace("```", "").strip()
-        elif result[0].startswith("```json"):
-            strip_summary = result[0].replace("```json\n", "").replace("```", "").strip()
-        else:
-            strip_summary = result[0].replace("```\n", "").replace("```", "").strip()
-
-        print(strip_summary)
+        strip_summary = strip(result)
 
         summary_report = json.loads(strip_summary)
 
@@ -183,12 +176,7 @@ def download():
 
     result = job.return_value()
 
-    if result[0].startswith("```python"):
-        strip_summary = result[0].replace("```python\n", "").replace("```", "").strip()
-    elif result[0].startswith("```json"):
-        strip_summary = result[0].replace("```json\n", "").replace("```", "").strip()
-    else:
-        strip_summary = result[0].replace("```\n", "").replace("```", "").strip()
+    strip_summary = strip(result)
 
     summary_report_text = retrieve(json.loads(strip_summary)["text"])
     summary_report_html = json.loads(strip_summary)["html"].strip("{ }")
@@ -260,12 +248,12 @@ def grading_queue():
     example_results_dict = {
         "original_topic": ["original_topic"],
         "original_text": ["original_text"],
-        "wrong_words": ["list", "of", "words", "that", "contain", "a", "mistake"],
+        "wrong_words": ["!list!", "!of!", "!words!", "!that!", "!contain!", "!a!", "!mistake!", "!which!", "!are!", "!delemited!", "!by!", "!", "!mark!"],
         "corrected_words": ["corrected", "version", "of", "the", "words", "with", "the", "(Reason)"],
         "corrected_text": ["corrected_text"],
     }
 
-    prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values in the following way: {example_results_dict}"
+    prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values in the following way: {example_results_dict}. Delimit all of the wrong words with '!' mark in the original text, as in the 'wrong_words' list example."
 
     job_queue = q.enqueue(RunOpenAI, prompt, essay)
 
@@ -301,7 +289,39 @@ def grading_results():
 
     print(result)
 
-    return render_template('grading.html', name="finish", result=result)
+    strip_result = strip(result)
+
+    topic = strip_result["original_topic"]
+
+    original_text = strip_result["original_text"]
+
+    wrong_words = strip_result["wrong_words"]
+
+    corrected_words = strip_result
+
+    sidebar_comments = []
+
+    for n, word in enumerate(wrong_words):
+        if word in original_text:
+            html_word = f'<span class="highlight" data-comment="comment{n}">{word.strip("!")}({n})</span>'
+            original_text.replace(word, html_word)
+    
+    for n, word in enumerate(corrected_words):
+        word_split = word.split()
+        description = ""
+        for one in word_split:
+            if one.startswith("(") or one.endswith(")"):
+                description += one
+        description.join(" ")
+        
+        html_line = f'<div id="comment{n}" class="comment-box"><strong>({n})</strong> <span class="green">{word}</span> <em>{description}</em></div>'
+        
+        sidebar_comments.append(html_line)
+
+    result_text = original_text
+
+
+    return render_template('grading.html', name="finish", topic=topic, essay=result_text, corrected_words=sidebar_comments)
 
 
 
@@ -376,6 +396,17 @@ def RunOpenAI(prompt, content):
     
     return response
 
+
+def strip(result):
+
+    if result[0].startswith("```python"):
+        strip_summary = result[0].replace("```python\n", "").replace("```", "").strip()
+    elif result[0].startswith("```json"):
+        strip_summary = result[0].replace("```json\n", "").replace("```", "").strip()
+    else:
+        strip_summary = result[0].replace("```\n", "").replace("```", "").strip()
+    
+    return strip_summary
 
 # These two lines tell Python to start Flask’s development server when the script is executed from the command line. 
 # It’ll be used only when you run the script locally.

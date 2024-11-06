@@ -486,12 +486,5 @@ Just in case
 }
 
 
-
-{% for mistake in mistakes %}
-  <div id="comment1" class="comment-box">
-      <strong>(1)</strong> <span class="red">{{mistake["word"]}}</span> <em>{{mistake["description"]}}</em>
-  </div>
-
-
 "missing_an_article": ["words", "that", "are", "missing"],
 "unnecessary_article": ["words", "that", "are", "unnecessary"],
