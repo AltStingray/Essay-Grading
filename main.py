@@ -253,7 +253,7 @@ def grading_queue():
         "corrected_text": ["corrected_text"],
     }
 
-    prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values in the following way: {example_results_dict}. Delimit all of the wrong words with '!' mark in the original text, as in the 'wrong_words' list example."
+    prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values in the following way: {example_results_dict}. Delimit all of the wrong words with '!' mark in the original text, as in the 'wrong_words' list example. Enclose the dict, all of the keys and values into double quotes, not single. "
 
     job_queue = q.enqueue(RunOpenAI, prompt, essay)
 
@@ -291,6 +291,8 @@ def grading_results():
         result = strip([job_result])
     else:
         result = job_result
+
+    result = json.loads(result)
 
     print(result)
 
