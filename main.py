@@ -253,7 +253,7 @@ def grading_queue():
         "corrected_text": ["corrected_text"],
     }
 
-    prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values in the following way: {example_results_dict}. Delimit all of the wrong words with '!' mark in the original text, as in the 'wrong_words' list example. Enclose the dict, all of the keys and values into double quotes, not single. "
+    prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values in the following way: {example_results_dict}. Delimit all of the wrong words with '!' mark in the 'original_text', as in the 'wrong_words' list example. Enclose the dict, all of the keys and values into double quotes, not single. "
 
     job_queue = q.enqueue(RunOpenAI, prompt, essay)
 
@@ -306,20 +306,24 @@ def grading_results():
 
     sidebar_comments = []
 
-    for n, word in enumerate(wrong_words):
+    for n, word in enumerate(wrong_words, start=1):
         if word in original_text:
             html_word = f'<span class="highlight" data-comment="comment{n}">{word.strip("!")}({n})</span>'
             original_text.replace(word, html_word)
     
-    for n, word in enumerate(corrected_words):
+    for n, word in enumerate(corrected_words, start=1):
         word_split = word.split()
+        correct_word = ""
         description = ""
         for one in word_split:
             if one.startswith("(") or one.endswith(")"):
                 description += one
+            else:
+                correct_word += one
+        correct_word.join(" ")
         description.join(" ")
         
-        html_line = f'<div id="comment{n}" class="comment-box"><strong>({n})</strong> <span class="green">{word}</span> <em>{description}</em></div>'
+        html_line = f'<div id="comment{n}" class="comment-box"><strong>({n})</strong> <span class="green">{correct_word}</span> <em>{description}</em></div>'
         
         sidebar_comments.append(html_line)
 
