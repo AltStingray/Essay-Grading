@@ -287,7 +287,7 @@ def grading_results():
 
     print(result)
 
-    strip_result = strip(result)
+    strip_result = strip(list(result))
 
     print(strip_result)
 
