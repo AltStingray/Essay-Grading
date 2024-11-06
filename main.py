@@ -285,6 +285,8 @@ def grading_results():
 
     result = job.return_value()
 
+    print(result)
+
     strip_result = strip(result)
 
     print(strip_result)
