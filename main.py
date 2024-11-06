@@ -285,19 +285,19 @@ def grading_results():
 
     result = job.return_value()
 
-    #result = result.replace("```html\n", "").replace("\nhtml```", "").strip()
-
-    print(result)
-
     strip_result = strip(result)
 
-    topic = strip_result["original_topic"]
+    print(strip_result)
 
-    original_text = strip_result["original_text"]
+    dict_result = json.loads(strip_result) # converting string into an actual dict
 
-    wrong_words = strip_result["wrong_words"]
+    topic = dict_result["original_topic"]
 
-    corrected_words = strip_result
+    original_text = dict_result["original_text"]
+
+    wrong_words = dict_result["wrong_words"]
+
+    corrected_words = dict_result["corrected_words"]
 
     sidebar_comments = []
 
