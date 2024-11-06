@@ -283,23 +283,25 @@ def grading_results():
 
     job = Job.fetch(job_id, connection=conn)
 
-    result = job.return_value()
+    job_result = job.return_value()
+
+    print(job_result)
+
+    if result.startswith("```"):
+        strip_result = strip([job_result])
+        result = json.loads(strip_result)
+    else:
+        result = job_result
 
     print(result)
 
-    strip_result = strip([result])
+    topic = result["original_topic"]
 
-    print(strip_result)
+    original_text = result["original_text"]
 
-    dict_result = json.loads(strip_result) # converting string into an actual dict
+    wrong_words = result["wrong_words"]
 
-    topic = dict_result["original_topic"]
-
-    original_text = dict_result["original_text"]
-
-    wrong_words = dict_result["wrong_words"]
-
-    corrected_words = dict_result["corrected_words"]
+    corrected_words = result["corrected_words"]
 
     sidebar_comments = []
 
