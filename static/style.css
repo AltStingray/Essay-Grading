@@ -259,7 +259,7 @@ a.article-title:hover {
   border-bottom: 2px solid rgba(0, 0, 0, 0.05);
   -webkit-transition: border-color 200ms;
   transition: border-color 200ms;
-  padding-bottom: 40px;
+  padding-bottom: 20px;
   white-space: pre-wrap;
   overflow-wrap: break-word;
   word-break: break-word;
@@ -270,7 +270,7 @@ a.article-title:hover {
 .create-date.jsx-3307320108 {
   text-align: right;
   font-size: 12px;
-  margin-top: 5px;
+  margin-top: 1px;
 }
 
 .page-text__question.jsx-3307320108 {
