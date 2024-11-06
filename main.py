@@ -298,7 +298,8 @@ def grading_results():
 
     topic = result["original_topic"]
 
-    original_text = result["original_text"]
+    original_text = (result["original_text"]).split()
+    print(original_text) # test
 
     wrong_words = result["wrong_words"]
 
@@ -307,12 +308,15 @@ def grading_results():
     sidebar_comments = []
 
     for n, word in enumerate(wrong_words, start=1):
+        print(word)
         if word in original_text:
             html_word = f'<span class="highlight" data-comment="comment{n}">{word.strip("!")}({n})</span>'
             original_text.replace(word, html_word)
-    
+            print("Success!") # test
+
     for n, word in enumerate(corrected_words, start=1):
         word_split = word.split()
+        print(word_split) # test
         correct_word = ""
         description = ""
         for one in word_split:
@@ -320,14 +324,14 @@ def grading_results():
                 description += one
             else:
                 correct_word += one
-        correct_word.join(" ")
-        description.join(" ")
+        " ".join(correct_word)
+        " ".join(description)
         
         html_line = f'<div id="comment{n}" class="comment-box"><strong>({n})</strong> <span class="green">{correct_word}</span> <em>{description}</em></div>'
         
         sidebar_comments.append(html_line)
 
-    result_text = original_text
+    result_text = ''.join(original_text)
 
 
     return render_template('grading.html', name="finish", topic=topic, essay=result_text, corrected_words=sidebar_comments)
