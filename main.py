@@ -291,7 +291,7 @@ def grading_results():
 
     print(strip_result)
 
-    dict_result = json.loads(strip_result) # converting string into an actual dict
+    dict_result = strip_result # converting string into an actual dict
 
     topic = dict_result["original_topic"]
 
