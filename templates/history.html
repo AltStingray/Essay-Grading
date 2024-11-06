@@ -4,11 +4,11 @@
     <p1>List of all available Summary Reports and Transcriptions:</p1>
     <br>
     {% for id in ids %}
-    <label for="Logs">Log {{id}}:</label>
-        <ul>
-            <li><a href="{{ url_for('logs_download', id=id, name='Summary report.odt')}}">Summary report.odt</a></li>
-            <li><a href="{{ url_for('logs_download', id=id, name='Transcription.odt')}}">Transcription.odt</a></li>
-            <li><a href="{{ url_for('logs_download', id=id, name='Summary report.html')}}">Summary report.html</a></li>
-        </ul>
+        <label for="Logs">Log {{id}}:</label>
+            <ul>
+                <li><a href="{{ url_for('logs_download', id=id, name='Summary report.odt')}}">Summary report.odt</a></li>
+                <li><a href="{{ url_for('logs_download', id=id, name='Transcription.odt')}}">Transcription.odt</a></li>
+                <li><a href="{{ url_for('logs_download', id=id, name='Summary report.html')}}">Summary report.html</a></li>
+            </ul>
     {% endfor %}
 {% endblock content %}
