@@ -298,7 +298,8 @@ def grading_results():
 
     topic = result["original_topic"]
 
-    original_text = (result["original_text"]).split()
+    original_text = result["original_text"]
+    splitted_original_text = original_text.split()
     print(original_text) # test
 
     wrong_words = result["wrong_words"]
@@ -309,7 +310,7 @@ def grading_results():
 
     for n, word in enumerate(wrong_words, start=1):
         print(word)
-        if word in original_text:
+        if word in splitted_original_text:
             html_word = f'<span class="highlight" data-comment="comment{n}">{word.strip("!")}({n})</span>'
             original_text.replace(word, html_word)
             print("Success!") # test
