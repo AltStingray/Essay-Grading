@@ -319,7 +319,7 @@ def grading_results():
     already_exists = ""
     for n, word in enumerate(linking_words, start=1):
         if word in original_text:
-            html_word = f"<div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{word.strip("#")}</span><span class='jsx-1879403401'></span></div>"
+            html_word = f"<span class='jsx-2885589388 linking-words'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{word.strip("#")}</span><span class='jsx-1879403401'></span></div></span>"
             original_text = original_text.replace(word, html_word)
             if word not in already_exists:
                 already_exists += word
