@@ -247,16 +247,17 @@ def grading_queue():
 
     essay = f"The topic of the essay: {topic}.\nThe essay: {essay} \nSubmitted by: {submitted_by}"
     
+    #"corrected_text": "corrected_text",
     example_results_dict = {
         "original_topic": "original_topic",
         "original_text": "original_text",
         "wrong_words": ["!list!", "!of!", "!words!", "!that!", "!contain!", "!a!", "!mistake!", "!which!", "!are!", "!delemited!", "!by!", "!", "!mark!"],
         "corrected_words": ["corrected", "version", "of", "the", "words", "with", "the", "(grammar rule reason)"],
-        "corrected_text": "corrected_text",
-        "submitted_by": "submitted_by"
+        "submitted_by": "submitted_by",
+        "linking words": ["#list#", "#of#", "#all#", "#linking#", "#words#"]
     }
 
-    prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values in the following way: {example_results_dict}. Delimit all of the wrong words with '!' mark in the 'original_text', as in the 'wrong_words' list example. Enclose the dict, all of the keys and values into double quotes, not single. "
+    prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values in the following way: {example_results_dict}. Delimit all of the wrong words with '!' mark in the 'original_text', as in the 'wrong_words' list example. If one mistake contains multiple words, enclose them with a single pair of ! . Delimit all of the linking words with '#' mark in the 'original_text', as in the 'linking_words' list example. Enclose the dict, all of the keys and values into double quotes, not single. "
 
     job_queue = q.enqueue(RunOpenAI, prompt, essay)
 
@@ -302,6 +303,7 @@ def grading_results():
     wrong_words = result["wrong_words"]
     corrected_words = result["corrected_words"]
     submitted_by = result["submitted_by"]
+    linking_words = result["linking_words"]
     current_date = date.today()
 
     sidebar_comments = []
@@ -313,7 +315,18 @@ def grading_results():
 
     print(original_text)
 
+    linking_words_count = 0
+    already_exists = ""
+    for n, word in enumerate(linking_words, start=1):
+        if word in original_text:
+            html_word = f"<div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{word.strip("#")}</span><span class='jsx-1879403401'></span></div>"
+            original_text = original_text.replace(word, html_word)
+            if word not in already_exists:
+                already_exists += word
+                linking_words_count += 1
+
     result_text = original_text
+    print(result_text)
 
     for n, word in enumerate(corrected_words, start=1):
         word_split = word.split()
@@ -332,7 +345,7 @@ def grading_results():
         sidebar_comments.append(html_line)
 
 
-    return render_template('grading.html', name="finish", topic=topic, essay=result_text, corrected_words=sidebar_comments, submitted_by=submitted_by, current_date=current_date)
+    return render_template('grading.html', name="finish", topic=topic, essay=result_text, corrected_words=sidebar_comments, submitted_by=submitted_by, current_date=current_date, linking_words_count=linking_words_count)
 
 
 
