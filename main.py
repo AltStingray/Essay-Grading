@@ -316,7 +316,7 @@ def grading_results():
 
     for n, word in enumerate(corrected_words, start=1):
         word_split = word.split()
-        cache_word_split = word_split
+        cache_word_split = word_split[:]
         print(word_split) # test
         correct_word = ""
         description = ""
