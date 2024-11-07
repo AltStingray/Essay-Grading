@@ -300,7 +300,10 @@ def grading_results():
     topic = result["original_topic"]
 
     original_text = result["original_text"]
-    print(original_text) # test
+
+    submitted_by = result["submitted_by"]
+
+    current_date = date.today()
 
     wrong_words = result["wrong_words"]
 
@@ -334,7 +337,7 @@ def grading_results():
         sidebar_comments.append(html_line)
 
 
-    return render_template('grading.html', name="finish", topic=topic, essay=result_text, corrected_words=sidebar_comments)
+    return render_template('grading.html', name="finish", topic=topic, essay=result_text, corrected_words=sidebar_comments, submitted_by=submitted_by, current_date=current_date)
 
 
 
