@@ -306,11 +306,10 @@ def grading_results():
     sidebar_comments = []
 
     for n, word in enumerate(wrong_words, start=1):
-        word = f" {word} "
         if word in original_text:
-            html_word = f'<span class="highlight" data-comment="comment{n}">{word.strip("!")}({n})</span>'
+            html_word = f"<span class='highlight' data-comment='comment{n}'>{word.strip("!")}({n})</span>"
             print(word)
-            original_text.replace(word, html_word)
+            original_text = original_text.replace(word, html_word)
 
     print(original_text)
 
@@ -318,14 +317,14 @@ def grading_results():
 
     for n, word in enumerate(corrected_words, start=1):
         word_split = word.split()
-        print(word_split) # test
         correct_word = ""
         description = ""
-        for one in word_split:
-            if one.startswith("(") or one.endswith(")"):
-                description += f"{one} "
+        for one in range(len(word_split)):
+            if correct_word[one].startswith("("):
+                description += ' '.join(word_split)
+                break
             else:
-                correct_word += f"{one}"
+                correct_word += f"{word_split.pop[one]} "
 
         html_line = f'<div id="comment{n}" class="comment-box"><strong>({n})</strong> <span class="green">{correct_word}</span> <em>{description}</em></div>'
         

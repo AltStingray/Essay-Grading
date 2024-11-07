@@ -394,6 +394,10 @@ p {
   color: red;
 }
 
+.green {
+  color: green;
+}
+
 /* Sidebar comments */
 
 .sidebar-comments {
