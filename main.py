@@ -243,7 +243,9 @@ def grading_queue():
 
     essay = request.args.get("essay")
 
-    essay = f"The topic of the essay: {topic}.\nThe essay: {essay}"
+    submitted_by = request.args.get("submitted_by")
+
+    essay = f"The topic of the essay: {topic}.\nThe essay: {essay} \nSubmitted by: {submitted_by}"
     
     example_results_dict = {
         "original_topic": ["original_topic"],
@@ -251,6 +253,7 @@ def grading_queue():
         "wrong_words": ["!list!", "!of!", "!words!", "!that!", "!contain!", "!a!", "!mistake!", "!which!", "!are!", "!delemited!", "!by!", "!", "!mark!"],
         "corrected_words": ["corrected", "version", "of", "the", "words", "with", "the", "(grammar rule reason)"],
         "corrected_text": ["corrected_text"],
+        "submitted_by": ["submitted_by"]
     }
 
     prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values in the following way: {example_results_dict}. Delimit all of the wrong words with '!' mark in the 'original_text', as in the 'wrong_words' list example. Enclose the dict, all of the keys and values into double quotes, not single. "
@@ -320,7 +323,7 @@ def grading_results():
         correct_word = ""
         description = ""
         for one in range(len(word_split) - 1):
-            if correct_word[one].startswith("("):
+            if word_split[one].startswith("("):
                 description += ' '.join(word_split)
                 break
             else:
