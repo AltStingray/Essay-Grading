@@ -419,7 +419,7 @@ p {
 
 /* Image styling */
 .image-section img {
-  width: 10%;
+  width: auto;
   height: auto;
   display: block;
   margin-bottom: 10px;

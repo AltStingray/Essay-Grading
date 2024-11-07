@@ -249,7 +249,7 @@ def grading_queue():
         "original_topic": ["original_topic"],
         "original_text": ["original_text"],
         "wrong_words": ["!list!", "!of!", "!words!", "!that!", "!contain!", "!a!", "!mistake!", "!which!", "!are!", "!delemited!", "!by!", "!", "!mark!"],
-        "corrected_words": ["corrected", "version", "of", "the", "words", "with", "the", "(Two-word reason)"],
+        "corrected_words": ["corrected", "version", "of", "the", "words", "with", "the", "(grammar rule reason)"],
         "corrected_text": ["corrected_text"],
     }
 
@@ -294,12 +294,9 @@ def grading_results():
 
     result = json.loads(result)
 
-    print(result)
-
     topic = result["original_topic"]
 
     original_text = result["original_text"]
-    splitted_original_text = original_text.split()
     print(original_text) # test
 
     wrong_words = result["wrong_words"]
@@ -309,8 +306,10 @@ def grading_results():
     sidebar_comments = []
 
     for n, word in enumerate(wrong_words, start=1):
-        if word in splitted_original_text:
+        word = f" {word} "
+        if word in original_text:
             html_word = f'<span class="highlight" data-comment="comment{n}">{word.strip("!")}({n})</span>'
+            print(word)
             original_text.replace(word, html_word)
 
     print(original_text)
