@@ -319,7 +319,7 @@ def grading_results():
         word_split = word.split()
         correct_word = ""
         description = ""
-        for one in range(len(word_split)):
+        for one in range(len(word_split) - 1):
             if correct_word[one].startswith("("):
                 description += ' '.join(word_split)
                 break
