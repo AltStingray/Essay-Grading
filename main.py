@@ -316,11 +316,12 @@ def grading_results():
 
     for n, word in enumerate(corrected_words, start=1):
         word_split = word.split()
+        cache_word_split = word_split
         print(word_split) # test
         correct_word = ""
         description = ""
-        for one in range(len(word_split)):
-            if word_split[one].startswith("("):
+        for one in range(len(cache_word_split)):
+            if cache_word_split[one].startswith("("):
                 description += (' '.join(word_split))
                 break
             else:
