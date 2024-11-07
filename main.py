@@ -295,6 +295,8 @@ def grading_results():
 
     result = json.loads(result)
 
+    print(result)
+
     topic = result["original_topic"]
     original_text = result["original_text"]
     wrong_words = result["wrong_words"]
@@ -323,11 +325,11 @@ def grading_results():
         for one in range(len(cache_word_split)):
             print(cache_word_split)
             print(word_split)
-            if (cache_word_split[one]).startswith('('):
+            if cache_word_split[one].startswith('('):
                 description += (" ".join(word_split))
                 break
             else:
-                correct_word += (f"{word_split.pop(one)} ")
+                correct_word += (f"{word_split.pop(0)} ")
 
         html_line = f'<div id="comment{n}" class="comment-box"><strong>({n})</strong> <span class="green">{correct_word}</span> <em>{description}</em></div>'
         
