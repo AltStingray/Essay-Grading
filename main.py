@@ -321,8 +321,10 @@ def grading_results():
         correct_word = ""
         description = ""
         for one in range(len(cache_word_split)):
-            if cache_word_split[one].startswith("("):
-                description += (' '.join(word_split))
+            print(cache_word_split)
+            print(word_split)
+            if (cache_word_split[one]).startswith('('):
+                description += (" ".join(word_split))
                 break
             else:
                 correct_word += (f"{word_split.pop(one)} ")
