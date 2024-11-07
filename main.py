@@ -249,7 +249,7 @@ def grading_queue():
         "original_topic": ["original_topic"],
         "original_text": ["original_text"],
         "wrong_words": ["!list!", "!of!", "!words!", "!that!", "!contain!", "!a!", "!mistake!", "!which!", "!are!", "!delemited!", "!by!", "!", "!mark!"],
-        "corrected_words": ["corrected", "version", "of", "the", "words", "with", "the", "(Reason)"],
+        "corrected_words": ["corrected", "version", "of", "the", "words", "with", "the", "(Two-word reason)"],
         "corrected_text": ["corrected_text"],
     }
 
@@ -309,11 +309,13 @@ def grading_results():
     sidebar_comments = []
 
     for n, word in enumerate(wrong_words, start=1):
-        print(word)
         if word in splitted_original_text:
             html_word = f'<span class="highlight" data-comment="comment{n}">{word.strip("!")}({n})</span>'
             original_text.replace(word, html_word)
-            print("Success!") # test
+
+    print(original_text)
+
+    result_text = original_text
 
     for n, word in enumerate(corrected_words, start=1):
         word_split = word.split()
@@ -322,17 +324,13 @@ def grading_results():
         description = ""
         for one in word_split:
             if one.startswith("(") or one.endswith(")"):
-                description += one
+                description += f"{one} "
             else:
-                correct_word += one
-        " ".join(correct_word)
-        " ".join(description)
-        
+                correct_word += f"{one}"
+
         html_line = f'<div id="comment{n}" class="comment-box"><strong>({n})</strong> <span class="green">{correct_word}</span> <em>{description}</em></div>'
         
         sidebar_comments.append(html_line)
-
-    result_text = ''.join(original_text)
 
 
     return render_template('grading.html', name="finish", topic=topic, essay=result_text, corrected_words=sidebar_comments)
