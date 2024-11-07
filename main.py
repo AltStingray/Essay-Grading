@@ -330,7 +330,7 @@ def grading_results():
                 description += (' '.join(word_split))
                 break
             else:
-                correct_word += (f"{word_split.pop[one]} ")
+                correct_word += (f"{word_split.pop(one)} ")
 
         html_line = f'<div id="comment{n}" class="comment-box"><strong>({n})</strong> <span class="green">{correct_word}</span> <em>{description}</em></div>'
         
