@@ -288,8 +288,6 @@ def grading_results():
 
     job_result = job.return_value()
 
-    print(job_result)
-
     if job_result.startswith("```"):
         result = strip([job_result])
     else:
@@ -298,16 +296,11 @@ def grading_results():
     result = json.loads(result)
 
     topic = result["original_topic"]
-
     original_text = result["original_text"]
-
-    submitted_by = result["submitted_by"]
-
-    current_date = date.today()
-
     wrong_words = result["wrong_words"]
-
     corrected_words = result["corrected_words"]
+    submitted_by = result["submitted_by"]
+    current_date = date.today()
 
     sidebar_comments = []
 
@@ -323,9 +316,10 @@ def grading_results():
 
     for n, word in enumerate(corrected_words, start=1):
         word_split = word.split()
+        print(word_split) # test
         correct_word = ""
         description = ""
-        for one in range(len(word_split) - 1):
+        for one in range(len(word_split)):
             if word_split[one].startswith("("):
                 description += (' '.join(word_split))
                 break
