@@ -254,7 +254,7 @@ def grading_queue():
         "wrong_words": ["!list!", "!of!", "!words!", "!that!", "!contain!", "!a!", "!mistake!", "!which!", "!are!", "!delemited!", "!by!", "!", "!mark!"],
         "corrected_words": ["corrected", "version", "of", "the", "words", "with", "the", "(grammar rule reason)"],
         "submitted_by": "submitted_by",
-        "linking words": ["#list#", "#of#", "#all#", "#linking#", "#words#"]
+        "linking_words": ["#list#", "#of#", "#all#", "#linking#", "#words#"]
     }
 
     prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values in the following way: {example_results_dict}. Delimit all of the wrong words with '!' mark in the 'original_text', as in the 'wrong_words' list example. If one mistake contains multiple words, enclose them with a single pair of ! . Delimit all of the linking words with '#' mark in the 'original_text', as in the 'linking_words' list example. Enclose the dict, all of the keys and values into double quotes, not single. "
