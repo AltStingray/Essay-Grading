@@ -2,6 +2,7 @@ import psycopg2
 import os
 import io
 from psycopg2.extensions import AsIs
+from psycopg2.extras import Json, DictCursor
 
 # Get environmental variable URL from Heroku
 DATABASE = os.environ.get("DATABASE_URL")
@@ -105,14 +106,14 @@ def db_store(data, db_name):
     db_conn = psycopg2.connect(DATABASE)
 
     cursor = db_conn.cursor()
-    
+
     columns= data.keys()
 
-    for i in columns:
+    for i in data.values():
         if db_name == "logs":
             insert_sql = f"INSERT INTO {db_name}(summary, transcription, filename, summary_html) VALUES{i};"
         else:
-            insert_sql = '''INSERT INTO {}(topic, essay, paragraphs_count, words_count, grammar_mistakes, linking_words_count, repetative_words_count, submitted_by, overall_band_score, sidebar_comments, date) VALUES({});'''.format(db_name, i)
+            insert_sql = f"INSERT INTO {db_name}(topic, essay, paragraphs_count, words_count, grammar_mistakes, linking_words_count, repetative_words_count, submitted_by, overall_band_score, sidebar_comments, date) VALUES({Json(i)});"
     
     cursor.execute(insert_sql)
 
