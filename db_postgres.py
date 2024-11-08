@@ -110,11 +110,11 @@ def db_store(data, db_name):
 
     columns= data.keys()
 
-    for i in data.values():
+    for i in columns():
         if db_name == "logs":
             insert_sql = f"INSERT INTO {db_name}(summary, transcription, filename, summary_html) VALUES{i};"
         else:
-            insert_sql = f"INSERT INTO {db_name}(topic, essay, paragraphs_count, words_count, grammar_mistakes, linking_words_count, repetative_words_count, submitted_by, overall_band_score, sidebar_comments, time) VALUES({Json(i)});"
+            insert_sql = f"INSERT INTO {db_name}(topic, essay, paragraphs_count, words_count, grammar_mistakes, linking_words_count, repetative_words_count, submitted_by, overall_band_score, sidebar_comments, time) VALUES({i}));"
     
     cursor.execute(insert_sql)
 
