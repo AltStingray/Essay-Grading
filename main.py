@@ -379,7 +379,7 @@ def grading_results():
         "time": current_date
     }
     
-    db_store(data, "essay_logs")
+    #db_store(data, "essay_logs")
 
     return render_template('grading.html', name="finish", topic=topic, essay=result_text, paragraphs_count=paragraphs_count, words_count=words_count, corrected_words=sidebar_comments, submitted_by=submitted_by, current_date=current_date, linking_words_count=linking_words_count, repetative_words_count=repetative_words_count, grammar_mistakes_count=grammar_mistakes_count, band_score=band_score)
 
