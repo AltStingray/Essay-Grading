@@ -376,7 +376,7 @@ def grading_results():
         "submitted_by": submitted_by,
         "overall_band_score": band_score,
         "sidebar_comments": sidebar_comments,
-        "date": current_date,
+        "date": current_date
     }
     
     db_store(data, "essay_logs")
