@@ -57,7 +57,7 @@ def db(command):
 
         #cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 6""")
 
-        cursor.execute("""ALTER TABLT Logs RENAME COLUMN date TO time""")
+        cursor.execute("""ALTER TABLE essay_logs RENAME COLUMN date TO time""")
 
         db_conn.commit()
 
