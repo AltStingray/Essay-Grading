@@ -105,8 +105,10 @@ def db_store(data, db_name):
     db_conn = psycopg2.connect(DATABASE)
 
     cursor = db_conn.cursor()
+    
     columns= data.keys()
-    for i in data.values():
+
+    for i in columns:
         if db_name == "logs":
             insert_sql = f"INSERT INTO {db_name}(summary, transcription, filename, summary_html) VALUES{i};"
         else:
