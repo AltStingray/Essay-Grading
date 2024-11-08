@@ -17,7 +17,15 @@ def db(command):
     # Creating a PostgreSQL table to store the data in
     if command == "create":
 
-        cursor.execute("""CREATE TABLE essay_logs(
+        create_summary_report_logs = """CREATE TABLE Logs(
+                     id SERIAL PRIMARY KEY,
+                     summary BYTEA NOT NULL,
+                     transcription BYTEA NOT NULL,
+                     filename VARCHAR(255) NOT NULL,
+                     upload_time TIMESTAMP DEFAULT NOW()
+                             )"""
+
+        create_essay_logs = """CREATE TABLE essay_logs(
                     id SERIAL PRIMARY KEY,
                     topic BYTEA NOT NULL,   
                     essay BYTEA NOT NULL,
@@ -29,16 +37,9 @@ def db(command):
                     submitted_by BYTEA NOT NULL,
                     overall_band_score BYTEA NOT NULL,
                     sidebar_comments BYTEA NOT NULL,
-                    date BYTEA NOT NULL,
-                            )""")
-        
-        #cursor.execute("""CREATE TABLE Logs(
-        #            id SERIAL PRIMARY KEY,
-        #            summary BYTEA NOT NULL,
-        #            transcription BYTEA NOT NULL,
-        #            filename VARCHAR(255) NOT NULL,
-        #            upload_time TIMESTAMP DEFAULT NOW()
-        #                    )""")
+                    date BYTEA NOT NULL)"""
+
+        cursor.execute(create_essay_logs)
             
         db_conn.commit() # Commiting to make changes persistent 
 
