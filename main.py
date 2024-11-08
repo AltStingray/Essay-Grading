@@ -33,7 +33,7 @@ app.config["SESSION_USE_SIGNER"] = True
 
 q = Queue(connection=conn)
 
-#db("create")
+db("create")
 #db("delete_data")
 #db("alter")
 db("print")
@@ -152,7 +152,14 @@ def results():
 
         filename = result[2].replace(".mp4", "")
 
-        db_store(summary_report["text"], result[1], filename, summary_report["html"])
+        data = {
+            "summary": summary_report["text"],
+            "transcription": result[1],
+            "filename": filename,
+            "summary_html":summary_report["html"]
+        }
+
+        db_store(data, "logs")
 
         return render_template('results.html')
     else:
@@ -199,9 +206,9 @@ def download():
 @app.route('/history')
 def history():
 
-    ids = db_get_ids()
+    ids = db_get_ids(table_name="Logs")
 
-    return render_template("history.html", ids=ids)
+    return render_template("history.html", log="summary_report", ids=ids)
 
 @app.route('/logs_download/<int:id>/<name>')
 def logs_download(id, name):
@@ -251,13 +258,16 @@ def grading_queue():
     example_results_dict = {
         "original_topic": "original_topic",
         "original_text": "original_text",
+        "paragraphs_count": "paragraphs_count",
         "wrong_words": ["!list!", "!of!", "!words!", "!that!", "!contain!", "!a!", "!mistake!", "!which!", "!are!", "!delemited!", "!by!", "!", "!mark!"],
         "corrected_words": ["corrected", "version", "of", "the", "words", "with", "the", "(grammar rule reason)"],
         "submitted_by": "submitted_by",
-        "linking_words": ["#list#", "#of#", "#all#", "#linking#", "#words#"]
+        "linking_words": ["#list#", "#of#", "#all#", "#linking#", "#words#"],
+        "repetative_words": ["-list-", "-of-", "-all-", "-repetative-", "-words-"],
+        "overall_band_score": "overall_band_score"
     }
 
-    prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values in the following way: {example_results_dict}. Delimit all of the wrong words with '!' mark in the 'original_text', as in the 'wrong_words' list example. If one mistake contains multiple words, enclose them with a single pair of ! . Delimit all of the linking words with '#' mark in the 'original_text', as in the 'linking_words' list example. Enclose the dict, all of the keys and values into double quotes, not single. "
+    prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values in the following way: {example_results_dict}. Delimit all of the wrong words with '!' mark in the 'original_text', as in the 'wrong_words' list example. If one mistake contains multiple words, enclose them with a single pair of ! . Delimit all of the linking words with '#' mark in the 'original_text', as in the 'linking_words' list example. Delimit all of the repetative words with '-' mark in the 'original_text', as in the 'repetative_words' list example. Enclose the dict, all of the keys and values into double quotes, not single. "
 
     job_queue = q.enqueue(RunOpenAI, prompt, essay)
 
@@ -300,33 +310,44 @@ def grading_results():
 
     topic = result["original_topic"]
     original_text = result["original_text"]
+    paragraphs_count = result["paragraphs_count"]
     wrong_words = result["wrong_words"]
     corrected_words = result["corrected_words"]
     submitted_by = result["submitted_by"]
     linking_words = result["linking_words"]
+    repetative_words = result["repetative words"]
+    band_score = result["overall_band_score"]
     current_date = date.today()
 
-    sidebar_comments = []
-
+    grammar_mistakes_count = 0
     for n, word in enumerate(wrong_words, start=1):
         if word in original_text:
             html_word = f"<span class='highlight' data-comment='comment{n}'>{word.strip("!")}({n})</span>"
             original_text = original_text.replace(word, html_word)
+            grammar_mistakes_count += 1
 
     print(original_text)
 
-    linking_words_count = 0
-    already_exists = ""
-    for n, word in enumerate(linking_words, start=1):
-        if word in original_text:
-            html_word = f"<span class='jsx-2885589388 linking-words'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{word.strip("#")}</span><span class='jsx-1879403401'></span></div></span>"
-            original_text = original_text.replace(word, html_word)
-            if word not in already_exists:
-                already_exists += word
-                linking_words_count += 1
+    def count_and_replace(words, html_line):
+        words_count = 0
+        already_exists = ""
+        for word in words:
+            if word in original_text:
+                html_word = html_line 
+                original_text = original_text.replace(word, html_word)
+                if word not in already_exists:
+                    already_exists += word
+                    words_count += 1
+        return words_count
+
+    linking_words_count = count_and_replace(linking_words, f"<span class='jsx-2885589388 linking-words'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{word.strip("#")}</span><span class='jsx-1879403401'></span></div></span>")
+    repetative_words_count = count_and_replace(repetative_words, f"<span class='jsx-2310580937 repeated-word'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{word.strip("-")}</span><span class='jsx-1879403401'></span></div></span>")
+    words_count = len(original_text.split())
 
     result_text = original_text
     print(result_text)
+
+    sidebar_comments = []
 
     for n, word in enumerate(corrected_words, start=1):
         word_split = word.split()
@@ -343,11 +364,54 @@ def grading_results():
         html_line = f'<div id="comment{n}" class="comment-box"><strong>({n})</strong> <span class="green">{correct_word}</span> <em>{description}</em></div>'
         
         sidebar_comments.append(html_line)
+    
+    data = {
+        "topic": topic,
+        "essay": result_text,
+        "paragraphs_count": paragraphs_count,
+        "words_count": words_count,
+        "grammar_mistakes": grammar_mistakes_count,
+        "linking_words_count": linking_words_count,
+        "repetative_words_count": repetative_words_count,
+        "submitted_by": submitted_by,
+        "overall_band_score": band_score,
+        "sidebar_comments": sidebar_comments,
+        "date": current_date,
+    }
+    
+    db_store(data, "essay_logs")
 
+    return render_template('grading.html', name="finish", topic=topic, essay=result_text, paragraphs_count=paragraphs_count, words_count=words_count, corrected_words=sidebar_comments, submitted_by=submitted_by, current_date=current_date, linking_words_count=linking_words_count, repetative_words_count=repetative_words_count, grammar_mistakes_count=grammar_mistakes_count, band_score=band_score)
 
-    return render_template('grading.html', name="finish", topic=topic, essay=result_text, corrected_words=sidebar_comments, submitted_by=submitted_by, current_date=current_date, linking_words_count=linking_words_count)
+@app.route('/grading/log')
+def grading_logs():
 
+    ids = db_get_ids(table_name="essay_logs")
+    
+    return render_template("history.html", log="essay_grading", ids=ids)
 
+@app.route('grading/log/view/<int:id>')
+def view_logs():
+
+    logs = db_retrieve(file_id=id)
+
+    essay = logs[1]
+
+    logs = io.BytesIO(logs)
+    topic = logs[0]
+    paragraphs_count = logs[2]
+    words_count = logs[3]
+    grammar_mistakes_count = logs[4]
+    linking_words_count = logs[5]
+    repetative_words_count = logs[6]
+    submitted_by = logs[7]
+    band_score = logs[8]
+    sidebar_comments = logs[9]
+    current_date = logs[10]
+
+    result_text = (essay.tobytes().decode('utf-8')).strip("{ }")
+    
+    return render_template('grading.html', name="finish", topic=topic, essay=result_text, paragraphs_count=paragraphs_count, words_count=words_count, corrected_words=sidebar_comments, submitted_by=submitted_by, current_date=current_date, linking_words_count=linking_words_count, repetative_words_count=repetative_words_count, grammar_mistakes_count=grammar_mistakes_count, band_score=band_score)
 
 @app.route('/about')
 def about():

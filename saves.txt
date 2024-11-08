@@ -486,5 +486,5 @@ Just in case
 }
 
 
-"missing_an_article": ["words", "that", "are", "missing"],
-"unnecessary_article": ["words", "that", "are", "unnecessary"],
+
+<input type="submit" name="save" value="Save results" class="button2" style="text-align: left;">

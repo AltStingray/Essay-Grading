@@ -16,13 +16,29 @@ def db(command):
 
     # Creating a PostgreSQL table to store the data in
     if command == "create":
-        cursor.execute("""CREATE TABLE Logs(
+
+        cursor.execute("""CREATE TABLE essay_logs(
                     id SERIAL PRIMARY KEY,
-                    summary BYTEA NOT NULL,
-                    transcription BYTEA NOT NULL,
-                    filename VARCHAR(255) NOT NULL,
-                    upload_time TIMESTAMP DEFAULT NOW()
+                    topic BYTEA NOT NULL,   
+                    essay BYTEA NOT NULL,
+                    paragraphs_count BYTEA NOT NULL,
+                    words_count BYTEA NOT NULL,
+                    grammar_mistakes BYTEA NOT NULL,
+                    linking_words_count BYTEA NOT NULL,
+                    repetative_words_count BYTEA NOT NULL,
+                    submitted_by BYTEA NOT NULL,
+                    overall_band_score BYTEA NOT NULL,
+                    sidebar_comments BYTEA NOT NULL,
+                    date BYTEA NOT NULL,
                             )""")
+        
+        #cursor.execute("""CREATE TABLE Logs(
+        #            id SERIAL PRIMARY KEY,
+        #            summary BYTEA NOT NULL,
+        #            transcription BYTEA NOT NULL,
+        #            filename VARCHAR(255) NOT NULL,
+        #            upload_time TIMESTAMP DEFAULT NOW()
+        #                    )""")
             
         db_conn.commit() # Commiting to make changes persistent 
 
@@ -83,32 +99,38 @@ def db(command):
         pass
 
 
-def db_store(summary_report, transcription, filename, summary_html):
+def db_store(data, db_name):
 
     db_conn = psycopg2.connect(DATABASE)
 
     cursor = db_conn.cursor()
 
-    cursor.execute(f"INSERT INTO Logs(summary, transcription, filename, summary_html) VALUES(%s, %s, %s, %s);", (summary_report, transcription, filename, summary_html))
+    for i in data.values():
+        if db_name == "logs":
+            insert_sql = f"INSERT INTO {db_name}(summary, transcription, filename, summary_html) VALUES{i};"
+        else:
+            insert_sql = f"INSERT INTO {db_name}(topic, essay, paragraphs_count, words_count, grammar_mistakes, linking_words_count, repetative_words_count, submitted_by, overall_band_score, sidebar_comments, date) VALUES{i};"
+    
+    cursor.execute(insert_sql)
 
     db_conn.commit()
 
     cursor.close()
     db_conn.close()
 
-    return "File uploaded to the database successfully!"
+    return "Data uploaded to the database successfully!"
 
 
-def db_get_ids():
+def db_get_ids(table_name):
 
     db_conn = psycopg2.connect(DATABASE)
 
     cursor = db_conn.cursor()
 
-    cursor.execute("SELECT id FROM Logs")
+    cursor.execute(f"SELECT id FROM {table_name}")
 
     ids = cursor.fetchall()
-    
+    print(ids) # test
     ids_lst = []
 
     for id in ids:
