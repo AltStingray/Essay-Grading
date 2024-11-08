@@ -33,7 +33,7 @@ app.config["SESSION_USE_SIGNER"] = True
 
 q = Queue(connection=conn)
 
-db("create")
+#db("create")
 #db("delete_data")
 #db("alter")
 db("print")
@@ -390,7 +390,7 @@ def grading_logs():
     
     return render_template("history.html", log="essay_grading", ids=ids)
 
-@app.route('grading/log/view/<int:id>')
+@app.route('/grading/log/view/<int:id>')
 def view_logs():
 
     logs = db_retrieve(file_id=id)
