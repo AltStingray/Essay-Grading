@@ -108,9 +108,7 @@ def db_store(data, db_name):
 
     cursor = db_conn.cursor()
 
-    columns= data.keys()
-
-    for i in columns():
+    for i in data.values():
         if db_name == "logs":
             insert_sql = f"INSERT INTO {db_name}(summary, transcription, filename, summary_html) VALUES{i};"
         else:
