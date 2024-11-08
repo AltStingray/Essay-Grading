@@ -38,7 +38,7 @@ def db(command):
                     submitted_by BYTEA NOT NULL,
                     overall_band_score BYTEA NOT NULL,
                     sidebar_comments BYTEA NOT NULL,
-                    date BYTEA NOT NULL)"""
+                    time BYTEA NOT NULL)"""
 
         cursor.execute(create_essay_logs)
             
@@ -55,8 +55,9 @@ def db(command):
 
         #cursor.execute("""ALTER TABLE Logs ADD filename VARCHAR(255)""")
 
-        cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 6""")
-        #"""SELECT setval('id', 2)"""
+        #cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 6""")
+
+        cursor.execute("""ALTER TABLT Logs RENAME COLUMN date TO time""")
 
         db_conn.commit()
 
@@ -113,7 +114,7 @@ def db_store(data, db_name):
         if db_name == "logs":
             insert_sql = f"INSERT INTO {db_name}(summary, transcription, filename, summary_html) VALUES{i};"
         else:
-            insert_sql = f"INSERT INTO {db_name}(topic, essay, paragraphs_count, words_count, grammar_mistakes, linking_words_count, repetative_words_count, submitted_by, overall_band_score, sidebar_comments, date) VALUES({Json(i)});"
+            insert_sql = f"INSERT INTO {db_name}(topic, essay, paragraphs_count, words_count, grammar_mistakes, linking_words_count, repetative_words_count, submitted_by, overall_band_score, sidebar_comments, time) VALUES({Json(i)});"
     
     cursor.execute(insert_sql)
 
