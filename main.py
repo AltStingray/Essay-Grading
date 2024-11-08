@@ -328,7 +328,7 @@ def grading_results():
 
     print(original_text)
 
-    def count_and_replace(words, html_line):
+    def count_and_replace(words, html_line, original_text):
         words_count = 0
         already_exists = ""
         for word in words:
@@ -338,10 +338,10 @@ def grading_results():
                 if word not in already_exists:
                     already_exists += word
                     words_count += 1
-        return words_count
+        return words_count, original_text
 
-    linking_words_count = count_and_replace(linking_words, f"<span class='jsx-2885589388 linking-words'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{word.strip("#")}</span><span class='jsx-1879403401'></span></div></span>")
-    repetative_words_count = count_and_replace(repetative_words, f"<span class='jsx-2310580937 repeated-word'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{word.strip("-")}</span><span class='jsx-1879403401'></span></div></span>")
+    linking_words_count, original_text = count_and_replace(linking_words, f"<span class='jsx-2885589388 linking-words'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{word.strip("#")}</span><span class='jsx-1879403401'></span></div></span>", original_text)
+    repetative_words_count, original_text = count_and_replace(repetative_words, f"<span class='jsx-2310580937 repeated-word'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{word.strip("-")}</span><span class='jsx-1879403401'></span></div></span>", original_text)
     words_count = len(original_text.split())
 
     result_text = original_text
