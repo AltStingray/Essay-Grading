@@ -4,9 +4,9 @@
     <form action="/grading/log">
         <input type="submit" value="Essay Logs" class="button2">
     </form>
-    <p1>List of all available Summary Reports and Transcriptions:</p1>
     <br>
     {% if log == "summary_report" %}
+        <p1>List of all available Summary Reports and Transcriptions:</p1>
         {% for id in ids %}
             <label for="Logs">Log {{id}}:</label>
                 <ul>
@@ -16,6 +16,7 @@
                 </ul>
         {% endfor %}
     {% elif log == "essay_grading" %}
+        <p1>List of all available Essay Gradings:</p1>
         {% for id in ids %}
             <label for="Logs">Log {{id}}:</label>
                 <ul>

@@ -315,7 +315,7 @@ def grading_results():
     corrected_words = result["corrected_words"]
     submitted_by = result["submitted_by"]
     linking_words = result["linking_words"]
-    repetative_words = result["repetative words"]
+    repetative_words = result["repetative_words"]
     band_score = result["overall_band_score"]
     current_date = date.today()
 
