@@ -321,11 +321,11 @@ def grading_results():
     current_date = date.today()
 
     grammar_mistakes_count = 0
-    for n, word in enumerate(wrong_words, start=1):
+    for n, word in enumerate(wrong_words):
         re_word = re.search(word, original_text)
         print(re_word)
         if word == re_word.group():
-            html_word = f"<span class='highlight' data-comment='comment{n}'>{word.strip("!")}({n})</span>"
+            html_word = f"<span class='highlight' data-comment='comment{n + 1}'>{word.strip("!")}({n + 1})</span>"
             original_text = original_text.replace(re_word.group(), html_word)
             grammar_mistakes_count += 1
 
@@ -351,7 +351,7 @@ def grading_results():
 
     sidebar_comments = []
 
-    for n, word in enumerate(corrected_words, start=1):
+    for n, word in enumerate(corrected_words):
         word_split = word.split()
         cache_word_split = word_split[:]
         correct_word = ""
@@ -363,7 +363,7 @@ def grading_results():
             else:
                 correct_word += (f"{word_split.pop(0)} ")
 
-        html_line = f'<div id="comment{n}" class="comment-box"><strong>({n})</strong> <span class="green">{correct_word}</span> <em>{description}</em></div>'
+        html_line = f'<div id="comment{n + 1}" class="comment-box"><strong>({n + 1})</strong> <span class="green">{correct_word}</span> <em>{description}</em></div>'
         
         sidebar_comments.append(html_line)
     
