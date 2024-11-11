@@ -428,8 +428,8 @@ p {
 
 /* Image styling */
 .image-section img {
-  width: 400px;
-  height: 180px;
+  width: 350px;
+  height: 150px;
   display: block;
   margin-bottom: 10px;
 }

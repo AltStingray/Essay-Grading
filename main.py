@@ -160,7 +160,7 @@ def results():
             "summary_html":summary_report["html"]
         }
 
-        db_store(data, "logs")
+        #db_store(data, "logs")
 
         return render_template('results.html')
     else:
@@ -264,7 +264,7 @@ def grading_queue():
         "corrected_words": ["corrected", "version", "of", "the", "words", "with", "the", "(grammar rule reason)"],
         "submitted_by": "submitted_by",
         "linking_words": ["#list#", "#of#", "#all#", "#linking#", "#words#"],
-        "repetative_words": [";list;*", ";of;", ";all;", ";repetative;", ";words;"],
+        "repetative_words": [";list;*", ";of;", ";all;", ";repetative;", ";words;", ";delimited;", ";by;", ";", ";mark;"],
         "overall_band_score": "overall_band_score"
     }
 
