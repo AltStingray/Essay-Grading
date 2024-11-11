@@ -324,7 +324,7 @@ def grading_results():
     for n, word in enumerate(wrong_words, start=1):
         re_word = re.search(word, original_text)
         print(re_word)
-        if word == re_word:
+        if word == re_word.group():
             html_word = f"<span class='highlight' data-comment='comment{n}'>{word.strip("!")}({n})</span>"
             original_text = original_text.replace(re_word, html_word)
             grammar_mistakes_count += 1
