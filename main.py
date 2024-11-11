@@ -268,7 +268,7 @@ def grading_queue():
         "overall_band_score": "overall_band_score"
     }
 
-    prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values in the following way: {example_results_dict}. In the given example dictionary, each column/key and its value describes what it should contain. Process the data based accordingly. For example, 'repetative_words' list should contain all the repetative words that you will spot in the 'original_text'.  Delimit all of the found words containing mistake with the '!' mark in the 'original_text', and store them into the 'wrong_words' list. If one mistake contains multiple words, enclose them with a single pair of ! . Delimit all of the found linking words with the '#' mark in the 'original_text', and store them into the 'linking_words' list. Delimit all of the found repetative words with the '*' mark in the 'original_text', and store them into the 'repetative_words' list. Every word placed in the lists should exactly match the word in 'original_text', either it's lower or upper case.  Enclose the dict, all of the keys and values into double quotes, not single."
+    prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values as demonstrated in the following dictionary example: {example_results_dict}. In the given example dictionary, each column/key and its value describes what it should contain. Process the data accordingly. For example, 'repetative_words' list should contain all the repetative words that you spot in the 'original_text', same thing with the 'linking_words' list.  Delimit all of the found words containing mistake with the '!' mark in the 'original_text', and store them into the 'wrong_words' list. If one mistake contains multiple words, enclose them with a single pair of ! . Delimit all of the linking words with the '#' mark in the 'original_text', and store them into the 'linking_words' list. Delimit all of the repetative words with the '*' mark in the 'original_text', and store them into the 'repetative_words' list. Every word placed in the lists should exactly match the word in 'original_text', either it's lower or upper case.  Enclose the dict, all of the keys and values into double quotes, not single."
 
     job_queue = q.enqueue(RunOpenAI, prompt, essay)
 
@@ -335,13 +335,13 @@ def grading_results():
     def count_and_replace(words, html_line, original_text, marker):
         words_count = 0
         already_exists = ""
-        for w in words:
-            if w in original_text:
-                w = w.strip(marker)
-                html_line = html_line.format(w)
-                original_text = original_text.replace(w, html_line)
-                if w not in already_exists:
-                    already_exists += w
+        for word in words:
+            re_word = re.search(word, original_text)
+            if word == re_word.group():
+                html_line = html_line.format(word.strip(marker))
+                original_text = original_text.replace(re_word.group(), html_line)
+                if word not in already_exists:
+                    already_exists += word
                     words_count += 1
         return words_count, original_text
 
