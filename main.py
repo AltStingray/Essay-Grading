@@ -326,7 +326,7 @@ def grading_results():
         print(re_word)
         if word == re_word.group():
             html_word = f"<span class='highlight' data-comment='comment{n}'>{word.strip("!")}({n})</span>"
-            original_text = original_text.replace(re_word, html_word)
+            original_text = original_text.replace(re_word.group(), html_word)
             grammar_mistakes_count += 1
 
     print(original_text)
