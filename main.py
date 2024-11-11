@@ -268,7 +268,7 @@ def grading_queue():
         "overall_band_score": "overall_band_score"
     }
 
-    prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values as demonstrated in the following dictionary example: {example_results_dict}. In the given example dictionary, each column/key and its value describes what it should contain. Process and allocate the data accordingly. For example, 'repetative_words' list should contain all the repetative words that you spot in the 'original_text', same thing with the 'linking_words' and 'grammar_mistakes' lists. Every word placed in the lists should exactly match the word in 'original_text', either it's lower or upper case. Delimit all of the found words containing grammar mistake with the '!' mark in the 'original_text', and store them into the 'grammar_mistakes' list. If one mistake contains multiple words, enclose them with a single pair of ! . In the 'original_text' delimit all of the linking words with the '#' mark, and store them into the 'linking_words' list. If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#'.  Delimit all of the repetative words with the '*' mark in the 'original_text', and store them into the 'repetative_words' list respectively.  Enclose the dict, all of the keys and values into double quotes, not single."
+    prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values as demonstrated in the following dictionary example: {example_results_dict}. In the given example dictionary, each column/key and its value describes what it should contain. Process and allocate the data accordingly. For example, 'repetative_words' list should contain all the repetative words that you spot in the 'original_text', same thing with the 'linking_words' and 'grammar_mistakes' lists. Every word placed in the lists should exactly match the word in 'original_text', either it's lower or upper case. Delimit all of the found words containing grammar mistake with the '!' mark in the 'original_text', and store them into the 'grammar_mistakes' list. If one mistake contains multiple words, enclose them with a single pair of ! . In the 'original_text' delimit all of the linking words with the '#' mark, and store them into the 'linking_words' list. If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#'.  In the 'original_text' delimit all of the repetative words with the '*' mark, and store them into the 'repetative_words' list respectively.  Enclose the dict, all of the keys and values into double quotes, not single."
 
     job_queue = q.enqueue(RunOpenAI, prompt, essay)
 
@@ -483,7 +483,7 @@ def RunOpenAI(prompt, content):
 
     response = client.chat.completions.create(
         model="gpt-4o-2024-08-06",
-        temperature=0.5,
+        temperature=0.6,
         messages=[
             {"role": "system", "content": prompt},
             {"role": "user", "content": f'''{content}'''}],
