@@ -337,14 +337,16 @@ def grading_results():
         already_exists = ""
         for word in words:
             re_word = re.search(word, original_text)
-            if word == re_word.group():
-                html_line = html_line.format(word.strip(marker))
-                original_text = original_text.replace(re_word.group(), html_line)
-                if word not in already_exists:
-                    already_exists += word
-                    words_count += 1
-            else:
-                print("Error, word is not found!")
+            print(re_word)
+            try:
+                if word == re_word.group():
+                    html_line = html_line.format(word.strip(marker))
+                    original_text = original_text.replace(re_word.group(), html_line)
+                    if word not in already_exists:
+                        already_exists += word
+                        words_count += 1
+            except AttributeError as err:
+                print(f"{err}, word is not found!")
         return words_count, original_text
 
     linking_words_count, linking_original_text = count_and_replace(linking_words, "<span class='jsx-2885589388 linking-words'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{}</span><span class='jsx-1879403401'></span></div></span>", original_text, "#")
@@ -481,6 +483,7 @@ def RunOpenAI(prompt, content):
 
     response = client.chat.completions.create(
         model="gpt-4o-2024-08-06",
+        temperature=0.5,
         messages=[
             {"role": "system", "content": prompt},
             {"role": "user", "content": f'''{content}'''}],
