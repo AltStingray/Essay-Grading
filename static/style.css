@@ -242,7 +242,7 @@ a.article-title:hover {
 
 .page-text__text.jsx-3307320108 {
   position: relative;
-  margin-top: 10px;
+  margin-top: 5px;
   color: #1c1e29;
   white-space: pre-line;
   word-break: break-word;
@@ -424,7 +424,7 @@ p {
 /* Image styling */
 .image-section img {
   width: 400px;
-  height: 100px;
+  height: 200px;
   display: block;
   margin-bottom: 10px;
 }

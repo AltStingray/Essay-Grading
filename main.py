@@ -268,7 +268,7 @@ def grading_queue():
         "overall_band_score": "overall_band_score"
     }
 
-    prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values in the following way: {example_results_dict}. Delimit all of the words containing mistake with the '!' mark in the 'original_text', and store them into the 'wrong_words' list. If one mistake contains multiple words, enclose them with a single pair of ! . Delimit all of the linking words with '#' mark in the 'original_text', and store them into the 'linking_words' list. Delimit all of the repetative words with '*' mark in the 'original_text', and store them into the 'repetative_words' list. Enclose the dict, all of the keys and values into double quotes, not single."
+    prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values in the following way: {example_results_dict}. Delimit all of the words containing mistake with the '!' mark in the 'original_text', and store them into the 'wrong_words' list. If one mistake contains multiple words, enclose them with a single pair of ! . Delimit all of the linking words with '#' mark in the 'original_text', and store them into the 'linking_words' list. Delimit all of the repetative words with '*' mark in the 'original_text', and store them into the 'repetative_words' list. Every word placed in the lists should exactly match the word in 'original_text', either it's lower or upper case. Enclose the dict, all of the keys and values into double quotes, not single."
 
     job_queue = q.enqueue(RunOpenAI, prompt, essay)
 
@@ -319,6 +319,7 @@ def grading_results():
     repetative_words = result["repetative_words"]
     band_score = result["overall_band_score"]
     current_date = date.today()
+    words_count = len(original_text.split())
 
     grammar_mistakes_count = 0
     for n, word in enumerate(wrong_words):
@@ -331,23 +332,24 @@ def grading_results():
 
     print(original_text)
 
-    def count_and_replace(words, html_line, original_text):
+    def count_and_replace(words, html_line, original_text, marker):
         words_count = 0
         already_exists = ""
-        for word in words:
-            if word in original_text:
-                original_text = original_text.replace(word, html_line)
-                if word not in already_exists:
-                    already_exists += word
+        for w in words:
+            if w in original_text:
+                w.strip(marker)
+                html_line = html_line.format(w)
+                original_text = original_text.replace(w, html_line)
+                if w not in already_exists:
+                    already_exists += w
                     words_count += 1
         return words_count, original_text
 
-    linking_words_count, linking_original_text = count_and_replace(linking_words, f"<span class='jsx-2885589388 linking-words'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{word.strip("#")}</span><span class='jsx-1879403401'></span></div></span>", original_text)
-    repetative_words_count, final_original_text = count_and_replace(repetative_words, f"<span class='jsx-2310580937 repeated-word'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{word.strip("-")}</span><span class='jsx-1879403401'></span></div></span>", linking_original_text)
-    words_count = len(original_text.split())
+    linking_words_count, linking_original_text = count_and_replace(linking_words, "<span class='jsx-2885589388 linking-words'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{}</span><span class='jsx-1879403401'></span></div></span>", original_text, "#")
+    repetative_words_count, final_original_text = count_and_replace(repetative_words, "<span class='jsx-2310580937 repeated-word'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{}</span><span class='jsx-1879403401'></span></div></span>", linking_original_text, "*")
 
     result_text = final_original_text
-    print(result_text)
+    print(f"\n\nresult_text\n\n")
 
     sidebar_comments = []
 
