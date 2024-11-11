@@ -267,7 +267,7 @@ def grading_queue():
         "overall_band_score": "overall_band_score"
     }
 
-    prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values in the following way: {example_results_dict}. Delimit all of the wrong words with '!' mark in the 'original_text', as in the 'wrong_words' list example. If one mistake contains multiple words, enclose them with a single pair of ! . Delimit all of the linking words with '#' mark in the 'original_text', as in the 'linking_words' list example. Delimit all of the repetative words with '-' mark in the 'original_text', as in the 'repetative_words' list example. Enclose the dict, all of the keys and values into double quotes, not single. "
+    prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values in the following way: {example_results_dict}. Delimit all of the mistake words with '!' mark in the 'original_text', as in the 'wrong_words' list example. If one mistake contains multiple words, enclose them with a single pair of ! . Delimit all of the linking words with '#' mark in the 'original_text', as in the 'linking_words' list example. Delimit all of the repetative words with '-' mark in the 'original_text', as in the 'repetative_words' list example. Enclose the dict, all of the keys and values into double quotes, not single. "
 
     job_queue = q.enqueue(RunOpenAI, prompt, essay)
 
@@ -333,18 +333,17 @@ def grading_results():
         already_exists = ""
         for word in words:
             if word in original_text:
-                html_word = html_line 
-                original_text = original_text.replace(word, html_word)
+                original_text = original_text.replace(word, html_line)
                 if word not in already_exists:
                     already_exists += word
                     words_count += 1
         return words_count, original_text
 
-    linking_words_count, original_text = count_and_replace(linking_words, f"<span class='jsx-2885589388 linking-words'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{word.strip("#")}</span><span class='jsx-1879403401'></span></div></span>", original_text)
-    repetative_words_count, original_text = count_and_replace(repetative_words, f"<span class='jsx-2310580937 repeated-word'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{word.strip("-")}</span><span class='jsx-1879403401'></span></div></span>", original_text)
+    linking_words_count, linking_original_text = count_and_replace(linking_words, f"<span class='jsx-2885589388 linking-words'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{word.strip("#")}</span><span class='jsx-1879403401'></span></div></span>", original_text)
+    repetative_words_count, final_original_text = count_and_replace(repetative_words, f"<span class='jsx-2310580937 repeated-word'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{word.strip("-")}</span><span class='jsx-1879403401'></span></div></span>", linking_original_text)
     words_count = len(original_text.split())
 
-    result_text = original_text
+    result_text = final_original_text
     print(result_text)
 
     sidebar_comments = []

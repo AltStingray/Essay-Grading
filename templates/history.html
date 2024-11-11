@@ -20,7 +20,7 @@
         {% for id in ids %}
             <label for="Logs">Log {{id}}:</label>
                 <ul>
-                    <li><a href="{{ url_for('logs_download', id=id)}}">Essay Grading</a></li>
+                    <li><a href="{{ url_for('view_logs', id=id)}}">Essay Grading</a></li>
                 </ul>
         {% endfor %}
     {% endif %}
