@@ -1,6 +1,7 @@
 # coding: cp1252
 import os
 import io
+import re
 import time
 import dropbox_module
 import assemblyAI
@@ -263,11 +264,11 @@ def grading_queue():
         "corrected_words": ["corrected", "version", "of", "the", "words", "with", "the", "(grammar rule reason)"],
         "submitted_by": "submitted_by",
         "linking_words": ["#list#", "#of#", "#all#", "#linking#", "#words#"],
-        "repetative_words": ["-list-", "-of-", "-all-", "-repetative-", "-words-"],
+        "repetative_words": ["*list*", "*of*", "*all*", "*repetative*", "*words*"],
         "overall_band_score": "overall_band_score"
     }
 
-    prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values in the following way: {example_results_dict}. Delimit all of the mistake words with '!' mark in the 'original_text', as in the 'wrong_words' list example. If one mistake contains multiple words, enclose them with a single pair of ! . Delimit all of the linking words with '#' mark in the 'original_text', as in the 'linking_words' list example. Delimit all of the repetative words with '-' mark in the 'original_text', as in the 'repetative_words' list example. Enclose the dict, all of the keys and values into double quotes, not single. "
+    prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values in the following way: {example_results_dict}. Delimit all of the words containing mistake with the '!' mark in the 'original_text', and store them into the 'wrong_words' list. If one mistake contains multiple words, enclose them with a single pair of ! . Delimit all of the linking words with '#' mark in the 'original_text', and store them into the 'linking_words' list. Delimit all of the repetative words with '*' mark in the 'original_text', and store them into the 'repetative_words' list. Enclose the dict, all of the keys and values into double quotes, not single."
 
     job_queue = q.enqueue(RunOpenAI, prompt, essay)
 
@@ -321,9 +322,11 @@ def grading_results():
 
     grammar_mistakes_count = 0
     for n, word in enumerate(wrong_words, start=1):
-        if word in original_text:
+        re_word = re.search(rf"[\!]{word}[\!]", original_text)
+        print(re_word)
+        if word == re_word:
             html_word = f"<span class='highlight' data-comment='comment{n}'>{word.strip("!")}({n})</span>"
-            original_text = original_text.replace(word, html_word)
+            original_text = original_text.replace(re_word, html_word)
             grammar_mistakes_count += 1
 
     print(original_text)
