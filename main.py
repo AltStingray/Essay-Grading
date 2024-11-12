@@ -261,7 +261,7 @@ def grading_queue():
         "original_text": "original_text",
         "paragraphs_count": "paragraphs_count",
         "grammar_mistakes": ["!list!", "!of!", "!words!", "!that!", "!contain!", "!a!", "!mistake!", "!which!", "!are!", "!delemited!", "!by!", "!", "!mark!"],
-        "corrected_words": ["corrected", "version", "of", "the", "words", "with", "the", "(grammar rule reason)"],
+        "corrected_words": ["corrected version of the word 1", "(grammar rule reason 1)", "corrected version of the word 2", "(grammar rule reason 2)"],
         "submitted_by": "submitted_by",
         "linking_words": ["#list#", "#of#", "#all#", "#linking#", "#words#"],
         "repetitive_words": ["^list^", "^of^", "^all^", "^repetitive^", "^words^"],
@@ -280,7 +280,7 @@ def grading_queue():
     **Formatting and Syntax Requirements:**
     - Enclose the dictionary, all keys, and all values in double quotes (" "), not single quotes (' ').
     - Maintain exact word forms as they appear in the 'original_text' for any list items, regardless of uppercase or lowercase.
-    - Use the following symbols to mark specific types of words in 'original_text':
+    - Use the following symbols to mark specific types of words directly in the 'original_text'(you should return the 'origina_text' that will contain all of the words wrapped as following):
         - Grammar mistakes: wrap with **'!'** (e.g., !incorrect word!)
         - Linking words: wrap with **'#'** (e.g., #however#).
         - Repetitive words: wrap with **'^'** (e.g., ^important^).
