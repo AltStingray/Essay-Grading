@@ -238,6 +238,10 @@ a.article-title:hover {
   background: rgb(248, 148, 148, 0.3);
 }
 
+.highlight-legends__item_unnecessary.jsx-2993038294 {
+  background: rgba(121, 181, 209, 0.3);
+}
+
 .h4.jsx-3594441866 {
   font-style: normal;
   font-weight: 600;
@@ -385,7 +389,7 @@ p {
   position: relative;
 }
 .highlight {
-  background-color: #ffdd57;
+  background-color: #ef5a5a;
   cursor: pointer;
   position: relative;
   display: inline-block;
@@ -393,7 +397,7 @@ p {
 }
 .strikethrough {
   text-decoration: line-through;
-  color: red;
+  color:#3498db;
 }
 .red {
   color: red;
