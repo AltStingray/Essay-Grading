@@ -38,7 +38,8 @@ def db(command):
                     submitted_by BYTEA NOT NULL,
                     overall_band_score BYTEA NOT NULL,
                     sidebar_comments BYTEA NOT NULL,
-                    time BYTEA NOT NULL)"""
+                    time BYTEA NOT NULL,
+                    unnecessary_words_count BYTEA NOT NULL,)"""
 
         cursor.execute(create_essay_logs)
             
@@ -51,11 +52,11 @@ def db(command):
     elif command == "alter":
         #alter/update table
 
-        #cursor.execute("""ALTER TABLE Logs ADD summary_html BYTEA""")
+        cursor.execute("""ALTER TABLE essay_logs ADD unnecessary_words_count BYTEA NOT NULL""")
 
         #cursor.execute("""ALTER TABLE Logs ADD filename VARCHAR(255)""")
 
-        cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 6""")
+        #cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 6""")
 
         #cursor.execute("""ALTER TABLE essay_logs RENAME COLUMN date TO time""")
 
@@ -108,13 +109,14 @@ def db_store(data, db_name):
 
     cursor = db_conn.cursor()
 
-    for i in data.values():
-        if db_name == "logs":
-            insert_sql = f"INSERT INTO {db_name}(summary, transcription, filename, summary_html) VALUES{i};"
-        else:
-            insert_sql = f"INSERT INTO {db_name}(topic, essay, paragraphs_count, words_count, grammar_mistakes, linking_words_count, repetative_words_count, submitted_by, overall_band_score, sidebar_comments, time) VALUES(%s);" % i
-    
-            cursor.execute(insert_sql)
+    if db_name == "logs":
+        insert_sql = f"""INSERT INTO {db_name}(summary, transcription, filename, summary_html) VALUES (%s, %s, %s, %s);"""
+    else:
+        insert_sql = f"""INSERT INTO {db_name}(topic, essay, paragraphs_count, words_count, grammar_mistakes,
+            linking_words_count, repetative_words_count, submitted_by, overall_band_score, sidebar_comments, time, unnecessary_words_count)
+            VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+
+    cursor.execute(insert_sql, data)
 
     db_conn.commit()
 
@@ -145,23 +147,39 @@ def db_get_ids(table_name):
     return ids_lst
 
 
-def db_retrieve(file_id):
+def db_retrieve(file_id, db):
 
     db_conn = psycopg2.connect(DATABASE)
 
     cursor = db_conn.cursor()
 
-    cursor.execute("SELECT summary, transcription, filename, summary_html FROM Logs WHERE id = %s", (str(file_id)))
+    if db == "Logs":
+        cursor.execute("SELECT topic, essay, paragraphs_count, words_count, grammar_mistakes, linking_words_count, repetative_words_count, submitted_by, overall_band_score, sidebar_comments, time, unnecessary_words_count FROM Logs WHERE id = %s", (str(file_id)))
 
-    file = cursor.fetchone()
+        file = cursor.fetchone()
 
-    if file:
-        summary = file[0]
-        transcription = file[1]
-        filename = file[2]
-        summary_html = file[3]
+        if file:
 
-        return [summary, transcription, filename, summary_html]
+            lst = []
+            for n in range(12):
+                one = file[n]
+                lst.append(one)
+
+            return lst
+        
+    elif db == "essay_logs":
+
+        cursor.execute("SELECT summary, transcription, filename, summary_html FROM Logs WHERE id = %s", (str(file_id)))
+
+        file = cursor.fetchone()
+
+        if file:
+            summary = file[0]
+            transcription = file[1]
+            filename = file[2]
+            summary_html = file[3]
+
+            return [summary, transcription, filename, summary_html]
 
     cursor.close()
     db_conn.close()

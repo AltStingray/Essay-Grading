@@ -36,7 +36,7 @@ q = Queue(connection=conn)
 
 #db("create")
 #db("delete_data")
-#db("alter")
+db("alter")
 db("print")
 
 
@@ -153,14 +153,9 @@ def results():
 
         filename = result[2].replace(".mp4", "")
 
-        data = {
-            "summary": summary_report["text"],
-            "transcription": result[1],
-            "filename": filename,
-            "summary_html":summary_report["html"]
-        }
+        data = [(summary_report["text"], result[1], filename, summary_report["html"])]
 
-        #db_store(data, "logs")
+        db_store(data, "logs")
 
         return render_template('results.html')
     else:
@@ -214,7 +209,7 @@ def history():
 @app.route('/logs_download/<int:id>/<name>')
 def logs_download(id, name):
 
-    logs = db_retrieve(file_id=id)
+    logs = db_retrieve(file_id=id, db="Logs")
 
     summary_report = logs[0]
     transcription = logs[1]
@@ -261,7 +256,7 @@ def grading_queue():
         "original_text": "original_text",
         "paragraphs_count": "paragraphs_count",
         "grammar_mistakes": ["!list!", "!of!", "!words!", "!that!", "!contain!", "!a!", "!mistake!", "!which!", "!are!", "!delemited!", "!by!", "!", "!mark!"],
-        "corrected_words": ["corrected version of the word with the (grammar rule reason)"],
+        "corrected_words": ["<corrected version of the word> (grammar rule reason)"],
         "linking_words": ["#list#", "#of#", "#all#", "#linking#", "#words#"],
         "repetitive_words": ["^list^", "^of^", "^all^", "^repetitive^", "^words^"],
         "unnecessary_words": ["-list-", "-of-", "-all-", "-unnecessary-", "-words-"],
@@ -281,19 +276,19 @@ def grading_queue():
     Enclose the dict, all of the keys and values into double quotes, not single.
     Do not rush with the answer. Take your time and process each of the following steps sequentially.
     
-    Step 1 - In the 'original_text' find all of the words that contain grammar mistake and delimit them with the '!' mark. If one mistake contains multiple words, enclose them with a single pair of '!' mark.
+    Step 1 - In the 'original_text' find all of the words that contain grammar mistake and wrap them with the '!' mark. If one mistake contains multiple words, enclose them with a single pair of '!' mark.
 
     Step 2 - Store all of the found grammar mistakes into the 'grammar_mistakes' list wrapped with the '!'.
      
-    Step 3 - In the 'original_text' find all of the linking words and delimit them with the '#' mark. If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#'.
+    Step 3 - In the 'original_text' find all of the linking words and wrap them with the '#' mark. If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#'.
 
     Step 4 - Store all of the found linking words into the 'linking_words' list wrapped with the '#'.  
      
-    Step 5 - In the 'original_text' find all of the repetitive words and delimit them with the '^' mark. If not single word but sentence gets repeated many times wrap it with the '^' mark(i.e. ^social media^).
+    Step 5 - In the 'original_text' find all of the repetitive words and wrap them with the '^' mark. If not single word but sentence gets repeated many times wrap it with the '^' mark(i.e. ^social media^).
 
     Step 6 - Store all of the found repetitive words into the 'repetitive_words' list wrapped with the '^'.  
     
-    Step 7 - In the 'original_text' find all of the unnecessary words and delimit them with the '-' mark. 
+    Step 7 - In the 'original_text' find all of the unnecessary words and wrap them with the '-' mark. 
 
     Step 8 - Store all of the found unnecessary words into the 'unnecessary_words' list wrapped with the '-'. 
 
@@ -402,21 +397,12 @@ def grading_results():
         
         sidebar_comments.append(html_line)
     
-    data = {
-        "topic": topic,
-        "essay": result_text,
-        "paragraphs_count": paragraphs_count,
-        "words_count": words_count,
-        "grammar_mistakes": grammar_mistakes_count,
-        "linking_words_count": linking_words_count,
-        "repetitive_words_count": repetitive_words_count,
-        "submitted_by": submitted_by,
-        "overall_band_score": band_score,
-        "sidebar_comments": sidebar_comments,
-        "time": current_date
-    }
+    data = [
+        (topic, result_text, paragraphs_count, words_count, grammar_mistakes_count, linking_words_count, 
+        repetitive_words_count, submitted_by, band_score, sidebar_comments, current_date, unnecessary_words_count)
+    ]
     
-    #db_store(data, "essay_logs")
+    db_store(data, "essay_logs")
 
     return render_template('grading.html', name="finish", topic=topic, essay=result_text, paragraphs_count=paragraphs_count, words_count=words_count, corrected_words=sidebar_comments, submitted_by=submitted_by, current_date=current_date, linking_words_count=linking_words_count, repetitive_words_count=repetitive_words_count, grammar_mistakes_count=grammar_mistakes_count, band_score=band_score, unnecessary_words_count=unnecessary_words_count)
 
@@ -430,7 +416,7 @@ def grading_logs():
 @app.route('/grading/log/view/<int:id>')
 def view_logs():
 
-    logs = db_retrieve(file_id=id)
+    logs = db_retrieve(file_id=id, db="essay_logs")
 
     essay = logs[1]
 
