@@ -160,12 +160,13 @@ def db_retrieve(file_id, db):
 
         if file:
 
-            lst = []
-            for n in range(12):
-                one = file[n]
-                lst.append(one)
+            if file:
+                summary = file[0]
+                transcription = file[1]
+                filename = file[2]
+                summary_html = file[3]
 
-            return lst
+            return [summary, transcription, filename, summary_html]
         
     elif db == "essay_logs":
 
@@ -174,12 +175,13 @@ def db_retrieve(file_id, db):
         file = cursor.fetchone()
 
         if file:
-            summary = file[0]
-            transcription = file[1]
-            filename = file[2]
-            summary_html = file[3]
 
-            return [summary, transcription, filename, summary_html]
+            lst = []
+            for n in range(12):
+                one = file[n]
+                lst.append(one)
+
+            return lst
 
     cursor.close()
     db_conn.close()
