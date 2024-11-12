@@ -488,3 +488,7 @@ Just in case
 
 
 <input type="submit" name="save" value="Save results" class="button2" style="text-align: left;">
+
+
+
+ For example, 'repetitive_words' list should contain all the repetitive words that you spot in the 'original_text', same thing with the 'linking_words' and 'grammar_mistakes' lists.

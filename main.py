@@ -268,7 +268,7 @@ def grading_queue():
         "overall_band_score": "overall_band_score"
     }
 
-    prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values as demonstrated in the following dictionary example: {example_results_dict}. In the given example dictionary, each column/key and its value describes what it should contain. Process and allocate the data accordingly. For example, 'repetitive_words' list should contain all the repetitive words that you spot in the 'original_text', same thing with the 'linking_words' and 'grammar_mistakes' lists. Try to find as much grammar, linking and repetitive words as you can. Every word placed in the lists should exactly match the word in 'original_text', either it's lower or upper case. Delimit all of the found words containing grammar mistake with the '!' mark in the 'original_text', and store them into the 'grammar_mistakes' list. If one mistake contains multiple words, enclose them with a single pair of ! . In the 'original_text' delimit all of the linking words with the '#' mark, and store them into the 'linking_words' list. If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#'.  In the 'original_text' delimit all of the repetitive words with the '^' mark, and store them into the 'repetitive_words' list respectively.  Enclose the dict, all of the keys and values into double quotes, not single."
+    prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values as demonstrated in the following dictionary example: {example_results_dict}. In the given example dictionary, each column/key and its value describes what it should contain, in which format and how every word should be wrapped. Process and allocate the data accordingly. Every word placed in a list should exactly match the word in 'original_text', either it's lower or upper case. Delimit all of the found words containing grammar mistake with the '!' mark in the 'original_text', and store them into the 'grammar_mistakes' list. If one mistake contains multiple words, enclose them with a single pair of ! . Delimit all of the linking words with the '#' mark in the 'original_text', and store them into the 'linking_words' list. If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#'.  Delimit all of the repetitive words with the '^' mark in the 'original_text', and store them into the 'repetitive_words' list respectively.  Enclose the dict, all of the keys and values into double quotes, not single. Try to find as much grammar mistakes, linking and repetitive words as you can. The more the better."
 
     job_queue = q.enqueue(RunOpenAI, prompt, essay)
 
@@ -340,9 +340,9 @@ def grading_results():
             if word in original_text:
                 original_word = word
                 print(f"Original word: {original_word}") # test
-                html_line = html_line.format(original_word.strip(marker))
-                print(html_line) # test
-                original_text = original_text.replace(original_word, html_line)
+                html_word = html_line.format(original_word.strip(marker))
+                print(html_word) # test
+                original_text = original_text.replace(original_word, html_word)
                 if word not in already_exists:
                     already_exists += word
                     words_count += 1
@@ -482,7 +482,6 @@ def RunOpenAI(prompt, content):
 
     response = client.chat.completions.create(
         model="gpt-4o-2024-08-06",
-        temperature=0.6,
         messages=[
             {"role": "system", "content": prompt},
             {"role": "user", "content": f'''{content}'''}],
