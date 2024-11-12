@@ -336,17 +336,16 @@ def grading_results():
         words_count = 0
         already_exists = ""
         for word in words:
-            re_word = re.search(word, original_text)
-            print(re_word)
-            try:
-                if word == re_word.group():
-                    html_line = html_line.format(word.strip(marker))
-                    original_text = original_text.replace(re_word.group(), html_line)
-                    if word not in already_exists:
-                        already_exists += word
-                        words_count += 1
-            except AttributeError as err:
-                print(f"{err}, word is not found!")
+            print(f"ORIGINAL TEXT IN COUNT AND REPLACE FUNCTION:\n{original_text}\n") # test
+            if word in original_text:
+                original_word = word
+                print(f"Original word: {original_word}") # test
+                html_line = html_line.format(word.strip(marker))
+                print(html_line) # test
+                original_text = original_text.replace(original_word, html_line)
+                if word not in already_exists:
+                    already_exists += word
+                    words_count += 1
         return words_count, original_text
 
     linking_words_count, linking_original_text = count_and_replace(linking_words, "<span class='jsx-2885589388 linking-words'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{}</span><span class='jsx-1879403401'></span></div></span>", original_text, "#")
