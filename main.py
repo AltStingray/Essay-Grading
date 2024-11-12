@@ -256,7 +256,7 @@ def grading_queue():
         "original_text": "original_text",
         "paragraphs_count": "paragraphs_count",
         "grammar_mistakes": ["!list!", "!of!", "!words!", "!that!", "!contain!", "!a!", "!mistake!", "!which!", "!are!", "!delemited!", "!by!", "!", "!mark!"],
-        "corrected_words": ["<corrected version of the word> (grammar rule reason)"],
+        "corrected_words": ["corrected", "version", "of", "the", "words", "with", "the", "(grammar rule reason)"],
         "linking_words": ["#list#", "#of#", "#all#", "#linking#", "#words#"],
         "repetitive_words": ["^list^", "^of^", "^all^", "^repetitive^", "^words^"],
         "unnecessary_words": ["-list-", "-of-", "-all-", "-unnecessary-", "-words-"],
@@ -271,8 +271,9 @@ def grading_queue():
 
     Instruction:
     Structure your answer in one dictionary with different values as demonstrated in the following dictionary example: {example_results_dict}.
-    In the given example dictionary, each column/key and its value describes what it should contain, in which format and how every word should be wrapped.  
-    Every word placed in a list should exactly match word in the 'original_text', either it's lower or upper case.
+    In the given example dictionary, each column/key and its value describes what it should contain, in which format and how every word should be wrapped.
+    One of your main tasks is to enclose/wrap all the words from example dictionary's lists with the specific mark described in the steps below, either '!', '#', '^' or '-' - in the 'original_text'. I'll repeat again - specific words in 'original_text' should be enclosed/wrapped.
+    Every word placed in a list should exactly match word in the 'original_text', either it's lower or upper case, and it should be marked/enclosed properly as well.
     Enclose the dict, all of the keys and values into double quotes, not single.
     Do not rush with the answer. Take your time and process each of the following steps sequentially.
     
