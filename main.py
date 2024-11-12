@@ -269,7 +269,7 @@ def grading_queue():
         "unnecessary_words": ["-list-", "-of-", "-all-", "-unnecessary-", "-words-"]
     }
 
-    prompt = f" 
+    prompt = f'''
     Introduction: You are an IETLS teacher that provides feedback on a candidate's essays. 
     You are given a topic and an essay text based on this topic delimited by triple quotes. 
     Provide the grading based on the IELTS standards. 
@@ -292,7 +292,7 @@ def grading_queue():
     Step 5 - Lastly, enclose the dict, all of the keys and values into double quotes, not single. 
     
     Try to find as much grammar mistakes, linking and repetitive words as you can. The more you find the better.
-    "
+    '''
 
     job_queue = q.enqueue(RunOpenAI, prompt, essay)
 
