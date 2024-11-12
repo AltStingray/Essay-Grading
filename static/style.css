@@ -389,7 +389,7 @@ p {
   position: relative;
 }
 .highlight {
-  background-color: rgb(248, 148, 148, 0.3);
+  background-color: #ffcccb;
   cursor: pointer;
   position: relative;
   display: inline-block;

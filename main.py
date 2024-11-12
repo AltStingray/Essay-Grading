@@ -270,34 +270,46 @@ def grading_queue():
     }
 
     prompt = f'''
-    Introduction: You are an IETLS teacher that provides feedback on a candidate's essays. 
-    You are given a topic and an essay text based on this topic delimited by triple quotes. 
-    Provide the grading based on the IELTS standards. 
+    Introduction: You are an IELTS teacher providing feedback on a candidate's essays. 
+    You are given a topic and an essay text based on this topic, delimited by triple quotes. 
+    Please provide feedback and grading based on IELTS standards.
 
-    Instruction:
-    Structure your answer in one dictionary with different values as demonstrated in the following dictionary example: {example_results_dict}.
-    In the given example dictionary, each column/key and its value describes what it should contain, in which format and how every word should be wrapped.  
-    Every word placed in a list should exactly match word in the 'original_text', either it's lower or upper case.
-    Enclose the dict, all of the keys and values into double quotes, not single.
-    Do not rush with the answer. Take your time to process each of the following steps.
+    Instructions:
+    Structure your response as a **single dictionary** with the following keys and values as demonstrated in the example dictionary: {example_results_dict}.
     
-    Step 1 - In the 'original_text' find all of the words that contain grammar mistake and delimit them with the '!' mark. If one mistake contains multiple words, enclose them with a single pair of '!' mark.
+    **Formatting and Syntax Requirements:**
+    - Enclose the dictionary, all keys, and all values in double quotes (" "), not single quotes (' ').
+    - Maintain exact word forms as they appear in the 'original_text' for any list items, regardless of uppercase or lowercase.
+    - Use the following symbols to mark specific types of words in 'original_text':
+        - Grammar mistakes: wrap with **'!'** (e.g., !incorrect word!)
+        - Linking words: wrap with **'#'** (e.g., #however#).
+        - Repetitive words: wrap with **'^'** (e.g., ^important^).
+        - Unnecessary words: wrap with **'-'** (e.g., -really-).
+    - Do not add any additional commentary outside of the dictionary structure. 
 
-    Step 2 - Store all of the found grammar mistakes into the 'grammar_mistakes' list.
-     
-    Step 3 - In the 'original_text' find all of the linking words and delimit them with the '#' mark. If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#'.
+    **Processing Steps:**
+    Follow each of the steps below to mark and extract specific types of words in the 'original_text'. Perform each step sequentially, ensuring each list contains only items that meet the requirements.
 
-    Step 4 - Store all of the found linking words into the 'linking_words' list.  
-     
-    Step 5 - In the 'original_text' find all of the repetitive words and delimit them with the '^' mark. If not single word but sentence gets repeated many times wrap it with the '^' mark(i.e. ^social media^).
+    Step 1 - Identify and wrap grammar mistakes with '!'. If a mistake spans multiple words, wrap the entire phrase in a single pair of '!'. 
 
-    Step 6 - Store all of the found repetitive words into the 'repetitive_words' list.  
-    
-    Step 7 - In the 'original_text' find all of the unnecessary words and delimit them with the '-' mark. 
+    Step 2 - Store each identified grammar mistake in the 'grammar_mistakes' list, maintaining the exact form (case) as in 'original_text'.
 
-    Step 8 - Store all of the found unnecessary words into the 'unnecessary_words' list. 
+    Step 3 - Identify and wrap linking words with '#'. If a linking word includes punctuation, wrap only the word with '#' and add spaces as needed.
 
+    Step 4 - Store each identified linking word in the 'linking_words' list, exactly as it appears in 'original_text'.
+
+    Step 5 - Identify and wrap repetitive words with '^'. If a sentence repeats multiple times, wrap the entire sentence in '^'.
+
+    Step 6 - Store each identified repetitive word or phrase in the 'repetitive_words' list, matching its original form.
+
+    Step 7 - Identify and wrap unnecessary words with '-'.
+
+    Step 8 - Store each identified unnecessary word in the 'unnecessary_words' list, matching its original form.
+
+    **Final Output**:
+    Ensure the response includes only the completed dictionary structured exactly as specified.
     '''
+
 
     job_queue = q.enqueue(RunOpenAI, prompt, essay)
 
