@@ -153,7 +153,7 @@ def results():
 
         filename = result[2].replace(".mp4", "")
 
-        data = [(summary_report["text"], result[1], filename, summary_report["html"])]
+        data = (summary_report["text"], result[1], filename, summary_report["html"])
 
         db_store(data, "logs")
 
@@ -397,10 +397,8 @@ def grading_results():
         
         sidebar_comments.append(html_line)
     
-    data = [
-        (topic, result_text, paragraphs_count, words_count, grammar_mistakes_count, linking_words_count, 
-        repetitive_words_count, submitted_by, band_score, sidebar_comments, current_date, unnecessary_words_count)
-    ]
+    data = (topic, result_text, paragraphs_count, words_count, grammar_mistakes_count, linking_words_count, repetitive_words_count, submitted_by, band_score, sidebar_comments, current_date, unnecessary_words_count)
+
     
     db_store(data, "essay_logs")
 
