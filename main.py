@@ -265,10 +265,11 @@ def grading_queue():
         "submitted_by": "submitted_by",
         "linking_words": ["#list#", "#of#", "#all#", "#linking#", "#words#"],
         "repetitive_words": ["^list^", "^of^", "^all^", "^repetitive^", "^words^"],
-        "overall_band_score": "overall_band_score"
+        "overall_band_score": "overall_band_score",
+
     }
 
-    prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values as demonstrated in the following dictionary example: {example_results_dict}. In the given example dictionary, each column/key and its value describes what it should contain, in which format and how every word should be wrapped. Process and allocate the data accordingly. Every word placed in a list should exactly match the word in 'original_text', either it's lower or upper case. Delimit all of the found words containing grammar mistake with the '!' mark in the 'original_text', and store them into the 'grammar_mistakes' list. If one mistake contains multiple words, enclose them with a single pair of ! . Delimit all of the linking words with the '#' mark in the 'original_text', and store them into the 'linking_words' list. If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#'.  Delimit all of the repetitive words with the '^' mark in the 'original_text', and store them into the 'repetitive_words' list respectively.  Enclose the dict, all of the keys and values into double quotes, not single. Try to find as much grammar mistakes, linking and repetitive words as you can. The more the better."
+    prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values as demonstrated in the following dictionary example: {example_results_dict}. In the given example dictionary, each column/key and its value describes what it should contain, in which format and how every word should be wrapped. Process and allocate the data accordingly. Every word placed in a list should exactly match the word in 'original_text', either it's lower or upper case. Delimit all of the found words containing grammar mistake with the '!' mark in the 'original_text', and store them into the 'grammar_mistakes' list. If one mistake contains multiple words, enclose them with a single pair of ! . Delimit all of the linking words with the '#' mark in the 'original_text', and store them into the 'linking_words' list. If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#'.  Delimit all of the repetitive words with the '^' mark in the 'original_text', and store them into the 'repetitive_words' list respectively. If not single word but sentence gets repeated many times wrap it with the '^' mark(i.e. ^social media^). Lastly, enclose the dict, all of the keys and values into double quotes, not single. Try to find as much grammar mistakes, linking and repetitive words as you can. The more you find the better."
 
     job_queue = q.enqueue(RunOpenAI, prompt, essay)
 
@@ -326,7 +327,7 @@ def grading_results():
         re_word = re.search(word, original_text)
         print(re_word)
         if word == re_word.group():
-            html_word = f"<span class='highlight' data-comment='comment{n + 1}'>{word.strip("!")}({n + 1})</span>"
+            html_word = f"<span class='highlight' data-comment='comment{n + 1}'>{word.strip("!")}({n + 1})</span>" #<span class='jsx-1879403401'><div contenteditable='false' class='jsx-1879403401 hover'><div class='jsx-1879403401 hint'><div class='jsx-1879403401 title'>Correct article usage</div><div class='jsx-1879403401 suggestions'><div class='jsx-1879403401 suggestion'>the Atlantic</div></div><p class='jsx-1879403401 info'><p>It&nbsp;seems that there is&nbsp;an&nbsp;article usage problem here.</p></p><div class='jsx-1879403401 examples-button'>show examples</div></div></div></span>"
             original_text = original_text.replace(re_word.group(), html_word)
             grammar_mistakes_count += 1
 
