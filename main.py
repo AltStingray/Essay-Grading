@@ -275,6 +275,7 @@ def grading_queue():
     One of your main tasks is to enclose/wrap all the words from example dictionary's lists with the specific mark described in the steps below, either '!', '#', '^' or '-' - in the 'original_text'. I'll repeat again - specific words in 'original_text' should be enclosed/wrapped.
     Every word placed in a list should exactly match word in the 'original_text', either it's lower or upper case, and it should be marked/enclosed properly as well.
     Enclose the dict, all of the keys and values into double quotes, not single.
+
     Do not rush with the answer. Take your time and process each of the following steps sequentially.
     
     Step 1 - In the 'original_text' find all of the words that contain grammar mistake and wrap them with the '!' mark. If one mistake contains multiple words, enclose them with a single pair of '!' mark.
@@ -282,8 +283,9 @@ def grading_queue():
     Step 2 - Store all of the found grammar mistakes into the 'grammar_mistakes' list wrapped with the '!'.
      
     Step 3 - In the 'original_text' find all of the linking words and wrap them with the '#' mark. If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#'.
+    Linking words definition: Linking words, also known as transition words, are words and phrases like 'however' or 'on the other hand' that connect clauses, sentences, paragraphs, or other words.
 
-    Step 4 - Store all of the found linking words into the 'linking_words' list wrapped with the '#'.  
+    Step 4 - Store all of the found linking words into the 'linking_words' list wrapped with the '#'. 
      
     Step 5 - In the 'original_text' find all of the repetitive words and wrap them with the '^' mark. If not single word but sentence gets repeated many times wrap it with the '^' mark(i.e. ^social media^).
 
