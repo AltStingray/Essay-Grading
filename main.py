@@ -36,7 +36,7 @@ q = Queue(connection=conn)
 
 #db("create")
 #db("delete_data")
-db("alter")
+#db("alter")
 db("print")
 
 
