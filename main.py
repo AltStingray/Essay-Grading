@@ -264,11 +264,11 @@ def grading_queue():
         "corrected_words": ["corrected", "version", "of", "the", "words", "with", "the", "(grammar rule reason)"],
         "submitted_by": "submitted_by",
         "linking_words": ["#list#", "#of#", "#all#", "#linking#", "#words#"],
-        "repetitive_words": [";list;*", ";of;", ";all;", ";repetitive;", ";words;", ";delimited;", ";by;", ";", ";mark;"],
+        "repetitive_words": ["^list^", "^of^", "^all^", "^repetitive^", "^words^"],
         "overall_band_score": "overall_band_score"
     }
 
-    prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values as demonstrated in the following dictionary example: {example_results_dict}. In the given example dictionary, each column/key and its value describes what it should contain. Process and allocate the data accordingly. For example, 'repetitive_words' list should contain all the repetitive words that you spot in the 'original_text', same thing with the 'linking_words' and 'grammar_mistakes' lists. Try to find as much grammar, linking and repetitive words as you can. Every word placed in the lists should exactly match the word in 'original_text', either it's lower or upper case. Delimit all of the found words containing grammar mistake with the '!' mark in the 'original_text', and store them into the 'grammar_mistakes' list. If one mistake contains multiple words, enclose them with a single pair of ! . In the 'original_text' delimit all of the linking words with the '#' mark, and store them into the 'linking_words' list. If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#'.  In the 'original_text' delimit all of the repetitive words with the ';' mark, and store them into the 'repetitive_words' list respectively.  Enclose the dict, all of the keys and values into double quotes, not single."
+    prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values as demonstrated in the following dictionary example: {example_results_dict}. In the given example dictionary, each column/key and its value describes what it should contain. Process and allocate the data accordingly. For example, 'repetitive_words' list should contain all the repetitive words that you spot in the 'original_text', same thing with the 'linking_words' and 'grammar_mistakes' lists. Try to find as much grammar, linking and repetitive words as you can. Every word placed in the lists should exactly match the word in 'original_text', either it's lower or upper case. Delimit all of the found words containing grammar mistake with the '!' mark in the 'original_text', and store them into the 'grammar_mistakes' list. If one mistake contains multiple words, enclose them with a single pair of ! . In the 'original_text' delimit all of the linking words with the '#' mark, and store them into the 'linking_words' list. If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#'.  In the 'original_text' delimit all of the repetitive words with the '^' mark, and store them into the 'repetitive_words' list respectively.  Enclose the dict, all of the keys and values into double quotes, not single."
 
     job_queue = q.enqueue(RunOpenAI, prompt, essay)
 
@@ -340,7 +340,7 @@ def grading_results():
             if word in original_text:
                 original_word = word
                 print(f"Original word: {original_word}") # test
-                html_line = html_line.format(word.strip(marker))
+                html_line = html_line.format(original_word.strip(marker))
                 print(html_line) # test
                 original_text = original_text.replace(original_word, html_line)
                 if word not in already_exists:
@@ -349,7 +349,7 @@ def grading_results():
         return words_count, original_text
 
     linking_words_count, linking_original_text = count_and_replace(linking_words, "<span class='jsx-2885589388 linking-words'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{}</span><span class='jsx-1879403401'></span></div></span>", original_text, "#")
-    repetitive_words_count, final_original_text = count_and_replace(repetitive_words, "<span class='jsx-2310580937 repeated-word'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{}</span><span class='jsx-1879403401'></span></div></span>", linking_original_text, ";")
+    repetitive_words_count, final_original_text = count_and_replace(repetitive_words, "<span class='jsx-2310580937 repeated-word'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{}</span><span class='jsx-1879403401'></span></div></span>", linking_original_text, "^")
 
     result_text = final_original_text
     print(f"\n\n{result_text}\n\n")
