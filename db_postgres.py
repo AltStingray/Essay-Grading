@@ -30,16 +30,16 @@ def db(command):
                     id SERIAL PRIMARY KEY,
                     topic BYTEA NOT NULL,   
                     essay BYTEA NOT NULL,
-                    paragraphs_count BYTEA NOT NULL,
-                    words_count BYTEA NOT NULL,
+                    paragraphs_count SMALLINT NOT NULL,
+                    words_count SMALLINT NOT NULL,
                     grammar_mistakes BYTEA NOT NULL,
-                    linking_words_count BYTEA NOT NULL,
-                    repetative_words_count BYTEA NOT NULL,
+                    linking_words_count SMALLINT NOT NULL,
+                    repetative_words_count SMALLINT NOT NULL,
                     submitted_by BYTEA NOT NULL,
-                    overall_band_score BYTEA NOT NULL,
+                    overall_band_score FLOAT NOT NULL,
                     sidebar_comments BYTEA NOT NULL,
                     time BYTEA NOT NULL,
-                    unnecessary_words_count BYTEA NOT NULL,)"""
+                    unnecessary_words_count SMALLINT NOT NULL,)"""
 
         cursor.execute(create_essay_logs)
             
