@@ -261,12 +261,12 @@ def grading_queue():
         "original_text": "original_text",
         "paragraphs_count": "paragraphs_count",
         "grammar_mistakes": ["!list!", "!of!", "!words!", "!that!", "!contain!", "!a!", "!mistake!", "!which!", "!are!", "!delemited!", "!by!", "!", "!mark!"],
-        "corrected_words": ["corrected", "version", "of", "the", "words", "with", "the", "(grammar rule reason)"],
-        "submitted_by": "submitted_by",
+        "corrected_words": ["corrected version of the word with the (grammar rule reason)"],
         "linking_words": ["#list#", "#of#", "#all#", "#linking#", "#words#"],
         "repetitive_words": ["^list^", "^of^", "^all^", "^repetitive^", "^words^"],
-        "overall_band_score": "overall_band_score",
-        "unnecessary_words": ["-list-", "-of-", "-all-", "-unnecessary-", "-words-"]
+        "unnecessary_words": ["-list-", "-of-", "-all-", "-unnecessary-", "-words-"],
+        "submitted_by": "submitted_by",
+        "overall_band_score": "overall_band_score(float value)",
     }
 
     prompt = f'''
