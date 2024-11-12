@@ -269,7 +269,30 @@ def grading_queue():
         "unnecessary_words": ["-list-", "-of-", "-all-", "-unnecessary-", "-words-"]
     }
 
-    prompt = f"You are an IETLS teacher that provides feedback on a candidate's essays. You are given a topic and an essay text based on this topic delimited by triple quotes. Provide the grading based on the IELTS and its Band standards. Structure your answer in one dictionary with different values as demonstrated in the following dictionary example: {example_results_dict}. In the given example dictionary, each column/key and its value describes what it should contain, in which format and how every word should be wrapped. Process and allocate the data accordingly. Every word placed in a list should exactly match the word in 'original_text', either it's lower or upper case. Delimit all of the found words containing grammar mistake with the '!' mark in the 'original_text', and store them into the 'grammar_mistakes' list. If one mistake contains multiple words, enclose them with a single pair of ! . Delimit all of the linking words with the '#' mark in the 'original_text', and store them into the 'linking_words' list. If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#'.  Delimit all of the repetitive words with the '^' mark in the 'original_text', and store them into the 'repetitive_words' list respectively. If not single word but sentence gets repeated many times wrap it with the '^' mark(i.e. ^social media^). Delimit all of the unnecessary words with the '-' mark in the 'original_text', and store them into the 'unnecessary_words' list. Lastly, enclose the dict, all of the keys and values into double quotes, not single. Try to find as much grammar mistakes, linking and repetitive words as you can. The more you find the better."
+    prompt = f" 
+    Introduction: You are an IETLS teacher that provides feedback on a candidate's essays. 
+    You are given a topic and an essay text based on this topic delimited by triple quotes. 
+    Provide the grading based on the IELTS standards. 
+    Structure your answer in one dictionary with different values as demonstrated in the following dictionary example: {example_results_dict}.
+    In the given example dictionary, each column/key and its value describes what it should contain, in which format and how every word should be wrapped.  
+    Every word placed in a list should exactly match the word in 'original_text', either it's lower or upper case.
+    Do not rush with the answer. Take your time to process each of the following steps to find most of the requested words.
+    
+    Step 1 - Delimit all of the found words containing grammar mistake with the '!' mark in the 'original_text', and store them into the 'grammar_mistakes' list.
+    If one mistake contains multiple words, enclose them with a single pair of ! .
+     
+    Step 2 - Delimit all of the linking words with the '#' mark in the 'original_text', and store them into the 'linking_words' list. 
+    If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#'. 
+     
+    Step 3 - Delimit all of the repetitive words with the '^' mark in the 'original_text', and store them into the 'repetitive_words' list respectively. 
+    If not single word but sentence gets repeated many times wrap it with the '^' mark(i.e. ^social media^). 
+    
+    Step 4 - Delimit all of the unnecessary words with the '-' mark in the 'original_text', and store them into the 'unnecessary_words' list. 
+    
+    Step 5 - Lastly, enclose the dict, all of the keys and values into double quotes, not single. 
+    
+    Try to find as much grammar mistakes, linking and repetitive words as you can. The more you find the better.
+    "
 
     job_queue = q.enqueue(RunOpenAI, prompt, essay)
 
@@ -338,7 +361,6 @@ def grading_results():
         words_count = 0
         already_exists = ""
         for word in words:
-            print(f"ORIGINAL TEXT IN COUNT AND REPLACE FUNCTION:\n{original_text}\n") # test
             if word in original_text:
                 original_word = word
                 print(f"Original word: {original_word}") # test
@@ -352,7 +374,7 @@ def grading_results():
 
     linking_words_count, linking_original_text = count_and_replace(linking_words, "<span class='jsx-2885589388 linking-words'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{}</span><span class='jsx-1879403401'></span></div></span>", original_text, "#")
     repetitive_words_count, repetative_original_text = count_and_replace(repetitive_words, "<span class='jsx-2310580937 repeated-word'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{}</span><span class='jsx-1879403401'></span></div></span>", linking_original_text, "^")
-    unnecessary_words_count, final_original_text = count_and_replace(unnecessary_words, "<span class='strikethrough'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{}</span><span class='jsx-1879403401'></span></div></span>", repetative_original_text, "-")
+    unnecessary_words_count, final_original_text = count_and_replace(unnecessary_words, "<span class='jsx-2310580937 unnecessary-word'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{}</span><span class='jsx-1879403401'></span></div></span>", repetative_original_text, "-")
 
     result_text = final_original_text
     print(f"\n\n{result_text}\n\n")
