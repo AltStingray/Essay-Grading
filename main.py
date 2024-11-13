@@ -353,10 +353,13 @@ def grading_results():
     for n, word in enumerate(grammar_mistakes):
         re_word = re.search(word, original_text)
         print(re_word)
-        if word == re_word.group():
-            html_word = f"<span class='highlight' data-comment='comment{n + 1}'>{word.strip("!")}({n + 1})</span>" #<span class='jsx-1879403401'><div contenteditable='false' class='jsx-1879403401 hover'><div class='jsx-1879403401 hint'><div class='jsx-1879403401 title'>Correct article usage</div><div class='jsx-1879403401 suggestions'><div class='jsx-1879403401 suggestion'>the Atlantic</div></div><p class='jsx-1879403401 info'><p>It&nbsp;seems that there is&nbsp;an&nbsp;article usage problem here.</p></p><div class='jsx-1879403401 examples-button'>show examples</div></div></div></span>"
-            original_text = original_text.replace(re_word.group(), html_word)
-            grammar_mistakes_count += 1
+        try:
+            if word == re_word.group():
+                html_word = f"<span class='highlight' data-comment='comment{n + 1}'>{word.strip("!")}({n + 1})</span>" #<span class='jsx-1879403401'><div contenteditable='false' class='jsx-1879403401 hover'><div class='jsx-1879403401 hint'><div class='jsx-1879403401 title'>Correct article usage</div><div class='jsx-1879403401 suggestions'><div class='jsx-1879403401 suggestion'>the Atlantic</div></div><p class='jsx-1879403401 info'><p>It&nbsp;seems that there is&nbsp;an&nbsp;article usage problem here.</p></p><div class='jsx-1879403401 examples-button'>show examples</div></div></div></span>"
+                original_text = original_text.replace(re_word.group(), html_word)
+                grammar_mistakes_count += 1
+        except AttributeError as err:
+            print(err)
 
     print(original_text)
 
