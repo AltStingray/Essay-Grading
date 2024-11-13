@@ -271,11 +271,13 @@ def grading_queue():
         Provide the grading based on the IELTS standards. 
 
         Instruction:
+        You will be provided with several prompts, which are sequential.
         Structure your answer in one dictionary with different values as demonstrated in the following dictionary example: {example_results_dict}.
         In the given example dictionary, each column/key and its value describes what it should contain, in which format and how every word should be wrapped.
         One of your main tasks is to enclose/wrap all the words from example dictionary's lists with the specific mark described in the steps below, either '!', '#', '^' or '-' - in the 'original_text'. I'll repeat again - specific words in 'original_text' should be enclosed/wrapped.
         Every word placed in a list should exactly match word in the 'original_text', either it's lower or upper case, and it should be marked/enclosed properly as well.
         Enclose the dict, all of the keys and values into double quotes, not single.
+        All of the following steps and prompts have to follow given instructions and structure. All the data should be placed in one dictionary.
 
         Do not rush with the answer. Take your time and process each of the following steps sequentially.
         
@@ -297,9 +299,6 @@ def grading_queue():
         Step 5 - In the 'original_text' find all of the repetitive words and wrap them with the '^' mark. If not single word but sentence gets repeated many times wrap it with the '^' mark(i.e. ^social media^).
 
         Step 6 - Store all of the found repetitive words into the 'repetitive_words' list wrapped with the '^'.  
-        '''
-        ,
-        '''
         
         Step 7 - In the 'original_text' find all of the unnecessary words and wrap them with the '-' mark. 
 
@@ -512,6 +511,7 @@ def RunOpenAI(prompt, content, program):
     client = OpenAI(api_key=OPENAI_API_KEY)
 
     if program == "essay_grading":
+        responses = []
         for one in prompt:
             response = client.chat.completions.create(
             model="gpt-4o-2024-08-06",
@@ -519,6 +519,8 @@ def RunOpenAI(prompt, content, program):
                 {"role": "system", "content": one},
                 {"role": "user", "content": f'''{content}'''}],
             )
+            responses.append(response.choices[0].message.content)
+        response = responses
     else:
         response = client.chat.completions.create(
             model="gpt-4o-2024-08-06",
@@ -527,7 +529,7 @@ def RunOpenAI(prompt, content, program):
                 {"role": "user", "content": f'''{content}'''}],
             )
     
-    response = response.choices[0].message.content #tapping into the content of response
+        response = response.choices[0].message.content #tapping into the content of response
     
     return response
 
