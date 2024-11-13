@@ -32,7 +32,7 @@ def db(command):
                     essay BYTEA NOT NULL,
                     paragraphs_count SMALLINT NOT NULL,
                     words_count SMALLINT NOT NULL,
-                    grammar_mistakes BYTEA NOT NULL,
+                    grammar_mistakes SMALLINT NOT NULL,
                     linking_words_count SMALLINT NOT NULL,
                     repetative_words_count SMALLINT NOT NULL,
                     submitted_by BYTEA NOT NULL,
