@@ -271,19 +271,21 @@ def grading_queue():
         Provide the grading based on the IELTS standards. 
 
         Instruction:
-        You will be provided with several prompts, which are sequential.
-        Structure your answer in a single dictionary with different values as demonstrated in the following dictionary example: {example_results_dict}.
+        You will be provided with several prompts, which are sequential and have to be all stored in one single dictionary.
+        All your responses should be structured in a single dictionary with different values, here is the dictionary example you have to follow: {example_results_dict}.
         In the given example dictionary, each column/key and its value describes what it should contain, in which format and how every word should be wrapped.
         One of your main tasks is to enclose/wrap all the words from example dictionary's lists with the specific mark described in the steps below, either '!', '#', '^' or '-' - in the 'original_text'. I'll repeat again - specific words in 'original_text' should be enclosed/wrapped.
         Every word placed in a list should exactly match word in the 'original_text', either it's lower or upper case, and it should be marked/enclosed properly as well.
         Enclose the dict, all of the keys and values into double quotes, not single.
-        All of the following steps and prompts have to follow given instructions and structure. All the data should be placed in one dictionary.
-
-        Do not rush with the answer. Take your time and process each of the following steps sequentially.
+        Do not rush with the answer. Take your time and process each of the following steps sequentially and apply changes to the 'original_text' and corresponding lists in the single dictionary.
+        '''
+        ,
+        '''
         
         Step 1 - In the 'original_text' find all of the words that contain grammar mistake and wrap them with the '!' mark. If one mistake contains multiple words, enclose them with a single pair of '!' mark.
 
         Step 2 - Store all of the found grammar mistakes into the 'grammar_mistakes' list wrapped with the '!'.
+        
         '''
         ,
 
@@ -293,6 +295,7 @@ def grading_queue():
         Linking words definition: Linking words, also known as transition words, are words and phrases like 'however' or 'on the other hand' that connect clauses, sentences, paragraphs, or other words.
 
         Step 4 - Store all of the found linking words into the 'linking_words' list wrapped with the '#'. 
+        
         '''
         ,
         '''
