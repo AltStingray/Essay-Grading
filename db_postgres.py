@@ -78,16 +78,6 @@ def db(command):
 
         return "Data has been deleted from the database successfully!"
 
-    elif command == "delete_table":
-        #delete table
-        cursor.execute("DROP DATABASE essay_logs")
-            
-        db_conn.commit() # Commiting to make changes persistent 
-
-        cursor.close()
-        db_conn.close()
-        print("DB deleted successfully!")
-
     elif command == "print":
         cursor.execute("SELECT * FROM Logs")
 
@@ -102,6 +92,20 @@ def db(command):
     else:
         pass
 
+def delete_table(table_name):
+    db_conn = psycopg2.connect(DATABASE)
+
+    db_conn.autocommit = True
+
+    # Create cursor to execute queries
+    cursor = db_conn.cursor()
+
+    cursor.execute(f"DROP DATABASE {table_name}")
+
+    cursor.close()
+    db_conn.close()
+
+    return print("DB deleted successfully!")
 
 def db_store(data, db_name):
 
