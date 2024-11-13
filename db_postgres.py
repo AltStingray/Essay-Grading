@@ -105,7 +105,7 @@ def delete_table(table_name):
     cursor.close()
     db_conn.close()
 
-    return print("DB deleted successfully!")
+    return print("Table deleted successfully!")
 
 def db_store(data, db_name):
 
