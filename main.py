@@ -280,7 +280,7 @@ def grading_queue():
     Brief explanation:
     Linking words definition: 'Linking words, also known as transition words, are words and phrases like 'however', 'on the other hand', 'besides' or 'in conclusion' that connect clauses, sentences, paragraphs, or other words.'
     Repetitive words definition: 'Repetitive words, are the words in the candidate's text which get repeated more than 4 times per text. For example, if the word 'people' appears in text more than 4 times, it is considered a repetitive word and should be marked with '^'.'
-    Unnecessary words defininion:
+    Unnecessary words defininion: 
     'Four types of unnecessary words and phrases to avoid for conciseness:
 
     Dummy Subjects: Avoid words like "there is/are" and "it is/was" that add no meaning.
@@ -294,7 +294,7 @@ def grading_queue():
     Example: "Our duty was to clean and to wash." to "We cleaned and washed."
     Circumlocutions: Avoid lengthy phrases that can be said in fewer words.
 
-    Example: "Owing to the fact that…" to "Since…"
+    Example: "Owing to the fact that..." to "Since..."
     In short, aim for direct, simplified wording by cutting out filler expressions.'
 
     Steps:
