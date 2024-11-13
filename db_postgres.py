@@ -38,7 +38,7 @@ def db(command):
                     submitted_by BYTEA NOT NULL,
                     overall_band_score FLOAT NOT NULL,
                     sidebar_comments TEXT NOT NULL,
-                    time DATE NOT NULL,
+                    time TIMESTAMP NOT NULL,
                     unnecessary_words_count SMALLINT NOT NULL)"""
 
         cursor.execute(create_essay_logs)
@@ -82,6 +82,7 @@ def db(command):
 
     elif command == "print":
         cursor.execute("SELECT * FROM Logs")
+        cursor.execute("SELECT * FROM essay_logs")
 
         rows = cursor.fetchall()
 
