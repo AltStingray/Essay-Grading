@@ -300,7 +300,7 @@ def grading_queue():
 
         Step 8 - Store all of the found unnecessary words into the 'unnecessary_words' list wrapped with the '-'. 
 
-        Return the updated dictionary.
+        Return the final version of the dictionary.
 
         '''
     ]
