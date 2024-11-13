@@ -264,40 +264,51 @@ def grading_queue():
         "overall_band_score": "overall_band_score(float value)",
     }
 
-    prompt = f'''
-    Introduction: You are an IETLS teacher that provides feedback on a candidate's essays. 
-    You are given a topic and an essay text based on this topic delimited by triple quotes. 
-    Provide the grading based on the IELTS standards. 
+    prompt = [
+        f'''
+        Introduction: You are an IETLS teacher that provides feedback on a candidate's essays. 
+        You are given a topic and an essay text based on this topic delimited by triple quotes. 
+        Provide the grading based on the IELTS standards. 
 
-    Instruction:
-    Structure your answer in one dictionary with different values as demonstrated in the following dictionary example: {example_results_dict}.
-    In the given example dictionary, each column/key and its value describes what it should contain, in which format and how every word should be wrapped.
-    One of your main tasks is to enclose/wrap all the words from example dictionary's lists with the specific mark described in the steps below, either '!', '#', '^' or '-' - in the 'original_text'. I'll repeat again - specific words in 'original_text' should be enclosed/wrapped.
-    Every word placed in a list should exactly match word in the 'original_text', either it's lower or upper case, and it should be marked/enclosed properly as well.
-    Enclose the dict, all of the keys and values into double quotes, not single.
+        Instruction:
+        Structure your answer in one dictionary with different values as demonstrated in the following dictionary example: {example_results_dict}.
+        In the given example dictionary, each column/key and its value describes what it should contain, in which format and how every word should be wrapped.
+        One of your main tasks is to enclose/wrap all the words from example dictionary's lists with the specific mark described in the steps below, either '!', '#', '^' or '-' - in the 'original_text'. I'll repeat again - specific words in 'original_text' should be enclosed/wrapped.
+        Every word placed in a list should exactly match word in the 'original_text', either it's lower or upper case, and it should be marked/enclosed properly as well.
+        Enclose the dict, all of the keys and values into double quotes, not single.
 
-    Do not rush with the answer. Take your time and process each of the following steps sequentially.
-    
-    Step 1 - In the 'original_text' find all of the words that contain grammar mistake and wrap them with the '!' mark. If one mistake contains multiple words, enclose them with a single pair of '!' mark.
+        Do not rush with the answer. Take your time and process each of the following steps sequentially.
+        
+        Step 1 - In the 'original_text' find all of the words that contain grammar mistake and wrap them with the '!' mark. If one mistake contains multiple words, enclose them with a single pair of '!' mark.
 
-    Step 2 - Store all of the found grammar mistakes into the 'grammar_mistakes' list wrapped with the '!'.
-     
-    Step 3 - In the 'original_text' find all of the linking words and wrap them with the '#' mark. If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#'.
-    Linking words definition: Linking words, also known as transition words, are words and phrases like 'however' or 'on the other hand' that connect clauses, sentences, paragraphs, or other words.
+        Step 2 - Store all of the found grammar mistakes into the 'grammar_mistakes' list wrapped with the '!'.
+        '''
+        ,
 
-    Step 4 - Store all of the found linking words into the 'linking_words' list wrapped with the '#'. 
-     
-    Step 5 - In the 'original_text' find all of the repetitive words and wrap them with the '^' mark. If not single word but sentence gets repeated many times wrap it with the '^' mark(i.e. ^social media^).
+        '''
+        
+        Step 3 - In the 'original_text' find all of the linking words and wrap them with the '#' mark. If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#'.
+        Linking words definition: Linking words, also known as transition words, are words and phrases like 'however' or 'on the other hand' that connect clauses, sentences, paragraphs, or other words.
 
-    Step 6 - Store all of the found repetitive words into the 'repetitive_words' list wrapped with the '^'.  
-    
-    Step 7 - In the 'original_text' find all of the unnecessary words and wrap them with the '-' mark. 
+        Step 4 - Store all of the found linking words into the 'linking_words' list wrapped with the '#'. 
+        '''
+        ,
+        '''
+        Step 5 - In the 'original_text' find all of the repetitive words and wrap them with the '^' mark. If not single word but sentence gets repeated many times wrap it with the '^' mark(i.e. ^social media^).
 
-    Step 8 - Store all of the found unnecessary words into the 'unnecessary_words' list wrapped with the '-'. 
+        Step 6 - Store all of the found repetitive words into the 'repetitive_words' list wrapped with the '^'.  
+        '''
+        ,
+        '''
+        
+        Step 7 - In the 'original_text' find all of the unnecessary words and wrap them with the '-' mark. 
 
-    '''
+        Step 8 - Store all of the found unnecessary words into the 'unnecessary_words' list wrapped with the '-'. 
 
-    job_queue = q.enqueue(RunOpenAI, prompt, essay)
+        '''
+    ]
+
+    job_queue = q.enqueue(RunOpenAI, prompt, essay, "essay_grading")
 
     job_id = job_queue.get_id()
 
@@ -487,23 +498,32 @@ def main(link, specified_date, teacher_name, access_token, user_prompt):
 
     summary_report = RunOpenAI(prompt, transcription)
 
-    filename = filename.replace(".mp4", "")
+    filename = filename.replace(".mp4", "summary_report")
 
     f_list = [summary_report, transcription, filename]
     
     return f_list
 
 
-def RunOpenAI(prompt, content):
+def RunOpenAI(prompt, content, program):
 
     client = OpenAI(api_key=OPENAI_API_KEY)
 
-    response = client.chat.completions.create(
-        model="gpt-4o-2024-08-06",
-        messages=[
-            {"role": "system", "content": prompt},
-            {"role": "user", "content": f'''{content}'''}],
-        )
+    if program == "essay_grading":
+        for one in prompt:
+            response = client.chat.completions.create(
+            model="gpt-4o-2024-08-06",
+            messages=[
+                {"role": "system", "content": one},
+                {"role": "user", "content": f'''{content}'''}],
+            )
+    else:
+        response = client.chat.completions.create(
+            model="gpt-4o-2024-08-06",
+            messages=[
+                {"role": "system", "content": prompt},
+                {"role": "user", "content": f'''{content}'''}],
+            )
     
     response = response.choices[0].message.content #tapping into the content of response
     
