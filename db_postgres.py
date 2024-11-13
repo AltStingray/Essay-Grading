@@ -39,7 +39,7 @@ def db(command):
                     overall_band_score FLOAT NOT NULL,
                     sidebar_comments BYTEA NOT NULL,
                     time BYTEA NOT NULL,
-                    unnecessary_words_count SMALLINT NOT NULL,)"""
+                    unnecessary_words_count SMALLINT NOT NULL)"""
 
         cursor.execute(create_essay_logs)
             
