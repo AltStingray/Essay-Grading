@@ -494,3 +494,6 @@ Just in case
  For example, 'repetitive_words' list should contain all the repetitive words that you spot in the 'original_text', same thing with the 'linking_words' and 'grammar_mistakes' lists.
 
  #ffdd57
+
+
+ One of your main tasks is to enclose/wrap all the words from example dictionary's lists with the specific mark described in the steps below, either '!', '#', '^' or '-' - in the 'original_text'. I'll repeat again - specific words in 'original_text' should be enclosed/wrapped.

@@ -273,8 +273,8 @@ def grading_queue():
         Instruction:
         You will be provided with several prompts, which are sequential and have to be all stored in one single dictionary.
         All your responses should be structured in a single dictionary with different values, here is the dictionary example you have to follow: {example_results_dict}.
+        Progressively update the dictionary example with each new given prompt.
         In the given example dictionary, each column/key and its value describes what it should contain, in which format and how every word should be wrapped.
-        One of your main tasks is to enclose/wrap all the words from example dictionary's lists with the specific mark described in the steps below, either '!', '#', '^' or '-' - in the 'original_text'. I'll repeat again - specific words in 'original_text' should be enclosed/wrapped.
         Every word placed in a list should exactly match word in the 'original_text', either it's lower or upper case, and it should be marked/enclosed properly as well.
         Enclose the dict, all of the keys and values into double quotes, not single.
         Do not rush with the answer. Take your time and process each of the following steps sequentially and apply changes to the 'original_text' and corresponding lists in the single dictionary.
@@ -282,30 +282,36 @@ def grading_queue():
         ,
         '''
         
-        Step 1 - In the 'original_text' find all of the words that contain grammar mistake and wrap them with the '!' mark. If one mistake contains multiple words, enclose them with a single pair of '!' mark.
+        Step 1 - Based on the example dictionary given to you in Instructions, in the 'original_text' find all of the words that contain grammar mistake and wrap them with the '!' mark. If one mistake contains multiple words, enclose them with a single pair of '!' mark.
 
-        Step 2 - Store all of the found grammar mistakes into the 'grammar_mistakes' list wrapped with the '!'.
+        Step 2 - Store all of the found grammar mistakes into the 'grammar_mistakes' list in the example dictionary wrapped with the '!'.
+
+        Return the updated dictionary.
         
         '''
         ,
 
         '''
         
-        Step 3 - In the 'original_text' find all of the linking words and wrap them with the '#' mark. If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#'.
+        Step 3 - Based on the updated dictionary, in the 'original_text' find all of the linking words and wrap them with the '#' mark. If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#'.
         Linking words definition: Linking words, also known as transition words, are words and phrases like 'however' or 'on the other hand' that connect clauses, sentences, paragraphs, or other words.
 
         Step 4 - Store all of the found linking words into the 'linking_words' list wrapped with the '#'. 
+
+        Return the updated dictionary.
         
         '''
         ,
         '''
-        Step 5 - In the 'original_text' find all of the repetitive words and wrap them with the '^' mark. If not single word but sentence gets repeated many times wrap it with the '^' mark(i.e. ^social media^).
+        Step 5 - Based on the updated dictionary, in the 'original_text' find all of the repetitive words and wrap them with the '^' mark. If not single word but sentence gets repeated many times wrap it with the '^' mark(i.e. ^social media^).
 
         Step 6 - Store all of the found repetitive words into the 'repetitive_words' list wrapped with the '^'.  
         
         Step 7 - In the 'original_text' find all of the unnecessary words and wrap them with the '-' mark. 
 
         Step 8 - Store all of the found unnecessary words into the 'unnecessary_words' list wrapped with the '-'. 
+
+        Return the updated dictionary.
 
         '''
     ]
@@ -341,11 +347,11 @@ def grading_results():
     job_result = job.return_value()
 
     print(job_result) # test
-    for one in job_result:
-        if one.startswith("```"):
-            result = strip([job_result])
-        else:
-            result = job_result
+
+    if job_result.startswith("```"):
+        result = strip([job_result])
+    else:
+        result = job_result
 
     result = json.loads(result)
 
@@ -514,7 +520,6 @@ def RunOpenAI(prompt, content, program):
     client = OpenAI(api_key=OPENAI_API_KEY)
 
     if program == "essay_grading":
-        responses = []
         for one in prompt:
             response = client.chat.completions.create(
             model="gpt-4o-2024-08-06",
@@ -522,8 +527,6 @@ def RunOpenAI(prompt, content, program):
                 {"role": "system", "content": one},
                 {"role": "user", "content": f'''{content}'''}],
             )
-            responses.append(response.choices[0].message.content)
-        response = responses
     else:
         response = client.chat.completions.create(
             model="gpt-4o-2024-08-06",
@@ -532,7 +535,7 @@ def RunOpenAI(prompt, content, program):
                 {"role": "user", "content": f'''{content}'''}],
             )
     
-        response = response.choices[0].message.content #tapping into the content of response
+    response = response.choices[0].message.content #tapping into the content of response
     
     return response
 
