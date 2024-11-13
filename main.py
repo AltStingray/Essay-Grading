@@ -275,24 +275,7 @@ def grading_queue():
     In the given example dictionary, each key and it's value describes what it should contain, in which format and how every word should be wrapped.
     Every word placed in a list should exactly match word in the 'original_text', either it's lower or upper case, and it should be marked/enclosed properly as well.
     Enclose the dict, all of the keys and values into double quotes, not single.
-    Do not rush with the answer. Take your time and process each of the following steps sequentially. But focus on the quality of the first two steps.
-
-    Brief explanation:
-    Linking words definition: 'Linking words, also known as transition words, are words and phrases like 'however', 'on the other hand', 'besides' or 'in conclusion' that connect clauses, sentences, paragraphs, or other words.'
-    Repetitive words definition: 'Repetitive words, are the words in the candidate's text which get repeated more than 4 times per text. For example, if the word 'people' appears in text more than 4 times, it is considered a repetitive word and should be marked with '^'.'
-    Unnecessary words defininion: 
-    'Four types of unnecessary words and phrases to avoid for conciseness: 
-
-    Dummy Subjects: Avoid words like "there is/are" and "it is/was" that add no meaning. 
-    Example: "There are great skiing resorts in Colorado." to "Colorado has great skiing resorts." 
-
-    Nominalizations: Use verbs instead of nouns made from verbs (e.g., "decision" vs. "decide"). 
-    Example: "The conjugation of verbs is difficult." to "Conjugating verbs is difficult." 
-    
-    Infinitive Phrases: Replace "to + verb" phrases with direct verbs. 
-    Example: "Our duty was to clean and to wash." to "We cleaned and washed." 
-    Circumlocutions: Avoid lengthy phrases that can be said in fewer words. 
-    Example: "Owing to the fact that..." to "Since..." In short, aim for direct, simplified wording by cutting out filler expressions.'
+    Do not rush with the answer. Take your time and process each of the following steps sequentially.
 
     Steps:
     Step 1 - In the 'original_text' identify all of the words that contain grammar mistake and wrap them with the '!' mark. If one mistake contains two words, enclose them with a single pair of '!' mark.
@@ -305,14 +288,34 @@ def grading_queue():
     '''
 
     '''
-     
+    Linking words definition: 'Linking words, also known as transition words, are words and phrases like 'however', 'on the other hand', 'besides' or 'in conclusion' that connect clauses, sentences, paragraphs, or other words.'
+
     Step 3 - In the 'original_text' identify all of the linking words and wrap them with the '#' mark. If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#'.
 
     Step 4 - Store all of the found linking words into the 'linking_words' list wrapped with the '#'. 
-     
+    '''
+
+    '''
+
     Step 5 - In the 'original_text' identify all of the repetitive words and wrap them with the '^' mark. If not single word but sentence gets repeated many times wrap it with the '^' mark(i.e. ^social media^).
 
-    Step 6 - Store all of the found repetitive words into the 'repetitive_words' list wrapped with the '^'.  
+    Step 6 - Store all of the found repetitive words into the 'repetitive_words' list wrapped with the '^'. 
+    '''
+    
+    '''
+    Unnecessary words defininion: 
+    'Four types of unnecessary words and phrases to avoid for conciseness: 
+
+    Dummy Subjects: Avoid words like "there is/are" and "it is/was" that add no meaning. 
+    Example: "There are great skiing resorts in Colorado." to "Colorado has great skiing resorts." 
+
+    Nominalizations: Use verbs instead of nouns made from verbs (e.g., "decision" vs. "decide"). 
+    Example: "The conjugation of verbs is difficult." to "Conjugating verbs is difficult." 
+    
+    Infinitive Phrases: Replace "to + verb" phrases with direct verbs. 
+    Example: "Our duty was to clean and to wash." to "We cleaned and washed." 
+    Circumlocutions: Avoid lengthy phrases that can be said in fewer words. 
+    Example: "Owing to the fact that..." to "Since..." In short, aim for direct, simplified wording by cutting out filler expressions.' 
     
     Step 7 - In the 'original_text' identify all of the unnecessary words and wrap them with the '-' mark. 
 
