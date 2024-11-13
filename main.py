@@ -34,9 +34,10 @@ app.config["SESSION_USE_SIGNER"] = True
 
 q = Queue(connection=conn)
 
-#db("create")
 #db("delete_data")
 #db("alter")
+db("delete_table")
+db("create")
 db("print")
 
 
@@ -277,7 +278,7 @@ def grading_queue():
 
     Do not rush with the answer. Take your time and process each of the following steps sequentially. But focus on the quality of the first two steps.
     
-    Step 1 - In the 'original_text' find all of the words that contain grammar mistake and wrap them with the '!' mark. If one mistake contains multiple words, enclose them with a single pair of '!' mark.
+    Step 1 - In the 'original_text' find all of the words that contain grammar mistake and wrap them with the '!' mark. If one mistake contains two words, enclose them with a single pair of '!' mark.
 
     Step 2 - Store all of the found grammar mistakes into the 'grammar_mistakes' list wrapped with the '!'.
      

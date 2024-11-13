@@ -80,7 +80,7 @@ def db(command):
 
     elif command == "delete_table":
         #delete table
-        cursor.execute("""DROP DATABASE Logs""")
+        cursor.execute("""DROP DATABASE essay_logs""")
             
         db_conn.commit() # Commiting to make changes persistent 
 
