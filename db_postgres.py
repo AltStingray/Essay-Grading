@@ -100,7 +100,7 @@ def delete_table(table_name):
     # Create cursor to execute queries
     cursor = db_conn.cursor()
 
-    cursor.execute(f"DROP DATABASE {table_name}")
+    cursor.execute(f"DROP TABLE {table_name}")
 
     cursor.close()
     db_conn.close()
