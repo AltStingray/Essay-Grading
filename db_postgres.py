@@ -37,7 +37,7 @@ def db(command):
                     repetative_words_count SMALLINT NOT NULL,
                     submitted_by BYTEA NOT NULL,
                     overall_band_score FLOAT NOT NULL,
-                    sidebar_comments BYTEA NOT NULL,
+                    sidebar_comments TEXT NOT NULL,
                     time BYTEA NOT NULL,
                     unnecessary_words_count SMALLINT NOT NULL)"""
 
@@ -52,13 +52,15 @@ def db(command):
     elif command == "alter":
         #alter/update table
 
-        cursor.execute("""ALTER TABLE essay_logs ADD unnecessary_words_count BYTEA NOT NULL""")
+        #cursor.execute("""ALTER TABLE essay_logs ADD unnecessary_words_count BYTEA NOT NULL""")
 
         #cursor.execute("""ALTER TABLE Logs ADD filename VARCHAR(255)""")
 
         #cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 6""")
 
         #cursor.execute("""ALTER TABLE essay_logs RENAME COLUMN date TO time""")
+
+        cursor.execute("""ALTER TABLE essay_logs ALTER COLUMN sidebar_comments TYPE TEXT""")
 
         db_conn.commit()
 
