@@ -448,10 +448,11 @@ def grading_logs():
 def view_logs(id):
 
     logs = db_retrieve(file_id=id, db="essay_logs")
+    
+    print(logs)
 
     essay = logs[1]
 
-    logs = io.BytesIO(logs)
     topic = logs[0]
     paragraphs_count = logs[2]
     words_count = logs[3]
