@@ -176,7 +176,7 @@ def db_retrieve(file_id, db):
         
     elif db == "essay_logs":
 
-        cursor.execute("SELECT topic, essay, paragraphs_count, words_count, grammar_mistakes, linking_words_count, repetative_words_count, submitted_by, overall_band_score, sidebar_comments, time, unnecessary_words_count FROM Logs WHERE id = %s", (str(file_id)))
+        cursor.execute("SELECT topic, essay, paragraphs_count, words_count, grammar_mistakes, linking_words_count, repetative_words_count, submitted_by, overall_band_score, sidebar_comments, time, unnecessary_words_count FROM essay_logs WHERE id = %s", (str(file_id)))
 
         file = cursor.fetchone()
 
