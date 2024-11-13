@@ -272,7 +272,7 @@ def grading_queue():
 
         Instruction:
         You will be provided with several prompts, which are sequential.
-        Structure your answer in one dictionary with different values as demonstrated in the following dictionary example: {example_results_dict}.
+        Structure your answer in a single dictionary with different values as demonstrated in the following dictionary example: {example_results_dict}.
         In the given example dictionary, each column/key and its value describes what it should contain, in which format and how every word should be wrapped.
         One of your main tasks is to enclose/wrap all the words from example dictionary's lists with the specific mark described in the steps below, either '!', '#', '^' or '-' - in the 'original_text'. I'll repeat again - specific words in 'original_text' should be enclosed/wrapped.
         Every word placed in a list should exactly match word in the 'original_text', either it's lower or upper case, and it should be marked/enclosed properly as well.
@@ -337,12 +337,12 @@ def grading_results():
 
     job_result = job.return_value()
 
-    if job_result.startswith("```"):
-        result = strip([job_result])
-    else:
-        result = job_result
-    
     print(job_result) # test
+    for one in job_result:
+        if one.startswith("```"):
+            result = strip([job_result])
+        else:
+            result = job_result
 
     result = json.loads(result)
 
