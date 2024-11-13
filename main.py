@@ -37,7 +37,7 @@ q = Queue(connection=conn)
 #db("delete_data")
 #db("alter")
 #delete_table("essay_logs")
-db("create")
+#db("create")
 db("print")
 
 
@@ -406,7 +406,7 @@ def grading_results():
     data = (topic, result_text, paragraphs_count, words_count, grammar_mistakes_count, linking_words_count, repetitive_words_count, submitted_by, band_score, sidebar_comments, current_date, unnecessary_words_count)
 
     
-    #db_store(data, "essay_logs")
+    db_store(data, "essay_logs")
 
     return render_template('grading.html', name="finish", topic=topic, essay=result_text, paragraphs_count=paragraphs_count, words_count=words_count, corrected_words=sidebar_comments, submitted_by=submitted_by, current_date=current_date, linking_words_count=linking_words_count, repetitive_words_count=repetitive_words_count, grammar_mistakes_count=grammar_mistakes_count, band_score=band_score, unnecessary_words_count=unnecessary_words_count)
 
