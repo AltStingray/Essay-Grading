@@ -277,6 +277,7 @@ def grading_queue():
         In the given example dictionary, each column/key and its value describes what it should contain, in which format and how every word should be wrapped.
         Every word placed in a list should exactly match word in the 'original_text', either it's lower or upper case, and it should be marked/enclosed properly as well.
         Enclose the dict, all of the keys and values into double quotes, not single.
+        Do not include any additional comments.
         Do not rush with the answer. Take your time and process each of the following steps sequentially and apply changes to the 'original_text' and corresponding lists in the single dictionary.
         '''
         ,
@@ -285,24 +286,12 @@ def grading_queue():
         Step 1 - Based on the example dictionary given to you in Instructions, in the 'original_text' find all of the words that contain grammar mistake and wrap them with the '!' mark. If one mistake contains multiple words, enclose them with a single pair of '!' mark.
 
         Step 2 - Store all of the found grammar mistakes into the 'grammar_mistakes' list in the example dictionary wrapped with the '!'.
-
-        Return the updated dictionary.
-        
-        '''
-        ,
-
-        '''
         
         Step 3 - Based on the updated dictionary, in the 'original_text' find all of the linking words and wrap them with the '#' mark. If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#'.
         Linking words definition: Linking words, also known as transition words, are words and phrases like 'however' or 'on the other hand' that connect clauses, sentences, paragraphs, or other words.
 
         Step 4 - Store all of the found linking words into the 'linking_words' list wrapped with the '#'. 
 
-        Return the updated dictionary.
-        
-        '''
-        ,
-        '''
         Step 5 - Based on the updated dictionary, in the 'original_text' find all of the repetitive words and wrap them with the '^' mark. If not single word but sentence gets repeated many times wrap it with the '^' mark(i.e. ^social media^).
 
         Step 6 - Store all of the found repetitive words into the 'repetitive_words' list wrapped with the '^'.  
