@@ -342,6 +342,8 @@ def grading_results():
         result = strip([job_result])
     else:
         result = job_result
+    
+    print(job_result) # test
 
     result = json.loads(result)
 
