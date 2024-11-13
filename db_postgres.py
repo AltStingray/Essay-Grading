@@ -38,7 +38,7 @@ def db(command):
                     submitted_by BYTEA NOT NULL,
                     overall_band_score FLOAT NOT NULL,
                     sidebar_comments TEXT NOT NULL,
-                    time BYTEA NOT NULL,
+                    time DATE NOT NULL,
                     unnecessary_words_count SMALLINT NOT NULL)"""
 
         cursor.execute(create_essay_logs)
@@ -60,7 +60,7 @@ def db(command):
 
         #cursor.execute("""ALTER TABLE essay_logs RENAME COLUMN date TO time""")
 
-        cursor.execute("""ALTER TABLE essay_logs ALTER COLUMN sidebar_comments TYPE TEXT""")
+        cursor.execute("""ALTER TABLE essay_logs ALTER COLUMN time TYPE DATE""")
 
         db_conn.commit()
 
