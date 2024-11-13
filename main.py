@@ -257,7 +257,7 @@ def grading_queue():
         "original_text": "original_text",
         "paragraphs_count": "paragraphs_count",
         "grammar_mistakes": ["!list!", "!of!", "!words!", "!that!", "!contain!", "!a!", "!mistake!", "!which!", "!are!", "!delemited!", "!by!", "!", "!mark!"],
-        "corrected_words": ["corrected", "version", "of", "the", "words", "with", "the", "(grammar rule reason)"],
+        "corrected_words": ["corrected version of the word 1 (grammar rule 1)", "corrected version of the word 2 (grammar rule 2)", "..."],
         "linking_words": ["#list#", "#of#", "#all#", "#linking#", "#words#"],
         "repetitive_words": ["^list^", "^of^", "^all^", "^repetitive^", "^words^"],
         "unnecessary_words": ["-list-", "-of-", "-all-", "-unnecessary-", "-words-"],
@@ -266,32 +266,51 @@ def grading_queue():
     }
 
     prompt = f'''
-    Introduction: You are an IETLS teacher that provides feedback on a candidate's essays. 
+    Introduction: You are an IETLS teacher that provides feedback on candidate's essays. 
     You are given a topic and an essay text based on this topic delimited by triple quotes. 
-    Provide the grading based on the IELTS standards. 
+    Provide the grading based on the IELTS standards. Your primary task is finding grammar mistakes, linking words, repetative words and unnecessary words in the candidate's essay.
 
     Instruction:
     Structure your answer in one dictionary with different values as demonstrated in the following dictionary example: {example_results_dict}.
-    In the given example dictionary, each column/key and its value describes what it should contain, in which format and how every word should be wrapped.
+    In the given example dictionary, each key and it's value describes what it should contain, in which format and how every word should be wrapped.
     Every word placed in a list should exactly match word in the 'original_text', either it's lower or upper case, and it should be marked/enclosed properly as well.
     Enclose the dict, all of the keys and values into double quotes, not single.
-
     Do not rush with the answer. Take your time and process each of the following steps sequentially. But focus on the quality of the first two steps.
-    
-    Step 1 - In the 'original_text' find all of the words that contain grammar mistake and wrap them with the '!' mark. If one mistake contains two words, enclose them with a single pair of '!' mark.
+
+    Brief explanation:
+    Linking words definition: 'Linking words, also known as transition words, are words and phrases like 'however', 'on the other hand', 'besides' or 'in conclusion' that connect clauses, sentences, paragraphs, or other words.'
+    Repetitive words definition: 'Repetitive words, are the words in the candidate's text which get repeated more than 4 times per text. For example, if the word 'people' appears in text more than 4 times, it is considered a repetitive word and should be marked with '^'.'
+    Unnecessary words defininion:
+    'Four types of unnecessary words and phrases to avoid for conciseness:
+
+    Dummy Subjects: Avoid words like "there is/are" and "it is/was" that add no meaning.
+
+    Example: "There are great skiing resorts in Colorado." → "Colorado has great skiing resorts."
+    Nominalizations: Use verbs instead of nouns made from verbs (e.g., “decision” vs. “decide”).
+
+    Example: "The conjugation of verbs is difficult." → "Conjugating verbs is difficult."
+    Infinitive Phrases: Replace “to + verb” phrases with direct verbs.
+
+    Example: "Our duty was to clean and to wash." → "We cleaned and washed."
+    Circumlocutions: Avoid lengthy phrases that can be said in fewer words.
+
+    Example: "Owing to the fact that…" → "Since…"
+    In short, aim for direct, simplified wording by cutting out filler expressions.'
+
+    Steps:
+    Step 1 - In the 'original_text' identify all of the words that contain grammar mistake and wrap them with the '!' mark. If one mistake contains two words, enclose them with a single pair of '!' mark.
 
     Step 2 - Store all of the found grammar mistakes into the 'grammar_mistakes' list wrapped with the '!'.
      
-    Step 3 - In the 'original_text' find all of the linking words and wrap them with the '#' mark. If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#'.
-    Linking words definition: Linking words, also known as transition words, are words and phrases like 'however' or 'on the other hand' that connect clauses, sentences, paragraphs, or other words.
+    Step 3 - In the 'original_text' identify all of the linking words and wrap them with the '#' mark. If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#'.
 
     Step 4 - Store all of the found linking words into the 'linking_words' list wrapped with the '#'. 
      
-    Step 5 - In the 'original_text' find all of the repetitive words and wrap them with the '^' mark. If not single word but sentence gets repeated many times wrap it with the '^' mark(i.e. ^social media^).
+    Step 5 - In the 'original_text' identify all of the repetitive words and wrap them with the '^' mark. If not single word but sentence gets repeated many times wrap it with the '^' mark(i.e. ^social media^).
 
     Step 6 - Store all of the found repetitive words into the 'repetitive_words' list wrapped with the '^'.  
     
-    Step 7 - In the 'original_text' find all of the unnecessary words and wrap them with the '-' mark. 
+    Step 7 - In the 'original_text' identify all of the unnecessary words and wrap them with the '-' mark. 
 
     Step 8 - Store all of the found unnecessary words into the 'unnecessary_words' list wrapped with the '-'. 
 
@@ -406,7 +425,7 @@ def grading_results():
     data = (topic, result_text, paragraphs_count, words_count, grammar_mistakes_count, linking_words_count, repetitive_words_count, submitted_by, band_score, sidebar_comments, current_date, unnecessary_words_count)
 
     
-    db_store(data, "essay_logs")
+    #db_store(data, "essay_logs")
 
     return render_template('grading.html', name="finish", topic=topic, essay=result_text, paragraphs_count=paragraphs_count, words_count=words_count, corrected_words=sidebar_comments, submitted_by=submitted_by, current_date=current_date, linking_words_count=linking_words_count, repetitive_words_count=repetitive_words_count, grammar_mistakes_count=grammar_mistakes_count, band_score=band_score, unnecessary_words_count=unnecessary_words_count)
 
@@ -418,7 +437,7 @@ def grading_logs():
     return render_template("history.html", log="essay_grading", ids=ids)
 
 @app.route('/grading/log/view/<int:id>')
-def view_logs():
+def view_logs(id):
 
     logs = db_retrieve(file_id=id, db="essay_logs")
 
@@ -508,10 +527,7 @@ def RunOpenAI(prompt, content):
             {"role": "user", "content": f'''{content}'''}],
         max_tokens=16000,
         )
-    import tiktoken
-    encoding = tiktoken.encoding_for_model('gpt-4o-2024-08-06')
-    print(encoding)
-    print(json.dumps(json.loads(response.model_dump_json()), indent=4))
+
     response = response.choices[0].message.content #tapping into the content of response
     
     return response
