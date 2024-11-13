@@ -35,7 +35,7 @@ app.config["SESSION_USE_SIGNER"] = True
 q = Queue(connection=conn)
 
 #db("delete_data")
-db("alter")
+#db("alter")
 #delete_table("essay_logs")
 #db("create")
 db("print")
