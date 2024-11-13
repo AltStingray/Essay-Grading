@@ -298,6 +298,13 @@ def grading_queue():
     Step 1 - In the 'original_text' identify all of the words that contain grammar mistake and wrap them with the '!' mark. If one mistake contains two words, enclose them with a single pair of '!' mark.
 
     Step 2 - Store all of the found grammar mistakes into the 'grammar_mistakes' list wrapped with the '!'.
+
+    Step 3 - Provide corrected versions of the words containing grammar mistakes as shown in the example dictionary.
+
+    Finally, return the modified dictionary from the example with the modified 'original_text', newly created 'grammar_mistakes' and 'corrected_words'.
+    '''
+
+    '''
      
     Step 3 - In the 'original_text' identify all of the linking words and wrap them with the '#' mark. If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#'.
 
