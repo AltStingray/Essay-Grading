@@ -285,16 +285,16 @@ def grading_queue():
 
     Dummy Subjects: Avoid words like "there is/are" and "it is/was" that add no meaning.
 
-    Example: "There are great skiing resorts in Colorado." → "Colorado has great skiing resorts."
+    Example: "There are great skiing resorts in Colorado." to "Colorado has great skiing resorts."
     Nominalizations: Use verbs instead of nouns made from verbs (e.g., “decision” vs. “decide”).
 
-    Example: "The conjugation of verbs is difficult." → "Conjugating verbs is difficult."
+    Example: "The conjugation of verbs is difficult." to "Conjugating verbs is difficult."
     Infinitive Phrases: Replace “to + verb” phrases with direct verbs.
 
-    Example: "Our duty was to clean and to wash." → "We cleaned and washed."
+    Example: "Our duty was to clean and to wash." to "We cleaned and washed."
     Circumlocutions: Avoid lengthy phrases that can be said in fewer words.
 
-    Example: "Owing to the fact that…" → "Since…"
+    Example: "Owing to the fact that…" to "Since…"
     In short, aim for direct, simplified wording by cutting out filler expressions.'
 
     Steps:
