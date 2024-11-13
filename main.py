@@ -281,21 +281,18 @@ def grading_queue():
     Linking words definition: 'Linking words, also known as transition words, are words and phrases like 'however', 'on the other hand', 'besides' or 'in conclusion' that connect clauses, sentences, paragraphs, or other words.'
     Repetitive words definition: 'Repetitive words, are the words in the candidate's text which get repeated more than 4 times per text. For example, if the word 'people' appears in text more than 4 times, it is considered a repetitive word and should be marked with '^'.'
     Unnecessary words defininion: 
-    'Four types of unnecessary words and phrases to avoid for conciseness:
+    'Four types of unnecessary words and phrases to avoid for conciseness: 
 
-    Dummy Subjects: Avoid words like "there is/are" and "it is/was" that add no meaning.
+    Dummy Subjects: Avoid words like "there is/are" and "it is/was" that add no meaning. 
+    Example: "There are great skiing resorts in Colorado." to "Colorado has great skiing resorts." 
 
-    Example: "There are great skiing resorts in Colorado." to "Colorado has great skiing resorts."
-    Nominalizations: Use verbs instead of nouns made from verbs (e.g., “decision” vs. “decide”).
-
-    Example: "The conjugation of verbs is difficult." to "Conjugating verbs is difficult."
-    Infinitive Phrases: Replace “to + verb” phrases with direct verbs.
-
-    Example: "Our duty was to clean and to wash." to "We cleaned and washed."
-    Circumlocutions: Avoid lengthy phrases that can be said in fewer words.
-
-    Example: "Owing to the fact that..." to "Since..."
-    In short, aim for direct, simplified wording by cutting out filler expressions.'
+    Nominalizations: Use verbs instead of nouns made from verbs (e.g., “decision” vs. “decide”). 
+    Example: "The conjugation of verbs is difficult." to "Conjugating verbs is difficult." 
+    
+    Infinitive Phrases: Replace “to + verb” phrases with direct verbs. 
+    Example: "Our duty was to clean and to wash." to "We cleaned and washed." 
+    Circumlocutions: Avoid lengthy phrases that can be said in fewer words. 
+    Example: "Owing to the fact that..." to "Since..." In short, aim for direct, simplified wording by cutting out filler expressions.'
 
     Steps:
     Step 1 - In the 'original_text' identify all of the words that contain grammar mistake and wrap them with the '!' mark. If one mistake contains two words, enclose them with a single pair of '!' mark.
