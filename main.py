@@ -34,8 +34,8 @@ app.config["SESSION_USE_SIGNER"] = True
 
 q = Queue(connection=conn)
 
-#db("delete_data")
-#db("alter")
+db("delete_data")
+db("alter")
 #delete_table("essay_logs")
 #db("create")
 db("print")
@@ -256,7 +256,7 @@ def grading_queue():
         "original_topic": "original_topic",
         "original_text": "original_text",
         "paragraphs_count": "paragraphs_count",
-        "grammar_mistakes": ["!list!", "!of!", "!words!", "!that!", "!contain!", "!a!", "!mistake!", "!and!", "!have!", "!a!", "!sequence!", "[<number>]"],
+        "grammar_mistakes": ["1list1", "2of2", "3words3", "4that4", "5contain5", "6a6", "7mistake7", "8and8", "9wrapped9", "10in10", "11sequence11", "12number12"],
         "corrected_words": ["corrected version of the word 1 (grammar rule 1)", "corrected version of the word 2 (grammar rule 2)", "..."],
         "linking_words": ["#list#", "#of#", "#all#", "#linking#", "#words#"],
         "repetitive_words": ["^list^", "^of^", "^all^", "^repetitive^", "^words^"],
@@ -278,9 +278,9 @@ def grading_queue():
     Do not rush with the answer. Take your time and process each of the following steps sequentially. But focus on the quality of the first two steps.
 
     Steps:
-    Step 1 - In the 'original_text' identify all of the words that contain grammar mistake, wrap them with the '!' mark and add their sequence number(i.e. !this![1]). If one mistake contains two words, enclose them with a single pair of '!' mark and sequence number at the end.
+    Step 1 - In the 'original_text' identify all of the words that contain grammar mistake, wrap them with the sequence number(i.e. 1this1, 2they2, 3awesome3). So, each next mistakes increments the number by 1. If one mistake contains two words, enclose them with a single pair of sequence number.
 
-    Step 2 - Store all of the found grammar mistakes into the 'grammar_mistakes' list wrapped with the '!' and added [<sequence_number>].
+    Step 2 - Store all of the found grammar mistakes into the 'grammar_mistakes' list wrapped in the sequence number.
 
     Step 3 - Provide corrected versions of the words containing grammar mistakes as shown in the example dictionary.
 
@@ -382,7 +382,7 @@ def grading_results():
         print(re_word)
         try:
             if word == re_word.group():
-                html_word = f"<span class='highlight' data-comment='comment{n + 1}'>{word.strip(f"![{n + 1}]")}({n + 1})</span>" #<span class='jsx-1879403401'><div contenteditable='false' class='jsx-1879403401 hover'><div class='jsx-1879403401 hint'><div class='jsx-1879403401 title'>Correct article usage</div><div class='jsx-1879403401 suggestions'><div class='jsx-1879403401 suggestion'>the Atlantic</div></div><p class='jsx-1879403401 info'><p>It&nbsp;seems that there is&nbsp;an&nbsp;article usage problem here.</p></p><div class='jsx-1879403401 examples-button'>show examples</div></div></div></span>"
+                html_word = f"<span class='highlight' data-comment='comment{n + 1}'>{word.strip(f"{n+1}")}({n + 1})</span>" #<span class='jsx-1879403401'><div contenteditable='false' class='jsx-1879403401 hover'><div class='jsx-1879403401 hint'><div class='jsx-1879403401 title'>Correct article usage</div><div class='jsx-1879403401 suggestions'><div class='jsx-1879403401 suggestion'>the Atlantic</div></div><p class='jsx-1879403401 info'><p>It&nbsp;seems that there is&nbsp;an&nbsp;article usage problem here.</p></p><div class='jsx-1879403401 examples-button'>show examples</div></div></div></span>"
                 original_text = original_text.replace(re_word.group(), html_word)
                 grammar_mistakes_count += 1
         except AttributeError as err:
@@ -453,15 +453,15 @@ def view_logs(id):
 
     essay = logs[1]
 
-    topic = io.BytesIO(logs[0]) #
+    topic = logs[0].tobytes().decode('utf-8')
     paragraphs_count = logs[2] 
     words_count = logs[3]
     grammar_mistakes_count = logs[4] 
     linking_words_count = logs[5] 
     repetitive_words_count = logs[6]
-    submitted_by = io.BytesIO(logs[7]) #
+    submitted_by = logs[7].tobytes().decode('utf-8')
     band_score = logs[8] 
-    sidebar_comments = strip(logs[9])
+    sidebar_comments = (logs[9]).strip("{ }")
     current_date = logs[10]
     unnecessary_words_count = logs[11]
 
