@@ -34,9 +34,10 @@ app.config["SESSION_USE_SIGNER"] = True
 
 q = Queue(connection=conn)
 
+#delete_table("essay_logs")
+
 db("delete_data")
 db("alter")
-#delete_table("essay_logs")
 #db("create")
 db("print")
 
@@ -278,7 +279,7 @@ def grading_queue():
     Do not rush with the answer. Take your time and process each of the following steps sequentially. But focus on the quality of the first two steps.
 
     Steps:
-    Step 1 - In the 'original_text' identify all of the words that contain grammar mistake, wrap them with the sequence number(i.e. 1this1, 2they2, 3awesome3). So, each next mistakes increments the number by 1. If one mistake contains two words, enclose them with a single pair of sequence number.
+    Step 1 - In the 'original_text' identify all of the words that contain grammar mistake, wrap them with the sequence number(i.e. 1this1). So, each next mistakes increments the number by 1. If one mistake contains two or more words, enclose them altogether with a single pair of a sequence number(i.e. 2like that2).
 
     Step 2 - Store all of the found grammar mistakes into the 'grammar_mistakes' list wrapped in the sequence number.
 
@@ -461,7 +462,7 @@ def view_logs(id):
     repetitive_words_count = logs[6]
     submitted_by = logs[7].tobytes().decode('utf-8')
     band_score = logs[8] 
-    sidebar_comments = (logs[9]).strip("{ }")
+    sidebar_comments = (logs[9]).strip('{" "}')
     current_date = logs[10]
     unnecessary_words_count = logs[11]
 

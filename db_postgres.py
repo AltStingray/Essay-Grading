@@ -62,7 +62,7 @@ def db(command):
 
         #cursor.execute("""ALTER TABLE essay_logs RENAME COLUMN date TO time""")
 
-        cursor.execute("""ALTER TABLE essay_logs ALTER COLUMN time TYPE DATE""")
+        #cursor.execute("""ALTER TABLE essay_logs ALTER COLUMN time TYPE DATE""")
 
         db_conn.commit()
 
