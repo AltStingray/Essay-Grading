@@ -464,10 +464,11 @@ def view_logs(id):
     repetitive_words_count = logs[6]
     submitted_by = logs[7].tobytes().decode('utf-8')
     band_score = logs[8] 
-    sidebar_comments = [logs[9].lstrip("'").rstrip("'").strip("{ }")]
+    sidebar_comments = [logs[9].strip("{ }")]
     current_date = logs[10]
     unnecessary_words_count = logs[11]
 
+    sidebar_comments = [sidebar_comments.lstrip("'").rstrip("'")]
     print(sidebar_comments)
 
     return render_template('grading.html', name="finish", topic=topic, essay=result_text, paragraphs_count=paragraphs_count, words_count=words_count, corrected_words=sidebar_comments, submitted_by=submitted_by, current_date=current_date, linking_words_count=linking_words_count, repetitive_words_count=repetitive_words_count, grammar_mistakes_count=grammar_mistakes_count, band_score=band_score, unnecessary_words_count=unnecessary_words_count)
