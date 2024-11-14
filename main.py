@@ -462,8 +462,7 @@ def view_logs(id):
     repetitive_words_count = logs[6]
     submitted_by = logs[7].tobytes().decode('utf-8')
     band_score = logs[8] 
-    stripped_sidebar_comments = logs[9].strip('{ }')
-    sidebar_comments = re.sub('^"$', "'", stripped_sidebar_comments)
+    sidebar_comments = "'" + (logs[9].strip('{ }').lstrip('"').rstrip('"')) + "'"
     print(sidebar_comments)
     current_date = logs[10]
     unnecessary_words_count = logs[11]
