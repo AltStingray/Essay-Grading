@@ -243,6 +243,7 @@ a.article-title:hover {
 }
 
 .h4.jsx-3594441866 {
+  padding: 50px;
   font-style: normal;
   font-weight: 600;
   font-size: 21px;
@@ -250,6 +251,7 @@ a.article-title:hover {
 }
 
 .page-text__text.jsx-3307320108 {
+  padding: 0px, 0px, 50px;
   position: relative;
   margin-top: 0px;
   color: #1c1e29;
@@ -410,7 +412,7 @@ p {
 /* Sidebar comments */
 
 .sidebar-comments {
-  padding: 30px 0px;
+  padding: 150px 0px;
   border-bottom: 1px dashed rgb(193, 193, 193);
 }
 
