@@ -453,6 +453,7 @@ def view_logs(id):
     print(logs)
 
     essay = logs[1]
+    result_text = (essay.tobytes().decode('utf-8')).strip("{ }")
 
     topic = logs[0].tobytes().decode('utf-8')
     paragraphs_count = logs[2] 
@@ -463,13 +464,15 @@ def view_logs(id):
     submitted_by = logs[7].tobytes().decode('utf-8')
     band_score = logs[8] 
     sidebar_comments = [logs[9].strip('{ }')]
-    print(sidebar_comments)
     current_date = logs[10]
     unnecessary_words_count = logs[11]
 
-    result_text = (essay.tobytes().decode('utf-8')).strip("{ }")
-    
-    return render_template('grading.html', name="finish", topic=topic, essay=result_text, paragraphs_count=paragraphs_count, words_count=words_count, corrected_words=sidebar_comments, submitted_by=submitted_by, current_date=current_date, linking_words_count=linking_words_count, repetitive_words_count=repetitive_words_count, grammar_mistakes_count=grammar_mistakes_count, band_score=band_score, unnecessary_words_count=unnecessary_words_count)
+    new_sidebar_comments = []
+    for comment in sidebar_comments:
+        new_comment = "'" + comment + "'"
+        new_sidebar_comments.append(new_comment)
+    print(new_sidebar_comments)
+    return render_template('grading.html', name="finish", topic=topic, essay=result_text, paragraphs_count=paragraphs_count, words_count=words_count, corrected_words=new_sidebar_comments, submitted_by=submitted_by, current_date=current_date, linking_words_count=linking_words_count, repetitive_words_count=repetitive_words_count, grammar_mistakes_count=grammar_mistakes_count, band_score=band_score, unnecessary_words_count=unnecessary_words_count)
 
 @app.route('/about')
 def about():
