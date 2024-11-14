@@ -36,8 +36,8 @@ q = Queue(connection=conn)
 
 #delete_table("essay_logs")
 
-db("delete_data")
-db("alter")
+#db("delete_data")
+#db("alter")
 #db("create")
 db("print")
 
@@ -462,7 +462,7 @@ def view_logs(id):
     repetitive_words_count = logs[6]
     submitted_by = logs[7].tobytes().decode('utf-8')
     band_score = logs[8] 
-    sidebar_comments = (logs[9].strip('{ }')).split()
+    sidebar_comments = [logs[9].strip('{ }')]
     current_date = logs[10]
     unnecessary_words_count = logs[11]
 

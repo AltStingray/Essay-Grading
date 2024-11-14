@@ -36,17 +36,7 @@
     </nav>
   </header>
   <main role="main" class="container-fluid">
-    <div class="row">
-      <div class="col-lg-9">
-        <div class="center">
-          {% block content %}{% endblock %}
-        </div>
-      </div>
-      <div class="col-lg-3">
-        <br><br><br><br><br><br>
-        {% block content2 %}{% endblock %}
-      </div>
-    </div>
+    {% block content %}{% endblock %}
   </main>
 <script src="/static/js/grading.js"></script>
 </body>
