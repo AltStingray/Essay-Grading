@@ -57,10 +57,12 @@ def db(command):
         #cursor.execute("""ALTER TABLE Logs ADD filename VARCHAR(255)""")
 
         #cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 6""")
+        
+        cursor.execute("""ALTER SEQUENCE essay_logs_id_seq RESTART WITH 1""")
 
         #cursor.execute("""ALTER TABLE essay_logs RENAME COLUMN date TO time""")
 
-        cursor.execute("""ALTER TABLE essay_logs ALTER COLUMN time TYPE DATE USING time::date""")
+        #cursor.execute("""ALTER TABLE essay_logs ALTER COLUMN time TYPE DATE USING time::date""")
 
         db_conn.commit()
 
@@ -71,7 +73,8 @@ def db(command):
 
     elif command == "delete_data":
 
-        cursor.execute(f"DELETE FROM Logs WHERE id IN ('6')")
+        #cursor.execute(f"DELETE FROM Logs WHERE id IN ('6')")
+        cursor.execute(f"DELETE FROM essay_logs WHERE id IN ('1')")
 
         db_conn.commit()
 

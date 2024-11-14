@@ -34,8 +34,8 @@ app.config["SESSION_USE_SIGNER"] = True
 
 q = Queue(connection=conn)
 
-#db("delete_data")
-#db("alter")
+db("delete_data")
+db("alter")
 #delete_table("essay_logs")
 #db("create")
 db("print")
@@ -453,15 +453,15 @@ def view_logs(id):
 
     essay = logs[1]
 
-    topic = logs[0]
-    paragraphs_count = logs[2]
+    topic = io.BytesIO(logs[0]) #
+    paragraphs_count = logs[2] 
     words_count = logs[3]
-    grammar_mistakes_count = logs[4]
-    linking_words_count = logs[5]
+    grammar_mistakes_count = logs[4] 
+    linking_words_count = logs[5] 
     repetitive_words_count = logs[6]
-    submitted_by = logs[7]
-    band_score = logs[8]
-    sidebar_comments = logs[9]
+    submitted_by = io.BytesIO(logs[7]) #
+    band_score = logs[8] 
+    sidebar_comments = strip(logs[9])
     current_date = logs[10]
     unnecessary_words_count = logs[11]
 
