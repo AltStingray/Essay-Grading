@@ -34,8 +34,8 @@ app.config["SESSION_USE_SIGNER"] = True
 
 q = Queue(connection=conn)
 
-db("delete_data")
-db("alter")
+#db("delete_data")
+#db("alter")
 #delete_table("essay_logs")
 #db("create")
 db("print")
@@ -256,7 +256,7 @@ def grading_queue():
         "original_topic": "original_topic",
         "original_text": "original_text",
         "paragraphs_count": "paragraphs_count",
-        "grammar_mistakes": ["!list!", "!of!", "!words!", "!that!", "!contain!", "!a!", "!mistake!", "!which!", "!are!", "!delemited!", "!by!", "!", "!mark!"],
+        "grammar_mistakes": ["!list!", "!of!", "!words!", "!that!", "!contain!", "!a!", "!mistake!", "!and!", "!have!", "!a!", "!sequence!", "[<number>]"],
         "corrected_words": ["corrected version of the word 1 (grammar rule 1)", "corrected version of the word 2 (grammar rule 2)", "..."],
         "linking_words": ["#list#", "#of#", "#all#", "#linking#", "#words#"],
         "repetitive_words": ["^list^", "^of^", "^all^", "^repetitive^", "^words^"],
@@ -278,9 +278,9 @@ def grading_queue():
     Do not rush with the answer. Take your time and process each of the following steps sequentially. But focus on the quality of the first two steps.
 
     Steps:
-    Step 1 - In the 'original_text' identify all of the words that contain grammar mistake and wrap them with the '!' mark. If one mistake contains two words, enclose them with a single pair of '!' mark.
+    Step 1 - In the 'original_text' identify all of the words that contain grammar mistake, wrap them with the '!' mark and add their sequence number(i.e. !this![1]). If one mistake contains two words, enclose them with a single pair of '!' mark and sequence number at the end.
 
-    Step 2 - Store all of the found grammar mistakes into the 'grammar_mistakes' list wrapped with the '!'.
+    Step 2 - Store all of the found grammar mistakes into the 'grammar_mistakes' list wrapped with the '!' and added [<sequence_number>].
 
     Step 3 - Provide corrected versions of the words containing grammar mistakes as shown in the example dictionary.
 
@@ -382,7 +382,7 @@ def grading_results():
         print(re_word)
         try:
             if word == re_word.group():
-                html_word = f"<span class='highlight' data-comment='comment{n + 1}'>{word.strip("!")}({n + 1})</span>" #<span class='jsx-1879403401'><div contenteditable='false' class='jsx-1879403401 hover'><div class='jsx-1879403401 hint'><div class='jsx-1879403401 title'>Correct article usage</div><div class='jsx-1879403401 suggestions'><div class='jsx-1879403401 suggestion'>the Atlantic</div></div><p class='jsx-1879403401 info'><p>It&nbsp;seems that there is&nbsp;an&nbsp;article usage problem here.</p></p><div class='jsx-1879403401 examples-button'>show examples</div></div></div></span>"
+                html_word = f"<span class='highlight' data-comment='comment{n + 1}'>{word.strip(f"![{n + 1}]")}({n + 1})</span>" #<span class='jsx-1879403401'><div contenteditable='false' class='jsx-1879403401 hover'><div class='jsx-1879403401 hint'><div class='jsx-1879403401 title'>Correct article usage</div><div class='jsx-1879403401 suggestions'><div class='jsx-1879403401 suggestion'>the Atlantic</div></div><p class='jsx-1879403401 info'><p>It&nbsp;seems that there is&nbsp;an&nbsp;article usage problem here.</p></p><div class='jsx-1879403401 examples-button'>show examples</div></div></div></span>"
                 original_text = original_text.replace(re_word.group(), html_word)
                 grammar_mistakes_count += 1
         except AttributeError as err:
@@ -433,7 +433,7 @@ def grading_results():
     data = (topic, result_text, paragraphs_count, words_count, grammar_mistakes_count, linking_words_count, repetitive_words_count, submitted_by, band_score, sidebar_comments, current_date, unnecessary_words_count)
 
     
-    #db_store(data, "essay_logs")
+    db_store(data, "essay_logs")
 
     return render_template('grading.html', name="finish", topic=topic, essay=result_text, paragraphs_count=paragraphs_count, words_count=words_count, corrected_words=sidebar_comments, submitted_by=submitted_by, current_date=current_date, linking_words_count=linking_words_count, repetitive_words_count=repetitive_words_count, grammar_mistakes_count=grammar_mistakes_count, band_score=band_score, unnecessary_words_count=unnecessary_words_count)
 
