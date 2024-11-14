@@ -411,7 +411,7 @@ p {
 /* Sidebar comments */
 
 .sidebar-comments {
-  padding: 250px 0px;
+  padding: 250px 0px 20px;
   border-bottom: 1px dashed rgb(193, 193, 193);
 }
 
