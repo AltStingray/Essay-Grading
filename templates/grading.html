@@ -93,15 +93,15 @@
     {% elif name == "wait" %}
         <div class="row">
             <div class="col-md-12" style="padding: 0px 0px 0px 120px;">
-                <h1 class="text-center">Essay Grading</h1>
+                <h1>Essay Grading</h1>
                 <p>Processing the submitted text, please wait... <div class="loader"></div></p>
                 <meta http-equiv="refresh" content="0; url=https://benchmark-summary-report-eae227664887.herokuapp.com/grading/processing"/>
             </div>
         </div>
     {% else %}
         <div class="row">
-            <div class="col-md-12" style="padding: 0px 0px 0px 130px;">
-                <h1 class="text-center">Essay Grading</h1><br>
+            <div class="col-md-12" style="padding: 0px 0px 0px 120px;">
+                <h1>Essay Grading</h1><br>
                 <form action="/grading/queue" method="get">
                     <h2>Paste your topic and essay text:</h2>
                     <textarea type="text" name="topic" rows="4", cols="100" placeholder="Your topic:"></textarea><br><br>
