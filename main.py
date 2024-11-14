@@ -35,10 +35,11 @@ app.config["SESSION_USE_SIGNER"] = True
 q = Queue(connection=conn)
 
 #delete_table("essay_logs")
-
-#db("delete_data")
-#db("alter")
 #db("create")
+
+db("delete_data")
+db("alter")
+
 db("print")
 
 
@@ -427,7 +428,7 @@ def grading_results():
             else:
                 correct_word += (f"{word_split.pop(0)} ")
 
-        html_line = f'<div id="comment{n + 1}" class="comment-box"><strong>({n + 1})</strong> <span class="green">{correct_word}</span> <em>{description}</em></div>'
+        html_line = f"<div id='comment{n + 1}' class='comment-box'><strong>({n + 1})</strong> <span class='green'>{correct_word}</span> <em>{description}</em></div>"
         
         sidebar_comments.append(html_line)
     
@@ -467,12 +468,9 @@ def view_logs(id):
     current_date = logs[10]
     unnecessary_words_count = logs[11]
 
-    new_sidebar_comments = []
-    for comment in sidebar_comments:
-        new_comment = "'" + comment + "'"
-        new_sidebar_comments.append(new_comment)
-    print(new_sidebar_comments)
-    return render_template('grading.html', name="finish", topic=topic, essay=result_text, paragraphs_count=paragraphs_count, words_count=words_count, corrected_words=new_sidebar_comments, submitted_by=submitted_by, current_date=current_date, linking_words_count=linking_words_count, repetitive_words_count=repetitive_words_count, grammar_mistakes_count=grammar_mistakes_count, band_score=band_score, unnecessary_words_count=unnecessary_words_count)
+    print(sidebar_comments)
+
+    return render_template('grading.html', name="finish", topic=topic, essay=result_text, paragraphs_count=paragraphs_count, words_count=words_count, corrected_words=sidebar_comments, submitted_by=submitted_by, current_date=current_date, linking_words_count=linking_words_count, repetitive_words_count=repetitive_words_count, grammar_mistakes_count=grammar_mistakes_count, band_score=band_score, unnecessary_words_count=unnecessary_words_count)
 
 @app.route('/about')
 def about():
