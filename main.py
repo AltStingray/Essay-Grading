@@ -230,7 +230,7 @@ def history():
 
     return render_template("history.html", log="summary_report", reports=reports)
 
-@app.route('/logs_download/<int:id>/<name>')
+@app.route('/logs_download/<id>/<name>')
 def logs_download(id, name):
 
     logs = db_retrieve(file_id=id, db="Logs")
