@@ -258,9 +258,10 @@ def logs_download(id, name):
     else:
         return logs
 
-@app.route('/redirect/<link>')
-def redirect_to(link):
-    return redirect(link)
+@app.route('/redirect_to/<url>')
+def redirect_to(url):
+
+    return redirect(url)
 
 @app.route('/grading')
 def grading():
