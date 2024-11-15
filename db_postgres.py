@@ -54,11 +54,13 @@ def db(command):
 
         #cursor.execute("""ALTER TABLE essay_logs ADD unnecessary_words_count BYTEA NOT NULL""")
 
-        #cursor.execute("""ALTER TABLE Logs ADD filename VARCHAR(255)""")
+        cursor.execute("""ALTER TABLE Logs ADD link VARCHAR(255)""")
+        cursor.execute("""ALTER TABLE Logs ADD time DATE""")
+        cursor.execute("""ALTER TABLE Logs ADD teacher VARCHAR(255)""")
 
         #cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 6""")
         
-        cursor.execute("""ALTER SEQUENCE essay_logs_id_seq RESTART WITH 1""")
+        #cursor.execute("""ALTER SEQUENCE essay_logs_id_seq RESTART WITH 1""")
 
         #cursor.execute("""ALTER TABLE essay_logs RENAME COLUMN date TO time""")
 
@@ -85,7 +87,7 @@ def db(command):
 
     elif command == "print":
         cursor.execute("SELECT * FROM Logs")
-        cursor.execute("SELECT * FROM essay_logs")
+        #cursor.execute("SELECT * FROM essay_logs")
 
         rows = cursor.fetchall()
 
@@ -120,7 +122,7 @@ def db_store(data, db_name):
     cursor = db_conn.cursor()
 
     if db_name == "logs":
-        insert_sql = f"""INSERT INTO {db_name}(summary, transcription, filename, summary_html) VALUES (%s, %s, %s, %s);"""
+        insert_sql = f"""INSERT INTO {db_name}(summary, transcription, filename, summary_html, link, time, teacher) VALUES (%s, %s, %s, %s, %s, %s, %s);"""
     else:
         insert_sql = f"""INSERT INTO {db_name}(topic, essay, paragraphs_count, words_count, grammar_mistakes, linking_words_count, repetative_words_count, submitted_by, overall_band_score, sidebar_comments, time, unnecessary_words_count) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
 
@@ -143,9 +145,8 @@ def db_get_ids(table_name):
     cursor.execute(f"SELECT id FROM {table_name}")
 
     ids = cursor.fetchall()
-    print(ids) # test
-    ids_lst = []
 
+    ids_lst = []
     for id in ids:
         ids_lst.append(id[0])
 
@@ -163,19 +164,21 @@ def db_retrieve(file_id, db):
 
     if db == "Logs":
 
-        cursor.execute("SELECT summary, transcription, filename, summary_html FROM Logs WHERE id = %s", (str(file_id)))
+        cursor.execute("SELECT summary, transcription, filename, summary_html, link, time, teacher FROM Logs WHERE id = %s", (str(file_id)))
 
         file = cursor.fetchone()
 
         if file:
 
-            if file:
-                summary = file[0]
-                transcription = file[1]
-                filename = file[2]
-                summary_html = file[3]
+            summary = file[0]
+            transcription = file[1]
+            filename = file[2]
+            summary_html = file[3]
+            link = file[4]
+            time = file[5]
+            teacher = file[6]
 
-            return [summary, transcription, filename, summary_html]
+            return [summary, transcription, filename, summary_html, link, time, teacher]
         
     elif db == "essay_logs":
 

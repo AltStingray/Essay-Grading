@@ -156,7 +156,13 @@ def results():
 
         filename = result[2].replace(".mp4", "")
 
-        data = (summary_report["text"], result[1], filename, summary_report["html"])
+        link = result[3]
+
+        specified_date = result[4]
+
+        teacher = result[5]
+
+        data = (summary_report["text"], result[1], filename, summary_report["html"], link, specified_date, teacher)
 
         db_store(data, "logs")
 
@@ -207,7 +213,22 @@ def history():
 
     ids = db_get_ids(table_name="Logs")
 
-    return render_template("history.html", log="summary_report", ids=ids)
+    reports = []
+
+    for id in ids:
+
+        report_dict = {}
+
+        logs = db_retrieve(file_id=id, db="Logs")
+        
+        report_dict["id"] = id
+        report_dict["date"] = logs[5]
+        report_dict["url"] = logs[4]
+        report_dict["teacher"] = logs[6]
+
+        reports += report_dict
+
+    return render_template("history.html", log="summary_report", reports=reports)
 
 @app.route('/logs_download/<int:id>/<name>')
 def logs_download(id, name):
@@ -217,14 +238,17 @@ def logs_download(id, name):
     summary_report = logs[0]
     transcription = logs[1]
     filename = logs[2]
+    html = logs[3]
+    link = logs[4]
+    specified_date = logs[5]
+    teacher = logs[6]
+
 
     if name == "Summary report.odt":
         return send_file(io.BytesIO(summary_report), as_attachment=True, download_name=f"summary_report_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif name == "Transcription.odt":
         return send_file(io.BytesIO(transcription), as_attachment=True, download_name=f"transcription_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif name == "Summary report.html":
-
-        html = logs[3]
 
         if html != None:
             html_data = (html.tobytes().decode('utf-8')).strip("{ }") #decoding the memory value from database into a string
@@ -233,6 +257,11 @@ def logs_download(id, name):
             html_data = '<p>' + summary_report.replace('\n', '<br>') + '</p>'
 
         return render_template("preview_report.html", html=html_data)
+    elif name == "Transcription.html":
+
+        transcription = (transcription.tobytes().decode('utf-8')).strip("{ }")
+
+        return render_template("preview_report.html", html=transcription)
     else:
         return logs
     
@@ -524,7 +553,7 @@ def main(link, specified_date, teacher_name, access_token, user_prompt):
 
     filename = filename.replace(".mp4", "")
 
-    f_list = [summary_report, transcription, filename]
+    f_list = [summary_report, transcription, filename, link, specified_date, teacher_name]
     
     return f_list
 
