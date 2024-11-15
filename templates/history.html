@@ -24,8 +24,8 @@
                                     <td>{{one["date"]}}</td>
                                     <td>{{one["url"]}}</td>
                                     <td>{{one["teacher"]}}</td>
-                                    <td><a href="{{ url_for('logs_download', id=one['id'], name='Summary report.html')}}">Summary</a></td>
-                                    <td><a href="{{ url_for('logs_download', id=one['id'], name='Transcription.html')}}">Transcript</a></td>
+                                    <td><a href="{{ url_for('logs_download', id={{one['id']}}, name='Summary report.html')}}">Summary</a></td>
+                                    <td><a href="{{ url_for('logs_download', id={{one['id']}}, name='Transcription.html')}}">Transcript</a></td>
                                     <td><button class="button2">Send to</button></td>
                                 </tr>
                             </tbody>
