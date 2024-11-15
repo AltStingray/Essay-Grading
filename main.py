@@ -225,7 +225,7 @@ def history():
         report_dict.update({"date": logs[5]})
         report_dict.update({"url": logs[4]})
         report_dict.update({"teacher": logs[6]})
-
+        print(report_dict) # test
         reports += report_dict
 
     print(reports) # test
