@@ -1,44 +1,46 @@
 {% extends "layout.html" %}
 {% block content %}
-    {% if name == "start" %}
-        <h2>Please complete Dropbox authorization to continue: </h2>
-        <form action="/authorize" method="get">
-            <input type="submit" class="button2" value="Authorize">
-        </form>
-    {% elif name == "choice" %}
-        <h2>Choose prompt of the GPT model for the summary report:</h2>
-        <form action="/choice" method="get">
-            <input type="submit" value="Default GPT Prompt" class="button2" name="choice">
-            <input type="submit" value="Custom GPT Prompt" class="button2" name="choice">
-        </form>
-    {% elif name == "password" %}
-        <h2>Provide secret password to access the Custom Prompt function: </h2>
-        {% if value == "fail" %}
-            <p style="color: red;">Wrong password!</p>
+    <div class="container text-center">
+        {% if name == "start" %}
+            <h2>Please complete Dropbox authorization to continue: </h2>
+            <form action="/authorize" method="get">
+                <input type="submit" class="button2" value="Authorize">
+            </form>
+        {% elif name == "choice" %}
+            <h2>Choose prompt of the GPT model for the summary report:</h2>
+            <form action="/choice" method="get">
+                <input type="submit" value="Default GPT Prompt" class="button2" name="choice">
+                <input type="submit" value="Custom GPT Prompt" class="button2" name="choice">
+            </form>
+        {% elif name == "password" %}
+            <h2>Provide secret password to access the Custom Prompt function: </h2>
+            {% if value == "fail" %}
+                <p style="color: red;">Wrong password!</p>
+            {% endif %}
+            <form action="/own" method="get">
+                <input type="text" name="password" placeholder="Password:"><br><br>
+                <input type="submit" class="button2" value="Verify">
+            </form>
+        {% elif name == "prompt" %}
+            <h2>Specify your custom prompt: </h2>
+            <form action="/default" method="get">
+                <textarea type="text" name="prompt" rows="8", cols="80" placeholder="Custom GPT prompt:"></textarea><br><br>
+                <input type="submit" class="button2" value="Submit"><br><br>
+                Default GPT prompt example:<br>
+                {{default_prompt}}
+                <br><br>
+            </form>
+        {% elif name == "link" %}
+            <h2>Prompt selected.</h2>
+            <form action="/processing" method="get">
+                <input type="text" name="link" placeholder="Dropbox video link:" size="40">
+                <br><br>
+                <input type="text" name="date" placeholder="Date(optional):" size="30">
+                <br><br>
+                <input type="text" name="teacher" placeholder="Teacher's name(optional):" size="20">
+                <br><br>
+                <input type="submit" class="button2" value="Submit">
+            </form>
         {% endif %}
-        <form action="/own" method="get">
-            <input type="text" name="password" placeholder="Password:"><br><br>
-            <input type="submit" class="button2" value="Verify">
-        </form>
-    {% elif name == "prompt" %}
-        <h2 style="text-align: center;">Specify your custom prompt: </h2>
-        <form action="/default" method="get">
-            <textarea type="text" name="prompt" rows="8", cols="80" placeholder="Custom GPT prompt:"></textarea><br><br>
-            <input type="submit" class="button2" value="Submit"><br><br>
-            Default GPT prompt example:<br>
-            {{default_prompt}}
-            <br><br>
-        </form>
-    {% elif name == "link" %}
-        <h2>Prompt selected.</h2>
-        <form action="/processing" method="get">
-            <input type="text" name="link" placeholder="Dropbox video link:" size="40">
-            <br><br>
-            <input type="text" name="date" placeholder="Date(optional):" size="30">
-            <br><br>
-            <input type="text" name="teacher" placeholder="Teacher's name(optional):" size="20">
-            <br><br>
-            <input type="submit" class="button2" value="Submit">
-        </form>
-    {% endif %}
+    </div>
 {% endblock content %}
