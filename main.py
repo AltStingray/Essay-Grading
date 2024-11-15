@@ -202,7 +202,7 @@ def download():
     elif pick_one == "Summary report preview":
         return render_template("preview_report.html", html=summary_report_html)
 
-@app.route('/history')
+@app.route('/summary/log')
 def history():
 
     ids = db_get_ids(table_name="Logs")

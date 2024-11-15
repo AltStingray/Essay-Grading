@@ -25,12 +25,12 @@
               </button>
               <div class="collapse navbar-collapse" id="navbarToggle">
                   <div class="navbar-nav mr-auto">
-                    <div class="btn-group">
-                      <button type="button" class="nav-item nav-link dropdown-toggle" data-togle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="dropdown">
+                      <button type="button" class="btn nav-item nav-link dropdown-toggle" id="dropdownMenuButton" data-togle="dropdown" aria-haspopup="true" aria-expanded="false">
                         History Logs
                       </button>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="/history">Summary Report</a>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="/summary/log">Summary Report</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/grading/log">Essay Grading</a>
                       </div>
