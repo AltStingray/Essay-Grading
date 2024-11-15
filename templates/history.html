@@ -24,22 +24,13 @@
                                     <td>{{one["date"]}}</td>
                                     <td>{{one["url"]}}</td>
                                     <td>{{one["teacher"]}}</td>
-                                    <td><a href="{{ url_for('logs_download', id=id, name='Summary report.html')}}">Summary</a></td>
-                                    <td><a href="{{ url_for('logs_download', id=id, name='Transcription.html')}}">Transcript</a></td>
+                                    <td><a href="{{ url_for('logs_download', id=one['id'], name='Summary report.html')}}">Summary</a></td>
+                                    <td><a href="{{ url_for('logs_download', id=one['id'], name='Transcription.html')}}">Transcript</a></td>
                                     <td><button class="button2">Send to</button></td>
                                 </tr>
                             </tbody>
                         {% endfor %}
                     </table>
-                    <p1>List of all available Summary Reports and Transcriptions:</p1><br>
-                    {% for id in ids %}
-                        <label for="Logs">Log {{id}}:</label>
-                            <ul>
-                                <li><a href="{{ url_for('logs_download', id=id, name='Summary report.odt')}}">Summary report.odt</a></li>
-                                <li><a href="{{ url_for('logs_download', id=id, name='Transcription.odt')}}">Transcription.odt</a></li>
-                                <li><a href="{{ url_for('logs_download', id=id, name='Summary report.html')}}">Summary report.html</a></li>
-                            </ul>
-                    {% endfor %}
                 {% elif log == "essay_grading" %}
                     <form action="/summary/log">
                         <input type="submit" value="Summary Report Logs" class="button2">
