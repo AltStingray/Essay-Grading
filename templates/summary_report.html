@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div class="container text-center">
+    <div class="container text-center mt-5">
         {% if name == "start" %}
             <h2>Please complete Dropbox authorization to continue: </h2>
             <form action="/authorize" method="get">
@@ -18,6 +18,7 @@
                 <p style="color: red;">Wrong password!</p>
             {% endif %}
             <form action="/own" method="get">
+                <br>
                 <input type="text" name="password" placeholder="Password:"><br><br>
                 <input type="submit" class="button2" value="Verify">
             </form>
@@ -32,6 +33,7 @@
             </form>
         {% elif name == "link" %}
             <h2>Prompt selected.</h2>
+            <br>
             <form action="/processing" method="get">
                 <input type="text" name="link" placeholder="Dropbox video link:" size="40">
                 <br><br>
