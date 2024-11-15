@@ -392,6 +392,7 @@ def grading_results():
 
     print(original_text)
 
+    #linking and repetitive words
     def count_and_replace(words, html_line, original_text, marker):
         words_count = 0
         already_exists = ""

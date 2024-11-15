@@ -269,7 +269,6 @@ a.article-title:hover {
   border-bottom: 2px solid rgba(0, 0, 0, 0.05);
   -webkit-transition: border-color 200ms;
   transition: border-color 200ms;
-  padding-top: 10px;
   padding-bottom: 20px;
   white-space: pre-wrap;
   overflow-wrap: break-word;

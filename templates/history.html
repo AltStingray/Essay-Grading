@@ -1,35 +1,45 @@
 {% extends "layout.html" %}
 {% block content %}
     <div class="row">
-        <div class="col-lg-12" style="padding: 0px 0px 0px 120px;">
-            <h1>Logs History</h1>
-            <br>
-            {% if log == "summary_report" %}
-                <form action="/grading/log">
-                    <input type="submit" value="Essay Grading Logs" class="button2">
-                </form>
-                <br>
-                <p1>List of all available Summary Reports and Transcriptions:</p1><br>
-                {% for id in ids %}
-                    <label for="Logs">Log {{id}}:</label>
-                        <ul>
-                            <li><a href="{{ url_for('logs_download', id=id, name='Summary report.odt')}}">Summary report.odt</a></li>
-                            <li><a href="{{ url_for('logs_download', id=id, name='Transcription.odt')}}">Transcription.odt</a></li>
-                            <li><a href="{{ url_for('logs_download', id=id, name='Summary report.html')}}">Summary report.html</a></li>
-                        </ul>
-                {% endfor %}
-            {% elif log == "essay_grading" %}
-                <form action="/history">
-                    <input type="submit" value="Summary Report Logs" class="button2">
-                </form>
-                <p1>List of all available Essay Gradings:</p1>
-                {% for id in ids %}
-                    <label for="Logs">Log {{id}}:</label>
-                        <ul>
-                            <li><a href="{{ url_for('view_logs', id=id)}}">Essay Grading</a></li>
-                        </ul>
-                {% endfor %}
-            {% endif %}
+        <div class="col-lg-12">
+            <h1>History Logs</h1>
+            <div class="container text-center">
+                {% if log == "summary_report" %}
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Id#</th>
+                                <th>Date</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <form action="/grading/log">
+                        <input type="submit" value="Essay Grading Logs" class="button2">
+                    </form>
+                    <br>
+                    <p1>List of all available Summary Reports and Transcriptions:</p1><br>
+                    {% for id in ids %}
+                        <label for="Logs">Log {{id}}:</label>
+                            <ul>
+                                <li><a href="{{ url_for('logs_download', id=id, name='Summary report.odt')}}">Summary report.odt</a></li>
+                                <li><a href="{{ url_for('logs_download', id=id, name='Transcription.odt')}}">Transcription.odt</a></li>
+                                <li><a href="{{ url_for('logs_download', id=id, name='Summary report.html')}}">Summary report.html</a></li>
+                            </ul>
+                    {% endfor %}
+                {% elif log == "essay_grading" %}
+                    <form action="/history">
+                        <input type="submit" value="Summary Report Logs" class="button2">
+                    </form>
+                    <p1>List of all available Essay Gradings:</p1>
+                    {% for id in ids %}
+                        <label for="Logs">Log {{id}}:</label>
+                            <ul>
+                                <li><a href="{{ url_for('view_logs', id=id)}}">Essay Grading</a></li>
+                            </ul>
+                    {% endfor %}
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock content %}
