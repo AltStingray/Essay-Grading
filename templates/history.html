@@ -27,6 +27,8 @@
                                     <td>{{one["date"]}}</td>
                                     {% if url != None %}
                                         <td><a href="{{ url_for('redirect_to', url=url) }}" target="_blank">Dropbox Link</a></td>
+                                    {% else %}
+                                        <td>Dropbox Link</td>
                                     {% endif %}
                                     <td>{{one["teacher"]}}</td>
                                     <td><a href="{{ url_for('logs_download', id=id, name='Summary report.html') }}">Summary</a></td>
