@@ -255,14 +255,12 @@ def logs_download(id, name):
             html_data = '<p>' + summary_report.replace('\n', '<br>') + '</p>'
 
         return render_template("preview_report.html", html=html_data)
-    elif name == "Transcription.html":
-
-        transcription = (transcription.tobytes().decode('utf-8')).strip("{ }")
-
-        return render_template("preview_report.html", html=transcription)
     else:
         return logs
-    
+
+@app.route('/redirect/<link>')
+def redirect_to(link):
+    return redirect(link)
 
 @app.route('/grading')
 def grading():
