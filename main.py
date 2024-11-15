@@ -221,15 +221,15 @@ def history():
 
         logs = db_retrieve(file_id=id, db="Logs")
         
-        report_dict["id"] = id
-        report_dict["date"] = logs[5]
-        report_dict["url"] = logs[4]
-        report_dict["teacher"] = logs[6]
+        report_dict.update({"id": id})
+        report_dict.update({"date": logs[5]})
+        report_dict.update({"url": logs[4]})
+        report_dict.update({"teacher": logs[6]})
 
         reports += report_dict
 
     print(reports) # test
-    
+
     return render_template("history.html", log="summary_report", reports=reports)
 
 @app.route('/logs_download/<id>/<name>')
