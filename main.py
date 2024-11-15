@@ -38,7 +38,7 @@ q = Queue(connection=conn)
 #db("create")
 
 #db("delete_data")
-#db("alter")
+db("alter")
 
 db("print")
 
@@ -239,10 +239,6 @@ def logs_download(id, name):
     transcription = logs[1]
     filename = logs[2]
     html = logs[3]
-    link = logs[4]
-    specified_date = logs[5]
-    teacher = logs[6]
-
 
     if name == "Summary report.odt":
         return send_file(io.BytesIO(summary_report), as_attachment=True, download_name=f"summary_report_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
