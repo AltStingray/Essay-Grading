@@ -212,7 +212,7 @@ def download():
 def history():
 
     ids = db_get_ids(table_name="Logs")
-
+    print(ids) # test
     reports = []
 
     for id in ids:
@@ -228,6 +228,8 @@ def history():
 
         reports += report_dict
 
+    print(reports) # test
+    
     return render_template("history.html", log="summary_report", reports=reports)
 
 @app.route('/logs_download/<id>/<name>')

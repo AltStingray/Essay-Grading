@@ -14,6 +14,7 @@
                                 <th>Teacher</th>
                                 <th>Summary</th>
                                 <th>Transcript</th>
+                                <th>Send to</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -27,7 +28,8 @@
                                     <td>{{one["teacher"]}}</td>
                                     <td><a href="{{ url_for('logs_download', id=id, name='Summary report.html') }}">Summary</a></td>
                                     <td><a href="{{ url_for('logs_download', id=id, name='Transcription.html') }}">Transcript</a></td>
-                                    <td><button class="button2">Send to</button></td>
+                                    <td><input type="text" name="email" placeholder="Email address: "></td>
+                                    <td><input type="submit" class="button2">Send</button></td>
                                 </tr>
                             </tbody>
                         {% endfor %}
