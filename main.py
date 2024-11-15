@@ -258,8 +258,10 @@ def logs_download(id, name):
     else:
         return logs
 
-@app.route('/redirect_to/<url>')
-def redirect_to(url):
+@app.route('/redirect')
+def redirect_to():
+
+    url = request.args.get("url")
 
     return redirect(url)
 

@@ -25,7 +25,7 @@
                                 <tr>
                                     <td>#{{id}}</td>
                                     <td>{{one["date"]}}</td>
-                                    <td><a href="{{ url_for('redirect_to', url=url) }}">Dropbox Link</a></td>
+                                    <td><a href="{{ url_for('redirect', url=url) }}">Dropbox Link</a></td>
                                     <td>{{one["teacher"]}}</td>
                                     <td><a href="{{ url_for('logs_download', id=id, name='Summary report.html') }}">Summary</a></td>
                                     <td><a href="{{ url_for('logs_download', id=id, name='Transcription.odt') }}">Transcript</a></td>
