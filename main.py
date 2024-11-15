@@ -225,7 +225,7 @@ def history():
         report_dict.update({"date": logs[5]})
         report_dict.update({"url": logs[4]})
         report_dict.update({"teacher": logs[6]})
-        
+
         reports.append(report_dict)
 
     print(reports) # test
@@ -536,7 +536,7 @@ def main(link, specified_date, teacher_name, access_token, user_prompt):
 
     print("Transcription created, working on the summary report...")
 
-    if specified_date != None or specified_date != "":
+    if specified_date != None and specified_date != "":
         pass
     else:
         specified_date = date.today()
