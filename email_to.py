@@ -1,6 +1,8 @@
 import smtplib
+from email import encoders
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
 
 def send_email(user_email, html_content):
     
@@ -20,6 +22,20 @@ def send_email(user_email, html_content):
     html = MIMEText(html_content, "html")
 
     msg.attach(html)
+
+    # Image
+    with open("/static/finalblue.jpeg", "rb") as p:
+        photo = MIMEBase("application", "octet-stream")
+        photo.set_payload(p.read())
+
+    encoders.encode_base64(photo)
+
+    photo.add_header(
+        "Content-Disposition",
+        "attachment; filename=/static/finalblue.jpeg",
+    )
+
+    msg.attach(photo)
 
     smtp.send_message(msg)
 

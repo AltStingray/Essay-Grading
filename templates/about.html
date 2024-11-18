@@ -1,5 +1,45 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>About page</h1>
-    <p1>This is a simple HTML+CSS page rendered by Flask with Python running on the backend. <br><br> Created by Denis.</p1>
+    <header class="bg-primary text-white text-center py-3">
+        <h1>About OET Tools</h1>
+    </header>
+
+    <main class="container my-5">
+        <section class="text-center mb-5">
+            <h2 class="mb-3">Who We Are</h2>
+            <p class="lead">
+                OET Tools is dedicated to helping students prepare for the Occupational English Test (OET) with ease and efficiency. Our innovative tools simplify the process of summarizing reports and grading essays, allowing students to focus on improving their skills and achieving their goals.
+            </p>
+        </section>
+
+        <section class="mb-5">
+            <h2>What We Offer</h2>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <strong>OET Summary Report Tool:</strong> A user-friendly tool that creates concise and accurate summaries of complex OET reports.
+                </li>
+                <li class="list-group-item">
+                    <strong>Essay Grading Tool:</strong> Automated grading powered by advanced algorithms to provide constructive feedback and scoring.
+                </li>
+            </ul>
+        </section>
+
+        <section class="mb-5">
+            <h2>Why Choose Us?</h2>
+            <p>
+                At OET Tools, we believe in empowering students with technology that simplifies learning. Whether you're preparing for the writing sub-test or refining your language skills, our tools are designed to save time and provide actionable insights. We are committed to supporting your success.
+            </p>
+        </section>
+
+        <section class="text-center">
+            <h2>Our Mission</h2>
+            <p class="lead">
+                To provide innovative, accessible, and reliable tools that assist students in mastering the OET and excelling in their careers.
+            </p>
+        </section>
+    </main>
+
+    <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2024 OET Tools. All Rights Reserved.</p>
+    </footer>
 {% endblock content %}
