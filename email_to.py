@@ -10,11 +10,11 @@ def send_email(user_email, html_content):
 
     email_password = "ccvsaldikydyktgk"
     #info@edubenchmark.com
-    smtp.login("egoroff2206@gmail.com", email_password)
+    smtp.login("altstingray@gmail.com", email_password)
 
     msg = MIMEMultipart("alternative")
     msg["Subject"] = "Your OET Summary Report"
-    msg["From"] = "egoroff2206@gmail.com"
+    msg["From"] = "altstingray@gmail.com"
     msg["To"] = user_email
 
     html = MIMEText(html_content, "html")
