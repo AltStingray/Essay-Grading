@@ -13,7 +13,7 @@ def send_email(user_email, html_content):
     #info@edubenchmark.com
     smtp.login("altstingray@gmail.com", email_password)
 
-    msg = MIMEMultipart("alternative")
+    msg = MIMEMultipart("related")
     msg["Subject"] = "Your OET Summary Report"
     msg["From"] = "altstingray@gmail.com"
     msg["To"] = user_email
