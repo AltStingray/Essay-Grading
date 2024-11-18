@@ -287,11 +287,12 @@ def email_to():
         <body>
             <img src="cid:header_image" style="width:100%; max-width: 600px;" alt="Benchmark Education Solutions logo">
             {(logs[3].tobytes().decode('utf-8')).strip("{ }")}
-            <br>
             Visit us for more information: 
-            <br> https://edubenchmark.com/ 
-            <br> www.facebook.com/pteoetielts 
-            <br> https://www.facebook.com/groups/oethelp/</body>
+            https://edubenchmark.com/ 
+            <br> 
+            www.facebook.com/pteoetielts 
+            <br> 
+            https://www.facebook.com/groups/oethelp/</body>
     </html>"""
 
     send_email(user_email, html)

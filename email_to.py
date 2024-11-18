@@ -27,7 +27,7 @@ def send_email(user_email, html_content):
 
     with open(logo, "rb") as img:
         image = MIMEImage(img.read())
-        image.add_header("Content-ID", "header-image")
+        image.add_header("Content-ID", "header_image")
         image.add_header("Content-Disposition", "inline", filename=logo)
         msg.attach(image)
 
