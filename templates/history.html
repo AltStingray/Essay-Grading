@@ -41,13 +41,13 @@
                                     <td><a href="{{ url_for('logs_download', id=id, name='Transcription.odt') }}">Transcript</a></td>
                                     <form action="/email_to" onsubmit="handleFormSubmission(event)" method="get">
                                         <td><input type="text" name="email" placeholder="Email address: " required></td>
+                                        <!-- Success message -->
+                                        <div id="success-message" style="display: none; color: green;">
+                                            Email has been sent successfully!
+                                        </div>
                                         <input type="hidden" name="id" value="{{ id }}">
                                         <td><input type="submit" class="button2" value="Send"></td>
                                     </form>
-                                    <!-- Success message -->
-                                    <div id="success-message" style="display: none; color: green;">
-                                        Email has been sent successfully!
-                                    </div>
                                 </tr>
                             </tbody>
                         {% endfor %}
