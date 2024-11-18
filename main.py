@@ -269,7 +269,7 @@ def redirect_to():
 
     return redirect(url)
 
-@app.route('/send_email')
+@app.route('/email_to')
 def email_to():
 
     user_email = request.args.get("email")
