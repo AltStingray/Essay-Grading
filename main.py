@@ -279,9 +279,11 @@ def email_to():
 
     logs = db_retrieve(file_id=id, db="Logs")
 
-    html = '<html>\n<head></head>\n<body>\n<div class="image-section"><img src="/static/finalblue.jpeg" alt="Benchmark Education Solutions logo"></div>\n' + (logs[3].tobytes().decode('utf-8')).strip("{ }") + '</body>\n</html>'
+    plain_text = (str(logs[0], "utf-8"))
 
-    send_email(user_email, html)
+    html = '<html>\n<head><style"font-size: 20px;"></head>\n<body>\n<img src="/static/finalblue.jpeg" alt="Benchmark Education Solutions logo">\n' + (logs[3].tobytes().decode('utf-8')).strip("{ }") + '</body>\n</html>'
+
+    send_email(user_email, html, plain_text)
 
     return redirect("/summary/log")
 

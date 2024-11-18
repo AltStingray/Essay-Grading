@@ -1,5 +1,11 @@
 {% extends "layout.html" %}
 {% block content %}
+    <script>
+        function handleFormSubmission(event){
+            const successMessage = document.getElementById('success-message');
+            successMessage.style.display = 'block';
+        }
+    </script>
     <div class="row">
         <div class="col-lg-12">
             <div class="container text-center">
@@ -33,11 +39,15 @@
                                     <td>{{one["teacher"]}}</td>
                                     <td><a href="{{ url_for('logs_download', id=id, name='Summary report.html') }}" target="_blank">Summary</a></td>
                                     <td><a href="{{ url_for('logs_download', id=id, name='Transcription.odt') }}">Transcript</a></td>
-                                    <form action="/email_to" method="get">
-                                        <td><input type="text" name="email" placeholder="Email address: "></td>
+                                    <form action="/email_to" onsubmit="handleFormSubmission(event)" method="get">
+                                        <td><input type="text" name="email" placeholder="Email address: " required></td>
                                         <input type="hidden" name="id" value="{{ id }}">
                                         <td><input type="submit" class="button2" value="Send"></td>
                                     </form>
+                                    <!-- Success message -->
+                                    <div id="success-message" style="display: none; color: green;">
+                                        Email has been sent successfully!
+                                    </div>
                                 </tr>
                             </tbody>
                         {% endfor %}
