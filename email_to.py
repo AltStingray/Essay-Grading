@@ -14,7 +14,7 @@ def send_email(user_email, html_content):
 
     msg = MIMEMultipart("alternative")
     msg["Subject"] = "Your OET Summary Report"
-    msg["From"] = "info@edubenchmark.com"
+    msg["From"] = "egoroff2206@gmail.com"
     msg["To"] = user_email
 
     html = MIMEText(html_content, "html")
