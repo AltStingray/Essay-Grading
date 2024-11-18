@@ -1,5 +1,6 @@
 import smtplib
-from email.message import EmailMessage
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 def send_email(user_email, html_content):
     
@@ -11,11 +12,14 @@ def send_email(user_email, html_content):
 
     smtp.login("altstingray@gmail.com", email_password)
 
-    msg = EmailMessage()
+    msg = MIMEMultipart("alternative")
     msg["Subject"] = "Your OET Summary Report"
     msg["From"] = "altstingray@gmail.com"
     msg["To"] = user_email
-    msg.set_content(html_content)
+
+    html = MIMEText(html_content, "html")
+    
+    msg.attach(html)
 
     smtp.send_message(msg)
 

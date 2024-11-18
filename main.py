@@ -279,12 +279,11 @@ def email_to():
 
     logs = db_retrieve(file_id=id, db="Logs")
 
-    html = '<div class="image-section"><img src="/static/finalblue.jpeg" alt="Benchmark Education Solutions logo"></div>' + (logs[3].tobytes().decode('utf-8')).strip("{ }")
+    html = '<html>\n<head></head>\n<body>\n<div class="image-section"><img src="/static/finalblue.jpeg" alt="Benchmark Education Solutions logo"></div>\n' + (logs[3].tobytes().decode('utf-8')).strip("{ }") + '</body>\n</html>'
 
     send_email(user_email, html)
 
-
-
+    return redirect("/summary/log")
 
 @app.route('/grading')
 def grading():
