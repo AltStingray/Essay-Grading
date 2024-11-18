@@ -281,7 +281,7 @@ def email_to():
 
     plain_text = (str(logs[0], "utf-8"))
 
-    html = '<html>\n<head></head>\n<body>\n<img src="static/finalblue.jpeg" style="width:100%; max-width: 600px;" alt="Benchmark Education Solutions logo">\n' + (logs[3].tobytes().decode('utf-8')).strip("{ }") + '<br> https://edubenchmark.com/ <br> www.facebook.com/pteoetielts <br> https://www.facebook.com/groups/oethelp/</body>\n</html>'
+    html = '<html>\n<head></head>\n<body>\n<img src="cid:header_image" style="width:100%; max-width: 600px;" alt="Benchmark Education Solutions logo">\n' + (logs[3].tobytes().decode('utf-8')).strip("{ }") + '<br> https://edubenchmark.com/ <br> www.facebook.com/pteoetielts <br> https://www.facebook.com/groups/oethelp/</body>\n</html>'
 
     send_email(user_email, html)
 

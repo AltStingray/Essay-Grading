@@ -1,8 +1,7 @@
 import smtplib
-from email import encoders
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from email.mime.base import MIMEBase
+from email.mime.image import MIMEImage
 
 def send_email(user_email, html_content):
     
@@ -26,18 +25,11 @@ def send_email(user_email, html_content):
     # Image
     logo = "static/finalblue.jpeg"
 
-    with open(logo, "rb") as p:
-        photo = MIMEBase("application", "octet-stream")
-        photo.set_payload(p.read())
-
-    encoders.encode_base64(photo)
-
-    photo.add_header(
-        "Content-Disposition",
-        f"attachment; filename={logo}",
-    )
-
-    msg.attach(photo)
+    with open(logo, "rb") as img:
+        image = MIMEImage(img.read())
+        image.add_header("Content-ID", "<header-image>")
+        image.add_header("Content-Disposition", "inline", filename=logo)
+        msg.attach(image)
 
     smtp.send_message(msg)
 
