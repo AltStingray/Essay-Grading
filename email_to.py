@@ -24,7 +24,9 @@ def send_email(user_email, html_content):
     msg.attach(html)
 
     # Image
-    with open("/static/finalblue.jpeg", "rb") as p:
+    logo = "static/finalblue.jpeg"
+
+    with open(logo, "rb") as p:
         photo = MIMEBase("application", "octet-stream")
         photo.set_payload(p.read())
 
@@ -32,7 +34,7 @@ def send_email(user_email, html_content):
 
     photo.add_header(
         "Content-Disposition",
-        "attachment; filename=/static/finalblue.jpeg",
+        f"attachment; filename={logo}",
     )
 
     msg.attach(photo)
