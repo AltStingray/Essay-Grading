@@ -9,7 +9,7 @@ def send_email(user_email, html_content):
     smtp.starttls()
 
     email_password = "ccvsaldikydyktgk"
-
+    #info@edubenchmark.com
     smtp.login("info@edubenchmark.com", email_password)
 
     msg = MIMEMultipart("alternative")
