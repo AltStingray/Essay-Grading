@@ -6,6 +6,7 @@ import time
 import dropbox_module
 import assemblyAI
 import json
+from email_to import send_email
 from rq import Queue
 from rq.job import Job
 from worker import conn
@@ -162,6 +163,9 @@ def results():
 
         teacher = result[5]
 
+        if teacher == None or teacher == "":
+            teacher = summary_report["teacher"]
+
         data = (summary_report["text"], result[1], filename, summary_report["html"], link, specified_date, teacher)
 
         db_store(data, "logs")
@@ -264,6 +268,22 @@ def redirect_to():
     url = request.args.get("url")
 
     return redirect(url)
+
+@app.route('/send_email')
+def email_to():
+
+    user_email = request.args.get("email")
+
+    id = request.args.get("id")
+
+    logs = db_retrieve(file_id=id, db="Logs")
+
+    html = '<div class="image-section"><img src="/static/finalblue.jpeg" alt="Benchmark Education Solutions logo"></div>' + (logs[3].tobytes().decode('utf-8')).strip("{ }")
+
+    send_email(user_email, html)
+
+
+
 
 @app.route('/grading')
 def grading():
@@ -545,7 +565,7 @@ def main(link, specified_date, teacher_name, access_token, user_prompt):
     if user_prompt != None:
         prompt = user_prompt + f"At the beginning of the report specify the header title 'OET Speaking Mock Test Session's Summary'; below specify 'Date: {specified_date}' and teacher's name(who acts as a patient): '{teacher_name}'. If 'None' specified, get teacher name coming from the dialogue analysis. Add the following line at the end of the report in italic style: 'AI-generated content may be inaccurate or misleading. Always check for accuracy.' You are not limited by a particular range of words, so provide detailed report with at least 4000 charaters. Provide two versions of the report. First one is a simple text respond. Second one is a structured HTML. Wrap those two versions as values in a single pure dictionary with the following keys: text and html. Do not include anything like 'json' that goes after and before the ``` at the beginning and at the end of your response."
     else:
-        prompt = f"I run an online OET speaking mock test service where candidates act as doctors, nurses or other medical practitioners and practice roleplay scenarios with a teacher who acts as the patient or the patient's relative. After each session, we provide a detailed report to the candidate, highlighting their performance. You are given a dialogue text delimited by triple quotes on the topic of medicine. At the beginning of the report specify the header title 'OET Speaking Mock Test Session's Summary'; below specify 'Date: {specified_date}' and teacher's name(who acts as a patient): '{teacher_name}'. If 'None' specified, get teacher name coming from the dialogue analysis. Please summarise the teacher's feedback on the candidate's grammar, lexical choices, pronunciation, and overall communication skills. In the overall communication skills section, use the five categories in the clinical communication criteria table in the knowledge file delimited by triple quotes. Summarise the teacher's feedback on the candidate's performance. Structure the report with sections for each roleplay and an overall performance summary which includes a table with 2 columns called areas that you are doing well and areas that you need to improve. Add the following line at the end of the report in italic style: 'AI-generated content may be inaccurate or misleading. Always check for accuracy.' You are not limited by a particular range of words, so provide detailed report with at least 4000 charaters. Provide two versions of the report. First one is a simple text respond. Second one is a structured HTML. Important: wrap those two versions as values in a single dictionary with the following keys: text and html. Do not include anything like 'json' that goes after and before the ``` at the beginning and at the end of your response."
+        prompt = f"I run an online OET speaking mock test service where candidates act as doctors, nurses or other medical practitioners and practice roleplay scenarios with a teacher who acts as the patient or the patient's relative. After each session, we provide a detailed report to the candidate, highlighting their performance. You are given a dialogue text delimited by triple quotes on the topic of medicine. At the beginning of the report specify the header title 'OET Speaking Mock Test Session's Summary'; below specify 'Date: {specified_date}' and teacher's name(who acts as a patient): '{teacher_name}'. If 'None' specified, get teacher name coming from the dialogue analysis. Please summarise the teacher's feedback on the candidate's grammar, lexical choices, pronunciation, and overall communication skills. In the overall communication skills section, use the five categories in the clinical communication criteria table in the knowledge file delimited by triple quotes. Summarise the teacher's feedback on the candidate's performance. Structure the report with sections for each roleplay and an overall performance summary which includes a table with 2 columns called areas that you are doing well and areas that you need to improve. Add the following line at the end of the report in italic style: 'AI-generated content may be inaccurate or misleading. Always check for accuracy.' You are not limited by a particular range of words, so provide detailed report with at least 4000 charaters. Provide two versions of the report. First one is a simple text respond. Second one is a structured HTML. Important: wrap those two versions as values in a single dictionary with the following keys: text and html. Also, in the same dictionary specify the third key: 'teacher' and add the relevan teacher's name to it(value). Do not include anything like 'json' that goes after and before the ``` at the beginning and at the end of your response."
 
 
     summary_report = RunOpenAI(prompt, transcription)
