@@ -34,7 +34,7 @@
                                     <td><a href="{{ url_for('logs_download', id=id, name='Summary report.html') }}" target="_blank">Summary</a></td>
                                     <td><a href="{{ url_for('logs_download', id=id, name='Transcription.odt') }}">Transcript</a></td>
                                     <form action="/email_to" method="get">
-                                        <td><input type="text" name="email" id={{id}} placeholder="Email address: "></td>
+                                        <td><input type="text" name="email" id=id placeholder="Email address: "></td>
                                         <td><input type="submit" class="button2" value="Send"></td>
                                     </form>
                                 </tr>

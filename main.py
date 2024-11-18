@@ -275,6 +275,7 @@ def email_to():
     user_email = request.args.get("email")
 
     id = request.args.get("id")
+    print(id)
 
     logs = db_retrieve(file_id=id, db="Logs")
 
