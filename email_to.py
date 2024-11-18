@@ -10,7 +10,7 @@ def send_email(user_email, html_content):
 
     email_password = "ccvsaldikydyktgk"
     #info@edubenchmark.com
-    smtp.login("info@edubenchmark.com", email_password)
+    smtp.login("egoroff2206@gmail.com", email_password)
 
     msg = MIMEMultipart("alternative")
     msg["Subject"] = "Your OET Summary Report"
