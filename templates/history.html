@@ -65,9 +65,6 @@
                         {% endfor %}
                     </table>
                 {% elif log == "essay_grading" %}
-                    <form action="/summary/log">
-                        <input type="submit" value="Summary Report Logs" class="button2">
-                    </form>
                     <p1>List of all available Essay Gradings:</p1>
                     {% for id in ids %}
                         <label for="Logs">Log {{id}}:</label>
