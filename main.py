@@ -257,7 +257,7 @@ def history():
         
         reports.sort(reverse=True, key=sort_by_new)
 
-        return render_template("history.html", log="summary_report", reports=reports, sort_by="Date-New")
+        return render_template("history.html", log="summary_report", reports=reports, sort_by="Date-Old")
     else:
 
         return render_template("history.html", log="summary_report", reports=reports, sort_by="Low-High")
