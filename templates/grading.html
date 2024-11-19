@@ -29,7 +29,7 @@
             </div>
             <div class="col-md-3">
                 <aside class="sidebar" style="place-items: right;">
-                    <div class="sidebar-comments">
+                    <div class="sidebar-comments" style="overflow-y:auto;">
                         {% for one in corrected_words %}
                             {{one|safe}}
                         {% endfor %}

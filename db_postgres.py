@@ -54,13 +54,13 @@ def db(command):
 
         #cursor.execute("""ALTER TABLE essay_logs ADD unnecessary_words_count BYTEA NOT NULL""")
 
-        cursor.execute("""ALTER TABLE Logs ADD link VARCHAR(255)""")
-        cursor.execute("""ALTER TABLE Logs ADD time DATE""")
-        cursor.execute("""ALTER TABLE Logs ADD teacher VARCHAR(255)""")
+        #cursor.execute("""ALTER TABLE Logs ADD link VARCHAR(255)""")
+        #cursor.execute("""ALTER TABLE Logs ADD time DATE""")
+        #cursor.execute("""ALTER TABLE Logs ADD teacher VARCHAR(255)""")
 
         #cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 6""")
         
-        #cursor.execute("""ALTER SEQUENCE essay_logs_id_seq RESTART WITH 1""")
+        cursor.execute("""ALTER SEQUENCE essay_logs_id_seq RESTART WITH 3""")
 
         #cursor.execute("""ALTER TABLE essay_logs RENAME COLUMN date TO time""")
 

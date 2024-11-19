@@ -38,8 +38,8 @@ q = Queue(connection=conn)
 #delete_table("essay_logs")
 #db("create")
 
-#db("delete_data")
-#db("alter")
+db("delete_data")
+db("alter")
 
 db("print")
 
@@ -245,7 +245,6 @@ def history():
             print(e["date"]) # test
             return e["date"]
         
-
         reports.sort(key=sort_by_new)
 
         print(reports) # test
