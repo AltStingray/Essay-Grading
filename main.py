@@ -241,11 +241,12 @@ def history():
         return render_template("history.html", log="summary_report", reports=reports, sort_by="High-Low")
     elif sort_by == "date-new":
 
-        reports = sorted(reports["date"])
+        def sort_by_new(e):
+            return e["date"]
 
-        print(reports)
+        reports.sort(key=sort_by_new)
 
-        return render_template("history.html", log="summary_report", reports=reports, sort_by="Low-High")
+        return render_template("history.html", log="summary_report", reports=reports, sort_by="Date-New")
     else:
 
         return render_template("history.html", log="summary_report", reports=reports, sort_by="Low-High")
