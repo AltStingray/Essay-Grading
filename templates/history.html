@@ -13,11 +13,8 @@
                     <h1>Summary report logs</h1>
 
                     <!--Sorting button-->
-                    <div class="sort_dropdown" style="float: left;">
+                    <div class="sort_by" style="float: left;">
                         <button type="button" class="button2 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            Sort by: # {{sort_by}}
-                        </button>
-                        <ul class="dropdown-menu w3-right">
                             {% if sort_by=="Low-High" %}
                                 <li><a class="dropdown-item" href="{{ url_for('history', sort_by='high-low')}}"># High-Low</a></li>
                             {% elif sort_by=="High-Low" %}
@@ -25,7 +22,7 @@
                             {% elif sort_by=="Date-New" %}
                                 <li><a class="dropdown-item" href="{{ url_for('history', sort_by='low-high')}}">Date-New</a></li>
                             {% endif %}
-                        </ul>
+                        </button>
                     </div>
 
                     <table class="table table-hover">

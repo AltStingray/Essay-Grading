@@ -506,17 +506,17 @@ GPT reference
 
 
 
-
-  <main role="main" class="container-fluid">
-    <div class="row">
-      <div class="col-lg-9">
-        <div class="center">
-          {% block content %}{% endblock %}
-        </div>
-      </div>
-      <div class="col-lg-3">
-        <br><br><br><br><br><br>
-        {% block content2 %}{% endblock %}
-      </div>
-    </div>
-  </main>
+  <div class="sort_dropdown" style="float: left;">
+                        <button type="button" class="button2 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            Sort by: # {{sort_by}}
+                        </button>
+                        <ul class="dropdown-menu w3-right">
+                            {% if sort_by=="Low-High" %}
+                                <li><a class="dropdown-item" href="{{ url_for('history', sort_by='high-low')}}"># High-Low</a></li>
+                            {% elif sort_by=="High-Low" %}
+                                <li><a class="dropdown-item" href="{{ url_for('history', sort_by='low-high')}}"># Low-high</a></li>
+                            {% elif sort_by=="Date-New" %}
+                                <li><a class="dropdown-item" href="{{ url_for('history', sort_by='low-high')}}">Date-New</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>

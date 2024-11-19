@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+{% block content %}
+    <title>FAQ - Benchmark Summary Report & Essay Grading Tools</title>
+    <style>
+        .faq-header {
+        margin: 20px 0;
+        text-align: center;
+        }
+        .faq-question {
+        margin: 10px 0;
+        }
+    </style>
+    </head>
+    <body>
+    <div class="container">
+        <header>
+        <h1 class="faq-header">Frequently Asked Questions</h1>
+        </header>
+        <main>
+        <div class="accordion" id="faqAccordion">
+            <!-- FAQ Item 1 -->
+            <div class="accordion-item">
+            <h2 class="accordion-header" id="questionOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#answerOne" aria-expanded="true" aria-controls="answerOne">
+                What is OET, and how does your tool help with it?
+                </button>
+            </h2>
+            <div id="answerOne" class="accordion-collapse collapse show" aria-labelledby="questionOne" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                OET (Occupational English Test) is an English language test for healthcare professionals. Our tools assist students by providing detailed summary reports of their performance and essay grading that aligns with OET standards.
+                </div>
+            </div>
+            </div>
+            <!-- FAQ Item 2 -->
+            <div class="accordion-item">
+            <h2 class="accordion-header" id="questionTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#answerTwo" aria-expanded="false" aria-controls="answerTwo">
+                How accurate is the essay grading tool?
+                </button>
+            </h2>
+            <div id="answerTwo" class="accordion-collapse collapse" aria-labelledby="questionTwo" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                Our essay grading tool uses advanced algorithms to evaluate grammar, vocabulary, structure, and adherence to OET standards. While it provides detailed feedback, we recommend combining it with a professional review for the best results.
+                </div>
+            </div>
+            </div>
+            <!-- FAQ Item 3 -->
+            <div class="accordion-item">
+            <h2 class="accordion-header" id="questionThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#answerThree" aria-expanded="false" aria-controls="answerThree">
+                Is the tool suitable for beginners or only advanced learners?
+                </button>
+            </h2>
+            <div id="answerThree" class="accordion-collapse collapse" aria-labelledby="questionThree" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                Our tools are designed for all learners, from beginners to advanced students. Beginners can use it to identify areas for improvement, while advanced learners can refine their skills to achieve higher OET scores.
+                </div>
+            </div>
+            </div>
+            <!-- FAQ Item 4 -->
+            <div class="accordion-item">
+            <h2 class="accordion-header" id="questionFour">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#answerFour" aria-expanded="false" aria-controls="answerFour">
+                Can I access my previous reports?
+                </button>
+            </h2>
+            <div id="answerFour" class="accordion-collapse collapse" aria-labelledby="questionFour" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                Yes! Our platform allows you to save and access your previous reports for tracking your progress over time.
+                </div>
+            </div>
+            </div>
+            <!-- FAQ Item 5 -->
+            <div class="accordion-item">
+            <h2 class="accordion-header" id="questionFive">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#answerFive" aria-expanded="false" aria-controls="answerFive">
+                Is my data safe and secure?
+                </button>
+            </h2>
+            <div id="answerFive" class="accordion-collapse collapse" aria-labelledby="questionFive" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                Absolutely. We prioritize your privacy and security. All your data is encrypted and stored securely in compliance with data protection standards.
+                </div>
+            </div>
+            </div>
+        </div>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-wH5NOf3mZz4Y2FCH/a4PHxMe5d8axRXFtFEjRQs20fl5FbhtKIw16q7Iigox2tKC" crossorigin="anonymous"></script>
+    </body>
+    </html>
+{% endblock content %}
