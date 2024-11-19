@@ -15,7 +15,7 @@ from markupsafe import escape
 from moviepy.editor import *
 from openai import OpenAI
 from db_postgres import *
-from datetime import date
+from datetime import datetime
 
 OPENAI_API_KEY = os.environ.get("N_OPENAI_API_KEY")
 
@@ -584,7 +584,7 @@ def main(link, specified_date, teacher_name, access_token, user_prompt):
     if specified_date != None and specified_date != "":
         pass
     else:
-        specified_date = date.today()
+        specified_date = datetime.now().strftime("%d-%m-%y")
 
     if user_prompt != None:
         prompt = user_prompt + f"At the beginning of the report specify the header title 'OET Speaking Mock Test Session's Summary'; below specify 'Date: {specified_date}' and teacher's name(who acts as a patient): '{teacher_name}'. If 'None' specified, get teacher name coming from the dialogue analysis. Add the following line at the end of the report in italic style: 'AI-generated content may be inaccurate or misleading. Always check for accuracy.' You are not limited by a particular range of words, so provide detailed report with at least 4000 charaters. Provide two versions of the report. First one is a simple text respond. Second one is a structured HTML. Wrap those two versions as values in a single pure dictionary with the following keys: text and html. Do not include anything like 'json' that goes after and before the ``` at the beginning and at the end of your response."
