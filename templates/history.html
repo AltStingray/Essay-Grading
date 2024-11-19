@@ -17,11 +17,13 @@
                         <button type="button" class="button2 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             Sort by: # {{sort_by}}
                         </button>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu w3-right">
                             {% if sort_by=="Low-High" %}
                                 <li><a class="dropdown-item" href="{{ url_for('history', sort_by='high-low')}}"># High-Low</a></li>
-                            {% else %}
+                            {% elif sort_by=="High-Low" %}
                                 <li><a class="dropdown-item" href="{{ url_for('history', sort_by='low-high')}}"># Low-high</a></li>
+                            {% elif sort_by=="Date-New" %}
+                                <li><a class="dropdown-item" href="{{ url_for('history', sort_by='low-high')}}">Date-New</a></li>
                             {% endif %}
                         </ul>
                     </div>
