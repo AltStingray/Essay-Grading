@@ -19,9 +19,9 @@
                         </button>
                         <ul class="dropdown-menu">
                             {% if sort_by=="Low-High" %}
-                                <li><a class="dropdown-item" href="{{ url_for('history', sort_by='high-low')}}"></a># High-Low</li>
+                                <li><a class="dropdown-item" href="{{ url_for('history', sort_by='high-low')}}"># High-Low</a></li>
                             {% else %}
-                                <li><a class="dropdown-item" href="{{ url_for('history', sort_by='low-high')}}"></a># Low-high</li>
+                                <li><a class="dropdown-item" href="{{ url_for('history', sort_by='low-high')}}"># Low-high</a></li>
                             {% endif %}
                         </ul>
                     </div>
