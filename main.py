@@ -38,8 +38,8 @@ q = Queue(connection=conn)
 #delete_table("essay_logs")
 #db("create")
 
-db("delete_data")
-db("alter")
+#db("delete_data")
+#db("alter")
 
 db("print")
 
@@ -242,12 +242,20 @@ def history():
     elif sort_by == "date-new":
 
         def sort_by_new(e):
-            print(e["date"]) # test
+
             return e["date"]
         
         reports.sort(key=sort_by_new)
 
-        print(reports) # test
+        return render_template("history.html", log="summary_report", reports=reports, sort_by="Date-New")
+    
+    elif sort_by == "date-old":
+
+        def sort_by_new(e):
+
+            return e["date"]
+        
+        reports.sort(reverse=True, key=sort_by_new)
 
         return render_template("history.html", log="summary_report", reports=reports, sort_by="Date-New")
     else:

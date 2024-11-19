@@ -19,7 +19,9 @@
                         {% elif sort_by=="High-Low" %}
                             <a href="{{ url_for('history', sort_by='date-new')}}" class="button2">Sort by # High-Low</a></li>
                         {% elif sort_by=="Date-New" %}
-                            <li><a class="dropdown-item" href="{{ url_for('history', sort_by='low-high')}}">Date-New</a></li>
+                            <a href="{{ url_for('history', sort_by='date-old')}}" class="button2">Date-New</a></li>
+                        {% elif sort_by=="Date-Old" %}
+                            <a href="{{ url_for('history', sort_by='low-high')}}" class="button2">Date-Old</a></li>
                         {% endif %}
                     </div>
 
