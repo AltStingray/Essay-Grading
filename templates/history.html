@@ -15,8 +15,15 @@
                     <!--Sorting button-->
                     <div class="sort_dropdown" style="float: left;">
                         <button type="button" class="button2 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            Sort by: # Low-High
+                            Sort by: # {{sort_by}}
                         </button>
+                        <ul class="dropdown-menu">
+                            {% if sort_by=="Low-High" %}
+                                <li><a class="dropdown-item" href="{{ url_for('/summary/log', sort_by='high-low')}}"></a># High-Low</li>
+                            {% else %}
+                                <li><a class="dropdown-item" href="{{ url_for('/summary_log', sort_by='low-high')}}"></a># Low-high</li>
+                            {% endif %}
+                        </ul>
                     </div>
 
                     <table class="table table-hover">
@@ -53,7 +60,7 @@
                                         <td><input type="submit" class="button2" value="Send"></td>
                                     </form>
                                     <!-- Success message -->
-                                    <div class="success-message text-center" id="success-message" style="display: none; color: green;">
+                                    <div id="success-message" style="display: none; color: green;">
                                         Email has been sent successfully!
                                     </div>
                                 </tr>

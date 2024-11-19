@@ -215,6 +215,8 @@ def download():
 @app.route('/summary/log')
 def history():
 
+    sort_by = request.args.get("sort_by")
+
     ids = db_get_ids(table_name="Logs")
     print(ids) # test
     reports = []
@@ -234,7 +236,14 @@ def history():
 
     print(reports) # test
 
-    return render_template("history.html", log="summary_report", reports=reports)
+    if sort_by == "high-low":
+
+        reports = reports.reverse()
+        
+        return render_template("history.html", log="summary_report", reports=reports, sort_by="High-Low")
+    else:
+
+        return render_template("history.html", log="summary_report", reports=reports, sort_by="Low-High")
 
 @app.route('/logs_download/<id>/<name>')
 def logs_download(id, name):
@@ -246,7 +255,7 @@ def logs_download(id, name):
     filename = logs[2]
     html = logs[3]
 
-    if name == "Summary report.odt":
+    if name == "Summary report.odt": #DEL
         return send_file(io.BytesIO(summary_report), as_attachment=True, download_name=f"summary_report_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif name == "Transcription.odt":
         return send_file(io.BytesIO(transcription), as_attachment=True, download_name=f"transcription_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
@@ -254,7 +263,7 @@ def logs_download(id, name):
 
         if html != None:
             html_data = (html.tobytes().decode('utf-8')).strip("{ }") #decoding the memory value from database into a string
-        else:
+        else: # DEL
             summary_report = (str(summary_report, "utf-8")) + "\n\n <em>AI-generated content may be inaccurate or misleading. Always check for accuracy</em>.\n"
             html_data = '<p>' + summary_report.replace('\n', '<br>') + '</p>'
 
