@@ -238,8 +238,9 @@ def history():
 
     if sort_by == "high-low":
 
-        reports = reports.reverse()
-        print(reports)
+        reports.reverse()
+
+        print(reports) # test
         
         return render_template("history.html", log="summary_report", reports=reports, sort_by="High-Low")
     else:
