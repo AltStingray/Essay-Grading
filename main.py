@@ -218,7 +218,7 @@ def history():
     sort_by = request.args.get("sort_by")
 
     ids = db_get_ids(table_name="Logs")
-    print(ids) # test
+
     reports = []
 
     for id in ids:
@@ -234,15 +234,18 @@ def history():
 
         reports.append(report_dict)
 
-    print(reports) # test
-
     if sort_by == "high-low":
 
         reports.reverse()
-
-        print(reports) # test
         
         return render_template("history.html", log="summary_report", reports=reports, sort_by="High-Low")
+    elif sort_by == "date-new":
+
+        reports = sorted(reports["date"])
+
+        print(reports)
+
+        return render_template("history.html", log="summary_report", reports=reports, sort_by="Low-High")
     else:
 
         return render_template("history.html", log="summary_report", reports=reports, sort_by="Low-High")
@@ -551,6 +554,11 @@ def view_logs(id):
 def about():
 
     return render_template('about.html')
+
+@app.route('/faq')
+def faq():
+
+    return render_template('faq.html')
 
 @app.route('/login')
 def login():
