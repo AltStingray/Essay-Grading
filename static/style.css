@@ -2,7 +2,7 @@ html, body {
   height: 100%;
   background: #fafafa;
   color: #333333;
-  margin-top: 5rem;
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
 }

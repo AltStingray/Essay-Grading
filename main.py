@@ -245,7 +245,7 @@ def history():
 
             return e["date"]
         
-        reports.sort(key=sort_by_new)
+        reports.sort(reverse=True, key=sort_by_new)
 
         return render_template("history.html", log="summary_report", reports=reports, sort_by="Date-New")
     
@@ -255,7 +255,7 @@ def history():
 
             return e["date"]
         
-        reports.sort(reverse=True, key=sort_by_new)
+        reports.sort(key=sort_by_new)
 
         return render_template("history.html", log="summary_report", reports=reports, sort_by="Date-Old")
     else:
