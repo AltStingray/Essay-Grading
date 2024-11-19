@@ -233,7 +233,7 @@ def history():
         report_dict.update({"teacher": logs[6]})
 
         reports.append(report_dict)
-
+    print(reports) # test
     if sort_by == "high-low":
 
         reports.reverse()
@@ -242,9 +242,13 @@ def history():
     elif sort_by == "date-new":
 
         def sort_by_new(e):
+            print(e["date"]) # test
             return e["date"]
+        
 
         reports.sort(key=sort_by_new)
+
+        print(reports) # test
 
         return render_template("history.html", log="summary_report", reports=reports, sort_by="Date-New")
     else:
