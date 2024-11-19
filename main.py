@@ -644,11 +644,11 @@ def RunOpenAI(prompt, content):
 def strip(result):
 
     if result[0].startswith("```python"):
-        strip_summary = result[0].replace("```python\n", "").replace("```", "").strip()
+        strip_summary = result[0].replace("```python\n", "").replace("```", "r").strip()
     elif result[0].startswith("```json"):
-        strip_summary = result[0].replace("```json\n", "").replace("```", "").strip()
+        strip_summary = result[0].replace("```json\n", "").replace("```", "r").strip()
     else:
-        strip_summary = result[0].replace("```\n", "").replace("```", "").strip()
+        strip_summary = result[0].replace("```\n", "").replace("```", "r").strip()
     
     return strip_summary
 
