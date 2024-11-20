@@ -58,15 +58,13 @@ def db(command):
         #cursor.execute("""ALTER TABLE Logs ADD time DATE""")
         #cursor.execute("""ALTER TABLE Logs ADD teacher VARCHAR(255)""")
 
-        #cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 3""")
+        cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 3""")
         
-        #cursor.execute("""ALTER SEQUENCE essay_logs_id_seq RESTART WITH 1""")
+        cursor.execute("""ALTER SEQUENCE essay_logs_id_seq RESTART WITH 1""")
 
         #cursor.execute("""ALTER TABLE essay_logs RENAME COLUMN date TO time""")
 
         #cursor.execute("""ALTER TABLE essay_logs ALTER COLUMN time TYPE DATE""")
-        
-        cursor.execute("""ALTER DATABASE postgresql-defined-67157 SET datestyle = 'DMY';""")
 
         db_conn.commit()
 
@@ -123,9 +121,9 @@ def db_store(data, db_name):
     cursor = db_conn.cursor()
 
     if db_name == "logs":
-        insert_sql = f"""INSERT INTO {db_name}(summary, transcription, filename, summary_html, link, time, teacher) VALUES (%s, %s, %s, %s, %s, %s, %s);"""
+        insert_sql = f"""INSERT INTO {db_name}(summary, transcription, filename, summary_html, link, time, teacher) VALUES (%s, %s, %s, %s, %s, (TO_DATE(%s, 'DD-MM-YYYY')), %s);"""
     else:
-        insert_sql = f"""INSERT INTO {db_name}(topic, essay, paragraphs_count, words_count, grammar_mistakes, linking_words_count, repetative_words_count, submitted_by, overall_band_score, sidebar_comments, time, unnecessary_words_count) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+        insert_sql = f"""INSERT INTO {db_name}(topic, essay, paragraphs_count, words_count, grammar_mistakes, linking_words_count, repetative_words_count, submitted_by, overall_band_score, sidebar_comments, time, unnecessary_words_count) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, (TO_DATE(%s, 'DD-MM-YYYY')), %s)"""
 
     cursor.execute(insert_sql, data)
 
