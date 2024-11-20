@@ -29,7 +29,7 @@
             </div>
             <div class="col-md-3">
                 <aside class="sidebar" style="place-items: right;">
-                    <div class="sidebar-comments" style="overflow-y:auto;">
+                    <div class="sidebar-comments" style="height: 120px; max-height: 150px; overflow-y:scroll;">
                         {% for one in corrected_words %}
                             {{one|safe}}
                         {% endfor %}

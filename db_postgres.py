@@ -23,7 +23,7 @@ def db(command):
                      summary BYTEA NOT NULL,
                      transcription BYTEA NOT NULL,
                      filename VARCHAR(255) NOT NULL,
-                     upload_time TIMESTAMP DEFAULT NOW()
+                     upload_time DATE NOT NULL,
                              )"""
 
         create_essay_logs = """CREATE TABLE essay_logs(
@@ -58,17 +58,19 @@ def db(command):
         #cursor.execute("""ALTER TABLE Logs ADD time DATE""")
         #cursor.execute("""ALTER TABLE Logs ADD teacher VARCHAR(255)""")
 
-        cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 3""")
+       # cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 3""")
         
         cursor.execute("""ALTER SEQUENCE essay_logs_id_seq RESTART WITH 1""")
 
         #cursor.execute("""ALTER TABLE essay_logs RENAME COLUMN date TO time""")
 
-        #cursor.execute("""ALTER TABLE essay_logs ALTER COLUMN time TYPE DATE""")
+        cursor.execute("""ALTER TABLE Logs ALTER COLUMN uploat_time TYPE DATE NOT NULL""")
 
         #cursor.execute("""UPDATE Logs SET id = 1 WHERE id = 6;""")
 
         #cursor.execute("""UPDATE Logs SET teacher = 'Carol' WHERE id = 2;""")
+        
+        cursor.execute("""ALTER DATABASE d5o8488ckdvb82 SET datastyle = 'DMY'""")
 
         db_conn.commit()
 
@@ -79,8 +81,8 @@ def db(command):
 
     elif command == "delete_data":
 
-        cursor.execute(f"DELETE FROM Logs WHERE id IN ('1', '2', '3', '4', '5')")
-        #cursor.execute(f"DELETE FROM essay_logs WHERE id IN ('1')")
+        #cursor.execute(f"DELETE FROM Logs WHERE id IN ('1', '2', '3', '4', '5')")
+        cursor.execute(f"DELETE FROM essay_logs WHERE id IN ('1')")
 
         db_conn.commit()
 
