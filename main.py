@@ -476,10 +476,10 @@ def grading_results():
     grammar_mistakes = result["grammar_mistakes"]
     corrected_words = result["corrected_words"]
     submitted_by = result["submitted_by"]
-    linking_words = result["linking_words"]
-    repetitive_words = result["repetitive_words"]
+    #linking_words = result["linking_words"]
+    #repetitive_words = result["repetitive_words"]
     band_score = result["overall_band_score"]
-    unnecessary_words = result["unnecessary_words"]
+    #unnecessary_words = result["unnecessary_words"]
     current_date = datetime.now().strftime("%d-%m-%Y")
     words_count = len(original_text.split())
 
