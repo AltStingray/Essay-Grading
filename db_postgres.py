@@ -58,15 +58,15 @@ def db(command):
         #cursor.execute("""ALTER TABLE Logs ADD time DATE""")
         #cursor.execute("""ALTER TABLE Logs ADD teacher VARCHAR(255)""")
 
-        cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 3""")
+        #cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 3""")
         
-        cursor.execute("""ALTER SEQUENCE essay_logs_id_seq RESTART WITH 1""")
+        #cursor.execute("""ALTER SEQUENCE essay_logs_id_seq RESTART WITH 1""")
 
         #cursor.execute("""ALTER TABLE essay_logs RENAME COLUMN date TO time""")
 
         #cursor.execute("""ALTER TABLE essay_logs ALTER COLUMN time TYPE DATE""")
         
-        cursor.execute("""ALTER TABLE Logs SET datestyle = dmy;""")
+        cursor.execute("""ALTER DATABASE postgresql-defined-67157 SET datestyle = 'DMY';""")
 
         db_conn.commit()
 
@@ -95,15 +95,6 @@ def db(command):
 
         for row in rows:
             print(row)
-
-        cursor.close()
-        db_conn.close()
-        
-    elif command == "set_datetime":
-
-        cursor.execute("""ALTER TABLE Logs SET datestyle = dmy;""")
-
-        db_conn.commit()
 
         cursor.close()
         db_conn.close()
