@@ -39,7 +39,7 @@ q = Queue(connection=conn)
 #db("create")
 
 #db("delete_data")
-db("alter")
+#db("alter")
 
 db("print")
 
@@ -287,17 +287,11 @@ def logs_download(id, name):
     filename = logs[2]
     html = logs[3]
 
-    if name == "Summary report.odt": #DEL
-        return send_file(io.BytesIO(summary_report), as_attachment=True, download_name=f"summary_report_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
-    elif name == "Transcription.odt":
+    if name == "Transcription.odt":
         return send_file(io.BytesIO(transcription), as_attachment=True, download_name=f"transcription_{filename}.odt", mimetype="application/vnd.oasis.opendocument.text")
     elif name == "Summary report.html":
 
-        if html != None:
-            html_data = (html.tobytes().decode('utf-8')).strip("{ }") #decoding the memory value from database into a string
-        else: # DEL
-            summary_report = (str(summary_report, "utf-8")) + "\n\n <em>AI-generated content may be inaccurate or misleading. Always check for accuracy</em>.\n"
-            html_data = '<p>' + summary_report.replace('\n', '<br>') + '</p>'
+        html_data = (html.tobytes().decode('utf-8')).strip("{ }") #decoding the memory value from database into a string
 
         return render_template("preview_report.html", html=html_data)
     else:
@@ -320,7 +314,7 @@ def email_to():
 
     logs = db_retrieve(file_id=id, db="Logs")
 
-    plain_text = (str(logs[0], "utf-8"))
+    #plain_text = (str(logs[0], "utf-8"))
 
     html = f"""<html>
         <head>
@@ -384,9 +378,9 @@ def grading_queue():
     Do not rush with the answer. Take your time and process each of the following steps sequentially. But focus on the quality of the first two steps.
 
     Steps:
-    Step 1 - In the 'original_text' identify all of the words that contain grammar mistake, wrap them with the sequence number(i.e. 1this1). So, each next mistakes increments the number by 1. If one mistake contains two or more words, enclose them altogether with a single pair of a sequence number(i.e. 2like that2).
+    Step 1 - In the 'original_text' identify all of the words that contain grammar mistake and wrap them with the sequence number(i.e. 1example1). So, each next mistakes increments the sequence number by 1. If one mistake contains two or more words, enclose them altogether with a single pair of a sequence number(i.e. 2enclose like that2).
 
-    Step 2 - Store all of the found grammar mistakes into the 'grammar_mistakes' list wrapped in the sequence number.
+    Step 2 - Store all of the found grammar mistakes each wrapped with a sequence number into the 'grammar_mistakes' list.
 
     Step 3 - Provide corrected versions of the words containing grammar mistakes as shown in the example dictionary.
 
@@ -494,7 +488,7 @@ def grading_results():
         except AttributeError as err:
             print(err)
 
-    print(original_text)
+    print(original_text) # test
 
     #linking and repetitive words
     def count_and_replace(words, html_line, original_text, marker):
@@ -517,7 +511,8 @@ def grading_results():
     unnecessary_words_count, final_original_text = count_and_replace(unnecessary_words, "<span class='jsx-2310580937 unnecessary-word'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{}</span><span class='jsx-1879403401'></span></div></span>", repetative_original_text, "-")
 
     result_text = final_original_text
-    print(f"\n\n{result_text}\n\n")
+
+    print(f"\n\n{result_text}\n\n") # test
 
     sidebar_comments = []
 
@@ -538,7 +533,6 @@ def grading_results():
         sidebar_comments.append(html_line)
     
     data = (topic, result_text, paragraphs_count, words_count, grammar_mistakes_count, linking_words_count, repetitive_words_count, submitted_by, band_score, sidebar_comments, current_date, unnecessary_words_count)
-
     
     db_store(data, "essay_logs")
 
@@ -556,7 +550,7 @@ def view_logs(id):
 
     logs = db_retrieve(file_id=id, db="essay_logs")
     
-    print(logs)
+    print(logs) # test
 
     essay = logs[1]
     result_text = (essay.tobytes().decode('utf-8')).strip("{ }")
@@ -649,7 +643,7 @@ def RunOpenAI(prompt, content):
         max_tokens=16000,
         )
 
-    response = response.choices[0].message.content #tapping into the content of response
+    response = response.choices[0].message.content #tapping into the content of the response
     
     return response
 
