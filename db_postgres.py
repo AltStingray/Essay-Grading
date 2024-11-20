@@ -64,7 +64,7 @@ def db(command):
 
         #cursor.execute("""ALTER TABLE essay_logs RENAME COLUMN date TO time""")
 
-        cursor.execute("""ALTER TABLE Logs ALTER COLUMN uploat_time TYPE DATE""")
+        #cursor.execute("""ALTER TABLE Logs ALTER COLUMN uploat_time TYPE DATE""")
 
         #cursor.execute("""UPDATE Logs SET id = 1 WHERE id = 6;""")
 
