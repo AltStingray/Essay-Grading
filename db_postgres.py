@@ -65,6 +65,8 @@ def db(command):
         #cursor.execute("""ALTER TABLE essay_logs RENAME COLUMN date TO time""")
 
         #cursor.execute("""ALTER TABLE essay_logs ALTER COLUMN time TYPE DATE""")
+        
+        cursor.execute("""ALTER TABLE Logs SET datestyle = dmy;""")
 
         db_conn.commit()
 
@@ -96,7 +98,15 @@ def db(command):
 
         cursor.close()
         db_conn.close()
+        
+    elif command == "set_datetime":
 
+        cursor.execute("""ALTER TABLE Logs SET datestyle = dmy;""")
+
+        db_conn.commit()
+
+        cursor.close()
+        db_conn.close()
     else:
         pass
 
