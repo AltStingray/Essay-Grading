@@ -358,6 +358,9 @@ def grading_queue():
         "paragraphs_count": "paragraphs_count",
         "grammar_mistakes": ["1list1", "2of2", "3words3", "4that4", "5contain5", "6a6", "7mistake7", "8and8", "9wrapped9", "10in10", "11sequence11", "12number12"],
         "corrected_words": ["corrected version of the word 1 (grammar rule 1)", "corrected version of the word 2 (grammar rule 2)", "..."],
+        "linking_words": ["#list#", "#of#", "#all#", "#linking#", "#words#"],
+        "repetitive_words": ["^list^", "^of^", "^all^", "^repetitive^", "^words^"],
+        "unnecessary_words": ["-list-", "-of-", "-all-", "-unnecessary-", "-words-"], 
         "submitted_by": "submitted_by",
         "overall_band_score": "overall_band_score(float value)",
     }
@@ -386,8 +389,6 @@ def grading_queue():
 
     '''
     Linking words definition: 'Linking words, also known as transition words, are words and phrases like 'however', 'on the other hand', 'besides' or 'in conclusion' that connect clauses, sentences, paragraphs, or other words.'
-    
-    "linking_words": ["#list#", "#of#", "#all#", "#linking#", "#words#"]
 
     Step 3 - In the 'original_text' identify all of the linking words and wrap them with the '#' mark. If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#'.
 
@@ -396,8 +397,6 @@ def grading_queue():
 
     '''
     Repetitive words definition: 'Repetitive words, are the words in the candidate's text which get repeated more than 4 times per text. For example, if the word 'people', "like", "well" or "obviously" appears in text more than 4 times, it is considered a repetitive word and should be marked with '^'.'
-
-    "repetitive_words": ["^list^", "^of^", "^all^", "^repetitive^", "^words^"],
 
     Step 5 - In the 'original_text' identify all of the repetitive words and wrap them with the '^' mark. If not single word but sentence gets repeated many times wrap it with the '^' mark(i.e. ^social media^).
 
@@ -418,8 +417,6 @@ def grading_queue():
     Example: "Our duty was to clean and to wash." to "We cleaned and washed." 
     Circumlocutions: Avoid lengthy phrases that can be said in fewer words. 
     Example: "Owing to the fact that..." to "Since..." In short, aim for direct, simplified wording by cutting out filler expressions.'
-
-    "unnecessary_words": ["-list-", "-of-", "-all-", "-unnecessary-", "-words-"], 
     
     Step 7 - In the 'original_text' identify all of the unnecessary words and wrap them with the '-' mark. 
 
@@ -476,10 +473,10 @@ def grading_results():
     grammar_mistakes = result["grammar_mistakes"]
     corrected_words = result["corrected_words"]
     submitted_by = result["submitted_by"]
-    #linking_words = result["linking_words"]
-    #repetitive_words = result["repetitive_words"]
+    linking_words = result["linking_words"]
+    repetitive_words = result["repetitive_words"]
     band_score = result["overall_band_score"]
-    #unnecessary_words = result["unnecessary_words"]
+    unnecessary_words = result["unnecessary_words"]
     current_date = datetime.now().strftime("%d-%m-%Y")
     words_count = len(original_text.split())
 

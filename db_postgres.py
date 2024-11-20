@@ -70,7 +70,7 @@ def db(command):
 
         #cursor.execute("""UPDATE Logs SET teacher = 'Carol' WHERE id = 2;""")
         
-        cursor.execute("""ALTER DATABASE d5o8488ckdvb82 SET datestyle = 'DMY'""")
+        #cursor.execute("""ALTER DATABASE d5o8488ckdvb82 SET datestyle = 'DMY'""")
 
         db_conn.commit()
 
