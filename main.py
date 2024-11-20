@@ -489,7 +489,7 @@ def grading_results():
 
                 nums_str = ""
                 for n in range(50):
-                    nums_str += n
+                    nums_str += str(n)
 
                 stripped_word = word.strip(nums_str)
 
