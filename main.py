@@ -488,8 +488,8 @@ def grading_results():
             if word == re_word.group():
 
                 nums_str = ""
-                for n in range(50):
-                    nums_str += str(n)
+                for str_n in range(50):
+                    nums_str += str(str_n)
 
                 stripped_word = word.strip(nums_str)
 
