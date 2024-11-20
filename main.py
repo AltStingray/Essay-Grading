@@ -151,9 +151,13 @@ def results():
 
         result = job.return_value()
 
+        #result = "r" + result + "r"
+
         print(result)
 
         strip_summary = strip(result)
+
+        print(strip_summary)
 
         summary_report = json.loads(strip_summary)
 
