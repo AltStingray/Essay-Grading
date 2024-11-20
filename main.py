@@ -39,7 +39,7 @@ q = Queue(connection=conn)
 #db("create")
 
 #db("delete_data")
-#db("alter")
+db("alter")
 
 db("print")
 
@@ -237,12 +237,17 @@ def history():
         report_dict.update({"teacher": logs[6]})
 
         reports.append(report_dict)
-    print(reports) # test
+
     if sort_by == "high-low":
 
-        reports.reverse()
+        def high_low(e):
+            
+            return e["id"]
+        
+        reports.sort(reverse=True, key=high_low)
         
         return render_template("history.html", log="summary_report", reports=reports, sort_by="High-Low")
+    
     elif sort_by == "date-new":
 
         def sort_by_new(e):
@@ -263,6 +268,12 @@ def history():
 
         return render_template("history.html", log="summary_report", reports=reports, sort_by="Date-Old")
     else:
+
+        def low_high(e):
+            
+            return e["id"]
+        
+        reports.sort(key=low_high)
 
         return render_template("history.html", log="summary_report", reports=reports, sort_by="Low-High")
 
