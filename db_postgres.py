@@ -180,7 +180,7 @@ def db_retrieve(file_id, db):
 
     if db == "Logs":
 
-        cursor.execute("SELECT summary, transcription, filename, summary_html, link, time, teacher FROM Logs WHERE id = %s", (str(file_id)))
+        cursor.execute("SELECT summary, transcription, filename, summary_html, link, time, teacher, client_email, client_name FROM Logs WHERE id = %s", (str(file_id)))
 
         file = cursor.fetchone()
 
