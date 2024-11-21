@@ -9,7 +9,7 @@ def send_email(user_email, html_content):
 
     smtp.starttls()
 
-    email_password = "u99W1dmlHBPLsIPX"
+    email_password = "u99W1dmIHBPLsIPX"
 
     smtp.login("oetspeakingsummary@gmail.com", email_password)
 

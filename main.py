@@ -384,7 +384,7 @@ def grading_queue():
 
     Step 2 - Store all of the found grammar mistakes each wrapped with a sequence number into the 'grammar_mistakes' list.
 
-    Step 3 - Provide corrected versions of the words containing grammar mistakes as shown in the example dictionary. You should display the correct word and next to it in the curly brackets point on the broken grammar rule of the mistake, like so: "these subjects(<grammar rule>)".
+    Step 3 - Provide corrected versions of the words containing grammar mistakes as shown in the example dictionary. You should display the correct word and next to it in the curly brackets point on the broken grammar rule of the mistake, like so: "these subjects (grammar rule)".
 
     Finally, return the modified dictionary from the example with the modified 'original_text', newly created 'grammar_mistakes' and 'corrected_words'.
     '''

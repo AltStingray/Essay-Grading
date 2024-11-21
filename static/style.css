@@ -156,7 +156,7 @@ a.article-title:hover {
 
 .sidebar {
   width: 300px;
-  margin-top: 200px;
+  margin-top: 300px;
   margin-right: 20;
 }
 
@@ -420,7 +420,7 @@ p {
 .sidebar-comments {
   padding: 20px 0px 20px;
   border-bottom: 1px dashed rgb(193, 193, 193);
-  height: 250px; 
+  height: 500px; 
   overflow-y: scroll;
 }
 
