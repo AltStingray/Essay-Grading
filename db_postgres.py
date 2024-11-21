@@ -54,7 +54,7 @@ def db(command):
 
         #cursor.execute("""ALTER TABLE essay_logs ADD unnecessary_words_count BYTEA NOT NULL""")
 
-        cursor.execute("""ALTER TABLE Logs ADD client_email VARCHAR(255)""")
+        #cursor.execute("""ALTER TABLE Logs ADD client_email VARCHAR(255)""")
         #cursor.execute("""ALTER TABLE Logs ADD time DATE""")
         cursor.execute("""ALTER TABLE Logs ADD client_name VARCHAR(255)""")
 
