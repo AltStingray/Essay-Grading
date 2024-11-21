@@ -75,9 +75,13 @@ def db(command):
         UPDATE Logs SET client_email = 'dr.shqazi@gmail.com' WHERE id = 2;
         UPDATE Logs SET client_name = 'Kazia' WHERE id = 2;
         UPDATE Logs SET client_email = 'lion3148@naver.com' WHERE id = 3;
-        UPDATE Logs SET client_email = 'Lee' WHERE id = 3;
+        UPDATE Logs SET client_name = 'Lee' WHERE id = 3;
         """
         #cursor.execute(add_clients)
+
+        fix = """ UPDATE Logs SET client_email = 'lion3148@naver.com' WHERE id = 3;
+        UPDATE Logs SET client_name = 'Lee' WHERE id = 3;"""
+        cursor.execute(fix)
         
         #cursor.execute("""UPDATE Logs SET client_email = 'drlamiaazizova@gmail.com' WHERE id = 1;""")
         
