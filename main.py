@@ -310,7 +310,6 @@ def email_to():
     user_email = request.args.get("email")
 
     id = request.args.get("id")
-    print(id)
 
     logs = db_retrieve(file_id=id, db="Logs")
 
@@ -320,7 +319,7 @@ def email_to():
         <head>
         </head>
         <body>
-            <img src="cid:header_image" style="width:100%; max-width: 600px;" alt="Benchmark Education Solutions logo">
+            <img src="cid:header_image" style="width:100%; max-width: 400px;" alt="Benchmark Education Solutions logo">
             {(logs[3].tobytes().decode('utf-8')).strip("{ }")}
             Visit us for more information: 
             <br>
@@ -328,7 +327,8 @@ def email_to():
             <br> 
             www.facebook.com/pteoetielts 
             <br> 
-            https://www.facebook.com/groups/oethelp/</body>
+            https://www.facebook.com/groups/oethelp/
+        </body>
     </html>"""
 
     send_email(user_email, html)
@@ -384,7 +384,7 @@ def grading_queue():
 
     Step 2 - Store all of the found grammar mistakes each wrapped with a sequence number into the 'grammar_mistakes' list.
 
-    Step 3 - Provide corrected versions of the words containing grammar mistakes as shown in the example dictionary.
+    Step 3 - Provide corrected versions of the words containing grammar mistakes as shown in the example dictionary. You should display the correct word and next to it in the curly brackets point on the broken grammar rule of the mistake, like so: "these subjects(<grammar rule>)".
 
     Finally, return the modified dictionary from the example with the modified 'original_text', newly created 'grammar_mistakes' and 'corrected_words'.
     '''
