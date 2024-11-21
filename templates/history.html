@@ -15,15 +15,17 @@
                     <!--Sorting button-->
                     <div class="sort_button" style="float: left;">
                         {% if sort_by=="Low-High" %}
-                            <a href="{{ url_for('history', sort_by='high-low')}}" class="button2">Sort by: # Low-High</a></li>
+                            <a href="{{ url_for('history', sort_by='high-low')}}" class="button2">Sort by: # Low-High</a>
                         {% elif sort_by=="High-Low" %}
-                            <a href="{{ url_for('history', sort_by='date-new')}}" class="button2">Sort by: # High-Low</a></li>
+                            <a href="{{ url_for('history', sort_by='date-new')}}" class="button2">Sort by: # High-Low</a>
                         {% elif sort_by=="Date-New" %}
-                            <a href="{{ url_for('history', sort_by='date-old')}}" class="button2">Sort by: Date-New</a></li>
+                            <a href="{{ url_for('history', sort_by='date-old')}}" class="button2">Sort by: Date-New</a>
                         {% elif sort_by=="Date-Old" %}
-                            <a href="{{ url_for('history', sort_by='low-high')}}" class="button2">Sort by: Date-Old</a></li>
+                            <a href="{{ url_for('history', sort_by='low-high')}}" class="button2">Sort by: Date-Old</a>
                         {% endif %}
                     </div>
+                    
+                    <a href="{{ url_for('authorize', auth='summary_logs') }}" class="button2">Create Summary Report</a>
 
                     <table class="table table-hover">
                         <thead>
@@ -32,6 +34,8 @@
                                 <th>Date</th>
                                 <th>URL</th>
                                 <th>Teacher</th>
+                                <th>Client</th>
+                                <th>Client's email</th>
                                 <th>Summary</th>
                                 <th>Transcript</th>
                                 <th>Send to</th>
@@ -51,6 +55,8 @@
                                         <td>Dropbox Link</td>
                                     {% endif %}
                                     <td>{{one["teacher"]}}</td>
+                                    <td>{{one["client_name"]}}</td>
+                                    <td>{{one["client_email"]}}</td>
                                     <td><a href="{{ url_for('logs_download', id=id, name='Summary report.html') }}" target="_blank">Summary</a></td>
                                     <td><a href="{{ url_for('logs_download', id=id, name='Transcription.odt') }}">Transcript</a></td>
                                     <form action="/email_to" onsubmit="handleFormSubmission(event)" method="get">

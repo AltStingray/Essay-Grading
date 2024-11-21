@@ -24,7 +24,7 @@
             </form>
         {% elif name == "prompt" %}
             <h2>Specify your custom prompt: </h2>
-            <form action="/default" method="get">
+            <form action="/custom_prompt" method="get">
                 <textarea type="text" name="prompt" rows="8", cols="80" placeholder="Custom GPT prompt:"></textarea><br><br>
                 <input type="submit" class="button2" value="Submit"><br><br>
                 Default GPT prompt example:<br>
@@ -32,15 +32,16 @@
                 <br><br>
             </form>
         {% elif name == "link" %}
-            <h2>Prompt selected.</h2>
-            <br>
             <form action="/processing" method="get">
-                <input type="text" name="link" placeholder="Dropbox video link:" size="40">
+                <input type="text" name="link" placeholder="Dropbox video link:" size="40" required>
                 <br><br>
                 <input type="text" name="date" placeholder="Date(optional):" size="30">
                 <br><br>
                 <input type="text" name="teacher" placeholder="Teacher's name(optional):" size="20">
                 <br><br>
+                <input type="text" name="client_email" placeholder="Client's email(optional):" size="20">
+                <br><br>
+                <input type="text" name="client" placeholder="Client's name(optional):" size="20">
                 <input type="submit" class="button2" value="Submit">
             </form>
         {% endif %}

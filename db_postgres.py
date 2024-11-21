@@ -54,13 +54,13 @@ def db(command):
 
         #cursor.execute("""ALTER TABLE essay_logs ADD unnecessary_words_count BYTEA NOT NULL""")
 
-        #cursor.execute("""ALTER TABLE Logs ADD link VARCHAR(255)""")
+        cursor.execute("""ALTER TABLE Logs ADD client_email VARCHAR(255)""")
         #cursor.execute("""ALTER TABLE Logs ADD time DATE""")
-        #cursor.execute("""ALTER TABLE Logs ADD teacher VARCHAR(255)""")
+        cursor.execute("""ALTER TABLE Logs ADD client_name VARCHAR(255)""")
 
-       # cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 3""")
+        #cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 3""")
         
-        cursor.execute("""ALTER SEQUENCE essay_logs_id_seq RESTART WITH 1""")
+        #cursor.execute("""ALTER SEQUENCE essay_logs_id_seq RESTART WITH 1""")
 
         #cursor.execute("""ALTER TABLE essay_logs RENAME COLUMN date TO time""")
 
@@ -69,6 +69,13 @@ def db(command):
         #cursor.execute("""UPDATE Logs SET id = 1 WHERE id = 6;""")
 
         #cursor.execute("""UPDATE Logs SET teacher = 'Carol' WHERE id = 2;""")
+
+        cursor.execute("""UPDATE Logs SET client_email = 'drlamiaazizova@gmail.com' WHERE id = 1;""")
+        cursor.execute("""UPDATE Logs SET client_name = 'Lamia' WHERE id = 1;""")
+        cursor.execute("""UPDATE Logs SET client_email = 'dr.shqazi@gmail.com' WHERE id = 2;""")
+        cursor.execute("""UPDATE Logs SET client_name = 'Kazia' WHERE id = 2;""")
+        cursor.execute("""UPDATE Logs SET client_email = 'lion3148@naver.com' WHERE id = 3;""")
+        cursor.execute("""UPDATE Logs SET client_email = 'Lee' WHERE id = 3;""")
         
         #cursor.execute("""ALTER DATABASE d5o8488ckdvb82 SET datestyle = 'DMY'""")
 
@@ -127,7 +134,7 @@ def db_store(data, db_name):
     cursor = db_conn.cursor()
 
     if db_name == "logs":
-        insert_sql = f"""INSERT INTO {db_name}(summary, transcription, filename, summary_html, link, time, teacher) VALUES (%s, %s, %s, %s, %s, (TO_DATE(%s, 'DD-MM-YYYY')), %s);"""
+        insert_sql = f"""INSERT INTO {db_name}(summary, transcription, filename, summary_html, link, time, teacher, client_email, client_name) VALUES (%s, %s, %s, %s, %s, (TO_DATE(%s, 'DD-MM-YYYY')), %s, %s, %s);"""
     else:
         insert_sql = f"""INSERT INTO {db_name}(topic, essay, paragraphs_count, words_count, grammar_mistakes, linking_words_count, repetative_words_count, submitted_by, overall_band_score, sidebar_comments, time, unnecessary_words_count) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, (TO_DATE(%s, 'DD-MM-YYYY')), %s)"""
 
@@ -182,8 +189,10 @@ def db_retrieve(file_id, db):
             link = file[4]
             time = file[5]
             teacher = file[6]
+            client_email = file[7]
+            client_name = file[8]
 
-            return [summary, transcription, filename, summary_html, link, time, teacher]
+            return [summary, transcription, filename, summary_html, link, time, teacher, client_email, client_name]
         
     elif db == "essay_logs":
 

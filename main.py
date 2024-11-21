@@ -38,7 +38,7 @@ q = Queue(connection=conn)
 #delete_table("essay_logs")
 #db("create")
 
-db("delete_data")
+#db("delete_data")
 db("alter")
 
 db("print")
@@ -59,7 +59,12 @@ def summary_report():
 @app.route('/authorize')
 def authorize():
 
-    return redirect(dropbox_module.redirect_link)
+    auth_from = request.args.get("auth")
+
+    if auth_from == "summary_logs":
+        return redirect(dropbox_module.redirect_link_summary_logs)
+    else:
+        return redirect(dropbox_module.redirect_link_start)
 
 
 @app.route('/start')
@@ -106,7 +111,7 @@ def own():
         return render_template('summary_report.html', name="prompt", default_prompt=default_prompt)
 
 
-@app.route('/default')
+@app.route('/custom_prompt')
 def default():
 
     prompt = request.args.get("prompt")
@@ -125,11 +130,15 @@ def processing():
 
     teacher_name = request.args.get("teacher")
 
+    client_name = request.args.get("client")
+
+    client_email = request.args.get("client_email")
+
     access_token = session.get("access_token")
     
     prompt = session.pop("prompt", None) # because of the pop() this line won't trigger TypeError. It deletes the value in a session and returns it. Specified None here means that the value of "prompt" key doesn't matter. If the value is None or Str - doesn't matter.
 
-    job = q.enqueue(main, link, date, teacher_name, access_token, prompt) # enque main function and it's parameters to execute in the background
+    job = q.enqueue(main, link, date, teacher_name, client_name, client_email, access_token, prompt) # enque main function and it's parameters to execute in the background
 
     job_id=job.get_id() # get id of the job that is in process 
 
@@ -140,7 +149,8 @@ def processing():
 
 @app.route('/results', methods=["GET", "POST"])
 def results():
-
+    '''Waiting for the completion of the queried job.'''
+    
     job_id = session["job_id"]
 
     job = Job.fetch(job_id, connection=conn)
@@ -151,26 +161,25 @@ def results():
 
         result = job.return_value()
 
-        print(result)
+        #print(result) # test
 
         strip_summary = strip(result)
 
-        print(strip_summary)
+        #print(strip_summary) # test
 
         summary_report = json.loads(strip_summary)
 
         filename = result[2].replace(".mp4", "")
-
         link = result[3]
-
         specified_date = result[4]
-
         teacher = result[5]
+        client_email = result[6]
+        client_name = result[7]
 
         if teacher == None or teacher == "":
             teacher = summary_report["teacher"]
 
-        data = (summary_report["text"], result[1], filename, summary_report["html"], link, specified_date, teacher)
+        data = (summary_report["text"], result[1], filename, summary_report["html"], link, specified_date, teacher, client_email, client_name)
 
         db_store(data, "logs")
 
@@ -218,6 +227,7 @@ def download():
 
 @app.route('/summary/log')
 def history():
+    '''Displaying the logs of the submitted summary reports'''
 
     sort_by = request.args.get("sort_by")
 
@@ -230,11 +240,13 @@ def history():
         report_dict = {}
 
         logs = db_retrieve(file_id=id, db="Logs")
-        
+
         report_dict.update({"id": id})
-        report_dict.update({"date": logs[5]})
         report_dict.update({"url": logs[4]})
+        report_dict.update({"date": logs[5]})
         report_dict.update({"teacher": logs[6]})
+        report_dict.update({"client_email": logs[7]})
+        report_dict.update({"client_name": logs[8]})
 
         reports.append(report_dict)
 
@@ -605,7 +617,9 @@ def register():
     return render_template('register.html')
 
 
-def main(link, specified_date, teacher_name, access_token, user_prompt):
+def main(link, specified_date, teacher_name, client_name, client_email, access_token, user_prompt):
+    '''Main function of the summary report generation. It takes 5 paramethers: (1)dropboxlink, (2)specified date by the user,
+    (3)specified teacher's name, (4)Dropbox access token to download the file, (5)Specified prompt by the user.'''
 
     #Downloading the video
     downloaded_video, filename = (dropbox_module.download_file(link, access_token))
@@ -639,7 +653,7 @@ def main(link, specified_date, teacher_name, access_token, user_prompt):
 
     filename = filename.replace(".mp4", "")
 
-    f_list = [summary_report, transcription, filename, link, specified_date, teacher_name]
+    f_list = [summary_report, transcription, filename, link, specified_date, teacher_name, client_email, client_name]
     
     return f_list
 
