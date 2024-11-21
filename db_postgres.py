@@ -70,15 +70,16 @@ def db(command):
         #cursor.execute("""UPDATE Logs SET teacher = 'Carol' WHERE id = 2;""")
 
         add_clients = """ 
-        UPDATE Logs SET client_email = 'drlamiaazizova@gmail.com' WHERE id = 1
+        UPDATE Logs SET client_email = 'drlamiaazizova@gmail.com' WHERE id = 1;
         UPDATE Logs SET client_name = 'Lamia' WHERE id = 1;
         UPDATE Logs SET client_email = 'dr.shqazi@gmail.com' WHERE id = 2;
         UPDATE Logs SET client_name = 'Kazia' WHERE id = 2;
         UPDATE Logs SET client_email = 'lion3148@naver.com' WHERE id = 3;
         UPDATE Logs SET client_email = 'Lee' WHERE id = 3;
         """
+        #cursor.execute(add_clients)
+        
         #cursor.execute("""UPDATE Logs SET client_email = 'drlamiaazizova@gmail.com' WHERE id = 1;""")
-        cursor.execute(add_clients)
         
         #cursor.execute("""ALTER DATABASE d5o8488ckdvb82 SET datestyle = 'DMY'""")
 
