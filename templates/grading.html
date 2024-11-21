@@ -29,7 +29,7 @@
             </div>
             <div class="col-md-3">
                 <aside class="sidebar" style="place-items: right;">
-                    <div class="sidebar-comments" style="height: 120px; max-height: 150px; overflow-y:scroll;">
+                    <div class="sidebar-comments">
                         {% for one in corrected_words %}
                             {{one|safe}}
                         {% endfor %}
@@ -92,10 +92,15 @@
         </div>
     {% elif name == "wait" %}
         <div class="row">
-            <div class="col-md-12" style="padding: 0px 0px 0px 120px;">
-                <h1>Essay Grading</h1>
-                <p>Processing the submitted text, please wait... <div class="loader"></div></p>
-                <meta http-equiv="refresh" content="0; url=https://benchmark-summary-report-eae227664887.herokuapp.com/grading/processing"/>
+            <div class="col-md-12">
+                <div class="processing text-center">
+                    <h1>Essay Grading</h1>
+                    <p>Processing the submitted text, please wait...
+                    <div class="loader-container" style="padding: 10px;">
+                        <div class="loader"></div></p>
+                    </div>
+                    <meta http-equiv="refresh" content="0; url=https://benchmark-summary-report-eae227664887.herokuapp.com/grading/processing"/>
+                </div>
             </div>
         </div>
     {% else %}
