@@ -420,7 +420,7 @@ p {
 .sidebar-comments {
   padding: 260px 0px 20px;
   border-bottom: 1px dashed rgb(193, 193, 193);
-  height: auto; 
+  height: 150px; 
   overflow-y: scroll;
 }
 

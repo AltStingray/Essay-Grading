@@ -365,6 +365,8 @@ def grading_queue():
         "overall_band_score": "overall_band_score(float value)",
     }
 
+    #prompts = [prompt, prompt2]
+
     prompt = f'''
     Introduction: You are an IETLS teacher that provides feedback on candidate's essays. 
     You are given a topic and an essay text based on this topic delimited by triple quotes. 
