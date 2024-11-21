@@ -56,7 +56,6 @@ def db(command):
 
         #cursor.execute("""ALTER TABLE Logs ADD client_email VARCHAR(255)""")
         #cursor.execute("""ALTER TABLE Logs ADD time DATE""")
-        cursor.execute("""ALTER TABLE Logs ADD client_name VARCHAR(255)""")
 
         #cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 3""")
         
@@ -70,12 +69,16 @@ def db(command):
 
         #cursor.execute("""UPDATE Logs SET teacher = 'Carol' WHERE id = 2;""")
 
-        cursor.execute("""UPDATE Logs SET client_email = 'drlamiaazizova@gmail.com' WHERE id = 1;""")
-        cursor.execute("""UPDATE Logs SET client_name = 'Lamia' WHERE id = 1;""")
-        cursor.execute("""UPDATE Logs SET client_email = 'dr.shqazi@gmail.com' WHERE id = 2;""")
-        cursor.execute("""UPDATE Logs SET client_name = 'Kazia' WHERE id = 2;""")
-        cursor.execute("""UPDATE Logs SET client_email = 'lion3148@naver.com' WHERE id = 3;""")
-        cursor.execute("""UPDATE Logs SET client_email = 'Lee' WHERE id = 3;""")
+        add_clients = """ 
+        UPDATE Logs SET client_email = 'drlamiaazizova@gmail.com' WHERE id = 1
+        UPDATE Logs SET client_name = 'Lamia' WHERE id = 1;
+        UPDATE Logs SET client_email = 'dr.shqazi@gmail.com' WHERE id = 2;
+        UPDATE Logs SET client_name = 'Kazia' WHERE id = 2;
+        UPDATE Logs SET client_email = 'lion3148@naver.com' WHERE id = 3;
+        UPDATE Logs SET client_email = 'Lee' WHERE id = 3;
+        """
+        #cursor.execute("""UPDATE Logs SET client_email = 'drlamiaazizova@gmail.com' WHERE id = 1;""")
+        cursor.execute(add_clients)
         
         #cursor.execute("""ALTER DATABASE d5o8488ckdvb82 SET datestyle = 'DMY'""")
 
