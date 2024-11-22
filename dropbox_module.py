@@ -17,7 +17,7 @@ def authorization(auth_code):
             "grant_type": "authorization_code",
             "client_id": CLIENT_ID,
             "client_secret": CLIENT_SECRET,
-            "redirect_uri": "https://benchmark-summary-report-eae227664887.herokuapp.com/start"
+            #"redirect_uri": "https://benchmark-summary-report-eae227664887.herokuapp.com/start"
         }
     )
 
