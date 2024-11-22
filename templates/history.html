@@ -68,7 +68,7 @@
                                     <form action="/email_to" onsubmit="handleFormSubmission(event)" method="get">
                                         <td><input type="text" name="email" placeholder="Email address: " required></td>
                                         <input type="hidden" name="id" value="{{ id }}">
-                                        {% if one["sent"] == "True" %}
+                                        {% if one["sent"] == True %}
                                             <td><input type="submit" class="button2" value="Sent" style="color: green;"></td>
                                         {% else %}
                                             <td><input type="submit" class="button2" value="Send"></td>
