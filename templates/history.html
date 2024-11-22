@@ -12,22 +12,23 @@
                 {% if log == "summary_report" %}
                     <h1 style="margin: 10px;">Summary report logs</h1>
                     <br>
-
-                    <!--Sorting button-->
-                    <div class="sort_button" style="float: left;">
-                        {% if sort_by=="Low-High" %}
-                            <a href="{{ url_for('history', sort_by='high-low')}}" class="button2">Sort by: # Low-High</a>
-                        {% elif sort_by=="High-Low" %}
-                            <a href="{{ url_for('history', sort_by='date-new')}}" class="button2">Sort by: # High-Low</a>
-                        {% elif sort_by=="Date-New" %}
-                            <a href="{{ url_for('history', sort_by='date-old')}}" class="button2">Sort by: Date-New</a>
-                        {% elif sort_by=="Date-Old" %}
-                            <a href="{{ url_for('history', sort_by='low-high')}}" class="button2">Sort by: Date-Old</a>
-                        {% endif %}
-                    </div>
-                    <!--Create Summary button-->
-                    <div class="create_summary_button" style="float: right;">
-                        <a href="{{ url_for('authorize', auth='summary_logs') }}" class="button2">Create Summary Report</a>
+                    <div class="top buttons" style="display: flex;">
+                        <!--Sorting button-->
+                        <div class="sort_button" style="float: left;">
+                            {% if sort_by=="Low-High" %}
+                                <a href="{{ url_for('history', sort_by='high-low')}}" class="button2">Sort by: # Low-High</a>
+                            {% elif sort_by=="High-Low" %}
+                                <a href="{{ url_for('history', sort_by='date-new')}}" class="button2">Sort by: # High-Low</a>
+                            {% elif sort_by=="Date-New" %}
+                                <a href="{{ url_for('history', sort_by='date-old')}}" class="button2">Sort by: Date-New</a>
+                            {% elif sort_by=="Date-Old" %}
+                                <a href="{{ url_for('history', sort_by='low-high')}}" class="button2">Sort by: Date-Old</a>
+                            {% endif %}
+                        </div>
+                        <!--Create Summary button-->
+                        <div class="create_summary_button" style="justify-content: center;">
+                            <a href="{{ url_for('authorize', auth='summary_logs') }}" class="button2">Create Summary Report</a>
+                        </div>
                     </div>
                     <table class="table table-hover">
                         <thead>
@@ -66,13 +67,13 @@
                                         <input type="hidden" name="id" value="{{ id }}">
                                         <td><input type="submit" class="button2" value="Send"></td>
                                     </form>
-                                    <!-- Success message -->
-                                    <div id="success-message" style="display: none; color: green;">
-                                        Email has been sent successfully!
-                                    </div>
                                 </tr>
                             </tbody>
                         {% endfor %}
+                        <!-- Success message -->
+                        <div id="success-message" style="display: none; color: green;">
+                            Email has been sent successfully!
+                        </div>
                     </table>
                 {% elif log == "essay_grading" %}
                     <p1>List of all available Essay Gradings:</p1>
