@@ -256,6 +256,7 @@ def history():
         report_dict.update({"teacher": logs[6]})
         report_dict.update({"client_email": logs[7]})
         report_dict.update({"client_name": logs[8]})
+        report_dict.update({"send": logs[9]})
 
         reports.append(report_dict)
 
@@ -332,7 +333,7 @@ def email_to():
 
     id = request.args.get("id")
 
-    logs = db_retrieve(file_id=id, db="Logs")
+    #logs = db_retrieve(file_id=id, db="Logs")
 
     #plain_text = (str(logs[0], "utf-8"))
 
@@ -340,6 +341,8 @@ def email_to():
         html = file.read()
 
     send_email(user_email, html)
+
+    sent_email(id)
 
     return redirect("/summary/log")
 

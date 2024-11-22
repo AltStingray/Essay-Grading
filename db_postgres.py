@@ -56,6 +56,7 @@ def db(command):
 
         #cursor.execute("""ALTER TABLE Logs ADD client_email VARCHAR(255)""")
         #cursor.execute("""ALTER TABLE Logs ADD time DATE""")
+        cursor.execute("""ALTER TABLE Logs ADD sent BOOLEAN FALSE""")
 
         #cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 3""")
         
@@ -78,10 +79,6 @@ def db(command):
         UPDATE Logs SET client_name = 'Lee' WHERE id = 3;
         """
         #cursor.execute(add_clients)
-
-        fix = """ UPDATE Logs SET client_email = 'lion3148@naver.com' WHERE id = 3;
-        UPDATE Logs SET client_name = 'Lee' WHERE id = 3;"""
-        cursor.execute(fix)
         
         #cursor.execute("""UPDATE Logs SET client_email = 'drlamiaazizova@gmail.com' WHERE id = 1;""")
         
@@ -93,7 +90,7 @@ def db(command):
         db_conn.close()
 
         return "Altered successfully!"
-
+    
     elif command == "delete_data":
 
         #cursor.execute(f"DELETE FROM Logs WHERE id IN ('1', '2', '3', '4', '5')")
@@ -120,7 +117,21 @@ def db(command):
     else:
         pass
 
+def sent_email(id):
+
+    db_conn = psycopg2.connect(DATABASE)
+
+    cursor = db_conn.cursor()
+
+    cursor.execute(f"UPDATE Logs SET sent = 'True' WHERE id = {id}")
+
+    db_conn.commit()
+
+    cursor.close()
+    db_conn.close()
+
 def delete_table(table_name):
+
     db_conn = psycopg2.connect(DATABASE)
 
     db_conn.autocommit = True
@@ -184,7 +195,7 @@ def db_retrieve(file_id, db):
 
     if db == "Logs":
 
-        cursor.execute("SELECT summary, transcription, filename, summary_html, link, time, teacher, client_email, client_name FROM Logs WHERE id = %s", (str(file_id)))
+        cursor.execute("SELECT summary, transcription, filename, summary_html, link, time, teacher, client_email, client_name, sent FROM Logs WHERE id = %s", (str(file_id)))
 
         file = cursor.fetchone()
 
@@ -199,8 +210,9 @@ def db_retrieve(file_id, db):
             teacher = file[6]
             client_email = file[7]
             client_name = file[8]
+            send = file[9]
 
-            return [summary, transcription, filename, summary_html, link, time, teacher, client_email, client_name]
+            return [summary, transcription, filename, summary_html, link, time, teacher, client_email, client_name, send]
         
     elif db == "essay_logs":
 
