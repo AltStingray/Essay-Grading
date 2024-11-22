@@ -256,7 +256,7 @@ def history():
         report_dict.update({"teacher": logs[6]})
         report_dict.update({"client_email": logs[7]})
         report_dict.update({"client_name": logs[8]})
-        report_dict.update({"send": logs[9]})
+        report_dict.update({"sent": logs[9]})
 
         reports.append(report_dict)
 
@@ -344,7 +344,7 @@ def email_to():
     with open("templates/email_template.html", "r", encoding="utf-8") as file:
         html = file.read()
 
-        html.format(date=date, summary_report_content=summary_report)
+        html = html % (date, summary_report)
 
     send_email(user_email, html)
 
