@@ -16,6 +16,7 @@ from moviepy.editor import *
 from openai import OpenAI
 from db_postgres import *
 from datetime import datetime
+from jinja2 import Template
 
 OPENAI_API_KEY = os.environ.get("N_OPENAI_API_KEY")
 
@@ -342,9 +343,12 @@ def email_to():
     summary_report = (logs[3].tobytes().decode('utf-8')).strip("{ }")
 
     with open("templates/email_template.html", "r", encoding="utf-8") as file:
-        html = file.read()
+        template = Template(file.read())
 
-        html = html % (date, summary_report)
+        html = template.render(
+            summary_report_content = summary_report,
+            date=date
+        )
 
     send_email(user_email, html)
 
