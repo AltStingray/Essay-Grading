@@ -7,7 +7,7 @@ CLIENT_SECRET = os.environ.get("DROPBOX_CLIENT_SECRET")
 redirect_link_start = f"https://www.dropbox.com/oauth2/authorize?client_id={CLIENT_ID}&redirect_uri=https://benchmark-summary-report-eae227664887.herokuapp.com/start&response_type=code"
 redirect_link_summary_logs = f"https://www.dropbox.com/oauth2/authorize?client_id={CLIENT_ID}&redirect_uri=https://benchmark-summary-report-eae227664887.herokuapp.com/skip_choice&response_type=code"
 
-def authorization(auth_code):
+def authorization(auth_code, route):
     token_url = "https://api.dropboxapi.com/oauth2/token"
 
     response = requests.post(
@@ -17,7 +17,7 @@ def authorization(auth_code):
             "grant_type": "authorization_code",
             "client_id": CLIENT_ID,
             "client_secret": CLIENT_SECRET,
-            "redirect_uri": "https://benchmark-summary-report-eae227664887.herokuapp.com/start"
+            "redirect_uri": f"https://benchmark-summary-report-eae227664887.herokuapp.com/{route}"
         }
     )
 
