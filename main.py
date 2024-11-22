@@ -72,7 +72,7 @@ def start():
     
     auth_code = str(escape(request.args.get("code")))
 
-    access_token = dropbox_module.authorization(auth_code)
+    access_token = dropbox_module.authorization(auth_code, "start")
 
     session["access_token"] = access_token
 
@@ -83,7 +83,7 @@ def skip_choice():
 
     auth_code = str(escape(request.args.get("code")))
 
-    access_token = dropbox_module.authorization(auth_code)
+    access_token = dropbox_module.authorization(auth_code, "skip_choice")
 
     session["access_token"] = access_token
 
