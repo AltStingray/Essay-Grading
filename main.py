@@ -346,7 +346,7 @@ def email_to():
         template = Template(file.read())
 
         html = template.render(
-            summary_report_content = summary_report,
+            summary_report_content=summary_report,
             date=date
         )
 
