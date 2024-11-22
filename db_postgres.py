@@ -56,7 +56,7 @@ def db(command):
 
         #cursor.execute("""ALTER TABLE Logs ADD client_email VARCHAR(255)""")
         #cursor.execute("""ALTER TABLE Logs ADD time DATE""")
-        cursor.execute("""ALTER TABLE Logs ADD sent BOOLEAN FALSE""")
+        cursor.execute("""ALTER TABLE Logs ADD sent BOOLEAN""")
 
         #cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 3""")
         
