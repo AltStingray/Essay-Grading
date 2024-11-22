@@ -30,7 +30,7 @@
                             <a href="{{ url_for('authorize', auth='summary_logs') }}" class="button2">Create Summary Report</a>
                         </div>
                         <div class="another button">
-                            <button class="button2">Test button</button>
+                            <input class="button2">Test button</input>
                         </div>
                     </div>
                     <table class="table table-hover">
@@ -68,7 +68,7 @@
                                     <form action="/email_to" onsubmit="handleFormSubmission(event)" method="get">
                                         <td><input type="text" name="email" placeholder="Email address: " required></td>
                                         <input type="hidden" name="id" value="{{ id }}">
-                                        {% if one["sent"] == True %}
+                                        {% if one["sent"] == "True" %}
                                             <td><input type="submit" class="button2" value="Sent" style="color: green;"></td>
                                         {% else %}
                                             <td><input type="submit" class="button2" value="Send"></td>

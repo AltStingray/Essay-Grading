@@ -39,7 +39,7 @@ q = Queue(connection=conn)
 #db("create")
 
 #db("delete_data")
-db("alter")
+#db("alter")
 
 db("print")
 
@@ -333,12 +333,18 @@ def email_to():
 
     id = request.args.get("id")
 
-    #logs = db_retrieve(file_id=id, db="Logs")
+    logs = db_retrieve(file_id=id, db="Logs")
 
     #plain_text = (str(logs[0], "utf-8"))
 
+    date = datetime.now().strftime("%d-%m-%Y")
+
+    summary_report = (logs[3].tobytes().decode('utf-8')).strip("{ }")
+
     with open("templates/email_template.html", "r", encoding="utf-8") as file:
         html = file.read()
+
+        html.format(date=date, summary_report_content=summary_report)
 
     send_email(user_email, html)
 
