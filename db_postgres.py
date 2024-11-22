@@ -123,7 +123,9 @@ def sent_email(id):
 
     cursor = db_conn.cursor()
 
-    cursor.execute(f"INSERT INTO Logs(sent) VALUES(%s) WHERE id = {id}", "True")
+    #cursor.execute(f"INSERT INTO Logs(sent) VALUES(%s) WHERE id = {id}", "True")
+    
+    cursor.execute(f"UPDATE Logs SET sent = 'True' WHERE id = {id}")
 
     db_conn.commit()
 
