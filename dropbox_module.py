@@ -5,7 +5,7 @@ import os
 CLIENT_ID = os.environ.get("DROPBOX_CLIENT_ID")
 CLIENT_SECRET = os.environ.get("DROPBOX_CLIENT_SECRET")
 redirect_link_start = f"https://www.dropbox.com/oauth2/authorize?client_id={CLIENT_ID}&redirect_uri=https://benchmark-summary-report-eae227664887.herokuapp.com/start&response_type=code"
-redirect_link_summary_logs = f"https://www.dropbox.com/oauth2/authorize?client_id={CLIENT_ID}&redirect_uri=https://benchmark-summary-report-eae227664887.herokuapp.com/choice&response_type=code"
+redirect_link_summary_logs = f"https://www.dropbox.com/oauth2/authorize?client_id={CLIENT_ID}&redirect_uri=https://benchmark-summary-report-eae227664887.herokuapp.com/skip_choice&response_type=code"
 
 def authorization(auth_code):
     token_url = "https://api.dropboxapi.com/oauth2/token"

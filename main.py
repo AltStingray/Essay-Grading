@@ -39,7 +39,7 @@ q = Queue(connection=conn)
 #db("create")
 
 #db("delete_data")
-db("alter")
+#db("alter")
 
 db("print")
 
@@ -53,7 +53,7 @@ def index():
 @app.route('/summary_report')
 def summary_report():
 
-    return render_template('summary_report.html', name="start")
+    return render_template('summary_report.html', name="authorize")
 
 
 @app.route('/authorize')
@@ -78,6 +78,16 @@ def start():
 
     return render_template('summary_report.html', name="choice")
 
+@app.route('/skip_choice')
+def skip_choice():
+
+    auth_code = str(escape(request.args.get("code")))
+
+    access_token = dropbox_module.authorization(auth_code)
+
+    session["access_token"] = access_token
+
+    return redirect('/choice')
 
 @app.route('/choice')
 def choice():

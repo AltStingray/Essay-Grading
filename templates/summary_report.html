@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
     <div class="container text-center mt-5">
-        {% if name == "start" %}
+        {% if name == "authorize" %}
             <h2>Please complete Dropbox authorization to continue: </h2>
             <form action="/authorize" method="get">
                 <input type="submit" class="button2" value="Authorize">
