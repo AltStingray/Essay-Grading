@@ -5,18 +5,19 @@ from email.mime.image import MIMEImage
 
 def send_email(user_email, html_content):
     
-    smtp = smtplib.SMTP("mail.smtp2go.com", 2525)
+    smtp = smtplib.SMTP("smtp.gmail.com", 587)
 
     smtp.starttls()
 
-    #email_password = "u99W1dmlHBPLsIPX"
-    email_password = "ccvsaldikydyktgk"
+    email_password = "u99W1dmlHBPLsIPX"
+    #email_password = "ccvsaldikydyktgk"
+    #altstingray@gmail.com
 
-    smtp.login("altstingray@gmail.com", email_password)
+    smtp.login("oetspeakingsummary@gmail.com", email_password)
 
     msg = MIMEMultipart("related")
     msg["Subject"] = "Your OET Summary Report"
-    msg["From"] = "altstingray@gmail.com"
+    msg["From"] = "oetspeakingsummary@gmail.com"
     msg["To"] = user_email
 
     html = MIMEText(html_content, "html")

@@ -12,7 +12,7 @@
                 {% if log == "summary_report" %}
                     <h1 style="margin: 10px;">Summary report logs</h1>
                     <br>
-                    <div class="top buttons" style="display: flex;">
+                    <div class="top buttons" style="display: flex; justify-content: space-between;">
                         <!--Sorting button-->
                         <div class="sort_button" style="float: left;">
                             {% if sort_by=="Low-High" %}
@@ -26,7 +26,7 @@
                             {% endif %}
                         </div>
                         <!--Create Summary button-->
-                        <div class="create_summary_button" style="justify-content: center;">
+                        <div class="create_summary_button">
                             <a href="{{ url_for('authorize', auth='summary_logs') }}" class="button2">Create Summary Report</a>
                         </div>
                     </div>
