@@ -72,7 +72,7 @@ def start():
     
     auth_code = str(escape(request.args.get("code")))
 
-    access_token = dropbox_module.authorization(auth_code, "start")
+    access_token = dropbox_module.authorization(auth_code)
 
     session["access_token"] = access_token
 
@@ -83,7 +83,7 @@ def skip_choice():
 
     auth_code = str(escape(request.args.get("code")))
 
-    access_token = dropbox_module.authorization(auth_code, "skip_choice")
+    access_token = dropbox_module.authorization(auth_code)
 
     session["access_token"] = access_token
 
@@ -107,7 +107,6 @@ def password():
     else:
         return render_template('summary_report.html', name="password")
     
-
 @app.route('/own')
 def own():
 
@@ -337,21 +336,8 @@ def email_to():
 
     #plain_text = (str(logs[0], "utf-8"))
 
-    html = f"""<html>
-        <head>
-        </head>
-        <body>
-            <img src="cid:header_image" style="width:100%; max-width: 400px;" alt="Benchmark Education Solutions logo">
-            {(logs[3].tobytes().decode('utf-8')).strip("{ }")}
-            Visit us for more information: 
-            <br>
-            https://edubenchmark.com/ 
-            <br> 
-            www.facebook.com/pteoetielts 
-            <br> 
-            https://www.facebook.com/groups/oethelp/
-        </body>
-    </html>"""
+    with open("templates/email_template.html", "r", encoding="utf-8") as file:
+        html = file.read()
 
     send_email(user_email, html)
 
