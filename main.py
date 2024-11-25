@@ -386,11 +386,6 @@ def grading_queue():
         "overall_band_score": "overall_band_score(float value)",
     }
 
-    prompt = [
-        {"instruction": introduction},
-        {"steps": [{"role": "user", "content": f'''{prompt_1}'''}]}
-    ]
-
     introduction = f'''
     Introduction: You are an IETLS teacher that provides feedback on candidate's essays. 
     You are given a topic and an essay text based on this topic delimited by triple quotes. 
@@ -456,6 +451,11 @@ def grading_queue():
     '''
     Step 9 - Precisely estimate the overall Band Score for the reviewed essay and store it into the "overall_band_score" key.
     '''
+
+    prompt = [
+        {"instruction": introduction},
+        {"steps": [{"role": "user", "content": f'''{prompt_1}'''}]}
+    ]
 
     job_queue = q.enqueue(RunOpenAI, prompt, essay, "Essay Grading")
 
