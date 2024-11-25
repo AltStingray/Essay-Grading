@@ -58,7 +58,7 @@ def db(command):
         #cursor.execute("""ALTER TABLE Logs ADD time DATE""")
         #cursor.execute("""ALTER TABLE Logs ADD sent BOOLEAN""")
 
-        #cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 3""")
+        cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 4""")
         
         #cursor.execute("""ALTER SEQUENCE essay_logs_id_seq RESTART WITH 1""")
 
@@ -93,7 +93,7 @@ def db(command):
     
     elif command == "delete_data":
 
-        #cursor.execute(f"DELETE FROM Logs WHERE id IN ('4')") #'2', '3', '4', '5'
+        cursor.execute(f"DELETE FROM Logs WHERE id IN ('4')") #'2', '3', '4', '5'
         #cursor.execute(f"DELETE FROM essay_logs WHERE id IN ('1')")
 
         db_conn.commit()
