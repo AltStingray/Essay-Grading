@@ -697,14 +697,14 @@ def RunOpenAI(prompt, content, tool):
         
     elif tool == "Essay Grading":
 
-        instruction = prompt["instruction"]
+        instruction = prompt[0]["instruction"]
 
         messages = [
             {"role": "system", "content": instruction},
             {"role": "user", "content": f'''{content}'''},
         ]
 
-        for step in prompt["steps"]:
+        for step in prompt[1]["steps"]:
             print(step)
             messages.append(step)
 
