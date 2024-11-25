@@ -586,6 +586,8 @@ def grading_logs():
         essay["name"] = one[7]
         essays.append(essay)
     
+    print(essays)
+
     return render_template("history.html", log="essay_grading", essays=essays)
 
 @app.route('/grading/log/view/<int:id>')

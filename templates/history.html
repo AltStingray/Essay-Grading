@@ -94,17 +94,18 @@
                                 <th></th>
                             </tr>
                         </thead>
-                    {% for one in essays %}
-                        {% set id = one["id"] %}
-                        <tbody>
-                            <tr>
-                                <td>id</td>
-                                <td>one["date"]</td>
-                                <td>one["name"]</td>
-                                <td><a href="{{ url_for('view_logs', id=id) }}" target="_blank">Essay</a></td>
-                            </tr>
-                        </tbody>
-                    {% endfor %}
+                        {% for one in essays %}
+                            {% set id = one["id"] %}
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>one["date"]</td>
+                                    <td>one["name"]</td>
+                                    <td><a href="{{ url_for('view_logs', id=id) }}" target="_blank">Essay</a></td>
+                                </tr>
+                            </tbody>
+                        {% endfor %}
+                    </table>
                 {% endif %}
             </div>
         </div>
