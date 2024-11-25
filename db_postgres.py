@@ -58,7 +58,7 @@ def db(command):
         #cursor.execute("""ALTER TABLE Logs ADD time DATE""")
         #cursor.execute("""ALTER TABLE Logs ADD sent BOOLEAN""")
 
-        #cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 3""")
+        cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 4""")
         
         #cursor.execute("""ALTER SEQUENCE essay_logs_id_seq RESTART WITH 1""")
 
@@ -93,8 +93,8 @@ def db(command):
     
     elif command == "delete_data":
 
-        #cursor.execute(f"DELETE FROM Logs WHERE id IN ('1', '2', '3', '4', '5')")
-        cursor.execute(f"DELETE FROM essay_logs WHERE id IN ('1')")
+        cursor.execute(f"DELETE FROM Logs WHERE id IN ('1')") #'2', '3', '4', '5'
+        #cursor.execute(f"DELETE FROM essay_logs WHERE id IN ('1')")
 
         db_conn.commit()
 
@@ -154,7 +154,7 @@ def db_store(data, db_name):
     cursor = db_conn.cursor()
 
     if db_name == "logs":
-        insert_sql = f"""INSERT INTO {db_name}(summary, transcription, filename, summary_html, link, time, teacher, client_email, client_name) VALUES (%s, %s, %s, %s, %s, (TO_DATE(%s, 'DD-MM-YYYY')), %s, %s, %s);"""
+        insert_sql = f"""INSERT INTO {db_name}(summary, transcription, filename, summary_html, link, time, teacher, client_email, client_name) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"""
     else:
         insert_sql = f"""INSERT INTO {db_name}(topic, essay, paragraphs_count, words_count, grammar_mistakes, linking_words_count, repetative_words_count, submitted_by, overall_band_score, sidebar_comments, time, unnecessary_words_count) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, (TO_DATE(%s, 'DD-MM-YYYY')), %s)"""
 
