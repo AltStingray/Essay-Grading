@@ -156,8 +156,8 @@ def db_store(data, db_name):
     if db_name == "logs":
         insert_sql = f"""INSERT INTO {db_name}(summary, transcription, filename, summary_html, link, time, teacher, client_email, client_name) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"""
     else:
-        insert_sql = f"""INSERT INTO {db_name}(topic, essay, paragraphs_count, words_count, grammar_mistakes, linking_words_count, repetative_words_count, submitted_by, overall_band_score, sidebar_comments, time, unnecessary_words_count) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, (TO_DATE(%s, 'DD-MM-YYYY')), %s)"""
-
+        insert_sql = f"""INSERT INTO {db_name}(topic, essay, paragraphs_count, words_count, grammar_mistakes, linking_words_count, repetative_words_count, submitted_by, overall_band_score, sidebar_comments, time, unnecessary_words_count) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+    #(TO_DATE(%s, 'DD-MM-YYYY'))
     cursor.execute(insert_sql, data)
 
     db_conn.commit()
