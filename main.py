@@ -386,9 +386,12 @@ def grading_queue():
         "overall_band_score": "overall_band_score(float value)",
     }
 
-    #prompts = [prompt, prompt2]
+    prompt = [
+        {"instruction": introduction},
+        {"steps": [{"role": "user", "content": f'''{prompt_1}'''}]}
+    ]
 
-    prompt = f'''
+    introduction = f'''
     Introduction: You are an IETLS teacher that provides feedback on candidate's essays. 
     You are given a topic and an essay text based on this topic delimited by triple quotes. 
     Provide the grading based on the IELTS standards. Your primary task is finding grammar mistakes, linking words, repetative words and unnecessary words in the candidate's essay.
@@ -398,8 +401,10 @@ def grading_queue():
     In the given example dictionary, each key and it's value describes what it should contain, in which format and how every word should be wrapped.
     Every word placed in a list should exactly match word in the 'original_text', either it's lower or upper case, and it should be marked/enclosed properly as well.
     Enclose the dict, all of the keys and values into double quotes, not single.
-    Do not rush with the answer. Take your time and process each of the following steps sequentially. But focus on the quality of the first two steps.
-
+    Create the main dictionary based on the provided examples, but with empty values which you will be then filling in with each next sequential step.
+    Do not rush with your answer. Take your time and process each of the following steps sequentially. But focus on the quality of the first two steps.
+    '''
+    prompt_1 = '''
     Steps:
     Step 1 - In the 'original_text' identify all of the words that contain grammar mistake and wrap them with the sequence number(i.e. 1example1). So, each next mistakes increments the sequence number by 1. If one mistake contains two or more words, enclose them altogether with a single pair of a sequence number(i.e. 2enclose like that2).
 
@@ -415,7 +420,8 @@ def grading_queue():
 
     Step 3 - In the 'original_text' identify all of the linking words and wrap them with the '#' mark. If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#'.
 
-    Step 4 - Store all of the found linking words into the 'linking_words' list wrapped with the '#'. 
+    Step 4 - Store all of the found linking words into the 'linking_words' list wrapped with the '#', as following: '"linking_words": ["#list#", "#of#", "#all#", "#linking#", "#words#"]'. And add this key to the main dictionary created previously.
+    
     '''
 
     '''
@@ -451,7 +457,7 @@ def grading_queue():
     Step 9 - Precisely estimate the overall Band Score for the reviewed essay and store it into the "overall_band_score" key.
     '''
 
-    job_queue = q.enqueue(RunOpenAI, prompt, essay)
+    job_queue = q.enqueue(RunOpenAI, prompt, essay, "Essay Grading")
 
     job_id = job_queue.get_id()
 
@@ -667,7 +673,7 @@ def main(link, specified_date, teacher_name, client_name, client_email, access_t
     else:
         prompt = f"I run an online OET speaking mock test service where candidates act as doctors, nurses or other medical practitioners and practice roleplay scenarios with a teacher who acts as the patient or the patient's relative. After each session, we provide a detailed report to the candidate, highlighting their performance. You are given a dialogue text delimited by triple quotes on the topic of medicine. At the beginning of the report specify the header title 'OET Speaking Mock Test Session's Summary'; below specify 'Date: {specified_date}' and teacher's name(who acts as a patient): '{teacher_name}'. If 'None' specified, get teacher name coming from the dialogue analysis. Please summarise the teacher's feedback on the candidate's grammar, lexical choices, pronunciation, and overall communication skills. In the overall communication skills section, use the five categories in the clinical communication criteria table in the knowledge file delimited by triple quotes. Summarise the teacher's feedback on the candidate's performance. Structure the report with sections for each roleplay and an overall performance summary which includes a table with 2 columns called areas that you are doing well and areas that you need to improve. Add the following line at the end of the report in italic style: 'AI-generated content may be inaccurate or misleading. Always check for accuracy.' You are not limited by a particular range of words, so provide detailed report with at least 4000 charaters. Provide two versions of the report. First one is a simple text respond. Second one is a structured HTML (Note: Do not include <style> tag). Important: wrap those two versions and a teacher's name as values in a single dictionary with the following keys: text, html and teacher. Return the dictionary."
 
-    summary_report = RunOpenAI(prompt, transcription)
+    summary_report = RunOpenAI(prompt, transcription, tool="Summary Report")
 
     filename = filename.replace(".mp4", "")
 
@@ -676,17 +682,37 @@ def main(link, specified_date, teacher_name, client_name, client_email, access_t
     return f_list
 
 
-def RunOpenAI(prompt, content):
+def RunOpenAI(prompt, content, tool):
 
     client = OpenAI(api_key=OPENAI_API_KEY)
 
-    response = client.chat.completions.create(
-        model="gpt-4o-2024-08-06",
-        messages=[
-            {"role": "system", "content": prompt},
-            {"role": "user", "content": f'''{content}'''}],
-        max_tokens=16000,
-        )
+    if tool == "Summary Report":
+        response = client.chat.completions.create(
+            model="gpt-4o-2024-08-06",
+            messages=[
+                {"role": "system", "content": prompt},
+                {"role": "user", "content": f'''{content}'''}],
+            max_tokens=16000,
+            )
+        
+    elif tool == "Essay Grading":
+
+        instruction = prompt["instruction"]
+
+        messages = [
+            {"role": "system", "content": instruction},
+            {"role": "user", "content": f'''{content}'''},
+        ]
+
+        for step in prompt["steps"]:
+            print(step)
+            messages.append(step)
+
+        response = client.chat.completions.create(
+            model="gpt-4o-2024-08-06",
+            messages=messages,
+            max_tokens=16000,
+            )
 
     response = response.choices[0].message.content #tapping into the content of the response
     
