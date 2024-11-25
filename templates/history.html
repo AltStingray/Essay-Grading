@@ -83,12 +83,27 @@
                         </div>
                     </table>
                 {% elif log == "essay_grading" %}
-                    <p1>List of all available Essay Gradings:</p1>
-                    {% for id in ids %}
-                        <label for="Logs">Log {{id}}:</label>
-                            <ul>
-                                <li><a href="{{ url_for('view_logs', id=id)}}">Essay Grading</a></li>
-                            </ul>
+                    <h1 style="margin: 10px;">Essay Grading Logs</h1>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Id#</th>
+                                <th>Date</th>
+                                <th>Name</th>
+                                <th>Essay</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                    {% for one in essays %}
+                        {% set id = one["id"] %}
+                        <tbody>
+                            <tr>
+                                <td>id</td>
+                                <td>one["date"]</td>
+                                <td>one["name"]</td>
+                                <td><a href="{{ url_for('grading/log/view/id', id=id) }}" target="_blank">Essay</a></td>
+                            </tr>
+                        </tbody>
                     {% endfor %}
                 {% endif %}
             </div>

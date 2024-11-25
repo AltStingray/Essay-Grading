@@ -576,8 +576,17 @@ def grading_results():
 def grading_logs():
 
     ids = db_get_ids(table_name="essay_logs")
+
+    essays = []
+    for id in ids:
+        essay = {}
+        one = db_retrieve(file_id=id, db="essay_logs")
+        essay["id"] = id
+        essay["date"] = one[10]
+        essay["name"] = one[7]
+        essays.append(essay)
     
-    return render_template("history.html", log="essay_grading", ids=ids)
+    return render_template("history.html", log="essay_grading", essays=essays)
 
 @app.route('/grading/log/view/<int:id>')
 def view_logs(id):
