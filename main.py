@@ -583,10 +583,8 @@ def grading_logs():
         one = db_retrieve(file_id=id, db="essay_logs")
         essay["id"] = id
         essay["date"] = one[10]
-        essay["name"] = one[7]
+        essay["name"] = one[7].tobytes().decode('utf-8')
         essays.append(essay)
-    
-    print(essays)
 
     return render_template("history.html", log="essay_grading", essays=essays)
 
