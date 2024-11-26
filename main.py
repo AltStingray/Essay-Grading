@@ -398,12 +398,12 @@ def grading_queue():
     Enclose the dict, all of the keys and values into double quotes, not single.
     Create the main dictionary based on the provided examples, but with empty values which you will be then filling in with each next sequential step.
     Do not rush with your answer. Take your time and process each of the following steps sequentially. Focus on the first 3 steps especially.
-    Take one minute to process each given prompt for the best possible results.
+    Take 15 seconds to process each given step for the best possible results.
     '''
     prompt_1 = '''
 
     Step 1 - In the 'original_text' identify all of the words that contain grammar mistakes. Then wrap them in the sequence number(i.e. 1example1). So the each next identified grammar mistake increments the sequence number by 1. (Note: If one mistake contains two or more words, enclose them altogether with a single pair of a sequence number(i.e. 2enclose like that2)).
-
+    Take at least half a minute to identify all of the grammar mistakes in the given candidate's text.
     Step 2 - Store all of the found grammar mistakes each wrapped in a sequence number into the 'grammar_mistakes' list.
 
     Step 3 - Provide corrected versions of the words containing grammar mistakes as shown in the example dictionary. You should display the corrected word and next to it in the parentheses () briefly describe the cause of the mistake, like so: "a (Missing an article)", "restricted (Passive form)", "areas (Spelling)", "and (Word choice)", etc.
