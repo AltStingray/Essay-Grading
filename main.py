@@ -397,11 +397,12 @@ def grading_queue():
     Every word placed in a list should exactly match word in the 'original_text', either it's lower or upper case, and it should be marked/enclosed properly as well.
     Enclose the dict, all of the keys and values into double quotes, not single.
     Create the main dictionary based on the provided examples, but with empty values which you will be then filling in with each next sequential step.
-    Do not rush with your answer. Take your time and process each of the following steps sequentially.
+    Do not rush with your answer. Take your time and process each of the following steps sequentially. Focus on the first 3 steps especially.
+    Take one minute to process each given prompt for the best possible results.
     '''
     prompt_1 = '''
 
-    Step 1 - In the 'original_text' identify all of the words that contain grammar mistakes. Then wrap them in the sequence number(i.e. 1example1). So the each next identified grammar mistake increments the sequence number by 1. If one mistake contains two or more words, enclose them altogether with a single pair of a sequence number(i.e. 2enclose like that2).
+    Step 1 - In the 'original_text' identify all of the words that contain grammar mistakes. Then wrap them in the sequence number(i.e. 1example1). So the each next identified grammar mistake increments the sequence number by 1. (Note: If one mistake contains two or more words, enclose them altogether with a single pair of a sequence number(i.e. 2enclose like that2)).
 
     Step 2 - Store all of the found grammar mistakes each wrapped in a sequence number into the 'grammar_mistakes' list.
 
@@ -450,7 +451,7 @@ def grading_queue():
     '''
 
     band_score = '''
-    Step 9 - Estimate the Overall Band Score for the reviewed essay and store it into the "overall_band_score" key.
+    Step 9 - Estimate the Overall Band Score for the reviewed essay and store it into the "overall_band_score" key as a float value.
     '''
 
     prompt = [
