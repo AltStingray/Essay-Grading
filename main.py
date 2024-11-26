@@ -714,7 +714,7 @@ def RunOpenAI(prompt, content, tool):
         ]
 
         for step in prompt[1]["steps"]:
-            step = step["content"].strip("\n ")
+            step["content"] = step["content"].strip("\n ")
             print(step)
             messages.append(step)
 
