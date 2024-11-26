@@ -410,7 +410,7 @@ def grading_queue():
     Finally, return the modified dictionary from the example with the modified 'original_text', newly created 'grammar_mistakes' and 'corrected_words'.
     '''
 
-    '''
+    prompt_2 = '''
     Linking words definition: 'Linking words, also known as transition words, are words and phrases like 'however', 'on the other hand', 'besides' or 'in conclusion' that connect clauses, sentences, paragraphs, or other words.'
 
     Step 3 - In the 'original_text' identify all of the linking words and wrap them with the '#' mark. If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#'.
@@ -419,7 +419,7 @@ def grading_queue():
     
     '''
 
-    '''
+    prompt_3 = '''
     Repetitive words definition: 'Repetitive words, are the words in the candidate's text which get repeated more than 4 times per text. For example, if the word 'people', "like", "well" or "obviously" appears in text more than 4 times, it is considered a repetitive word and should be marked with '^'.'
 
     Step 5 - In the 'original_text' identify all of the repetitive words and wrap them with the '^' mark. If not single word but sentence gets repeated many times wrap it with the '^' mark(i.e. ^social media^).
@@ -427,7 +427,7 @@ def grading_queue():
     Step 6 - Store all of the found repetitive words into the 'repetitive_words' list wrapped with the '^'. 
     '''
     
-    '''
+    prompt_4 = '''
     Unnecessary words defininion: 
     'Four types of unnecessary words and phrases to avoid for conciseness: 
 
@@ -454,8 +454,11 @@ def grading_queue():
 
     prompt = [
         {"instruction": introduction},
-        {"steps": [{"role": "user", "content": f'''{prompt_1}'''}]}
+        {"steps": []}
     ]
+    for one in [prompt_1, prompt_2, prompt_3, prompt_4]:
+        d = {"role": "user", "content": one}
+        prompt[1]["steps"].append(d)
 
     job_queue = q.enqueue(RunOpenAI, prompt, essay, "Essay Grading")
 
