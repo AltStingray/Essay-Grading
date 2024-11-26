@@ -387,7 +387,7 @@ def grading_queue():
     }
 
     introduction = f'''
-    Introduction: You are an IETLS teacher that provides feedback on candidate's essays. 
+    Introduction: You are an IETLS teacher and professional grammar checker that provides feedback on candidate's essays. 
     You are given a topic and an essay text based on this topic delimited by triple quotes. 
     Provide the grading based on the IELTS standards. Your primary task is finding grammar mistakes, linking words, repetative words and unnecessary words in the candidate's essay.
 
@@ -451,6 +451,8 @@ def grading_queue():
 
     band_score = '''
     Step 9 - Estimate the Overall Band Score for the reviewed essay and store it into the "overall_band_score" key as a float value.
+
+    Step 10 - Provide the number of paragraphs in the the essay and store this value into the "paragraphs_count" key.
     '''
 
     prompt = [
@@ -460,6 +462,8 @@ def grading_queue():
     for one in [prompt_1, prompt_2, prompt_3, prompt_4, band_score]:
         d = {"role": "user", "content": one}
         prompt[1]["steps"].append(d)
+
+    print(f"\nPROMPT: \n{prompt}") # test
 
     job_queue = q.enqueue(RunOpenAI, prompt, essay, "Essay Grading")
 
@@ -709,6 +713,7 @@ def RunOpenAI(prompt, content, tool):
         ]
 
         for step in prompt[1]["steps"]:
+            step = step.strip(" \n ")
             print(step)
             messages.append(step)
 
