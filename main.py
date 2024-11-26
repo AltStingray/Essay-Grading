@@ -459,7 +459,8 @@ def grading_queue():
         {"instruction": introduction},
         {"steps": []}
     ]
-    for one in [prompt_1, prompt_2, prompt_3, prompt_4, band_score]:
+    #[prompt_1, prompt_2, prompt_3, prompt_4, band_score]
+    for one in [prompt_1]:
         d = {"role": "user", "content": one}
         prompt[1]["steps"].append(d)
 
@@ -713,7 +714,6 @@ def RunOpenAI(prompt, content, tool):
         ]
 
         for step in prompt[1]["steps"]:
-            step = step.strip(" \n ")
             print(step)
             messages.append(step)
 
