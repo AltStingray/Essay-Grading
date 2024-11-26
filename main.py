@@ -397,32 +397,33 @@ def grading_queue():
     Every word placed in a list should exactly match word in the 'original_text', either it's lower or upper case, and it should be marked/enclosed properly as well.
     Enclose the dict, all of the keys and values into double quotes, not single.
     Create the main dictionary based on the provided examples, but with empty values which you will be then filling in with each next sequential step.
-    Do not rush with your answer. Take your time and process each of the following steps sequentially. But focus on the quality of the first two steps.
+    Do not rush with your answer. Take your time and process each of the following steps sequentially.
     '''
     prompt_1 = '''
-    Steps:
-    Step 1 - In the 'original_text' identify all of the words that contain grammar mistake and wrap them with the sequence number(i.e. 1example1). So, each next mistakes increments the sequence number by 1. If one mistake contains two or more words, enclose them altogether with a single pair of a sequence number(i.e. 2enclose like that2).
 
-    Step 2 - Store all of the found grammar mistakes each wrapped with a sequence number into the 'grammar_mistakes' list.
+    Step 1 - In the 'original_text' identify all of the words that contain grammar mistakes. Then wrap them in the sequence number(i.e. 1example1). So the each next identified grammar mistake increments the sequence number by 1. If one mistake contains two or more words, enclose them altogether with a single pair of a sequence number(i.e. 2enclose like that2).
 
-    Step 3 - Provide corrected versions of the words containing grammar mistakes as shown in the example dictionary. You should display the correct word and next to it in the curly brackets point on the broken grammar rule of the mistake, like so: "these subjects (grammar rule)".
+    Step 2 - Store all of the found grammar mistakes each wrapped in a sequence number into the 'grammar_mistakes' list.
 
-    Finally, return the modified dictionary from the example with the modified 'original_text', newly created 'grammar_mistakes' and 'corrected_words'.
+    Step 3 - Provide corrected versions of the words containing grammar mistakes as shown in the example dictionary. You should display the corrected word and next to it in the parentheses () briefly describe the cause of the mistake, like so: "a (Missing an article)", "restricted (Passive form)", "areas (Spelling)", "and (Word choice)", etc.
+    
     '''
+    #Finally, return the modified dictionary from the example with the modified 'original_text', newly created 'grammar_mistakes' and 'corrected_words'.
 
     prompt_2 = '''
     Linking words definition: 'Linking words, also known as transition words, are words and phrases like 'however', 'on the other hand', 'besides' or 'in conclusion' that connect clauses, sentences, paragraphs, or other words.'
 
-    Step 3 - In the 'original_text' identify all of the linking words and wrap them with the '#' mark. If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#'.
+    Step 3 - In the 'original_text' identify all of the linking words throughout the whole text. Then wrap all of them with the '#' mark. (Note: If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#').
 
     Step 4 - Store all of the found linking words into the 'linking_words' list wrapped with the '#', as following: '"linking_words": ["#list#", "#of#", "#all#", "#linking#", "#words#"]'. And add this key to the main dictionary created previously.
     
     '''
 
     prompt_3 = '''
-    Repetitive words definition: 'Repetitive words, are the words in the candidate's text which get repeated more than 4 times per text. For example, if the word 'people', "like", "well" or "obviously" appears in text more than 4 times, it is considered a repetitive word and should be marked with '^'.'
+    Repetitive words definition: 'The repetitive use of the same word in a text is called "redundancy" or "word repetition." It can make the text less engaging and may indicate a need for variety or synonyms to improve readability and flow.
+    Repetitive words, are the words in a candidate's text which get repeated more than 4 times per text. For example, if the word 'people', "like", "well" or "obviously" appears in text more than 4 times, it is considered a repetitive word and should be marked with '^''
 
-    Step 5 - In the 'original_text' identify all of the repetitive words and wrap them with the '^' mark. If not single word but sentence gets repeated many times wrap it with the '^' mark(i.e. ^social media^).
+    Step 5 - In the 'original_text' identify all of the repetitive words throughout the whole text, even if they have already been identified. Then wrap them with the '^' mark. 
 
     Step 6 - Store all of the found repetitive words into the 'repetitive_words' list wrapped with the '^'. 
     '''
@@ -442,21 +443,21 @@ def grading_queue():
     Circumlocutions: Avoid lengthy phrases that can be said in fewer words. 
     Example: "Owing to the fact that..." to "Since..." In short, aim for direct, simplified wording by cutting out filler expressions.'
     
-    Step 7 - In the 'original_text' identify all of the unnecessary words and wrap them with the '-' mark. 
+    Step 7 - In the 'original_text' identify all of the unnecessary words throughout the whole text. Then wrap them with the '-' mark. 
 
     Step 8 - Store all of the found unnecessary words into the 'unnecessary_words' list wrapped with the '-'. 
 
     '''
 
-    '''
-    Step 9 - Precisely estimate the overall Band Score for the reviewed essay and store it into the "overall_band_score" key.
+    band_score = '''
+    Step 9 - Estimate the Overall Band Score for the reviewed essay and store it into the "overall_band_score" key.
     '''
 
     prompt = [
         {"instruction": introduction},
         {"steps": []}
     ]
-    for one in [prompt_1, prompt_2, prompt_3, prompt_4]:
+    for one in [prompt_1, prompt_2, prompt_3, prompt_4, band_score]:
         d = {"role": "user", "content": one}
         prompt[1]["steps"].append(d)
 
