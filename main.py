@@ -703,29 +703,31 @@ def RunOpenAI(prompt, content, tool):
                 {"role": "user", "content": f'''{content}'''}],
             max_tokens=16000,
             )
+        response = response.choices[0].message.content
         
     elif tool == "Essay Grading":
 
         instruction = prompt[0]["instruction"]
 
-        messages = [
+        for step in prompt[1]["steps"]:
+
+            messages = [
             {"role": "system", "content": instruction},
             {"role": "user", "content": f'''{content}'''},
-        ]
-
-        for step in prompt[1]["steps"]:
+            ]
+            
             step["content"] = step["content"].strip("\n ")
             print(step)
             messages.append(step)
 
-        response = client.chat.completions.create(
-            model="gpt-4o-2024-08-06",
-            messages=messages,
-            max_tokens=16000,
-            timeout=120,
-            )
-
-    response = response.choices[0].message.content #tapping into the content of the response
+            response = client.chat.completions.create(
+                model="gpt-4o-2024-08-06",
+                messages=messages,
+                max_tokens=16000,
+                timeout=120,
+                )
+            response = response.choices[0].message.content #tapping into the content of the response
+            print(response)
     
     return response
 
