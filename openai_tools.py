@@ -156,7 +156,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
             max_tokens=16000
             )
         
-        response = loads(str(strip(response.choices[0].message.content)))
+        response = loads(strip_text(response.choices[0].message.content))
 
         print(f"Response on the line 129 in the openai_tools:\n{response}") # Test
 
@@ -182,13 +182,13 @@ def run_summary_report(prompt, content):
 
     return response
 
-def strip(result):
+def strip_text(text):
 
-    if result[0].startswith("```python"):
-        stripped_text = result[0].replace("```python\n", "").replace("```", "").strip()
-    elif result[0].startswith("```json"):
-        stripped_text = result[0].replace("```json\n", "").replace("```", "").strip()
+    if text.startswith("```python"):
+        stripped_text = text.strip("```pyton")
+    elif text.startswith("```json"):
+        stripped_text = text.strip("```json")
     else:
-        stripped_text = result[0].replace("```\n", "").replace("```", "").strip()
+        stripped_text = text.strip("```")
     
     return stripped_text
