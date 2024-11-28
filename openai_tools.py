@@ -182,11 +182,10 @@ def run_essay_grading(topic, essay_text, submitted_by):
     )
 
     result = final_check.choices[0].message.content
-    response = loads(strip_text(result))
     
-    print(f"Final output: {response}") # test
+    print(f"Final output: {result}") # test
 
-    return response
+    return result
 
 def run_summary_report(prompt, content):
 
