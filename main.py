@@ -598,13 +598,13 @@ def main(link, specified_date, teacher_name, client_name, client_email, access_t
 def strip(result):
 
     if result[0].startswith("```python"):
-        strip_summary = result[0].replace("```python\n", "").replace("```", "").strip()
+        stripped_text = result[0].replace("```python\n", "").replace("```", "").strip()
     elif result[0].startswith("```json"):
-        strip_summary = result[0].replace("```json\n", "").replace("```", "").strip()
+        stripped_text = result[0].replace("```json\n", "").replace("```", "").strip()
     else:
-        strip_summary = result[0].replace("```\n", "").replace("```", "").strip()
+        stripped_text = result[0].replace("```\n", "").replace("```", "").strip()
     
-    return strip_summary
+    return stripped_text
 
 # These two lines tell Python to start Flask’s development server when the script is executed from the command line. 
 # It’ll be used only when you run the script locally.
