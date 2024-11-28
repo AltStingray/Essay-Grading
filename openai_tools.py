@@ -173,19 +173,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
     print(f"Final dictionary: {final_dict}") # test
 
-    final_check = client.chat.completions.create(
-        model="gpt-4o-2024-08-06",
-        messages=[
-            {"role": "system", "content": final_prompt},
-            {"role": "user", "content": str(final_dict)}],
-        max_tokens=16000
-    )
-
-    result = final_check.choices[0].message.content
-    
-    print(f"Final output: {result}") # test
-
-    return result
+    return final_dict
 
 def run_summary_report(prompt, content):
 
