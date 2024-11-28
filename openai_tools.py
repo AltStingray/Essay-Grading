@@ -121,7 +121,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
     Include the 'overall_band_score' and 'paragraphs_count' in the 'words_update' dictionary.
 
-    Store the untouched essay text into the 'modified_text' dictionary.
+    Store the untouched essay text into the 'modified_text' key as a value.
 
     Finally, return the 'words_update' and 'modified_text' in a single dictionary.
     '''
