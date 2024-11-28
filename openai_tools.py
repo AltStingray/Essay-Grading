@@ -157,7 +157,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
         response = client.chat.completions.create(
             model="gpt-4o-2024-08-06",
             messages=messages,
-            max_tokens=16000
+            max_tokens=16000,
             temperature=0.2
             )
         
