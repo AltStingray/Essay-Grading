@@ -178,7 +178,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
         model="gpt-4o-2024-08-06",
         messages=[
             {"role": "system", "content": final_prompt},
-            {"role": "user", "content": final_dict}],
+            {"role": "user", "content": str(final_dict)}],
         max_tokens=16000
     )
 
