@@ -34,7 +34,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
     Instruction:
     You will be given multiple steps. In each step you will be given example dictionaries, how each key and it's value should be structured, in which format and how every word should be wrapped.
-    Every word/sentence placed in a list should exactly match word/sentence in the 'original_text', either it's lower or upper case, and it should be marked/enclosed properly as well.
+    Every word/sentence placed in a list should exactly match word/sentence in the essay, either it's lower or upper case, and it should be marked/enclosed properly as well.
     Enclose the dict, all of the keys and values into double quotes, not single.
     Create a 'modified_text' dictionary in which you will place the later modified essay text. 
     Do not include anything else except the things you are being prompted. No additional commments or notes.
@@ -174,20 +174,20 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
     print(f"Final dictionary: {final_dict}") # test
 
-    #final_check = client.chat.completions.create(
-    #    model="gpt-4o-2024-08-06",
-    #    messages=[
-    #        {"role": "system", "content": final_prompt},
-    #        {"role": "user", "content": final_dict}],
-    #    max_tokens=16000
-    #)
-#
-    #result = final_check.choices[0].message.content
-    #response = loads(strip_text(result))
-    #
-    #print(f"Final output: {response}") # test
+    final_check = client.chat.completions.create(
+        model="gpt-4o-2024-08-06",
+        messages=[
+            {"role": "system", "content": final_prompt},
+            {"role": "user", "content": final_dict}],
+        max_tokens=16000
+    )
 
-    return final_dict
+    result = final_check.choices[0].message.content
+    response = loads(strip_text(result))
+    
+    print(f"Final output: {response}") # test
+
+    return response
 
 def run_summary_report(prompt, content):
 
