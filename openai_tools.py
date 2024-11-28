@@ -36,7 +36,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
     You will be given multiple steps. In each step you will be given example dictionaries, how each key and it's value should be structured, in which format and how every word should be wrapped.
     Every word/sentence placed in a list should exactly match word/sentence in the essay, either it's lower or upper case, and it should be marked/enclosed properly as well.
     Enclose the dict, all of the keys and values into double quotes, not single.
-    Create a 'modified_text' dictionary in which you will place the later modified essay text. 
+    Create a 'modified_text' key in which you will place the later modified essay text as a value. 
     Do not include anything else except the things you are being prompted. No additional commments or notes.
     Do not rush with your answer. Take your time and process each of the following steps sequentially.
     '''
@@ -158,7 +158,6 @@ def run_essay_grading(topic, essay_text, submitted_by):
             model="gpt-4o-2024-08-06",
             messages=messages,
             max_tokens=16000,
-            temperature=0.2
             )
         
         result = response.choices[0].message.content
