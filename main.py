@@ -399,12 +399,7 @@ def grading_results():
 
     job_result = job.return_value()
 
-    #if job_result.startswith("```"):
-    #    result = strip([job_result])
-    #else:
     result = job_result
-
-    #result = json.loads(result)
 
     topic = result["original_topic"]
     original_text = result["original_text"]
