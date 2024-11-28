@@ -208,7 +208,7 @@ def strip_text(text):
         stripped_text = text.strip("```pyton")
     elif text.startswith("```json"):
         stripped_text = text.strip("```json")
-    else:
+    elif text.startswith("```"):
         stripped_text = text.strip("```")
     
     return stripped_text
