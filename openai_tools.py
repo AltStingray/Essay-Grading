@@ -1,4 +1,5 @@
 from openai import OpenAI
+from json import loads
 import os
 # So, what we will do here is the following:
 # We will feed gpd model steps by chunks, and collecting responses one by one. 
@@ -153,7 +154,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
             max_tokens=16000
             )
         
-        response = (response.choices[0].message.content).strip("```json")
+        response = loads((response.choices[0].message.content).strip("```json"))
 
         print(f"Response on the line 129 in the openai_tools:\n{response}") # Test
 
