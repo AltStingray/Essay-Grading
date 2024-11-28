@@ -205,10 +205,10 @@ def run_summary_report(prompt, content):
 def strip_text(text):
 
     if text.startswith("```python"):
-        stripped_text = text.strip("```pyton")
+        text = text.strip("```pyton")
     elif text.startswith("```json"):
-        stripped_text = text.strip("```json")
+        text = text.strip("```json")
     elif text.startswith("```"):
-        stripped_text = text.strip("```")
+        text = text.strip("```")
     
-    return stripped_text
+    return text
