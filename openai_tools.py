@@ -156,7 +156,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
             max_tokens=16000
             )
         
-        response = loads(strip(response.choices[0].message.content))
+        response = loads(str(strip(response.choices[0].message.content)))
 
         print(f"Response on the line 129 in the openai_tools:\n{response}") # Test
 
