@@ -45,7 +45,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
     Step 1 - In the provided essay text take at least 30 seconds to identify all of the words that contain grammar mistakes. Then, wrap each word/sentence that contains grammar mistake with the sequence number(i.e. 1example1). So the each next identified grammar mistake increments the sequence number by 1. (Note: If one mistake contains two or more words, enclose them altogether with a single pair of a sequence number(i.e. 2enclose like that2)).
     
-    Save the modified essay text into the 'modified_text' dictionary.
+    Save the modified essay text into the 'modified_text' key.
 
     Step 2 - Store all of the found grammar mistakes each wrapped in a sequence number into the 'grammar_mistakes' list. Example: "grammar_mistakes": ["1list1", "2of2", "3words3", "4that4", "5contain5", "6a6", "7mistake7", "8and8", "9wrapped9", "10in10", "11sequence11", "12number12"]
 
@@ -62,7 +62,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
     Step 1 - In the given essay text identify all of the linking words throughout the whole text, then wrap all of them with the '#' mark. (Note: If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#').
 
-    Save the modified essay text into the 'modified_text' dictionary.
+    Save the modified essay text into the 'modified_text' key.
 
     Step 2 - Store all of the found linking words into the 'linking_words' list wrapped with the '#', as following: "linking_words": ["#list#", "#of#", "#all#", "#linking#", "#words#"].
     
@@ -78,7 +78,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
     Step 1 - In the given essay text identify all of the repetitive words throughout the whole text, even if they have already been identified. Then wrap them with the '^' mark. 
     
-    Save the modified essay text into the 'modified_text' dictionary.
+    Save the modified essay text into the 'modified_text' key.
 
     Step 2 - Store all of the found repetitive words into the 'repetitive_words' list wrapped with the '^', as shown in the following example: "repetitive_words": ["^list^", "^of^", "^all^", "^repetitive^", "^words^"]. 
     
@@ -105,7 +105,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
     Step 1 - In the given essay text identify some of the unnecessary words that you would get rid of to increase the overall clarity and make the essay better. Then wrap them with the '-' mark. 
 
-    Save the modified essay text into the 'modified_text' dictionary.
+    Save the modified essay text into the 'modified_text' key.
 
     Step 2 - Store all of the found unnecessary words into the 'unnecessary_words' list wrapped with the '-', as shown in the following example: "unnecessary_words": ["-list-", "-of-", "-all-", "-unnecessary-", "-words-"]. 
 
@@ -158,7 +158,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
             model="gpt-4o-2024-08-06",
             messages=messages,
             max_tokens=16000
-            #temperature=0.2
+            temperature=0.2
             )
         
         result = response.choices[0].message.content
