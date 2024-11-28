@@ -7,6 +7,7 @@ import dropbox_module
 import assemblyAI
 import json
 from email_to import send_email
+from openai_tools import *
 from rq import Queue
 from rq.job import Job
 from worker import conn
@@ -17,8 +18,6 @@ from openai import OpenAI
 from db_postgres import *
 from datetime import datetime
 from jinja2 import Template
-
-OPENAI_API_KEY = os.environ.get("N_OPENAI_API_KEY")
 
 PASSWORD = os.environ.get("CUSTOM_PROMPT_PASSWORD")
 
@@ -370,103 +369,7 @@ def grading_queue():
 
     submitted_by = request.args.get("submitted_by")
 
-    essay = f"The topic of the essay: {topic}.\nThe essay: {essay} \nSubmitted by: {submitted_by}"
-    
-    #"corrected_text": "corrected_text",
-    example_results_dict = {
-        "original_topic": "original_topic",
-        "original_text": "original_text",
-        "paragraphs_count": "paragraphs_count",
-        "grammar_mistakes": ["1list1", "2of2", "3words3", "4that4", "5contain5", "6a6", "7mistake7", "8and8", "9wrapped9", "10in10", "11sequence11", "12number12"],
-        "corrected_words": ["corrected version of the word 1 (grammar rule 1)", "corrected version of the word 2 (grammar rule 2)", "..."],
-        "linking_words": ["#list#", "#of#", "#all#", "#linking#", "#words#"],
-        "repetitive_words": ["^list^", "^of^", "^all^", "^repetitive^", "^words^"],
-        "unnecessary_words": ["-list-", "-of-", "-all-", "-unnecessary-", "-words-"], 
-        "submitted_by": "submitted_by",
-        "overall_band_score": "overall_band_score(float value)",
-    }
-
-    introduction = f'''
-    Introduction: You are an IETLS teacher and professional grammar checker that provides feedback on candidate's essays. 
-    You are given a topic and an essay text based on this topic delimited by triple quotes. 
-    Provide the grading based on the IELTS standards. Your primary task is finding grammar mistakes, linking words, repetative words and unnecessary words in the candidate's essay.
-
-    Instruction:
-    Structure your answer in one dictionary with different values as demonstrated in the following dictionary example: {example_results_dict}.
-    In the given example dictionary, each key and it's value describes what it should contain, in which format and how every word should be wrapped.
-    Every word placed in a list should exactly match word in the 'original_text', either it's lower or upper case, and it should be marked/enclosed properly as well.
-    Enclose the dict, all of the keys and values into double quotes, not single.
-    Create the main dictionary based on the provided examples, but with empty values which you will be then filling in with each next sequential step.
-    Do not rush with your answer. Take your time and process each of the following steps sequentially. Focus on the first 3 steps especially.
-    '''
-    prompt_1 = '''
-
-    Step 1 - In the 'original_text' take at least 30 seconds to identify all of the words that contain grammar mistakes. Then in the same 'origial_text' wrap them with the sequence number(i.e. 1example1). So the each next identified grammar mistake increments the sequence number by 1. (Note: If one mistake contains two or more words, enclose them altogether with a single pair of a sequence number(i.e. 2enclose like that2)).
-
-    Step 2 - Store all of the found grammar mistakes each wrapped in a sequence number into the 'grammar_mistakes' list.
-
-    Step 3 - Provide corrected versions of the words containing grammar mistakes as shown in the example dictionary. You should display the corrected word and next to it in the parentheses () briefly describe the cause of the mistake, like so: "a (Missing an article)", "restricted (Passive form)", "areas (Spelling)", "and (Word choice)", etc.
-    
-    '''
-    #Finally, return the modified dictionary from the example with the modified 'original_text', newly created 'grammar_mistakes' and 'corrected_words'.
-
-    prompt_2 = '''
-    Linking words definition: 'Linking words, also known as transition words, are words and phrases like 'however', 'on the other hand', 'besides' or 'in conclusion' that connect clauses, sentences, paragraphs, or other words.'
-
-    Step 3 - In the 'original_text' identify all of the linking words throughout the whole text, then wrap all of them with the '#' mark. (Note: If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#').
-
-    Step 4 - Store all of the found linking words into the 'linking_words' list wrapped with the '#', as following: '"linking_words": ["#list#", "#of#", "#all#", "#linking#", "#words#"]'. And add this key to the main dictionary created previously.
-    
-    '''
-
-    prompt_3 = '''
-    Repetitive words definition: 'The repetitive use of the same word in a text is called "redundancy" or "word repetition." It can make the text less engaging and may indicate a need for variety or synonyms to improve readability and flow.
-    Repetitive words, are the words in a candidate's text which get repeated more than 4 times per text. For example, if the word 'people', "like", "well" or "obviously" appears in text more than 4 times, it is considered a repetitive word and should be marked with '^''
-
-    Step 5 - In the 'original_text' identify all of the repetitive words throughout the whole text, even if they have already been identified. Then wrap them with the '^' mark. 
-
-    Step 6 - Store all of the found repetitive words into the 'repetitive_words' list wrapped with the '^'. 
-    '''
-    
-    prompt_4 = '''
-    Unnecessary words defininion: 
-    'Four types of unnecessary words and phrases to avoid for conciseness: 
-
-    Dummy Subjects: Avoid words like "there is/are" and "it is/was" that add no meaning. 
-    Example: "There are great skiing resorts in Colorado." to "Colorado has great skiing resorts." 
-
-    Nominalizations: Use verbs instead of nouns made from verbs (e.g., "decision" vs. "decide"). 
-    Example: "The conjugation of verbs is difficult." to "Conjugating verbs is difficult." 
-    
-    Infinitive Phrases: Replace "to + verb" phrases with direct verbs. 
-    Example: "Our duty was to clean and to wash." to "We cleaned and washed." 
-    Circumlocutions: Avoid lengthy phrases that can be said in fewer words. 
-    Example: "Owing to the fact that..." to "Since..." In short, aim for direct, simplified wording by cutting out filler expressions.'
-    
-    Step 7 - In the 'original_text' identify all of the unnecessary words throughout the whole text. Then wrap them with the '-' mark. 
-
-    Step 8 - Store all of the found unnecessary words into the 'unnecessary_words' list wrapped with the '-'. 
-
-    '''
-
-    band_score = '''
-    Step 9 - Estimate the Overall Band Score for the reviewed essay and store it into the "overall_band_score" key as a float value.
-
-    Step 10 - Provide the number of paragraphs in the the essay and store this value into the "paragraphs_count" key.
-    '''
-
-    prompt = [
-        {"instruction": introduction},
-        {"steps": []}
-    ]
-
-    for one in [prompt_1, prompt_2, prompt_3, prompt_4, band_score]:
-        d = {"role": "user", "content": one}
-        prompt[1]["steps"].append(d)
-
-    print(f"\nPROMPT: \n{prompt}") # test
-
-    job_queue = q.enqueue(RunOpenAI, prompt, essay, "Essay Grading")
+    job_queue = q.enqueue(run_essay_grading, topic, essay, submitted_by)
 
     job_id = job_queue.get_id()
 
@@ -503,7 +406,7 @@ def grading_results():
 
     result = json.loads(result)
 
-    print(result)
+    print(result) # test
 
     topic = result["original_topic"]
     original_text = result["original_text"]
@@ -526,7 +429,7 @@ def grading_results():
             if word == re_word.group():
 
                 nums_str = ""
-                for str_n in range(50):
+                for str_n in range(70):
                     nums_str += str(str_n)
 
                 stripped_word = word.strip(nums_str)
@@ -682,54 +585,14 @@ def main(link, specified_date, teacher_name, client_name, client_email, access_t
     else:
         prompt = f"I run an online OET speaking mock test service where candidates act as doctors, nurses or other medical practitioners and practice roleplay scenarios with a teacher who acts as the patient or the patient's relative. After each session, we provide a detailed report to the candidate, highlighting their performance. You are given a dialogue text delimited by triple quotes on the topic of medicine. At the beginning of the report specify the header title 'OET Speaking Mock Test Session's Summary'; below specify 'Date: {specified_date}' and teacher's name(who acts as a patient): '{teacher_name}'. If 'None' specified, get teacher name coming from the dialogue analysis. Please summarise the teacher's feedback on the candidate's grammar, lexical choices, pronunciation, and overall communication skills. In the overall communication skills section, use the five categories in the clinical communication criteria table in the knowledge file delimited by triple quotes. Summarise the teacher's feedback on the candidate's performance. Structure the report with sections for each roleplay and an overall performance summary which includes a table with 2 columns called areas that you are doing well and areas that you need to improve. Add the following line at the end of the report in italic style: 'AI-generated content may be inaccurate or misleading. Always check for accuracy.' You are not limited by a particular range of words, so provide detailed report with at least 4000 charaters. Provide two versions of the report. First one is a simple text respond. Second one is a structured HTML (Note: Do not include <style> tag). Important: wrap those two versions and a teacher's name as values in a single dictionary with the following keys: text, html and teacher. Return the dictionary."
 
-    summary_report = RunOpenAI(prompt, transcription, tool="Summary Report")
+    summary_report = run_summary_report(prompt, transcription)
 
     filename = filename.replace(".mp4", "")
 
     f_list = [summary_report, transcription, filename, link, specified_date, teacher_name, client_email, client_name]
     
     return f_list
-
-
-def RunOpenAI(prompt, content, tool):
-
-    client = OpenAI(api_key=OPENAI_API_KEY)
-
-    if tool == "Summary Report":
-        response = client.chat.completions.create(
-            model="gpt-4o-2024-08-06",
-            messages=[
-                {"role": "system", "content": prompt},
-                {"role": "user", "content": f'''{content}'''}],
-            max_tokens=16000,
-            )
-        response = response.choices[0].message.content
         
-    elif tool == "Essay Grading":
-
-        instruction = prompt[0]["instruction"]
-
-        for step in prompt[1]["steps"]:
-
-            messages = [
-            {"role": "system", "content": instruction},
-            {"role": "user", "content": f'''{content}'''},
-            ]
-            
-            step["content"] = step["content"].strip("\n ")
-            print(step)
-            messages.append(step)
-
-            response = client.chat.completions.create(
-                model="gpt-4o-2024-08-06",
-                messages=messages,
-                max_tokens=16000,
-                timeout=120,
-                )
-            response = response.choices[0].message.content #tapping into the content of the response
-            print(response)
-    
-    return response
 
 
 def strip(result):
