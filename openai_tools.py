@@ -154,14 +154,14 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
         messages.append(step)
 
-        response = client.chat.completions.create(
+        gpt_response = client.chat.completions.create(
             model="gpt-4o-2024-08-06",
             messages=messages,
             max_tokens=16000
             #temperature=0.2
             )
         
-        result = response.choices[0].message.content
+        result = gpt_response.choices[0].message.content
         print(f"\nResponse on the line 155 before strip:\n{result}") #test
         response = loads(strip_text(result))
 
