@@ -56,10 +56,9 @@ def run_essay_grading(topic, essay_text, submitted_by):
     Finally, return those two dictionaries 'words_update' and 'modified_text'.
     '''
 
+    #Note: Ingore the sequential numbers in the essay text, as this is your doings from the previous iteration.
     prompt_2 = '''
     Linking words definition: 'Linking words, also known as transition words, are words and phrases like 'however', 'on the other hand', 'besides' or 'in conclusion' that connect clauses, sentences, paragraphs, or other words.'
-
-    Note: Ingore the sequential numbers in the essay text, as this is your doings from the previous iteration.
 
     Step 1 - In the given essay text identify all of the linking words throughout the whole text, then wrap all of them with the '#' mark. (Note: If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#').
 
@@ -73,10 +72,9 @@ def run_essay_grading(topic, essay_text, submitted_by):
     '''
 
     #Repetitive words, are the words in a candidate's text which get repeated more than 4 times per text. For example, if the word 'people', "like", "well" or "obviously" appears in text more than 4 times, it is considered a repetitive word and should be marked with '^''
+    #Note: Ingore the sequential numbers and '#' marks in the essay text, as those are your doings from the previous iteration.
     prompt_3 = '''
     Repetitive words definition: 'The repetitive use of the same word in a text is called "redundancy" or "word repetition." It can make the text less engaging and may indicate a need for variety or synonyms to improve readability and flow.
-
-    Note: Ingore the sequential numbers and '#' marks in the essay text, as those are your doings from the previous iteration.
 
     Step 1 - In the given essay text identify all of the repetitive words throughout the whole text, even if they have already been identified. Then wrap them with the '^' mark. 
     
@@ -88,7 +86,8 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
     Finally, return those two dictionaries 'words_update' and 'modified_text'.
     '''
-    
+
+    #Note: Ingore the sequential numbers, '#' and '^' marks in the essay text, as those are your doings from the previous iteration.
     prompt_4 = '''
     Unnecessary words defininion: 
     'Four types of unnecessary words and phrases to avoid for conciseness: 
@@ -103,8 +102,6 @@ def run_essay_grading(topic, essay_text, submitted_by):
     Example: "Our duty was to clean and to wash." to "We cleaned and washed." 
     Circumlocutions: Avoid lengthy phrases that can be said in fewer words. 
     Example: "Owing to the fact that..." to "Since..." In short, aim for direct, simplified wording by cutting out filler expressions.'
-    
-    Note: Ingore the sequential numbers, '#' and '^' marks in the essay text, as those are your doings from the previous iteration.
 
     Step 1 - In the given essay text identify all of the unnecessary words throughout the whole text. Then wrap them with the '-' mark. 
 
@@ -139,8 +136,6 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
     for prompt in prompts:
 
-        print(f"Modified essay? {essay}") # test
-
         messages = [
             {"role": "system", "content": introduction},
             {"role": "user", "content": essay},
@@ -156,7 +151,9 @@ def run_essay_grading(topic, essay_text, submitted_by):
             max_tokens=16000
             )
         
-        response = loads(strip_text(response.choices[0].message.content))
+        result = response.choices[0].message.content
+        print(f"\nResponse on the line 155 before strip:\n{result}") #test
+        response = loads(strip_text(result))
 
         print(f"Response on the line 129 in the openai_tools:\n{response}") # Test
 
