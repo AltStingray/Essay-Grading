@@ -172,7 +172,7 @@ def results():
 
         #print(result) # test
 
-        strip_summary = strip(result)
+        strip_summary = strip_text(result)
 
         #print(strip_summary) # test
 
@@ -214,7 +214,7 @@ def download():
 
     result = job.return_value()
 
-    strip_summary = strip(result)
+    strip_summary = strip_text(result)
 
     summary_report_text = retrieve(json.loads(strip_summary)["text"])
     summary_report_html = json.loads(strip_summary)["html"].strip("{ }")
@@ -585,19 +585,6 @@ def main(link, specified_date, teacher_name, client_name, client_email, access_t
     f_list = [summary_report, transcription, filename, link, specified_date, teacher_name, client_email, client_name]
     
     return f_list
-        
-
-
-def strip(result):
-
-    if result[0].startswith("```python"):
-        stripped_text = result[0].replace("```python\n", "").replace("```", "").strip()
-    elif result[0].startswith("```json"):
-        stripped_text = result[0].replace("```json\n", "").replace("```", "").strip()
-    else:
-        stripped_text = result[0].replace("```\n", "").replace("```", "").strip()
-    
-    return stripped_text
 
 # These two lines tell Python to start Flask’s development server when the script is executed from the command line. 
 # It’ll be used only when you run the script locally.

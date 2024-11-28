@@ -53,7 +53,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
     
     Include 'grammar_mistakes' and 'corrected_words' as keys and values inside the 'words_update' dictionary.
 
-    Finally, return those two dictionaries 'words_update' and 'modified_text'.
+    Finally, return those two dictionaries 'words_update' and 'modified_text' in a single dictionary.
     '''
 
     #Note: Ingore the sequential numbers in the essay text, as this is your doings from the previous iteration.
@@ -68,7 +68,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
     
     Include the 'linking_words' key and values inside the 'words_update' dictionary.
 
-    Finally, return those two dictionaries 'words_update' and 'modified_text'.
+    Finally, return those two dictionaries 'words_update' and 'modified_text' in a single dictionary.
     '''
 
     #Repetitive words, are the words in a candidate's text which get repeated more than 4 times per text. For example, if the word 'people', "like", "well" or "obviously" appears in text more than 4 times, it is considered a repetitive word and should be marked with '^''
@@ -84,7 +84,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
     
     Include the 'repetitive_words' key and values inside the 'words_update' dictionary.
 
-    Finally, return those two dictionaries 'words_update' and 'modified_text'.
+    Finally, return those two dictionaries 'words_update' and 'modified_text' in a single dictionary.
     '''
 
     #Note: Ingore the sequential numbers, '#' and '^' marks in the essay text, as those are your doings from the previous iteration.
@@ -111,7 +111,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
     Include the 'unnecessary_words' key and values inside the 'words_update' dictionary.
 
-    Finally, return those two dictionaries 'words_update' and 'modified_text'.
+    Finally, return those two dictionaries 'words_update' and 'modified_text' in a single dictionary.
     '''
 
     band_score = '''
@@ -123,7 +123,16 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
     Store the untouched essay text into the 'modified_text' dictionary.
 
-    Finally, return the 'words_update' and 'modified_text'.
+    Finally, return the 'words_update' and 'modified_text' in a single dictionary.
+    '''
+
+    final_prompt = '''
+    You are a helpful assistant. You are specialized in essay grading.
+    In the given dictionary you can see different sections. One of them is modified essay text in 'original_text'. 
+    Previously you made some gradings and added all of those sections. Your final task is to review the 'original_text' and other sections for the last time
+    and to make some appropriate adjustments. Make sure that each enclosed/marked/wrapped word in 'original_text' corresponds to the relevant section.
+    Make sure that grammar, linking, repetitive and unnecessary words are apropriate and correct.
+    Return the adjusted dictionary.
     '''
 
     prompts = [band_score, prompt_1, prompt_2, prompt_3, prompt_4]
@@ -149,6 +158,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
             model="gpt-4o-2024-08-06",
             messages=messages,
             max_tokens=16000
+            #temperature=0.2
             )
         
         result = response.choices[0].message.content
@@ -161,9 +171,23 @@ def run_essay_grading(topic, essay_text, submitted_by):
         final_dict["original_text"] = response["modified_text"]
 
         essay = response["modified_text"]
-    
+
     print(f"Final dictionary: {final_dict}") # test
-    return final_dict
+
+    final_check = client.chat.completions.create(
+        model="gpt-4o-2024-08-06",
+        messages=[
+            {"role": "system", "content": final_prompt},
+            {"role": "user", "content": final_dict}],
+        max_tokens=16000
+    )
+
+    result = final_check.choices[0].message.content
+    response = loads(strip_text(result))
+    
+    print(f"Final output: {response}") # test
+
+    return response
 
 def run_summary_report(prompt, content):
 
@@ -173,7 +197,6 @@ def run_summary_report(prompt, content):
             {"role": "system", "content": prompt},
             {"role": "user", "content": f'''{content}'''}],
         max_tokens=16000,
-        temperature=0.2
         )
     
     response = response.choices[0].message.content

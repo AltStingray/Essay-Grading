@@ -527,3 +527,20 @@ html = f"""<html>
 
 For the gpt fine tuning: 
 {'original_topic': 'Some parents believe that children need strict rules. Other parents believe children should have a lot of freedom to make decisions on their own. Discuss both sides and give your opinion.', 'original_text': 'Some parents think that children should have strict rules while other parents believe that children should have the freedom to make their own decisions. I personally believe that while children sometimes make wrong decisions, they should have the freedom to make their own decisions because it increases their confidence. \n\nSome people argue that children should not have the opportunity to make decisions because they sometimes make ^wrong decisions^. The reasons behind this 1is1 children are immature, and they have little experience and knowledge, which lead them 2making2 3wrong decisions3. For example, in Australia, once one child made a 4wrong decision4 regarding which subject he will study in his secondary school. The child made a 5wrong decision5, and the subject he 6choose6 at the very early stage of his life, was not suitable for him later. #However#, I personally believe that children should make decisions because they will become confident.\n\nChildren should make decisions on their own because it will increase their confidence. #If# children start making decisions at their young age, they will learn a lot from it. It will broaden their outlook, minimize their fear, and they will become more confident about different aspects of their lives. For example, children in Bangladesh are encouraged to make decisions on their own because #in# their later lives, they become confident, outspoken and independent. Therefore, I personally believe that children should learn to make decisions because they will become #more# independent.\n\n#In conclusion#, I personally believe that -although- children do not have the capabilities of making their own decisions, they should be encouraged to make their own decisions because it will make them confident.', 'paragraphs_count': '3', 'grammar_mistakes': ['1is1', '2making2', '3wrong decisions3', '4wrong decision4', '5wrong decision5', '6choose6'], 'corrected_words': ['are (subject-verb agreement rule)', 'to make (verb + infinitive form)', 'make wrong decisions (verb tense rule)', 'made a wrong decision (verb tense rule)', 'made a wrong decision (verb tense rule)', 'chose (past simple tense)'], 'linking_words': ['#However#', '#If#', '#in#', '#more#', '#In conclusion#'], 'repetitive_words': ['^wrong decisions^'], 'unnecessary_words': ['-although-'], 'submitted_by': 'Denis Yehorov', 'overall_band_score': '6.0'}
+
+
+
+Just in case:
+
+
+
+def strip(result):
+
+    if result[0].startswith("```python"):
+        stripped_text = result[0].replace("```python\n", "").replace("```", "").strip()
+    elif result[0].startswith("```json"):
+        stripped_text = result[0].replace("```json\n", "").replace("```", "").strip()
+    else:
+        stripped_text = result[0].replace("```\n", "").replace("```", "").strip()
+    
+    return stripped_text
