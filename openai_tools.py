@@ -130,7 +130,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
     You are a helpful assistant. You are specialized in essay grading.
     In the given dictionary you can see different sections. One of them is modified essay text in 'original_text'. 
     Previously you made some gradings and added all of those sections. Your final task is to review the 'original_text' and other sections for the last time
-    and to make some appropriate adjustments. Make sure that each enclosed/marked/wrapped word in 'original_text' corresponds to the relevant section.
+    and to make some appropriate adjustments. Make sure that each enclosed word in 'original_text' corresponds to the relevant section.
     Make sure that grammar, linking, repetitive and unnecessary words are apropriate and correct.
     Return the adjusted dictionary.
     '''
@@ -153,11 +153,12 @@ def run_essay_grading(topic, essay_text, submitted_by):
         step = {"role": "user", "content": prompt}
 
         messages.append(step)
-        
+
         response = client.chat.completions.create(
             model="gpt-4o-2024-08-06",
             messages=messages,
             max_tokens=16000
+            #temperature=0.2
             )
         
         result = response.choices[0].message.content
@@ -173,20 +174,20 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
     print(f"Final dictionary: {final_dict}") # test
 
-    final_check = client.chat.completions.create(
-        model="gpt-4o-2024-08-06",
-        messages=[
-            {"role": "system", "content": final_prompt},
-            {"role": "user", "content": final_dict}],
-        max_tokens=16000
-    )
+    #final_check = client.chat.completions.create(
+    #    model="gpt-4o-2024-08-06",
+    #    messages=[
+    #        {"role": "system", "content": final_prompt},
+    #        {"role": "user", "content": final_dict}],
+    #    max_tokens=16000
+    #)
+#
+    #result = final_check.choices[0].message.content
+    #response = loads(strip_text(result))
+    #
+    #print(f"Final output: {response}") # test
 
-    result = final_check.choices[0].message.content
-    response = loads(strip_text(result))
-    
-    print(f"Final output: {response}") # test
-
-    return response
+    return final_dict
 
 def run_summary_report(prompt, content):
 
@@ -205,10 +206,10 @@ def run_summary_report(prompt, content):
 def strip_text(text):
 
     if text.startswith("```python"):
-        text = text.strip("```pyton")
+        stripped_text = text.strip("```pyton")
     elif text.startswith("```json"):
-        text = text.strip("```json")
-    elif text.startswith("```"):
-        text = text.strip("```")
+        stripped_text = text.strip("```json")
+    else:
+        stripped_text = text.strip("```")
     
-    return text
+    return stripped_text
