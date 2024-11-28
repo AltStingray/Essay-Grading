@@ -155,7 +155,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
         print(f"\nResponse on the line 155 before strip:\n{result}") #test
         response = loads(strip_text(result))
 
-        print(f"Response on the line 129 in the openai_tools:\n{response}") # Test
+        print(f"Response on the line 158 in the openai_tools:\n{response}") # Test
 
         final_dict.update(response["words_update"])
         final_dict["original_text"] = response["modified_text"]
