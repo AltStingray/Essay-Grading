@@ -436,7 +436,7 @@ def register():
 
 # These two lines tell Python to start Flask’s development server when the script is executed from the command line. 
 # It’ll be used only when you run the script locally.
-if __name__ == "__main__":
+if __name__ == "__routes__":
 
     app.run(host="127.0.0.1", port=8080, debug=True)
     
