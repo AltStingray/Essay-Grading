@@ -3,6 +3,7 @@ import os
 import io
 import time
 import json
+import dropbox_module
 from main_python import *
 from email_to import send_email
 from openai_tools import *
@@ -186,10 +187,10 @@ def download():
 
     result = job.return_value()
 
-    strip_summary = strip_text(result)
+    #strip_summary = strip_text(result)
 
-    summary_report_text = retrieve(strip_summary[1])
-    summary_report_html = strip_summary[4].strip("{ }")
+    summary_report_text = retrieve(result[1])
+    summary_report_html = result[4].strip("{ }")
     transcription = retrieve(result[2])
     filename = result[3]
 
