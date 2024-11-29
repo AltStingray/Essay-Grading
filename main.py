@@ -150,7 +150,7 @@ def processing():
 
     session["job_id"] = job_id
 
-    if not process:
+    if process == None:
         return redirect(url_for("results"))
 
 
