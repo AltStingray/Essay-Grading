@@ -9,15 +9,16 @@ def send_email(user_email, html_content):
 
     smtp.starttls()
 
-    email_password = "u99W1dmIHBPLslPX"
-    #email_password = "ccvsaldikydyktgk"
+    #email_password = "u99W1dmIHBPLslPX"
+    #oetspeakingsummary@mail
+    email_password = "ccvsaldikydyktgk"
     #altstingray@gmail.com
 
-    smtp.login("oetspeakingsummary@mail.smtp2go.com", email_password)
+    smtp.login("altstingray@gmail.com", email_password)
 
     msg = MIMEMultipart("related")
     msg["Subject"] = "Your OET Summary Report"
-    msg["From"] = "oetspeakingsummary@mail.smtp2go.com"
+    msg["From"] = "altstingray@gmail.com"
     msg["To"] = user_email
 
     html = MIMEText(html_content, "html")

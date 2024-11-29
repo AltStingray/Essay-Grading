@@ -125,8 +125,6 @@ def main_summary_report(link, specified_date, teacher_name, client_name, client_
     summary_report = run_summary_report(prompt, transcription)
 
     filename = filename.replace(".mp4", "")
-
-    #f_list = [summary_report, transcription, filename, link, specified_date, teacher_name, client_email, client_name]
     
     strip_summary = strip_text(summary_report)
 
@@ -137,6 +135,20 @@ def main_summary_report(link, specified_date, teacher_name, client_name, client_
 
     data = (summary_report["text"], transcription, filename, summary_report["html"], link, specified_date, teacher, client_email, client_name)
 
-    return db_store(data, "logs")
+    db_store(data, "logs")
 
-    #return f_list
+    #f_list = [summary_report, transcription, filename, link, specified_date, teacher_name, client_email, client_name]
+
+    return data
+
+
+def strip_text(text):
+
+    if text.startswith("```python"):
+        stripped_text = text.strip("```pyton")
+    elif text.startswith("```json"):
+        stripped_text = text.strip("```json")
+    else:
+        stripped_text = text.strip("```")
+    
+    return stripped_text

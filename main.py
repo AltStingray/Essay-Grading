@@ -188,10 +188,10 @@ def download():
 
     strip_summary = strip_text(result)
 
-    summary_report_text = retrieve(json.loads(strip_summary)["text"])
-    summary_report_html = json.loads(strip_summary)["html"].strip("{ }")
-    transcription = retrieve(result[1])
-    filename = result[2]
+    summary_report_text = retrieve(strip_summary[1])
+    summary_report_html = strip_summary[4].strip("{ }")
+    transcription = retrieve(result[2])
+    filename = result[3]
 
     pick_one = escape(request.args.get("pick_one"))
 
