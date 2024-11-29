@@ -5,7 +5,7 @@ import dropbox_module
 import json
 from datetime import datetime
 from moviepy.editor import *
-from openai_tools import run_summary_report
+from openai_tools import run_summary_report, strip_text
 from db_postgres import db_store
 
 def process_essay(result):
@@ -140,15 +140,3 @@ def main_summary_report(link, specified_date, teacher_name, client_name, client_
     #f_list = [summary_report, transcription, filename, link, specified_date, teacher_name, client_email, client_name]
 
     return data
-
-
-def strip_text(text):
-
-    if text.startswith("```python"):
-        stripped_text = text.strip("```pyton")
-    elif text.startswith("```json"):
-        stripped_text = text.strip("```json")
-    else:
-        stripped_text = text.strip("```")
-    
-    return stripped_text

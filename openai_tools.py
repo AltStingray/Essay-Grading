@@ -1,6 +1,5 @@
 from openai import OpenAI
 from json import loads
-from main_python import strip_text
 import os
 # So, what we will do here is the following:
 # We will feed gpd model steps by chunks, and collecting responses one by one. 
@@ -189,3 +188,14 @@ def run_summary_report(prompt, content):
     response = response.choices[0].message.content
 
     return response
+
+def strip_text(text):
+
+    if text.startswith("```python"):
+        stripped_text = text.strip("```pyton")
+    elif text.startswith("```json"):
+        stripped_text = text.strip("```json")
+    else:
+        stripped_text = text.strip("```")
+    
+    return stripped_text
