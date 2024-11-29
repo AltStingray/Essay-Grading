@@ -83,7 +83,7 @@ def skip_choice():
 
     session["access_token"] = access_token
 
-    return redirect('/choice')
+    return redirect(url_for(processing, process="background"))
 
 @app.route('/choice')
 def choice():
@@ -129,7 +129,7 @@ def default():
 @app.route('/processing', methods=["GET", "POST"])
 def processing():
     
-    process = escape(request.args.get("process_in_background"))
+    process = escape(request.args.get("process"))
     print(process)
 
     link = escape(request.args.get("link"))
@@ -152,7 +152,7 @@ def processing():
 
     session["job_id"] = job_id
 
-    if process != "process_in_background":
+    if process != "background":
         return redirect(url_for("results"))
 
 
@@ -189,10 +189,10 @@ def download():
 
     #strip_summary = strip_text(result)
 
-    summary_report_text = retrieve(result[1])
-    summary_report_html = result[4].strip("{ }")
-    transcription = retrieve(result[2])
-    filename = result[3]
+    summary_report_text = result[0]
+    summary_report_html = result[3].strip("{ }")
+    transcription = retrieve(result[1])
+    filename = result[2]
 
     pick_one = escape(request.args.get("pick_one"))
 
