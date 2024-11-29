@@ -13,11 +13,11 @@ def send_email(user_email, html_content):
     #email_password = "ccvsaldikydyktgk"
     #altstingray@gmail.com
 
-    smtp.login("oetspeakingsummary", email_password)
+    smtp.login("oetspeakingsummary@mail.smtp2go.com", email_password)
 
     msg = MIMEMultipart("related")
     msg["Subject"] = "Your OET Summary Report"
-    msg["From"] = "oetspeakingsummary"
+    msg["From"] = "oetspeakingsummary@mail.smtp2go.com"
     msg["To"] = user_email
 
     html = MIMEText(html_content, "html")

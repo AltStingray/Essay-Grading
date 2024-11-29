@@ -129,6 +129,7 @@ def default():
 def processing():
     
     process = escape(request.args.get("process_in_background"))
+    print(process)
 
     link = escape(request.args.get("link"))
 
@@ -150,7 +151,7 @@ def processing():
 
     session["job_id"] = job_id
 
-    if process == None:
+    if process != "process_in_background":
         return redirect(url_for("results"))
 
 
