@@ -13,6 +13,7 @@
                     <h1 style="margin: 10px;">Summary report logs</h1>
                     <br>
                     <div class="top buttons" style="display: flex; justify-content: space-between;">
+
                         <!--Sorting button-->
                         <div class="sort_button" style="float: left;">
                             {% if sort_by=="Low-High" %}
@@ -25,10 +26,53 @@
                                 <a href="{{ url_for('history', sort_by='low-high')}}" class="button2">Sort by: Date-Old</a>
                             {% endif %}
                         </div>
+
                         <!--Create Summary button-->
                         <div class="create_summary_button">
-                            <a href="{{ url_for('authorize', auth='summary_logs') }}" class="button2">Create Summary Report</a>
+                            <!--<a href="{{ url_for('authorize', auth='summary_logs') }}" class="button2">Create Summary Report</a>-->
+                            <button type="button" class="btn button2" data-bs-toggle="modal" data-bs-target="#GenerateReport">Generate Summary Report</button>
                         </div>
+
+                        <!--The modal-->
+                        <div class="modal" id="GenerateReport">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+
+                                    <!--Modal Header-->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Generate Summary Report</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+
+                                    <!--Modal Body-->
+                                    <div class="modal-body">
+                                        <form action="/processing" name="process_in_background" method="get">
+                                            <div class="form">
+                                                <h1>Provide data for the following fields:</h1>
+                                                <br><br>
+                                                <input type="text" name="link" placeholder="Dropbox video link:" size="40" required>
+                                                <br><br>
+                                                <input type="text" name="date" placeholder="Date(optional):" size="30">
+                                                <br><br>
+                                                <input type="text" name="teacher" placeholder="Teacher's name:" size="20">
+                                                <br><br>
+                                                <input type="text" name="client_email" placeholder="Client's email:" size="20">
+                                                <br><br>
+                                                <input type="text" name="client" placeholder="Client's name:" size="20">
+                                                <br><br>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <!--Modal footer-->
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="test_button" style="color: white;">
                             <input type="hidden" class="button2">Test hidden white button</input>
                         </div>

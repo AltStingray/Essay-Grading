@@ -531,9 +531,6 @@ For the gpt fine tuning:
 
 
 Just in case:
-
-
-
 def strip(result):
 
     if result[0].startswith("```python"):
@@ -544,3 +541,27 @@ def strip(result):
         stripped_text = result[0].replace("```\n", "").replace("```", "").strip()
     
     return stripped_text
+
+
+
+job = Job.fetch(job_id, connection=conn)
+
+        result = job.return_value()
+
+        strip_summary = strip_text(result)
+
+        summary_report = json.loads(strip_summary)
+
+        filename = result[2].replace(".mp4", "")
+        link = result[3]
+        specified_date = result[4]
+        teacher = result[5]
+        client_email = result[6]
+        client_name = result[7]
+
+        if teacher == None or teacher == "":
+            teacher = summary_report["teacher"]
+
+        data = (summary_report["text"], result[1], filename, summary_report["html"], link, specified_date, teacher, client_email, client_name)
+
+        db_store(data, "logs")

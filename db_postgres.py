@@ -1,8 +1,5 @@
 import psycopg2
 import os
-import io
-from psycopg2.extensions import AsIs
-from psycopg2.extras import Json, DictCursor
 
 # Get environmental variable URL from Heroku
 DATABASE = os.environ.get("DATABASE_URL")
