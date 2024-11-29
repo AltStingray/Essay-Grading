@@ -189,7 +189,7 @@ def download():
 
     #strip_summary = strip_text(result)
 
-    summary_report_text = result[0]
+    summary_report_text = retrieve(result[0])
     summary_report_html = result[3].strip("{ }")
     transcription = retrieve(result[1])
     filename = result[2]

@@ -137,6 +137,4 @@ def main_summary_report(link, specified_date, teacher_name, client_name, client_
 
     db_store(data, "logs")
 
-    #f_list = [summary_report, transcription, filename, link, specified_date, teacher_name, client_email, client_name]
-
     return data
