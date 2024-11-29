@@ -5,7 +5,7 @@ import dropbox_module
 import json
 from datetime import datetime
 from moviepy.editor import *
-from openai_tools import run_summary_report, strip_text
+from openai_tools import run_summary_report
 from db_postgres import db_store
 
 def process_essay(result):
