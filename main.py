@@ -130,7 +130,6 @@ def default():
 def processing():
     
     process = escape(request.args.get("process"))
-    print(process)
 
     link = escape(request.args.get("link"))
 

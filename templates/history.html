@@ -46,7 +46,7 @@
 
                                     <!--Modal Body-->
                                     <div class="modal-body">
-                                        <form action="/authorization" name="process_in_background" method="get">
+                                        <form action="/authorize" auth="summary_logs" method="get">
                                             <div class="form">
                                                 <h1>Provide data for the following fields:</h1>
                                                 <br><br>
@@ -66,7 +66,7 @@
 
                                     <!--Modal footer-->
                                     <div class="modal-footer">
-                                        <input type="submit" class="btn btn-primary" value="Submit"></input>
+                                        <input type="submit" class="btn btn-primary" data-bs-dismiss="modal" value="Submit"></input>
                                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                                     </div>
                                 </div>
