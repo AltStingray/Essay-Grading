@@ -69,7 +69,12 @@ def authorize():
 
     access_token = escape(session.get("access_token"))
 
+    if date == None or date == "":
+        date = datetime.now().strftime("%d-%m-%Y")
+
     data = (link, date, teacher_name, client_name, client_email, access_token)
+
+    print(data)
     
     cache(data)
 
@@ -99,7 +104,7 @@ def skip_choice():
 
     session["access_token"] = access_token
 
-    return redirect(url_for(processing, process="background"))
+    return redirect(url_for('processing', process="background"))
 
 @app.route('/choice')
 def choice():
