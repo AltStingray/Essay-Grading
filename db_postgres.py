@@ -164,6 +164,25 @@ def db_store(data, db_name):
 
     return "Data uploaded to the database successfully!"
 
+def cache(data):
+
+    db_conn = psycopg2.connect(DATABASE)
+
+    cursor = db_conn.cursor()
+
+    cursor.execute("""
+        CREATE TEMP TABLE IF NOT EXISTS temp_storage(
+            id SERIAL PRIMARY KEY,
+            link VARCHAR(255),
+            time DATE,
+            teacher_name VARCHAR(255),
+            client_name VARCHAR(255),
+            client_email VARCHAR(255),
+            access_token VARCHAR(255) 
+            );
+    """)
+    cursor.execute("""
+        INSERT INTO temp_storage(link, time, teacher_name, client_name, client_email, access_token) VALUES(%s, %s, %s, %s, %s, %s);""", data)
 
 def db_get_ids(table_name):
 
@@ -226,7 +245,13 @@ def db_retrieve(file_id, db):
                 lst.append(one)
 
             return lst
+    else:
+        cursor.execute("SELECT link, time, teacher_name, client_name, client_email, access_token FROM temp_storage WHERE id = %s", str(file_id))
 
+        file = cursor.fetchone()
+
+        return file
+    
     cursor.close()
     db_conn.close()
 

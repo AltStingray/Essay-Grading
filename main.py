@@ -55,7 +55,23 @@ def summary_report():
 @app.route('/authorize')
 def authorize():
 
-    auth_from = request.args.get("auth")
+    auth_from = escape(request.args.get("auth"))
+    
+    link = escape(request.args.get("link"))
+
+    date = escape(request.args.get("date"))
+
+    teacher_name = escape(request.args.get("teacher"))
+
+    client_name = escape(request.args.get("client"))
+
+    client_email = escape(request.args.get("client_email"))
+
+    access_token = escape(session.get("access_token"))
+
+    data = (link, date, teacher_name, client_name, client_email, access_token)
+    
+    cache(data)
 
     if auth_from == "summary_logs":
         return redirect(dropbox_module.redirect_link_summary_logs)
@@ -131,17 +147,19 @@ def processing():
     
     process = escape(request.args.get("process"))
 
-    link = escape(request.args.get("link"))
+    retrieve_cache = db_retrieve(id=1)
 
-    date = escape(request.args.get("date"))
+    link = retrieve_cache[0]
 
-    teacher_name = escape(request.args.get("teacher"))
+    date = retrieve_cache[1]
 
-    client_name = escape(request.args.get("client"))
+    teacher_name = retrieve_cache[2]
 
-    client_email = escape(request.args.get("client_email"))
+    client_name = retrieve_cache[3]
 
-    access_token = escape(session.get("access_token"))
+    client_email = retrieve_cache[4]
+
+    access_token = retrieve_cache[5]
     
     prompt = session.pop("prompt", None) # because of the pop() this line won't trigger TypeError. It deletes the value in a session and returns it. Specified None here means that the value of "prompt" key doesn't matter. If the value is None or Str - doesn't matter.
 

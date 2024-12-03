@@ -46,7 +46,7 @@
 
                                     <!--Modal Body-->
                                     <div class="modal-body">
-                                        <form action="/authorize" auth="summary_logs" method="get">
+                                        <form action="/authorize" method="get">
                                             <div class="form">
                                                 <h1>Provide data for the following fields:</h1>
                                                 <br><br>
@@ -60,14 +60,14 @@
                                                 <br><br>
                                                 <input type="text" name="client" placeholder="Client's name:" size="20">
                                                 <br><br>
+                                                <input type="hidden" name="auth" value="summary_logs" size="20">
+                                            </div>
+                                            <!--Modal footer-->
+                                            <div class="modal-footer">
+                                                <input type="submit" class="btn btn-primary" value="Submit"></input>
+                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                                             </div>
                                         </form>
-                                    </div>
-
-                                    <!--Modal footer-->
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                                     </div>
                                 </div>
                             </div>
