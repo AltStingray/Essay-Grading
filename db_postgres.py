@@ -184,6 +184,12 @@ def cache(data):
     cursor.execute("""
         INSERT INTO temp_storage(link, time, teacher_name, client_name, client_email, access_token) VALUES(%s, %s, %s, %s, %s, %s);""", data)
 
+    db_conn.commit()
+    
+    cursor.close()
+
+    db_conn.close()
+
 def db_get_ids(table_name):
 
     db_conn = psycopg2.connect(DATABASE)
