@@ -152,7 +152,7 @@ def processing():
     
     process = escape(request.args.get("process"))
 
-    retrieve_cache = db_retrieve(file_id=1)
+    retrieve_cache = db_retrieve(file_id=1, db="")
 
     link = retrieve_cache[0]
 
