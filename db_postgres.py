@@ -178,7 +178,7 @@ def cache(data):
             teacher_name VARCHAR(255),
             client_name VARCHAR(255),
             client_email VARCHAR(255),
-            access_token VARCHAR(255) 
+            access_token TEXT 
             );
     """)
     cursor.execute("""
