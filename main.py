@@ -2,7 +2,6 @@
 import os
 import io
 import time
-import json
 import dropbox_module
 from main_python import *
 from email_to import send_email
