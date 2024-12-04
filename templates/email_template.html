@@ -1,240 +1,968 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Edubenchmark</title>
-	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;" />
-	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,700,700italic,800,800italic|Open+Sans+Condensed:700"/>
-	<style type="text/css">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Edubenchmark</title>
+    <meta
+      name="viewport"
+      content="width=device-width; initial-scale=1.0; maximum-scale=1.0;"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,700,700italic,800,800italic|Open+Sans+Condensed:700"
+    />
+    <style type="text/css">
+      body {
+        background-color: #f8f8f8;
+        margin: 0px;
+        padding: 0px;
+        text-align: center;
+        width: 100%;
+      }
+      html {
+        width: 100%;
+      }
+      .contentbg {
+        background-color: #f8f8f8;
+      }
+      img {
+        border: 0px;
+        outline: none;
+        text-decoration: none;
+        display: block;
+      }
+
+      @media only screen and (max-width: 640px) {
         body {
-            background-color: #f8f8f8;
-            margin: 0px;
-            padding: 0px;
-            text-align: center;
-            width: 100%;
+          width: auto !important;
         }
-        html { width: 100%; }
-        .contentbg
-        {
-            background-color: #f8f8f8;
+        table[class="main"] {
+          width: 446px !important;
         }
-        img {
-            border:0px;
-            outline:none;
-            text-decoration:none;
-            display:block;
+        table[class="logo"] {
+          width: 100% !important;
         }
-        @media only screen and (max-width:640px)
-        {
-            body{width:auto!important;}
-            table[class=main]{width:446px !important;}
-            table[class=logo]{width:100% !important;}
-            table[class=righttop-details]{width:100% !important;}
-            table[class=social-top]{width:100% !important;}
-            td[class=viewonline-field]{padding: 10px 0px 0px 0px !important;}
-            td[id=viewonline]{text-align:center !important;}
-            table[class=subimagebox]{width:100% !important;}
-            td[class=subcontent-hidebox]{height:20px !important; display:block !important;}
-            td[class=subcontent-hideboxtwo]{height:30px !important; display:block !important;}
-            td[class=main-contentbox]{width:285px !important; float:left !important; padding-left:75px !important;}
-            td[class=maincontent-hidebox]{height:30px !important; display:block !important;}
-            td[class=contentbox]{width:386px !important; display:block; padding:0px 25px !important;}
-            table[class=subcontentbox]{width:386px !important;}
-            td[class=downloadhidebox]{display:none !important;}
-            table[class=icon-bottom]{width:100% !important;}
-            td[class=hidebox]{height:15px !important; display:block !important;}
-            td[class=hidebox-footer]{height:10px !important; display:block !important;}
-            td[class=footerbox]{width:100% !important; display:block !important;}
-            .tablewidtmobile{ width:70% !important;}
+        table[class="righttop-details"] {
+          width: 100% !important;
         }
-        @media only screen and (max-width:450px)
-        {
-            body{width:auto!important;}
-            table[class=main]{width:320px !important;}
-            table[class=logo]{width:100% !important;}
-            table[class=righttop-details]{width:100% !important;}
-            table[class=social-top]{width:100% !important;}
-            td[class=viewonline-field]{padding: 10px 0px 0px 0px !important;}
-            td[id=viewonline]{text-align:center !important;}
-            table[class=subimagebox]{width:100% !important;}
-            td[class=subcontent-hidebox]{height:20px !important; display:block !important;}
-            td[class=subcontent-hideboxtwo]{height:30px !important; display:block !important;}
-            td[class=main-contentbox]{width:285px !important; float:left !important; padding-left:12px !important;}
-            td[class=maincontent-hidebox]{height:30px !important; display:block !important;}
-            td[class=contentbox]{width:100% !important; display:block; padding:0px !important;}
-            table[class=subcontentbox]{width:100% !important;}
-            td[class=downloadhidebox]{display:none !important;}
-            table[class=icon-bottom]{width:100% !important;}
-            td[class=hidebox]{height:15px !important; display:block !important;}
-            td[class=hidebox-footer]{height:10px !important; display:block !important;}
-            td[class=footerbox]{width:100% !important; display:block !important;}	
+        table[class="social-top"] {
+          width: 100% !important;
         }
-	</style>
-</head>
-<body>
-	<div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: ' . $Lato . ', Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
-	    Click to log in and use your package
-	</div>
-	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="contentbg" bgcolor="#f8f8f8">
-	<tr>
-	<td><table width="100%" border="0" cellspacing="0" cellpadding="0"  bgcolor="#f8f8f8">
-	<tr>
-	<td valign="top">
-	<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#f8f8f8">
-	<tr>
-	<td valign="top" bgcolor="#f8f8f8">
-    <!--Width of the main content window-->
-	<table width="810" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#f8f8f8" class="main">
-	<tr>
-	<td colspan="3" valign="top" bgcolor="#f8f8f8" height="20"></td>
-	</tr>
-	<tr>
-	<td colspan="3" valign="top" bgcolor="#f8f8f8">
-	<table width="100%" border="0" cellspacing="0" cellpadding="0">
-	<tr>
-	<td  valign="top" align="left" style="font-family: ' . $OpenSans . ', sans-serif; font-size: 16px; font-weight: normal; color: #000000; line-height: 25px; padding-left:30px;">
-	<a href="https://edubenchmark.com/" target="_blank"><img src="https://edubenchmark.com/images/benchmark-red.png" width="186" height="" style="display:block; border: none; text-align:left;"/></a>
-	</td>
-	</tr>
-	</table>
-	</td>
-	</tr>
-	<tr>
-	<td colspan="3" valign="top" bgcolor="#f8f8f8" height="30"></td>
-	</tr>
-	<tr>
-	<td width="30">&nbsp;</td>
-	<td valign="top">
-	<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff" style=" padding-left:20px; padding-right:10px;padding-top:10px; padding-bottom:20px;">
-	<tr>
-	<td colspan="3" valign="top" align="left" style="font-family: ' . $OpenSans . ', sans-serif; font-size: 16px; font-weight: normal; color: #000000; line-height: 25px;">
-	<p style=" width:100%; color:#d6303c;padding-left:0px; padding-right:0px; padding-top:20px; padding-bottom:0px; margin-left:0px; margin-right:0px; margin-top:0px; margin-bottom:0px;"><span style="color:#000000; font-size:14px;">{{date}}</span></p>
-	<p style=" width:100%; color:#d6303c;padding-left:0px; padding-right:0px; padding-top:20px; padding-bottom:0px; margin-left:0px; margin-right:0px; margin-top:0px; margin-bottom:0px;"><strong>Developer</strong></p>
-	<p style="width:100%;  font-size:14px;padding-left:0px; padding-right:0px; padding-top:0px; padding-bottom:0px; margin-left:0px; margin-right:0px; margin-top:0px; margin-bottom:0px;">egoroff2206@gmail.com</p>
-	</td>
-	</tr>
-	<tr>
-	<td colspan="3" valign="top" align="left" height="50">
-	</td>
-	</tr>
-	<tr>
-	<td valign="top" align="center" colspan="3" style="font-size: 32px; font-weight:bold; color:#d6303c; line-height:32px; font-family: ' . $OpenSans . ', sans-serif;">OET Summary Report</td>
-	</tr>
-	<tr>
-	<td valign="top" align="left" colspan="3" style="font-size: 16px; font-weight:bold; color:#d6303c;" height="20"></td>
-    </tr>
-    <!--Main Summary Report content here-->
-    <tr>
-        <td style="width: 100%; font-size: medium;">
-            {{summary_report_content}}
+        td[class="viewonline-field"] {
+          padding: 10px 0px 0px 0px !important;
+        }
+        td[id="viewonline"] {
+          text-align: center !important;
+        }
+        table[class="subimagebox"] {
+          width: 100% !important;
+        }
+        td[class="subcontent-hidebox"] {
+          height: 20px !important;
+          display: block !important;
+        }
+        td[class="subcontent-hideboxtwo"] {
+          height: 30px !important;
+          display: block !important;
+        }
+        td[class="main-contentbox"] {
+          width: 285px !important;
+          float: left !important;
+          padding-left: 75px !important;
+        }
+        td[class="maincontent-hidebox"] {
+          height: 30px !important;
+          display: block !important;
+        }
+        td[class="contentbox"] {
+          width: 386px !important;
+          display: block;
+          padding: 0px 25px !important;
+        }
+        table[class="subcontentbox"] {
+          width: 386px !important;
+        }
+        td[class="downloadhidebox"] {
+          display: none !important;
+        }
+        table[class="icon-bottom"] {
+          width: 100% !important;
+        }
+        td[class="hidebox"] {
+          height: 15px !important;
+          display: block !important;
+        }
+        td[class="hidebox-footer"] {
+          height: 10px !important;
+          display: block !important;
+        }
+        td[class="footerbox"] {
+          width: 100% !important;
+          display: block !important;
+        }
+        .tablewidtmobile {
+          width: 70% !important;
+        }
+      }
+
+      @media only screen and (max-width: 450px) {
+        body {
+          width: auto !important;
+        }
+        table[class="main"] {
+          width: 320px !important;
+        }
+        table[class="logo"] {
+          width: 100% !important;
+        }
+        table[class="righttop-details"] {
+          width: 100% !important;
+        }
+        table[class="social-top"] {
+          width: 100% !important;
+        }
+        td[class="viewonline-field"] {
+          padding: 10px 0px 0px 0px !important;
+        }
+        td[id="viewonline"] {
+          text-align: center !important;
+        }
+        table[class="subimagebox"] {
+          width: 100% !important;
+        }
+        td[class="subcontent-hidebox"] {
+          height: 20px !important;
+          display: block !important;
+        }
+        td[class="subcontent-hideboxtwo"] {
+          height: 30px !important;
+          display: block !important;
+        }
+        td[class="main-contentbox"] {
+          width: 285px !important;
+          float: left !important;
+          padding-left: 12px !important;
+        }
+        td[class="maincontent-hidebox"] {
+          height: 30px !important;
+          display: block !important;
+        }
+        td[class="contentbox"] {
+          width: 100% !important;
+          display: block;
+          padding: 0px !important;
+        }
+        table[class="subcontentbox"] {
+          width: 100% !important;
+        }
+        td[class="downloadhidebox"] {
+          display: none !important;
+        }
+        table[class="icon-bottom"] {
+          width: 100% !important;
+        }
+        td[class="hidebox"] {
+          height: 15px !important;
+          display: block !important;
+        }
+        td[class="hidebox-footer"] {
+          height: 10px !important;
+          display: block !important;
+        }
+        td[class="footerbox"] {
+          width: 100% !important;
+          display: block !important;
+        }
+      }
+    </style>
+
+    <!-- Internet Explorer fix -->
+    <!--[if IE]>
+      <style type="text/css">
+        @media only screen and (max-width: 640px) {
+          table[class="subimagebox"] {
+            width: 100% !important;
+            float: left;
+          }
+          td[class="main-contentbox"] {
+            width: 285px !important;
+            float: left;
+            padding-left: 75px !important;
+          }
+          td[class="contentbox"] {
+            width: 386px !important;
+            float: left;
+            display: block;
+            padding: 0px 25px !important;
+          }
+          table[class="subcontentbox"] {
+            width: 386px !important;
+            float: left;
+          }
+          td[class="footerbox"] {
+            width: 100% !important;
+            float: left;
+            display: block;
+          }
+        }
+
+        @media only screen and (max-width: 450px) {
+          table[class="subimagebox"] {
+            width: 100% !important;
+            float: left;
+          }
+          td[class="main-contentbox"] {
+            width: 285px !important;
+            float: left;
+            padding-left: 12px !important;
+          }
+          td[class="contentbox"] {
+            width: 100% !important;
+            float: left;
+            display: block;
+            padding: 0px !important;
+          }
+          table[class="subcontentbox"] {
+            width: 100% !important;
+            float: left;
+          }
+          td[class="footerbox"] {
+            width: 100% !important;
+            float: left;
+            display: block;
+          }
+        }
+      </style>
+    <![endif]-->
+    <!-- / Internet Explorer fix -->
+
+    <!-- Outlook -->
+    <!--[if gte mso 9]>
+      <style type="text/css">
+        .righttop-details {
+          width: 250px !important;
+        }
+        .icon-bottom {
+          width: 286px !important;
+        }
+        .subimagebox {
+          width: 240px !important;
+        }
+      </style>
+    <![endif]-->
+
+    <!--[if gte mso 10]>
+      <style type="text/css">
+        .righttop-details {
+          width: 250px !important;
+        }
+        .icon-bottom {
+          width: 286px !important;
+        }
+        .subimagebox {
+          width: 240px !important;
+        }
+      </style>
+    <![endif]-->
+
+    <!--[if gte mso 15]>
+      <style type="text/css">
+        .righttop-details {
+          width: 250px !important;
+        }
+        .icon-bottom {
+          width: 286px !important;
+        }
+        .subimagebox {
+          width: 240px !important;
+        }
+      </style>
+    <![endif]-->
+    <!-- / Outlook -->
+  </head>
+
+  <body>
+    <!-- HIDDEN PREHEADER TEXT -->
+    <div
+      style="
+        display: none;
+        font-size: 1px;
+        color: #fefefe;
+        line-height: 1px;
+        font-family: 'Lato', Helvetica, Arial, sans-serif;
+        max-height: 0px;
+        max-width: 0px;
+        opacity: 0;
+        overflow: hidden;
+      "
+    >
+      Click to view the recorded session
+    </div>
+    <!--Table Start-->
+    <table
+      width="100%"
+      border="0"
+      cellspacing="0"
+      cellpadding="0"
+      class="contentbg"
+      bgcolor="#f8f8f8"
+    >
+      <tr>
+        <td>
+          <table
+            width="100%"
+            border="0"
+            cellspacing="0"
+            cellpadding="0"
+            bgcolor="#f8f8f8"
+          >
+            <tr>
+              <td valign="top">
+                <!--Content Start-->
+                <table
+                  width="100%"
+                  border="0"
+                  cellspacing="0"
+                  cellpadding="0"
+                  bgcolor="#f8f8f8"
+                >
+                  <tr>
+                    <td valign="top" bgcolor="#f8f8f8">
+                      <table
+                        width="750"
+                        border="0"
+                        align="center"
+                        cellpadding="0"
+                        cellspacing="0"
+                        bgcolor="#f8f8f8"
+                        class="main"
+                      >
+                        <tr>
+                          <td
+                            colspan="3"
+                            valign="top"
+                            bgcolor="#f8f8f8"
+                            height="20"
+                          ></td>
+                        </tr>
+                        <tr>
+                          <td colspan="3" valign="top" bgcolor="#f8f8f8">
+                            <!--Sub Content Start-->
+                            <table
+                              width="100%"
+                              border="0"
+                              cellspacing="0"
+                              cellpadding="0"
+                            >
+                              <tr>
+                                <td
+                                  valign="top"
+                                  align="left"
+                                  style="
+                                    font-family: 'Open Sans', sans-serif;
+                                    font-size: 16px;
+                                    font-weight: normal;
+                                    color: #000000;
+                                    line-height: 25px;
+                                    padding-left: 30px;
+                                  "
+                                >
+                                  <a href="#" target="_blank"
+                                    ><img
+                                      editable="true"
+                                      mc:edit="logo"
+                                      src="https://edubenchmark.com/images/benchmark-red.png"
+                                      width="186"
+                                      height=""
+                                      style="
+                                        display: block;
+                                        border: none;
+                                        text-align: left;
+                                      "
+                                  /></a>
+                                </td>
+                              </tr>
+                            </table>
+                            <!--Sub Content End-->
+                          </td>
+                        </tr>
+                        <tr>
+                          <td
+                            colspan="3"
+                            valign="top"
+                            bgcolor="#f8f8f8"
+                            height="30"
+                          ></td>
+                        </tr>
+                        <tr>
+                          <td width="30">&nbsp;</td>
+                          <td valign="top">
+                            <!--Sub Content Start-->
+                            <table
+                              width="100%"
+                              border="0"
+                              cellspacing="0"
+                              cellpadding="0"
+                              bgcolor="#ffffff"
+                              style="
+                                padding-left: 20px;
+                                padding-right: 10px;
+                                padding-top: 10px;
+                                padding-bottom: 20px;
+                              "
+                            >
+                              <tr>
+                                <td
+                                  valign="top"
+                                  align="left"
+                                  style="
+                                    font-family: 'Open Sans', sans-serif;
+                                    font-size: 16px;
+                                    font-weight: normal;
+                                    color: #000000;
+                                    line-height: 25px;
+                                  "
+                                >
+					  
+						<h1 style="line-height: 36px;">OET Speaking Mock Test Session's Summary</h1>
+						<p>Date: 2024-11-16</p>
+						<p>Teacher's name: Carol</p>
+						
+						<h2>Roleplay 1:</h2>
+						<h3>Grammar:</h3>
+						<p>Carol noted that the candidate often used incorrect grammatical structures, particularly when forming questions. An example highlighted was the incorrect use of continuous tense in questions such as "since how long are you having these headaches?" and "since how many years are you having this issue?". Carol provided the correct forms, such as "how long have you been having these headaches?" to guide improvement.</p>
+						
+						<h3>Lexical Choices:</h3>
+						<p>While the vocabulary used was generally appropriate, there was a tendency to miss confirming understanding or empathy towards the patient’s concerns, like not asking further about the patient’s environment which could influence symptoms.</p>
+						
+						<h3>Pronunciation:</h3>
+						<p>Carol pointed out issues with pronunciation, particularly with distinction between the 'V' and 'W' sounds, such as the word 'avoid'. Carol emphasized the need to consistently pronounce these sounds correctly.</p>
+						
+						<h3>Overall Communication Skills:</h3>
+						<ol>
+						  <li><strong>Relationship building:</strong> The candidate began the session by introducing themselves and inquiring about the patient's condition, which laid a foundation for a supportive dialogue.</li>
+						  <li><strong>Understanding and incorporating the patient's perspective:</strong> The candidate missed opportunities to explore the patient's subjective experience, such as worries about migraine and its triggers.</li>
+						  <li><strong>Providing structure:</strong> The candidate provided some potential triggers for headaches but failed to walk through these in an organized manner with the patient, missing chances to use phrases like "firstly, secondly, and thirdly."</li>
+						  <li><strong>Information giving:</strong> While information on lifestyle modifications was given, it lacked tailoring to the specific patient's context as elicited from the conversation.</li>
+						  <li><strong>Information gathering:</strong> Carol suggested the candidate improve their depth of inquiry to avoid missing key patient cues.</li>
+						</ol>
+						
+						<h2>Roleplay 2:</h2>
+						<h3>Grammar:</h3>
+						<p>The candidate showed improvement in this section but should practice summarization as prompted by summarizing what the relative said before stating the diagnosis or treatment plan.</p>
+						
+						<h3>Lexical Choices:</h3>
+						<p>There was clear and empathetic explanation of croup, although it was suggested that the candidate confirm understanding more explicitly.</p>
+						
+						<h3>Pronunciation:</h3>
+						<p>No specific issues were pointed out in this scenario, indicating an improvement and adaptation in style.</p>
+						
+						<h3>Overall Communication Skills:</h3>
+						<ol>
+						  <li><strong>Relationship building:</strong> The candidate maintained a kind tone and clear communication.</li>
+						  <li><strong>Understanding and incorporating the patient's perspective:</strong> There was some challenge in understanding the relative's emotional readiness for information, a nuanced improvement noted between scenarios.</li>
+						  <li><strong>Providing structure:</strong> Introductions and structured responses such as possible treatment options were shared logically.</li>
+						  <li><strong>Information giving:</strong> Information was presented clearly, but again needed stronger confirmation of understanding from the patient's perspective.</li>
+						  <li><strong>Information gathering:</strong> Greater attention to summarizing information given by the relative was encouraged.</li>
+						</ol>
+						
+						<h2>Overall Performance Summary:</h2>
+						<table>
+						<thead>
+						<tr><th>Areas that you are doing well</th><th>Areas that you need to improve</th></tr>
+						</thead>
+						<tbody>
+						<tr><td>Good rapport and empathy</td><td>Refine grammar in questions</td></tr>
+						<tr><td>Clear information sharing</td><td>Pronunciation of V and W sounds</td></tr>
+						<tr><td>Structured responses</td><td>Checking patient or relative understanding</td></tr>
+						<tr><td>Engagement with the patient</td><td>Providing structured and dynamic responses</td></tr>
+						</tbody>
+						</table>
+						
+						<p><i>AI-generated content may be inaccurate or misleading. Always check for accuracy.</i></p>
+						
+						
+                                </td>
+                              </tr>
+                            </table>
+                            <!--Sub Content End-->
+                            <!--Sub Button-->
+                            <table
+                              width="100%"
+                              border="0"
+                              cellspacing="0"
+                              cellpadding="0"
+                              bgcolor="#ffffff"
+                              style="
+                                padding-left: 20px;
+                                padding-right: 20px;
+                                padding-top: 0px;
+                                padding-bottom: 0px;
+                              "
+                            >
+                              <tr>
+                                <td
+                                  valign="top"
+                                  align="center"
+                                  style="
+                                    font-family: 'Open Sans', sans-serif;
+                                    font-size: 16px;
+                                    font-weight: normal;
+                                    color: #000000;
+                                    line-height: 25px;
+                                  "
+                                  height="30"
+                                ></td>
+                              </tr>
+                              <tr>
+                                <td
+                                  valign="top"
+                                  align="center"
+                                  style="
+                                    font-family: 'Open Sans', sans-serif;
+                                    font-size: 16px;
+                                    font-weight: normal;
+                                    color: #000000;
+                                    line-height: 25px;
+                                  "
+                                >
+                                  
+                                </td>
+                              </tr>
+                              <tr>
+                                <td
+                                  valign="top"
+                                  align="center"
+                                  style="
+                                    font-family: 'Open Sans', sans-serif;
+                                    font-size: 16px;
+                                    font-weight: normal;
+                                    color: #000000;
+                                    line-height: 25px;
+                                  "
+                                  height="20"
+                                >
+                                  &nbsp;
+                                </td>
+                              </tr>
+                              <tr>
+                                <td
+                                  valign="top"
+                                  align="center"
+                                  style="
+                                    font-family: 'Open Sans', sans-serif;
+                                    font-size: 16px;
+                                    font-weight: normal;
+                                    color: #000000;
+                                    line-height: 25px;
+                                  ">
+                                  <a href="https://live.vcita.com/site/edubenchmark.com/online-scheduling?action=hvt6rh7id1jx34kd&o=cHJvZmlsZV9wYWdl&s=aHR0cHM6Ly9saXZlLnZjaXRhLmNvbS9zaXRlL2VkdWJlbmNobWFyay5jb20%3D&showClose=true" target="_blank" style="background-color:#d6303c; font-size:16px; font-weight:normal; color:#ffffff; text-decoration: none; padding-left:30px;padding-right:30px;padding-top:12px; padding-bottom:12px;">Book Your Session                  </a>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td valign="top" align="center" style="
+                                    font-family: 'Open Sans', sans-serif;
+                                    font-size: 16px;
+                                    font-weight: normal;
+                                    color: #000000;
+                                    line-height: 25px;
+                                  " height="30"></td>
+                              </tr>
+                              <tr>
+                                <td
+                                  valign="top"
+                                  align="center"
+                                  style="
+                                    font-family: 'Open Sans', sans-serif;
+                                    font-weight: normal;
+                                    color: #000000;
+                                  "
+                                >
+                                
+                                  <p
+                                    style="
+                                      padding-left: 0px;
+                                      padding-right: 0px;
+                                      padding-top: 0px;
+                                      padding-bottom: 0px;
+                                      margin-left: 0px;
+                                      margin-right: 0px;
+                                      margin-top: 0px;
+                                      margin-bottom: 0px;
+                                      font-size: 18px;
+                                      font-family: 'Open Sans', sans-serif;
+                                    "
+                                  >
+                                    <strong
+                                      >Good luck with your preparation!</strong
+                                    >
+                                  </p>
+                                  <p
+                                    style="
+                                      padding-left: 0px;
+                                      padding-right: 0px;
+                                      padding-top: 5px;
+                                      padding-bottom: 0px;
+                                      margin-left: 0px;
+                                      margin-right: 0px;
+                                      margin-top: 0px;
+                                      margin-bottom: 0px;
+                                      font-size: 14px;
+                                      font-family: 'Open Sans', sans-serif;
+                                    "
+                                  >
+                                    For any queries,&nbsp;contact
+                                    <a href="mailto:info@edubenchmark.com"
+                                      >info@edubenchmark.com</a
+                                    >
+                                  </p>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td
+                                  valign="top"
+                                  align="center"
+                                  style="
+                                    font-family: 'Open Sans', sans-serif;
+                                    font-size: 16px;
+                                    font-weight: normal;
+                                    color: #000000;
+                                    line-height: 25px;
+                                  "
+                                >
+                                  &nbsp;
+                                </td>
+                              </tr>
+                            </table>
+                            <!--Sub Button-->
+
+                            <!--Thanks Start-->
+                            <table
+                              width="100%"
+                              border="0"
+                              cellspacing="0"
+                              cellpadding="0"
+                              bgcolor="#ffffff"
+                              style="
+                                padding-left: 20px;
+                                padding-right: 20px;
+                                padding-top: 0px;
+                                padding-bottom: 0px;
+                              "
+                            >
+                              <tr>
+                                <td
+                                  valign="top"
+                                  align="left"
+                                  height="30"
+                                  style="
+                                    font-family: 'Open Sans', sans-serif;
+                                    font-size: 16px;
+                                    font-weight: normal;
+                                    color: #000000;
+                                    line-height: 25px;
+                                  "
+                                ></td>
+                              </tr>
+                              <tr>
+                                <td
+                                  width="100%"
+                                  bgcolor="#ffffff"
+                                  valign="top"
+                                  align="left"
+                                  style="
+                                    font-family: 'Open Sans', sans-serif;
+                                    font-size: 16px;
+                                    font-weight: normal;
+                                    color: #000000;
+                                    line-height: 25px;
+                                    width: 100%;
+                                  "
+                                >
+                                  <p
+                                    style="
+                                      padding-left: 0px;
+                                      padding-right: 0px;
+                                      padding-top: 0px;
+                                      padding-bottom: 0px;
+                                      margin-left: 0px;
+                                      margin-right: 0px;
+                                      margin-top: 0px;
+                                      margin-bottom: 0px;
+                                    "
+                                  >
+                                    Thank you
+                                  </p>
+                                  <p
+                                    style="
+                                      padding-left: 0px;
+                                      padding-right: 0px;
+                                      padding-top: 0px;
+                                      padding-bottom: 0px;
+                                      margin-left: 0px;
+                                      margin-right: 0px;
+                                      margin-top: 0px;
+                                      margin-bottom: 0px;
+                                    "
+                                  >
+                                    Benchmark OET Team
+                                  </p>
+                                  <p
+                                    style="
+                                      padding-left: 0px;
+                                      padding-right: 0px;
+                                      padding-top: 0px;
+                                      padding-bottom: 0px;
+                                      margin-left: 0px;
+                                      margin-right: 0px;
+                                      margin-top: 0px;
+                                      margin-bottom: 0px;
+                                    "
+                                  >
+                                    <a
+                                      href="https://edubenchmark.com/"
+                                      style="text-decoration: none"
+                                      >EduBenchmark.com
+                                    </a>
+                                  </p>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td
+                                  valign="top"
+                                  align="left"
+                                  height="20"
+                                  style="
+                                    font-family: 'Open Sans', sans-serif;
+                                    font-size: 16px;
+                                    font-weight: normal;
+                                    color: #000000;
+                                    line-height: 25px;
+                                  "
+                                ></td>
+                              </tr>
+                            </table>
+                            <!--Thanks Start-->
+                          </td>
+                          <td width="30">&nbsp;</td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+                <!--Content End-->
+              </td>
+            </tr>
+            <tr>
+              <td valign="top">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td valign="top" bgcolor="#f8f8f8">
+                      <!--Footer Start-->
+                      <table
+                        width="750"
+                        border="0"
+                        align="center"
+                        cellpadding="0"
+                        cellspacing="0"
+                        class="main"
+                      >
+                        <tr>
+                          <td width="5">&nbsp;</td>
+                          <td valign="top" style="padding: 21px 0px 33px 0px">
+                            <table
+                              width="100%"
+                              border="0"
+                              cellspacing="0"
+                              cellpadding="0"
+                            >
+                              <tr>
+                                <td width="100%" valign="top" class="footerbox">
+                                  <!--Footer Link Start-->
+                                  <table
+                                    width="100%"
+                                    border="0"
+                                    align="right"
+                                    cellpadding="0"
+                                    cellspacing="0"
+                                  >
+                                    <tr>
+                                      <td
+                                        class="hidebox-footer"
+                                        style="display: none"
+                                      ></td>
+                                    </tr>
+                                    <tr>
+                                      <td valign="top">
+                                        <table
+                                          width="100%"
+                                          border="0"
+                                          cellpadding="0"
+                                          cellspacing="0"
+                                        >
+                                          <tr>
+                                            <td width="100%" valign="top">
+                                              <table
+                                                width="100%"
+                                                border="0"
+                                                cellspacing="0"
+                                                cellpadding="0"
+                                              >
+                                                <tr>
+                                                  <td
+                                                    align="center"
+                                                    valign="top"
+                                                    class="textfooter"
+                                                    style="padding-top: 8px"
+                                                    mc:edit="recommend-link"
+                                                  >
+                                                    <a
+                                                      href="https://edubenchmark.com/"
+                                                      target="_blank"
+                                                      ><img
+                                                        editable="true"
+                                                        mc:edit="logo"
+                                                        src="https://edubenchmark.com/images/benchmark-red.png"
+                                                        width="150"
+                                                        height=""
+                                                        style="
+                                                          display: block;
+                                                          border: none;
+                                                        "
+                                                    /></a>
+                                                  </td>
+                                                </tr>
+                                                <tr>
+                                                  <td
+                                                    style="
+                                                      font-family: 'Open Sans',
+                                                        sans-serif;
+                                                      font-size: 14px;
+                                                      padding-top: 10px;
+                                                    "
+                                                    align="center"
+                                                    valign="top"
+                                                    class="textfooter"
+                                                    mc:edit="recommend-link"
+                                                  >
+                                                    Your Trusted OET Partner!
+                                                  </td>
+                                                </tr>
+                                                <tr>
+                                                  <td
+                                                    align="center"
+                                                    valign="top"
+                                                    class="textfooter"
+                                                    style="padding-top: 15px"
+                                                    mc:edit="recommend-link"
+                                                  >
+                                                    <table
+                                                      width="40%"
+                                                      border="0"
+                                                      align="center"
+                                                      cellpadding="0"
+                                                      cellspacing="0"
+                                                      class="tablewidtmobile"
+                                                    >
+                                                      <tr>
+                                                        <td
+                                                          style="
+                                                            font-family: 'Open Sans',
+                                                              sans-serif;
+                                                            font-size: 12px;
+                                                          "
+                                                        >
+                                                          <a
+                                                            href="https://edubenchmark.com/blog/OET/"
+                                                            target="_blank"
+                                                            style="
+                                                              text-decoration: none;
+                                                              font-weight: normal;
+                                                            "
+                                                            >Blog&nbsp;</a
+                                                          >
+                                                        </td>
+                                                        <td
+                                                          style="
+                                                            font-family: 'Open Sans',
+                                                              sans-serif;
+                                                            font-size: 12px;
+                                                          "
+                                                        >
+                                                          <a
+                                                            href="https://www.facebook.com/pteoetielts/"
+                                                            target="_blank"
+                                                            style="
+                                                              text-decoration: none;
+                                                              font-weight: normal;
+                                                            "
+                                                            >Facebook&nbsp;</a
+                                                          >
+                                                        </td>
+                                                        <td
+                                                          style="
+                                                            font-family: 'Open Sans',
+                                                              sans-serif;
+                                                            font-size: 12px;
+                                                          "
+                                                        >
+                                                          <a
+                                                            href="https://wa.me/message/DBYFCVFNJ3GDO1"
+                                                            target="_blank"
+                                                            style="
+                                                              text-decoration: none;
+                                                              font-weight: normal;
+                                                            "
+                                                            >WhatsApp&nbsp;</a
+                                                          >
+                                                        </td>
+                                                        <td
+                                                          style="
+                                                            font-family: 'Open Sans',
+                                                              sans-serif;
+                                                            font-size: 12px;
+                                                          "
+                                                        >
+                                                          <a
+                                                            href="https://www.youtube.com/channel/UClDM_3twqOgWc67GghR7ozg"
+                                                            target="_blank"
+                                                            style="
+                                                              text-decoration: none;
+                                                              font-weight: normal;
+                                                            "
+                                                            >Youtube&nbsp;</a
+                                                          >
+                                                        </td>
+                                                      </tr>
+                                                    </table>
+                                                  </td>
+                                                </tr>
+                                              </table>
+                                            </td>
+                                          </tr>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                  <!--Footer Link End-->
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                          <td width="5">&nbsp;</td>
+                        </tr>
+                      </table>
+                      <!--Footer End-->
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
         </td>
-    </tr>
-    <!---->
-	</table>
-	<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff" style=" padding-left:20px; padding-right:20px;padding-top:0px; padding-bottom:0px;">
-	<tr>
-	<td valign="top" align="center" style="font-family: ' . $OpenSans . ', sans-serif; font-size: 16px; font-weight: normal; color: #000000; line-height: 25px;" height="20">&nbsp;</td>
-	</tr>
-	<tr>
-	<td valign="top" align="center" style="font-family: ' . $OpenSans . ', sans-serif; font-size: 16px; font-weight: normal; color: #000000; line-height: 25px;" height="30">
-	<a href="' . $url . '" style="background-color:#d6303c; font-size:16px; font-weight:normal; color:#ffffff; text-decoration: none; padding-left:30px;padding-right:30px;padding-top:12px; padding-bottom:12px;">Login</a>
-	</td>
-	</tr>
-	<tr>
-	<td valign="top" align="center" style="font-family: ' . $OpenSans . ', sans-serif; font-size: 16px; font-weight: normal; color: #000000; line-height: 25px;" height="20">&nbsp;</td>
-	</tr>
-	<tr>
-	<td valign="top" align="center" style="font-family: ' . $OpenSans . ', sans-serif; font-weight: normal; color: #000000;">
-	<p style="padding-left:0px;padding-right:0px;padding-top:0px; padding-bottom:0px; margin-left:0px;margin-right:0px;margin-top:0px; margin-bottom:0px; font-size: 18px; font-family: ' . $OpenSans . ', sans-serif;"><strong>Good luck with your preparation!</strong></p>
-	<p style="padding-left:0px;padding-right:0px;padding-top:5px; padding-bottom:0px; margin-left:0px;margin-right:0px;margin-top:0px; margin-bottom:0px; font-size: 14px; font-family: ' . $OpenSans . ', sans-serif;">For any queries,&nbsp;contact <a href="mailto:info@edubenchmark.com">info@edubenchmark.com</a></p>
-	</td>
-	</tr>
-	<tr>
-	<td valign="top" align="center" style="font-family: ' . $OpenSans . ', sans-serif; font-size: 16px; font-weight: normal; color: #000000; line-height: 25px;">&nbsp;</td>
-	</tr>
-	</table>
-	<table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff" style=" padding-left:20px; padding-right:20px;padding-top:0px; padding-bottom:0px;">
-	<tr>
-	<td valign="top" align="left" height="30" style="font-family: ' . $OpenSans . ', sans-serif; font-size: 16px; font-weight: normal; color: #000000; line-height: 25px;">
-	</td>
-	</tr>
-	<tr>
-	<td width="100%" bgcolor="#ffffff" valign="top" align="left" style="font-family: ' . $OpenSans . ', sans-serif; font-size: 16px; font-weight: normal; color: #000000; line-height: 25px; width:100%;">
-	<p style="padding-left:0px;padding-right:0px;padding-top:0px; padding-bottom:0px; margin-left:0px;margin-right:0px;margin-top:0px; margin-bottom:0px;">Thank you</p>
-	<p style="padding-left:0px;padding-right:0px;padding-top:0px; padding-bottom:0px; margin-left:0px;margin-right:0px;margin-top:0px; margin-bottom:0px;">Benchmark OET Team</p>
-	<p style="padding-left:0px;padding-right:0px;padding-top:0px; padding-bottom:0px; margin-left:0px;margin-right:0px;margin-top:0px; margin-bottom:0px;"><a href="https://edubenchmark.com/" style="text-decoration:none;">EduBenchmark.com  </a></p>
-	</td>
-	</tr>
-	<tr>
-	<td valign="top" align="left" height="20" style="font-family: ' . $OpenSans . ', sans-serif; font-size: 16px; font-weight: normal; color: #000000; line-height: 25px;">
-	</td>
-	</tr>
-	</table>
-	</td>
-	<td width="30">&nbsp;</td>
-	</tr>
-	</table>
-	</td>
-	</tr>
-	</table>
-	</td>
-	</tr>
-	<tr>
-	<td valign="top">
-	<table width="100%" border="0" cellspacing="0" cellpadding="0">
-	<tr>
-	<td valign="top" bgcolor="#f8f8f8">
-	<table width="610" border="0" align="center" cellpadding="0" cellspacing="0" class="main">
-	<tr>
-	<td width="5">&nbsp;</td>
-	<td valign="top" style="padding:21px 0px 33px 0px;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-	<tr>
-	<td width="100%" valign="top" class="footerbox">
-	<table width="100%" border="0" align="right" cellpadding="0" cellspacing="0">
-	<tr>
-	<td class="hidebox-footer" style="display:none;"></td>
-	</tr>
-	<tr>
-	<td valign="top"><table width="100%" border="0" cellpadding="0" cellspacing="0">
-	<tr>
-	<td width="100%" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-	<tr>
-	<td align="center" valign="top" class="textfooter" style="padding-top:8px;" mc:edit="recommend-link"><a href="https://edubenchmark.com/" target="_blank"><img editable="true" mc:edit="logo" src="https://edubenchmark.com/images/benchmark-red.png" width="150" height=""  style="display:block; border: none;"/></a></td>
-	</tr>
-	<tr>
-	<td style="font-family: ' . $OpenSans . ', sans-serif; font-size:14px; padding-top:10px;" align="center" valign="top" class="textfooter" mc:edit="recommend-link">Your Trusted OET Partner! </td>
-	</tr>
-	<tr>
-	<td align="center" valign="top" class="textfooter" style="padding-top:15px;" mc:edit="recommend-link">
-	<table width="40%" border="0" align="center" cellpadding="0" cellspacing="0" class="tablewidtmobile">
-	<tr>
-	<td style="font-family: ' . $OpenSans . ', sans-serif; font-size:12px; text-align:center;"><a href="https://edubenchmark.com/blog/OET/" target="_blank" style="text-decoration: none; font-weight: normal;">Blog&nbsp;</a></td>
-	<td style="font-family: ' . $OpenSans . ', sans-serif; font-size:12px; text-align:center;"><a href="https://www.facebook.com/pteoetielts/" target="_blank" style="text-decoration: none; font-weight: normal;">Facebook&nbsp;</a></td>
-	<td style="font-family: ' . $OpenSans . ', sans-serif; font-size:12px; text-align:center;"><a href="https://wa.me/message/DBYFCVFNJ3GDO1" target="_blank" style="text-decoration: none; font-weight: normal;">WhatsApp&nbsp;</a></td>
-	<td style="font-family: ' . $OpenSans . ', sans-serif; font-size:12px; text-align:center;"><a href="https://www.youtube.com/channel/UCK50hlHE9yYSFkkg8TcDExQ" target="_blank" style="text-decoration: none; font-weight: normal;">Youtube&nbsp;</a></td>
-	</tr>
-	</table>
-	</td>
-	</tr>
-	</table></td>
-	</tr>
-	</table></td>
-	</tr>
-	</table>
-	</td>
-	</tr>
-	</table></td>
-	<td width="5">&nbsp;</td>
-	</tr>
-	</table>
-	</td>
-	</tr>
-	</table>
-	</td>
-	</tr>
-	</table></td>
-	</tr>
-	</table>
-</body>
+      </tr>
+    </table>
+    <!--Table End-->
+  </body>
 </html>
