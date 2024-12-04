@@ -317,7 +317,7 @@ def logs_download(id, name):
 @app.route('/redirect')
 def redirect_to():
 
-    url = escape(request.args.get("url"))
+    url = request.args.get("url")
 
     return redirect(url)
 

@@ -59,7 +59,7 @@ def db(command):
         
         cursor.execute("""ALTER SEQUENCE essay_logs_id_seq RESTART WITH 2""")
 
-        cursor.execute("""ALTER SEQUENCE temp_storage_id_seq RESTART WITH 1""")
+        #cursor.execute("""ALTER SEQUENCE temp_storage_id_seq RESTART WITH 1""")
 
         #cursor.execute("""ALTER TABLE essay_logs RENAME COLUMN date TO time""")
 
@@ -78,8 +78,8 @@ def db(command):
         UPDATE Logs SET client_name = 'Lee' WHERE id = 3;
         """
         #cursor.execute(add_clients)
-        
-        cursor.execute("""UPDATE Logs SET link = 'https://www.dropbox.com/scl/fi/kkh4urusbik9mcvjcl1al/dr.shqazi-gmail.com_D_US_Carol_migraine_croup_Session1_16Nov24.mp4?rlkey=vqey0t1sgzmptrkhs4rs8h1yj&e=16&dl=0' WHERE id = 1;""")
+
+        #cursor.execute("""UPDATE Logs SET link = 'https://www.dropbox.com/scl/fi/kkh4urusbik9mcvjcl1al/dr.shqazi-gmail.com_D_US_Carol_migraine_croup_Session1_16Nov24.mp4?rlkey=vqey0t1sgzmptrkhs4rs8h1yj&e=17&dl=0' WHERE id = 1;""")
         
         #cursor.execute("""ALTER DATABASE d5o8488ckdvb82 SET datestyle = 'DMY'""")
 
@@ -94,7 +94,7 @@ def db(command):
 
         cursor.execute(f"DELETE FROM Logs WHERE id IN ('4')") #'2', '3', '4', '5'
         cursor.execute(f"DELETE FROM essay_logs WHERE id IN ('2')")
-        cursor.execute(f"DELETE FROM temp_storage WHERE id IN ('1', '2', '3', '4')")
+        #cursor.execute(f"DELETE FROM temp_storage WHERE id IN ('1', '2', '3', '4')")
 
         db_conn.commit()
 
