@@ -25,8 +25,10 @@ def process_essay(result):
 
     grammar_mistakes_count = 0
     for n, word in enumerate(grammar_mistakes):
+
         re_word = re.search(word, original_text)
         print(re_word)
+
         try:
             if word == re_word.group():
 
@@ -36,9 +38,10 @@ def process_essay(result):
 
                 stripped_word = word.strip(nums_str)
 
-                html_word = f"<span class='highlight' data-comment='comment{n + 1}'>{stripped_word}({n + 1})</span>" #<span class='jsx-1879403401'><div contenteditable='false' class='jsx-1879403401 hover'><div class='jsx-1879403401 hint'><div class='jsx-1879403401 title'>Correct article usage</div><div class='jsx-1879403401 suggestions'><div class='jsx-1879403401 suggestion'>the Atlantic</div></div><p class='jsx-1879403401 info'><p>It&nbsp;seems that there is&nbsp;an&nbsp;article usage problem here.</p></p><div class='jsx-1879403401 examples-button'>show examples</div></div></div></span>"
+                html_word = f"<span class='highlight' data-comment='comment{n + 1}'>{stripped_word}({n + 1})</span>"
                 original_text = original_text.replace(re_word.group(), html_word)
                 grammar_mistakes_count += 1
+
         except AttributeError as err:
             print(err)
 
@@ -46,18 +49,23 @@ def process_essay(result):
 
     #linking and repetitive words
     def count_and_replace(words, html_line, original_text, marker):
+
         words_count = 0
         already_exists = ""
+
         for word in words:
+            
             if word in original_text:
                 original_word = word
                 print(f"Original word: {original_word}") # test
                 html_word = html_line.format(original_word.strip(marker))
                 print(html_word) # test
                 original_text = original_text.replace(original_word, html_word)
+                
                 if word not in already_exists:
                     already_exists += word
                     words_count += 1
+
         return words_count, original_text
 
     linking_words_count, linking_original_text = count_and_replace(linking_words, "<span class='jsx-2885589388 linking-words'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{}</span><span class='jsx-1879403401'></span></div></span>", original_text, "#")
@@ -71,11 +79,14 @@ def process_essay(result):
     sidebar_comments = []
 
     for n, word in enumerate(corrected_words):
+        
         word_split = word.split()
         cache_word_split = word_split[:]
         correct_word = ""
         description = ""
+
         for one in range(len(cache_word_split)):
+
             if cache_word_split[one].startswith('('):
                 description += (" ".join(word_split))
                 break
