@@ -59,6 +59,8 @@ def db(command):
         
         cursor.execute("""ALTER SEQUENCE essay_logs_id_seq RESTART WITH 2""")
 
+        cursor.execute("""ALTER SEQUENCE temp_storage_id_seq RESTART WITH 1""")
+
         #cursor.execute("""ALTER TABLE essay_logs RENAME COLUMN date TO time""")
 
         #cursor.execute("""ALTER TABLE Logs ALTER COLUMN uploat_time TYPE DATE""")
@@ -92,6 +94,7 @@ def db(command):
 
         cursor.execute(f"DELETE FROM Logs WHERE id IN ('4')") #'2', '3', '4', '5'
         cursor.execute(f"DELETE FROM essay_logs WHERE id IN ('2')")
+        cursor.execute(f"DELETE FROM temp_storage WHERE id IN ('1', '2', '3', '4')")
 
         db_conn.commit()
 
@@ -101,9 +104,11 @@ def db(command):
         return "Data has been deleted from the database successfully!"
 
     elif command == "print":
+
         cursor.execute("SELECT * FROM Logs")
         #cursor.execute("SELECT * FROM essay_logs")
-        cursor.execute("SELECT * FROM temp_storage")
+        #cursor.execute("SELECT * FROM temp_storage")
+
         rows = cursor.fetchall()
 
         for row in rows:
