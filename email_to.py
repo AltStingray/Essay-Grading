@@ -11,14 +11,14 @@ def send_email(user_email, html_content):
 
     #email_password = "u99W1dmIHBPLslPX"
     #oetspeakingsummary@mail
-    email_password = "ccvsaldikydyktgk"
+    #email_password = "ccvsaldikydyktgk"
     #altstingray@gmail.com
 
-    smtp.login("altstingray@gmail.com", email_password)
+    smtp.login("info@edubenchmark.com")
 
     msg = MIMEMultipart("related")
     msg["Subject"] = "Your OET Summary Report"
-    msg["From"] = "altstingray@gmail.com"
+    msg["From"] = "oetspeakingsummary"
     msg["To"] = user_email
 
     html = MIMEText(html_content, "html")
