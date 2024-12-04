@@ -90,7 +90,7 @@ def process_essay(result):
     
     return data
 
-def main_summary_report(link, specified_date, teacher_name, client_name, client_email, access_token, user_prompt):
+def main_summary_report(link, specified_date, teacher, client_name, client_email, access_token, user_prompt):
     '''Main function of the summary report generation. It takes 5 paramethers: (1)dropboxlink, (2)specified date by the user,
     (3)specified teacher's name, (4)Dropbox access token to download the file, (5)Specified prompt by the user.'''
 
@@ -130,7 +130,7 @@ def main_summary_report(link, specified_date, teacher_name, client_name, client_
 
     summary_report = json.loads(strip_summary)
 
-    if teacher_name == None or teacher_name == "":
+    if teacher == None or teacher == "":
         teacher = summary_report["teacher"]
 
     data = (summary_report["text"], transcription, filename, summary_report["html"], link, specified_date, teacher, client_email, client_name)
