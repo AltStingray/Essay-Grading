@@ -175,6 +175,8 @@ def processing():
 
     if process != "background":
         return redirect(url_for("results"))
+    else:
+        return redirect(url_for("history"))
 
 
 @app.route('/results', methods=["GET", "POST"])

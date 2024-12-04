@@ -565,3 +565,15 @@ job = Job.fetch(job_id, connection=conn)
         data = (summary_report["text"], result[1], filename, summary_report["html"], link, specified_date, teacher, client_email, client_name)
 
         db_store(data, "logs")
+
+
+<tr>
+	<td valign="middle" align="center" style="border-bottom:solid 2px #d6303c;font-size: 16px; font-weight:bold; color:#d6303c; line-height:55px; width:33%; font-family: ' . $OpenSans . ', sans-serif;">PACKAGE</td>
+	<td valign="middle" align="center" style="border-bottom:solid 2px #d6303c;font-size: 16px; font-weight:bold; color:#d6303c; line-height:55px; width:33%; font-family: ' . $OpenSans . ', sans-serif;">PRICE</td>
+	<td valign="middle" align="center" style="border-bottom:solid 2px #d6303c;font-size: 16px; font-weight:bold; color:#d6303c; line-height:55px; width:33%; font-family: ' . $OpenSans . ', sans-serif;">VALIDITY</td>
+	</tr>
+	<tr>
+	<td align="center" style="border-bottom: solid 2px #d6303c;"><span style="padding-bottom:5px;padding-top:0px;padding-right:0px; font-weight: bold; padding-left:0px; line-height:20px;">Package Name</span></td>
+	<td valign="middle" align="center" style="border-bottom:solid 2px #d6303c; font-size:14px; line-height:50px; font-weight:bold; width:33%;font-family: ' . $OpenSans . ', sans-serif;">25$</td>
+	<td valign="middle" align="center" style="border-bottom:solid 2px #d6303c; font-size:14px; line-height:50px; font-weight:bold; width:33%;font-family: ' . $OpenSans . ', sans-serif;">No terms</td>
+</tr>
