@@ -46,10 +46,13 @@
 
                                     <!--Modal Body-->
                                     <div class="modal-body">
-                                        <form action="/authorize" method="get">
+                                        <form action="/authorize" onsubmit="handleFormSubmission(event)" method="get">
                                             <div class="form">
                                                 <h1>Provide data for the following fields:</h1>
                                                 <br><br>
+                                                <div id="success-message" style="display: none; color: green;">
+                                                    Email has been sent successfully!
+                                                </div>
                                                 <input type="text" name="link" placeholder="Dropbox video link:" size="40" required>
                                                 <br><br>
                                                 <input type="text" name="date" placeholder="Date(optional):" size="30">
