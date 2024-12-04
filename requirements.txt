@@ -2,7 +2,7 @@
 
 Flask==3.0.3
 
-OpenAI==1.42.0
+OpenAI==1.56.2
 
 MoviePy==1.0.3
 
