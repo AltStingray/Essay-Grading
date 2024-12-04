@@ -171,7 +171,7 @@ def cache(data):
     cursor = db_conn.cursor()
 
     cursor.execute("""
-        CREATE TEMP TABLE IF NOT EXISTS temp_storage(
+        CREATE TABLE IF NOT EXISTS temp_storage(
             id SERIAL PRIMARY KEY,
             link VARCHAR(255),
             time DATE,
@@ -251,6 +251,8 @@ def db_retrieve(file_id, db):
         cursor.execute("SELECT link, time, teacher_name, client_name, client_email, access_token FROM temp_storage WHERE id = %s", str(file_id))
 
         file = cursor.fetchone()
+
+        cursor.execute("DROP TABLE temp_storage")
 
         return file
     
