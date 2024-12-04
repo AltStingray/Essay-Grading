@@ -257,7 +257,10 @@ def db_retrieve(file_id, db):
 
         file = cursor.fetchone()
 
-        cursor.execute("DROP TABLE temp_storage")
+        cursor.execute(f"DROP TABLE {db}")
+        print("DB HAS BEEN DELETED")
+        cursor.close()
+        db_conn.close()
 
         return file
     

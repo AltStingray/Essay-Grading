@@ -60,7 +60,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
     prompt_2 = '''
     Linking words definition: 'Linking words, also known as transition words, are words and phrases like 'however', 'on the other hand', 'besides' or 'in conclusion' that connect clauses, sentences, paragraphs, or other words.'
     
-    Note: If you see that word has already been wrapped with sequence number("1like that1"), '#' mark, '^' mark, or '-': you simply skip it and do not wrap it.
+    Note: If you see that word or sentence has already been wrapped with sequence number("1like that1"), '#' mark, '^' mark, or '-': you simply skip it and do not wrap it again.
     
     Step 1 - In the given essay text identify all of the linking words throughout the whole text, then wrap all of them with the '#' mark. (Note: If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#').
 
@@ -76,9 +76,9 @@ def run_essay_grading(topic, essay_text, submitted_by):
     #Repetitive words, are the words in a candidate's text which get repeated more than 4 times per text. For example, if the word 'people', "like", "well" or "obviously" appears in text more than 4 times, it is considered a repetitive word and should be marked with '^''
     #Note: Ingore the sequential numbers and '#' marks in the essay text, as those are your doings from the previous iteration.
     prompt_3 = '''
-    Repetitive words definition: 'The repetitive use of the same word in a text is called "redundancy" or "word repetition." It can make the text less engaging and may indicate a need for variety or synonyms to improve readability and flow.
+    Repetitive words definition: 'The repetitive use of the same word in a text is called "redundancy" or "word repetition." It can make the text less engaging and may indicate a need for variety or synonyms to improve readability and flow. Important: Syncategorematic words are not repetitive words.
 
-    Note: If you see that word has already been wrapped with sequence number("1like that1"), '#' mark, '^' mark, or '-': you simply skip it and do not wrap it.
+    Note: If you see that word or sentence has already been wrapped with sequence number("1like that1"), '#' mark, '^' mark, or '-': you simply skip it and do not wrap it again.
 
     Step 1 - In the given essay text identify all of the repetitive words throughout the whole text, even if they have already been identified. Then wrap them with the '^' mark. 
     
@@ -108,7 +108,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
     Example: "Owing to the fact that..." to "Since..." In short, aim for direct, simplified wording by cutting out filler expressions.'
     Do not confuse unnecessary words with linking words that were wrapped with '#' mark. Unnecessary words are those that you can surely get rid of and they won't change the context, structure or grammar of the text.
 
-    Note: If you see that word has already been wrapped with sequence number("1like that1"), '#' mark, '^' mark, or '-': you simply skip it and do not wrap it.
+    Note: If you see that word or sentence has already been wrapped with sequence number("1like that1"), '#' mark, '^' mark, or '-': you simply skip it and do not wrap it again.
 
     Step 1 - In the given essay text identify some of the unnecessary words that you would get rid of to increase the overall clarity and make the essay better. Then wrap them with the '-' mark. 
 

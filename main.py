@@ -30,7 +30,7 @@ app.config["SESSION_USE_SIGNER"] = True
 
 q = Queue(connection=conn)
 
-#delete_table("essay_logs")
+delete_table("essay_logs")
 #db("create")
 
 db("delete_data")
@@ -149,7 +149,7 @@ def processing():
     
     process = escape(request.args.get("process"))
 
-    retrieve_cache = db_retrieve(file_id=1, db="")
+    retrieve_cache = db_retrieve(file_id=1, db="temp_storage")
 
     link = retrieve_cache[0]
 
@@ -171,6 +171,7 @@ def processing():
 
         return redirect(url_for("history"))
     else:
+        # we can do the same here, without specifying the job...but man, how we will know the id then to download it.
         job = q.enqueue(main_summary_report, link, date, teacher_name, client_name, client_email, access_token, prompt) # enque main function and it's parameters to execute in the background
 
         job_id=job.get_id() # get id of the job that is in process 
