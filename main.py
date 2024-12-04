@@ -72,8 +72,6 @@ def authorize():
         date = datetime.now().strftime("%d-%m-%Y")
 
     data = (link, date, teacher_name, client_name, client_email, access_token)
-
-    print(data)
     
     cache(data)
 
@@ -166,17 +164,20 @@ def processing():
     access_token = retrieve_cache[5]
     
     prompt = session.pop("prompt", None) # because of the pop() this line won't trigger TypeError. It deletes the value in a session and returns it. Specified None here means that the value of "prompt" key doesn't matter. If the value is None or Str - doesn't matter.
+    
+    if process == "background":
 
-    job = q.enqueue(main_summary_report, link, date, teacher_name, client_name, client_email, access_token, prompt) # enque main function and it's parameters to execute in the background
+        q.enqueue(main_summary_report, link, date, teacher_name, client_name, client_email, access_token, prompt)
 
-    job_id=job.get_id() # get id of the job that is in process 
-
-    session["job_id"] = job_id
-
-    if process != "background":
-        return redirect(url_for("results"))
-    else:
         return redirect(url_for("history"))
+    else:
+        job = q.enqueue(main_summary_report, link, date, teacher_name, client_name, client_email, access_token, prompt) # enque main function and it's parameters to execute in the background
+
+        job_id=job.get_id() # get id of the job that is in process 
+
+        session["job_id"] = job_id
+
+        return redirect(url_for("results"))
 
 
 @app.route('/results', methods=["GET", "POST"])
@@ -209,9 +210,7 @@ def download():
     job = Job.fetch(job_id, connection=conn)
 
     result = job.return_value()
-
-    #strip_summary = strip_text(result)
-
+    
     summary_report_text = retrieve(result[0])
     summary_report_html = result[3].strip("{ }")
     transcription = retrieve(result[1])

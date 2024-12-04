@@ -77,7 +77,7 @@ def db(command):
         """
         #cursor.execute(add_clients)
         
-        #cursor.execute("""UPDATE Logs SET client_email = 'drlamiaazizova@gmail.com' WHERE id = 1;""")
+        cursor.execute("""UPDATE Logs SET link = 'https://www.dropbox.com/scl/fi/kkh4urusbik9mcvjcl1al/dr.shqazi-gmail.com_D_US_Carol_migraine_croup_Session1_16Nov24.mp4?rlkey=vqey0t1sgzmptrkhs4rs8h1yj&e=16&dl=0' WHERE id = 1;""")
         
         #cursor.execute("""ALTER DATABASE d5o8488ckdvb82 SET datestyle = 'DMY'""")
 
