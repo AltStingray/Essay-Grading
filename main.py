@@ -30,7 +30,7 @@ app.config["SESSION_USE_SIGNER"] = True
 
 q = Queue(connection=conn)
 
-#delete_table("temp_storage")
+delete_table("temp_storage")
 #db("create")
 
 db("delete_data")
@@ -146,13 +146,15 @@ def default():
 @app.route('/processing', methods=["GET", "POST"])
 def processing():
     
-    process = escape(request.args.get("process"))
+    process = request.args.get("process")
     
     prompt = session.pop("prompt", None) # because of the pop() this line won't trigger TypeError. It deletes the value in a session and returns it. Specified None here means that the value of "prompt" key doesn't matter. If the value is None or Str - doesn't matter.
     
     access_token = session["access_token"]
 
     if process == "background":
+        
+        print("BACKGROUND PROCESSING")
 
         retrieve_cache = db_retrieve(file_id=1, db="temp_storage")
 

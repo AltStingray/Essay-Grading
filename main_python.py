@@ -134,7 +134,7 @@ def main_summary_report(link, specified_date, teacher, client_name, client_email
     summary_report = run_summary_report(prompt, transcription)
 
     filename = filename.replace(".mp4", "")
-    
+
     strip_summary = strip_text(summary_report)
     
     summary_report = json.loads(strip_summary)
