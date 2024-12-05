@@ -182,8 +182,8 @@ def cache(data):
             time DATE,
             teacher_name VARCHAR(255),
             client_name VARCHAR(255),
-            client_email VARCHAR(255),
-            );
+            client_email VARCHAR(255)
+        )
     """)
     cursor.execute("""
         INSERT INTO temp_storage(link, time, teacher_name, client_name, client_email, access_token) VALUES(%s, %s, %s, %s, %s);""", data)
@@ -257,7 +257,7 @@ def db_retrieve(file_id, db):
         file = cursor.fetchone()
 
         cursor.execute(f"DROP TABLE {db}")
-        
+
         print("TABLE HAS BEEN DELETED")
 
         cursor.close()
