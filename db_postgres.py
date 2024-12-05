@@ -107,7 +107,7 @@ def db(command):
 
         cursor.execute("SELECT * FROM Logs")
         #cursor.execute("SELECT * FROM essay_logs")
-        cursor.execute("SELECT * FROM temp_storage IF EXISTS")
+        #cursor.execute("SELECT * FROM temp_storage")
 
         rows = cursor.fetchall()
 
