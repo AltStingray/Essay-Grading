@@ -33,6 +33,11 @@
                             <button type="button" class="button2" data-bs-toggle="modal" data-bs-target="#GenerateReport">Generate Summary Report</button>
                         </div>
 
+                        <!-- Success message -->
+                        <div id="success-message" style="display: none; color: green;">
+                            Email has been sent successfully!
+                        </div>
+
                         <!--The modal-->
                         <div class="modal" id="GenerateReport">
                             <div class="modal-dialog modal-dialog-centered">
@@ -124,10 +129,6 @@
                                 </tr>
                             </tbody>
                         {% endfor %}
-                        <!-- Success message -->
-                        <div id="success-message" style="display: none; color: green;">
-                            Email has been sent successfully!
-                        </div>
                     </table>
                 {% elif log == "essay_grading" %}
                     <h1 style="margin: 10px;">Essay Grading Logs</h1>

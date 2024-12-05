@@ -171,7 +171,7 @@ def processing():
         return redirect(url_for("history"))
     else:
 
-        link = escape(request.args.get("link"))
+        link = request.args.get("link")
 
         date = escape(request.args.get("date"))
 
@@ -181,7 +181,6 @@ def processing():
 
         client_email= escape(request.args.get("client_email"))
 
-        # we can do the same here, without specifying the job...but man, how we will know the id then to download it.
         job = q.enqueue(main_summary_report, link, date, teacher_name, client_name, client_email, access_token, prompt) # enque main function and it's parameters to execute in the background
 
         job_id=job.get_id() # get id of the job that is in process 
