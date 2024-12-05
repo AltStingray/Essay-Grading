@@ -58,7 +58,7 @@ def authorize():
 
     if auth_from == "summary_logs":
 
-        link = escape(request.args.get("link"))
+        link = request.args.get("link")
 
         date = escape(request.args.get("date"))
 
