@@ -136,7 +136,7 @@ def main_summary_report(link, specified_date, teacher, client_name, client_email
     filename = filename.replace(".mp4", "")
     
     strip_summary = strip_text(summary_report)
-
+    
     summary_report = json.loads(strip_summary)
 
     if teacher == None or teacher == "" or len(teacher) == 0:
