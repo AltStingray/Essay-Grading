@@ -175,6 +175,8 @@ def cache(data):
 
     cursor = db_conn.cursor()
 
+    cursor.execute("""SET datestyle = dmy;""")
+    
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS temp_storage(
             id SERIAL PRIMARY KEY,
@@ -185,7 +187,7 @@ def cache(data):
             client_email VARCHAR(255)
         )
     """)
-    
+
     cursor.execute("""
         INSERT INTO temp_storage(link, time, teacher_name, client_name, client_email) VALUES(%s, %s, %s, %s, %s);""", data)
 

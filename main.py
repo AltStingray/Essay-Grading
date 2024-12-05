@@ -69,7 +69,7 @@ def authorize():
         client_email = escape(request.args.get("client_email"))
 
         if date == "":
-            date = "2001-01-01"
+            date = datetime.now().strftime("%d-%m-%Y")
 
         data = (link, date, teacher_name, client_name, client_email)
             

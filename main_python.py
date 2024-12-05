@@ -123,9 +123,7 @@ def main_summary_report(link, specified_date, teacher, client_name, client_email
 
     print("Transcription created, working on the summary report...")
 
-    print(specified_date)
-
-    if specified_date == None or specified_date == "" or specified_date == "2001-01-01":
+    if specified_date == None or specified_date == "":
         specified_date = datetime.now().strftime("%d-%m-%Y")
 
     if user_prompt != None:
@@ -141,7 +139,9 @@ def main_summary_report(link, specified_date, teacher, client_name, client_email
     
     summary_report = json.loads(strip_summary)
 
-    if teacher == None or teacher == "" or len(teacher) == 0:
+    print(teacher)
+    
+    if teacher == "":
         teacher = summary_report["teacher"]
 
     data = (summary_report["text"], transcription, filename, summary_report["html"], link, specified_date, teacher, client_email, client_name)

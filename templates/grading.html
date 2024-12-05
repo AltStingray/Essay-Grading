@@ -16,6 +16,23 @@
                     <div class="jsx-3307320108 page-text__question">
                         <div class="jsx-3594441866 h4">{{topic}}</div>
                     </div>
+
+                    <!--Select option dropdown-->
+                    <div class="dropdown">
+                        <button type="button" class="btn nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            Show: Grammar Mistakes
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ url_for('words-category', show='linking-words')}}">Linking words</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{ url_for('words-category', show='repetitive-words')}}">Repetitive words</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{ url_for('words-category', show='unnecessary-words')}}"></a>Unnecessary words</li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{ url_for('words-category', show='corrected-essay')}}"></a>Corrected essay</li>
+                        </ul>
+                    </div>
+
                     <div class="jsx-3307320108 page-text__text">
                         <span class="jsx-242105113 t18 ">
                             <div contenteditable="false" spellcheck="false" data-gramm-editor="false" class="jsx-319668748 content-editable undefined">{{essay|safe}}</div>

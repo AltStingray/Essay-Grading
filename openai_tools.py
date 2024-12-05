@@ -36,7 +36,6 @@ def run_essay_grading(topic, essay_text, submitted_by):
     You will be given multiple steps. In each step you will be given example dictionaries, how each key and it's value should be structured, in which format and how every word should be wrapped.
     Every word/sentence placed in a list should exactly match word/sentence in the essay, either it's lower or upper case, and it should be marked/enclosed properly as well.
     Enclose the dict, all of the keys and values into double quotes, not single.
-    Create a 'modified_text' key in which you will place the later modified essay text as a value. 
     Do not include anything else except the things you are being prompted. No additional commments or notes.
     Do not rush with your answer. Take your time and process each of the following steps sequentially.
     '''
@@ -45,22 +44,20 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
     Step 1 - In the provided essay text take at least 30 seconds to identify all of the words that contain grammar mistakes. Then, wrap each word/sentence that contains grammar mistake with the sequence number(i.e. 1example1). So the each next identified grammar mistake increments the sequence number by 1. (Note: If one mistake contains two or more words, enclose them altogether with a single pair of a sequence number(i.e. 2enclose like that2)).
     
-    Save the modified essay text into the 'modified_text' key.
+    Store the modified essay text as a list into a 'essay_grammar_mistakes' dictionary key.
 
     Step 2 - Store all of the found grammar mistakes each wrapped in a sequence number into the 'grammar_mistakes' list. Example: "grammar_mistakes": ["1list1", "2of2", "3words3", "4that4", "5contain5", "6a6", "7mistake7", "8and8", "9wrapped9", "10in10", "11sequence11", "12number12"]
 
     Step 3 - Provide corrected versions of the words containing grammar mistakes as shown in the following example: "corrected_words": ["corrected version of the word 1 (grammar rule 1)", "corrected version of the word 2 (grammar rule 2)", "..."]. You should display the corrected word and next to it in the parentheses () briefly describe the cause of the mistake, like so: "a (Missing an article)", "restricted (Passive form)", "areas (Spelling)", "and (Word choice)", etc.
     
-    Include 'grammar_mistakes' and 'corrected_words' as keys and values inside the 'words_update' dictionary.
+    Include 'essay-grammar-mistakes', 'grammar_mistakes' and 'corrected_words' as keys and values inside the 'words_update' dictionary.
 
-    Finally, return those two dictionaries 'words_update' and 'modified_text' in a single dictionary.
+    Finally, return the 'words_update' dictionary.
     '''
 
     #Note: Ingore the sequential numbers in the essay text, as this is your doings from the previous iteration.
     prompt_2 = '''
     Linking words definition: 'Linking words, also known as transition words, are words and phrases like 'however', 'on the other hand', 'besides' or 'in conclusion' that connect clauses, sentences, paragraphs, or other words.'
-    
-    Note: If you see that word or sentence has already been wrapped with sequence number("1like that1"), '#' mark, '^' mark, or '-': you simply skip it and do not wrap it again.
     
     Step 1 - In the given essay text identify all of the linking words throughout the whole text, then wrap all of them with the '#' mark. (Note: If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#').
 
@@ -122,9 +119,11 @@ def run_essay_grading(topic, essay_text, submitted_by):
     '''
 
     band_score = '''
-    Step 1 - Estimate the Overall Band Score for the given essay and store it into the "overall_band_score" key as a float value as shown in the following example: "overall_band_score": "overall_band_score(float value)".
+    Step 1 - Evaluate the given candidate's essay text based on the IELTS standarts and return the corrected version of it. Store the result as a value in the "corrected_essay" key.
 
-    Step 2 - Provide the number of paragraphs in the the essay and store this value into the "paragraphs_count" key.
+    Step 2 - Estimate the Overall Band Score for the given essay and store it into the "overall_band_score" key as a float value as shown in the following example: "overall_band_score": "overall_band_score(float value)".
+
+    Step 3 - Provide the number of paragraphs in the the essay and store this value into the "paragraphs_count" key.
 
     Include the 'overall_band_score' and 'paragraphs_count' in the 'words_update' dictionary.
 
@@ -146,7 +145,6 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
     final_dict = {
         "original_topic": topic,
-        "original_text": "",
         "submitted_by": submitted_by,
     }
 
@@ -155,11 +153,8 @@ def run_essay_grading(topic, essay_text, submitted_by):
         messages = [
             {"role": "system", "content": introduction},
             {"role": "user", "content": essay},
+            {"role": "user", "content": prompt}
         ]
-
-        step = {"role": "user", "content": prompt}
-
-        messages.append(step)
 
         response = client.chat.completions.create(
             model="gpt-4o-2024-08-06",
@@ -168,15 +163,10 @@ def run_essay_grading(topic, essay_text, submitted_by):
             )
         
         result = response.choices[0].message.content
-        print(f"\nResponse on the line 155 before strip:\n{result}") #test
+
         response = loads(strip_text(result))
 
-        print(f"Response on the line 158 in the openai_tools:\n{response}") # Test
-
         final_dict.update(response["words_update"])
-        final_dict["original_text"] = response["modified_text"]
-
-        essay = response["modified_text"]
 
     print(f"Final dictionary: {final_dict}") # test
 
