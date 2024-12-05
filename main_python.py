@@ -123,7 +123,9 @@ def main_summary_report(link, specified_date, teacher, client_name, client_email
 
     print("Transcription created, working on the summary report...")
 
-    if specified_date == None or specified_date == "" or len(str(specified_date)) == 0:
+    print(specified_date)
+
+    if specified_date == None or specified_date == "":
         specified_date = datetime.now().strftime("%d-%m-%Y")
 
     if user_prompt != None:

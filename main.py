@@ -30,7 +30,7 @@ app.config["SESSION_USE_SIGNER"] = True
 
 q = Queue(connection=conn)
 
-#delete_table("temp_storage")
+delete_table("temp_storage")
 #db("create")
 
 db("delete_data")
@@ -153,8 +153,6 @@ def processing():
     access_token = session["access_token"]
 
     if process == "background":
-        
-        print("BACKGROUND PROCESSING")
 
         retrieve_cache = db_retrieve(file_id=1, db="temp_storage")
 

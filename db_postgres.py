@@ -256,12 +256,11 @@ def db_retrieve(file_id, db):
 
         file = cursor.fetchone()
 
-        cursor.execute(f"DROP TABLE {db}")
+        cursor.execute("DROP TABLE %s", db)
 
         print("TABLE HAS BEEN DELETED")
 
-        cursor.close()
-        db_conn.close()
+        db_conn.commit()
 
         return file
     
