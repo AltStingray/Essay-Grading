@@ -55,27 +55,28 @@ def summary_report():
 def authorize():
 
     auth_from = escape(request.args.get("auth"))
-    
-    link = escape(request.args.get("link"))
-
-    date = escape(request.args.get("date"))
-
-    teacher_name = escape(request.args.get("teacher"))
-
-    client_name = escape(request.args.get("client"))
-
-    client_email = escape(request.args.get("client_email"))
-
-    access_token = escape(session.get("access_token"))
-
-    if date == None or date == "":
-        date = datetime.now().strftime("%d-%m-%Y")
-
-    data = (link, date, teacher_name, client_name, client_email, access_token)
-    
-    cache(data)
 
     if auth_from == "summary_logs":
+        
+        link = escape(request.args.get("link"))
+
+        date = escape(request.args.get("date"))
+
+        teacher_name = escape(request.args.get("teacher"))
+
+        client_name = escape(request.args.get("client"))
+
+        client_email = escape(request.args.get("client_email"))
+
+        access_token = escape(session.get("access_token"))
+
+        if date == None or date == "":
+            date = datetime.now().strftime("%d-%m-%Y")
+
+        data = (link, date, teacher_name, client_name, client_email, access_token)
+        
+        cache(data)
+
         return redirect(dropbox_module.redirect_link_summary_logs)
     else:
         return redirect(dropbox_module.redirect_link_start)
@@ -164,6 +165,8 @@ def processing():
     access_token = retrieve_cache[5]
     
     prompt = session.pop("prompt", None) # because of the pop() this line won't trigger TypeError. It deletes the value in a session and returns it. Specified None here means that the value of "prompt" key doesn't matter. If the value is None or Str - doesn't matter.
+
+    q.enqueue(main_summary_report, link, date, teacher_name, client_name, client_email, access_token, prompt)
     
     if process == "background":
 
