@@ -67,12 +67,13 @@ def authorize():
         client_name = escape(request.args.get("client"))
 
         client_email = escape(request.args.get("client_email"))
-        try:
-            data = (link, date, teacher_name, client_name, client_email)
+
+        if date == "":
+            date = "2001-01-01"
+
+        data = (link, date, teacher_name, client_name, client_email)
             
-            cache(data)
-        except Exception as e:
-            print(f"Time is not specified! {e}")
+        cache(data)
 
         return redirect(dropbox_module.redirect_link_summary_logs)
     else:

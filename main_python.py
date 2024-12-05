@@ -125,7 +125,7 @@ def main_summary_report(link, specified_date, teacher, client_name, client_email
 
     print(specified_date)
 
-    if specified_date == None or specified_date == "":
+    if specified_date == None or specified_date == "" or specified_date == "2001-01-01":
         specified_date = datetime.now().strftime("%d-%m-%Y")
 
     if user_prompt != None:
