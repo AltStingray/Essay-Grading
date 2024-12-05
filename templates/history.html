@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
     <script>
-        function handleFormSubmission(event){
-            const successMessage = document.getElementById('success-message');
+        function handleFormSubmission(event, messageid){
+            const successMessage = document.getElementById(messageid);
             successMessage.style.display = 'block';
         }
     </script>
@@ -33,11 +33,6 @@
                             <button type="button" class="button2" data-bs-toggle="modal" data-bs-target="#GenerateReport">Generate Summary Report</button>
                         </div>
 
-                        <!-- Success message -->
-                        <div id="success-message" style="display: none; color: green;">
-                            Email has been sent successfully!
-                        </div>
-
                         <!--The modal-->
                         <div class="modal" id="GenerateReport">
                             <div class="modal-dialog modal-dialog-centered">
@@ -51,11 +46,11 @@
 
                                     <!--Modal Body-->
                                     <div class="modal-body">
-                                        <form action="/authorize" onsubmit="handleFormSubmission(event)" method="get">
+                                        <form action="/authorize" onsubmit="handleFormSubmission(event, 'success-message-modal')" method="get">
                                             <div class="form">
                                                 <h1>Provide data for the following fields:</h1>
                                                 <br><br>
-                                                <div id="success-message" style="display: none; color: green;">
+                                                <div id="success-message-modal" style="display: none; color: green;">
                                                     Data has been submitted successfully!
                                                 </div>
                                                 <input type="text" name="link" placeholder="Dropbox video link:" size="40" required>
@@ -117,7 +112,7 @@
                                     <td>{{one["client_email"]}}</td>
                                     <td><a href="{{ url_for('logs_download', id=id, name='Summary report.html') }}" target="_blank">Summary</a></td>
                                     <td><a href="{{ url_for('logs_download', id=id, name='Transcription.odt') }}">Transcript</a></td>
-                                    <form action="/email_to" onsubmit="handleFormSubmission(event)" method="get">
+                                    <form action="/email_to" onsubmit="handleFormSubmission(event, 'success-message-email')" method="get">
                                         <td><input type="text" name="email" placeholder="Email address: " required></td>
                                         <input type="hidden" name="id" value="{{ id }}">
                                         {% if one["sent"] == True %}
@@ -129,6 +124,10 @@
                                 </tr>
                             </tbody>
                         {% endfor %}
+                        <!-- Success message -->
+                        <div id="success-message-email" style="display: none; color: green;">
+                            Email has been sent successfully!
+                        </div>
                     </table>
                 {% elif log == "essay_grading" %}
                     <h1 style="margin: 10px;">Essay Grading Logs</h1>

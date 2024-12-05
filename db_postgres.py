@@ -186,7 +186,7 @@ def cache(data):
         )
     """)
     cursor.execute("""
-        INSERT INTO temp_storage(link, time, teacher_name, client_name, client_email, access_token) VALUES(%s, %s, %s, %s, %s);""", data)
+        INSERT INTO temp_storage(link, time, teacher_name, client_name, client_email) VALUES(%s, %s, %s, %s, %s);""", data)
 
     db_conn.commit()
 
