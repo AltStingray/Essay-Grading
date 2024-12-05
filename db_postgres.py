@@ -183,11 +183,10 @@ def cache(data):
             teacher_name VARCHAR(255),
             client_name VARCHAR(255),
             client_email VARCHAR(255),
-            access_token TEXT 
             );
     """)
     cursor.execute("""
-        INSERT INTO temp_storage(link, time, teacher_name, client_name, client_email, access_token) VALUES(%s, %s, %s, %s, %s, %s);""", data)
+        INSERT INTO temp_storage(link, time, teacher_name, client_name, client_email, access_token) VALUES(%s, %s, %s, %s, %s);""", data)
 
     db_conn.commit()
 
@@ -253,12 +252,14 @@ def db_retrieve(file_id, db):
 
             return lst
     else:
-        cursor.execute("SELECT link, time, teacher_name, client_name, client_email, access_token FROM temp_storage WHERE id = %s", str(file_id))
+        cursor.execute("SELECT link, time, teacher_name, client_name, client_email FROM temp_storage WHERE id = %s", str(file_id))
 
         file = cursor.fetchone()
 
         cursor.execute(f"DROP TABLE {db}")
-        print("DB HAS BEEN DELETED")
+        
+        print("TABLE HAS BEEN DELETED")
+
         cursor.close()
         db_conn.close()
 

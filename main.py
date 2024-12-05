@@ -57,7 +57,7 @@ def authorize():
     auth_from = escape(request.args.get("auth"))
 
     if auth_from == "summary_logs":
-        
+
         link = escape(request.args.get("link"))
 
         date = escape(request.args.get("date"))
@@ -68,12 +68,10 @@ def authorize():
 
         client_email = escape(request.args.get("client_email"))
 
-        access_token = escape(session.get("access_token"))
-
         if date == None or date == "":
             date = datetime.now().strftime("%d-%m-%Y")
 
-        data = (link, date, teacher_name, client_name, client_email, access_token)
+        data = (link, date, teacher_name, client_name, client_email)
         
         cache(data)
 
@@ -149,31 +147,40 @@ def default():
 def processing():
     
     process = escape(request.args.get("process"))
-
-    retrieve_cache = db_retrieve(file_id=1, db="temp_storage")
-
-    link = retrieve_cache[0]
-
-    date = retrieve_cache[1]
-
-    teacher_name = retrieve_cache[2]
-
-    client_name = retrieve_cache[3]
-
-    client_email = retrieve_cache[4]
-
-    access_token = retrieve_cache[5]
     
     prompt = session.pop("prompt", None) # because of the pop() this line won't trigger TypeError. It deletes the value in a session and returns it. Specified None here means that the value of "prompt" key doesn't matter. If the value is None or Str - doesn't matter.
-
-    q.enqueue(main_summary_report, link, date, teacher_name, client_name, client_email, access_token, prompt)
     
+    access_token = session["access_token"]
+
     if process == "background":
+
+        retrieve_cache = db_retrieve(file_id=1, db="temp_storage")
+
+        link = retrieve_cache[0]
+
+        date = retrieve_cache[1]
+
+        teacher_name = retrieve_cache[2]
+
+        client_name = retrieve_cache[3]
+
+        client_email = retrieve_cache[4]
 
         q.enqueue(main_summary_report, link, date, teacher_name, client_name, client_email, access_token, prompt)
 
         return redirect(url_for("history"))
     else:
+
+        link = escape(request.args.get("link"))
+
+        date = escape(request.args.get("date"))
+
+        teacher_name = escape(request.args.get("teacher"))
+
+        client_name = escape(request.args.get("client"))
+
+        client_email= escape(request.args.get("client_email"))
+
         # we can do the same here, without specifying the job...but man, how we will know the id then to download it.
         job = q.enqueue(main_summary_report, link, date, teacher_name, client_name, client_email, access_token, prompt) # enque main function and it's parameters to execute in the background
 
