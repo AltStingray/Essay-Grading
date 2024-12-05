@@ -68,9 +68,6 @@ def authorize():
 
         client_email = escape(request.args.get("client_email"))
 
-        if date == None or date == "":
-            date = datetime.now().strftime("%d-%m-%Y")
-
         data = (link, date, teacher_name, client_name, client_email)
         
         cache(data)
