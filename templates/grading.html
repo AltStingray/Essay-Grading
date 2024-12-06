@@ -33,7 +33,7 @@
                             %}
                             {% for name, slug in categories.items() %}
                                 {% if words_category != name %}
-                                    <li><a class="dropdown-item" href="{{ url_for('view_logs', show='grammar-mistakes', id=id)}}">{{name}}</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for('view_logs', show=slug, id=id)}}">{{name}}</a></li>
                                     {% if not loop.last %}
                                         <li><hr class="dropdown-divider"></li>
                                     {% endif %}
