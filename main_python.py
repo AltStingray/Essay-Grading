@@ -56,6 +56,8 @@ def process_essay(result):
         except AttributeError as err:
             print(err)
 
+        print(updated_essay_grammar_mistakes) # test
+
     #linking and repetitive words
     def count_and_replace(words, html_line, text, marker):
 
