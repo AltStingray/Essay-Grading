@@ -166,7 +166,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
         strip_response = strip_text(result)
         print(f"\nResult after strip:\n\n{strip_response}")
         if strip_response.startswith("{"):
-            response = loads('"' + strip_response + '"')
+            response = strip_response
         else:
             response = loads('{"' + strip_response + '"}')
 
