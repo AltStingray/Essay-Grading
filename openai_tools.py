@@ -161,9 +161,11 @@ def run_essay_grading(topic, essay_text, submitted_by):
         
         result = response.choices[0].message.content
 
+        print(f"\nResult before strip:\n\n{result}")
+
         response = loads(strip_text(result))
 
-        print(response)
+        print(f"\nResult after strip:\n\n{response}")
 
         final_dict.update(response["update"])
 
