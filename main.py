@@ -390,6 +390,15 @@ def grading_processing():
     job = Job.fetch(job_id, connection=conn)
 
     if job.is_finished:
+
+        job_result = job.return_value()
+
+        result = job_result
+
+        data = process_essay(result)
+
+        db_store(data, "essay_logs")
+
         return redirect(url_for("grading_results"))
     else:
         time.sleep(1)
@@ -408,9 +417,7 @@ def grading_results():
 
     result = job_result
 
-    data = process_essay(result)
-
-    db_store(data, "essay_logs")
+    data = process_essay(result) # fix this, man
 
     if show == "linking-words":
         essay = data[13]
