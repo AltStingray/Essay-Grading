@@ -565,3 +565,15 @@ job = Job.fetch(job_id, connection=conn)
         data = (summary_report["text"], result[1], filename, summary_report["html"], link, specified_date, teacher, client_email, client_name)
 
         db_store(data, "logs")
+
+
+
+Image for email. Just in case.
+# Image
+    #logo = "static/finalblue.jpeg"
+
+    #with open(logo, "rb") as img:
+    #    image = MIMEImage(img.read())
+    #    image.add_header("Content-ID", "header_image")
+    #    image.add_header("Content-Disposition", "inline", filename=logo)
+    #    msg.attach(image)

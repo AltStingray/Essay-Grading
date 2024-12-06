@@ -398,6 +398,8 @@ def grading_processing():
 @app.route('/grading/results')
 def grading_results():
 
+    show = request.args.get("show")
+
     job_id = session["job_id_2"]
 
     job = Job.fetch(job_id, connection=conn)
@@ -410,7 +412,23 @@ def grading_results():
 
     db_store(data, "essay_logs")
 
-    return render_template('grading.html', name="finish", topic=data[0], essay=data[1], paragraphs_count=data[2], words_count=data[3], corrected_words=data[9], submitted_by=data[7], current_date=data[10], linking_words_count=data[5], repetitive_words_count=data[6], grammar_mistakes_count=data[4], band_score=data[8], unnecessary_words_count=data[11])
+    if show == "linking-words":
+        essay = data[13]
+        words_category = "Linking Words"
+    elif show == "repetitive-words":
+        essay = data[14]
+        words_category = "Repetitive Words"
+    elif show == "unnecessary_words":
+        essay = data[15]
+        words_category = "Unnecessary Words"
+    elif show == "corrected_essay":
+        essay = data[16]
+        words_category = "Corrected Essay"
+    else:
+        essay = data[12]
+        words_category = "Grammar Mistakes"
+
+    return render_template('grading.html', name="finish", topic=data[0], essay=essay, paragraphs_count=data[2], words_count=data[3], corrected_words=data[9], submitted_by=data[7], current_date=data[10], linking_words_count=data[5], repetitive_words_count=data[6], grammar_mistakes_count=data[4], band_score=data[8], unnecessary_words_count=data[11], id=job_id, words_category=words_category)
 
 @app.route('/grading/log')
 def grading_logs():
@@ -431,10 +449,12 @@ def grading_logs():
 @app.route('/grading/log/view/<int:id>')
 def view_logs(id):
 
+    show = request.args.get("show")
+
     logs = db_retrieve(file_id=id, db="essay_logs")
 
-    essay = logs[1].tobytes().decode('utf-8').strip("{ }")
     topic = logs[0].tobytes().decode('utf-8')
+    original_essay = logs[1].tobytes().decode('utf-8').strip("{ }")
     paragraphs_count = logs[2] 
     words_count = logs[3]
     grammar_mistakes_count = logs[4] 
@@ -445,8 +465,31 @@ def view_logs(id):
     sidebar_comments = [logs[9].strip("{ }").strip('"').replace('","', "")]
     current_date = logs[10]
     unnecessary_words_count = logs[11]
+    essay_grammar_mistakes = logs[12].tobytes().decode('utf-8')
+    essay_linking_words = logs[13].tobytes().decode('utf-8')
+    essay_repetitive_words = logs[14].tobytes().decode('utf-8')
+    essay_unnecessary_words = logs[15].tobytes().decode('utf-8')
+    corrected_essay = logs[16].tobytes().decode('utf-8')
 
-    return render_template('grading.html', name="finish", topic=topic, essay=essay, paragraphs_count=paragraphs_count, words_count=words_count, corrected_words=sidebar_comments, submitted_by=submitted_by, current_date=current_date, linking_words_count=linking_words_count, repetitive_words_count=repetitive_words_count, grammar_mistakes_count=grammar_mistakes_count, band_score=band_score, unnecessary_words_count=unnecessary_words_count)
+    if show == "linking-words":
+        essay = essay_linking_words
+        words_category = "Linking Words"
+    elif show == "repetitive-words":
+        essay = essay_repetitive_words
+        words_category = "Repetitive Words"
+    elif show == "unnecessary_words":
+        essay = essay_unnecessary_words
+        words_category = "Unnecessary Words"
+    elif show == "corrected_essay":
+        essay = corrected_essay
+        words_category = "Corrected Essay"
+    else:
+        essay = essay_grammar_mistakes
+        words_category = "Grammar Mistakes"
+
+    return render_template('grading.html', name="finish", topic=topic, essay=essay, paragraphs_count=paragraphs_count, words_count=words_count, corrected_words=sidebar_comments, submitted_by=submitted_by, current_date=current_date, linking_words_count=linking_words_count, repetitive_words_count=repetitive_words_count, grammar_mistakes_count=grammar_mistakes_count, band_score=band_score, unnecessary_words_count=unnecessary_words_count, id=id, words_category=words_category)
+
+
 
 @app.route('/about')
 def about():

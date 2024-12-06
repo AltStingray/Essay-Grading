@@ -27,6 +27,7 @@ def db(command):
                     id SERIAL PRIMARY KEY,
                     topic BYTEA NOT NULL,   
                     essay BYTEA NOT NULL,
+                    essay_grammar_mistakes TEXT,
                     paragraphs_count SMALLINT NOT NULL,
                     words_count SMALLINT NOT NULL,
                     grammar_mistakes SMALLINT NOT NULL,
@@ -53,11 +54,16 @@ def db(command):
 
         #cursor.execute("""ALTER TABLE Logs ADD client_email VARCHAR(255)""")
         #cursor.execute("""ALTER TABLE Logs ADD time DATE""")
-        #cursor.execute("""ALTER TABLE Logs ADD sent BOOLEAN""")
+
+        cursor.execute("""ALTER TABLE essay_logs ADD essay_grammar_mistakes BYTEA""")
+        cursor.execute("""ALTER TABLE essay_logs ADD essay_linking_words BYTEA""")
+        cursor.execute("""ALTER TABLE essay_logs ADD essay_repetitive_words BYTEA""")
+        cursor.execute("""ALTER TABLE essay_logs ADD essay_unnecessary_words BYTEA""")
+        cursor.execute("""ALTER TABLE essay_logs ADD corrected_essay BYTEA""")
 
         cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 4""")
         
-        cursor.execute("""ALTER SEQUENCE essay_logs_id_seq RESTART WITH 1""")
+        cursor.execute("""ALTER SEQUENCE essay_logs_id_seq RESTART WITH 2""")
 
         #cursor.execute("""ALTER SEQUENCE temp_storage_id_seq RESTART WITH 1""")
 
@@ -80,8 +86,6 @@ def db(command):
         #cursor.execute(add_clients)
 
         #cursor.execute("""UPDATE Logs SET link = 'https://www.dropbox.com/scl/fi/kkh4urusbik9mcvjcl1al/dr.shqazi-gmail.com_D_US_Carol_migraine_croup_Session1_16Nov24.mp4?rlkey=vqey0t1sgzmptrkhs4rs8h1yj&e=17&dl=0' WHERE id = 1;""")
-        
-        #cursor.execute("""ALTER DATABASE d5o8488ckdvb82 SET datestyle = 'DMY'""")
 
         db_conn.commit()
 
@@ -93,7 +97,7 @@ def db(command):
     elif command == "delete_data":
 
         cursor.execute(f"DELETE FROM Logs WHERE id IN ('4')") #'2', '3', '4', '5'
-        cursor.execute(f"DELETE FROM essay_logs WHERE id IN ('1')")
+        cursor.execute(f"DELETE FROM essay_logs WHERE id IN ('2')")
         #cursor.execute(f"DELETE FROM temp_storage WHERE id IN ('1', '2', '3', '4')")
 
         db_conn.commit()
@@ -157,8 +161,8 @@ def db_store(data, db_name):
     
     if db_name == "logs":
         insert_sql = f"""INSERT INTO {db_name}(summary, transcription, filename, summary_html, link, time, teacher, client_email, client_name) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"""
-    else:
-        insert_sql = f"""INSERT INTO {db_name}(topic, essay, paragraphs_count, words_count, grammar_mistakes, linking_words_count, repetative_words_count, submitted_by, overall_band_score, sidebar_comments, time, unnecessary_words_count) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+    elif db_name == "essay_logs":
+        insert_sql = f"""INSERT INTO {db_name}(topic, essay, paragraphs_count, words_count, grammar_mistakes, linking_words_count, repetative_words_count, submitted_by, overall_band_score, sidebar_comments, time, unnecessary_words_count, essay_grammar_mistakes, essay_linking_words, essay_repetitive_words, essay_unnecessary_words, corrected_essay) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
 
     cursor.execute(insert_sql, data)
 
@@ -242,14 +246,14 @@ def db_retrieve(file_id, db):
         
     elif db == "essay_logs":
 
-        cursor.execute("SELECT topic, essay, paragraphs_count, words_count, grammar_mistakes, linking_words_count, repetative_words_count, submitted_by, overall_band_score, sidebar_comments, time, unnecessary_words_count FROM essay_logs WHERE id = %s", (str(file_id)))
+        cursor.execute("SELECT topic, essay, paragraphs_count, words_count, grammar_mistakes, linking_words_count, repetative_words_count, submitted_by, overall_band_score, sidebar_comments, time, unnecessary_words_count, essay_grammar_mistakes, essay_linking_words, essay_repetitive_words, essay_unnecessary_words, corrected_essay FROM essay_logs WHERE id = %s", (str(file_id)))
 
         file = cursor.fetchone()
 
         if file:
 
             lst = []
-            for n in range(12):
+            for n in range(17):
                 one = file[n]
                 lst.append(one)
 

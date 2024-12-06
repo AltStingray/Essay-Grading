@@ -44,15 +44,15 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
     Step 1 - In the provided essay text take at least 30 seconds to identify all of the words that contain grammar mistakes. Then, wrap each word/sentence that contains grammar mistake with the sequence number(i.e. 1example1). So the each next identified grammar mistake increments the sequence number by 1. (Note: If one mistake contains two or more words, enclose them altogether with a single pair of a sequence number(i.e. 2enclose like that2)).
     
-    Store the modified essay text as a list into a 'essay_grammar_mistakes' dictionary key.
+    Store the modified essay text as a value into the 'essay_grammar_mistakes' dictionary key.
 
     Step 2 - Store all of the found grammar mistakes each wrapped in a sequence number into the 'grammar_mistakes' list. Example: "grammar_mistakes": ["1list1", "2of2", "3words3", "4that4", "5contain5", "6a6", "7mistake7", "8and8", "9wrapped9", "10in10", "11sequence11", "12number12"]
 
     Step 3 - Provide corrected versions of the words containing grammar mistakes as shown in the following example: "corrected_words": ["corrected version of the word 1 (grammar rule 1)", "corrected version of the word 2 (grammar rule 2)", "..."]. You should display the corrected word and next to it in the parentheses () briefly describe the cause of the mistake, like so: "a (Missing an article)", "restricted (Passive form)", "areas (Spelling)", "and (Word choice)", etc.
     
-    Include 'essay-grammar-mistakes', 'grammar_mistakes' and 'corrected_words' as keys and values inside the 'words_update' dictionary.
+    Include 'essay_grammar_mistakes', 'grammar_mistakes' and 'corrected_words' as keys and values inside the 'update' dictionary.
 
-    Finally, return the 'words_update' dictionary.
+    Finally, return the 'update' dictionary.
     '''
 
     #Note: Ingore the sequential numbers in the essay text, as this is your doings from the previous iteration.
@@ -61,31 +61,31 @@ def run_essay_grading(topic, essay_text, submitted_by):
     
     Step 1 - In the given essay text identify all of the linking words throughout the whole text, then wrap all of them with the '#' mark. (Note: If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#').
 
-    Save the modified essay text into the 'modified_text' key.
+    Store the modified essay text as a value into the 'essay_linking_words' dictionary ket.
+
+    Save the modified essay text as a value into the 'modified_text' key.
 
     Step 2 - Store all of the found linking words into the 'linking_words' list wrapped with the '#', as following: "linking_words": ["#list#", "#of#", "#all#", "#linking#", "#words#"].
     
-    Include the 'linking_words' key and values inside the 'words_update' dictionary.
+    Include the 'linking_words' and 'essay_linking_words' as keys and values inside the 'update' dictionary.
 
-    Finally, return those two dictionaries 'words_update' and 'modified_text' in a single dictionary.
+    Finally, return the 'update' dictionary.
     '''
 
     #Repetitive words, are the words in a candidate's text which get repeated more than 4 times per text. For example, if the word 'people', "like", "well" or "obviously" appears in text more than 4 times, it is considered a repetitive word and should be marked with '^''
     #Note: Ingore the sequential numbers and '#' marks in the essay text, as those are your doings from the previous iteration.
     prompt_3 = '''
-    Repetitive words definition: 'The repetitive use of the same word in a text is called "redundancy" or "word repetition." It can make the text less engaging and may indicate a need for variety or synonyms to improve readability and flow. Important: Syncategorematic words are not repetitive words.
+    Repetitive words definition: 'The repetitive use of the same word in a text is called "redundancy" or "word repetition." It can make the text less engaging and may indicate a need for variety or synonyms to improve readability and flow. Note: Syncategorematic words are not repetitive words. Examples of syncategorematic terms include: articles (for example, 'the' and 'a') connectives (for example, 'and' and 'or') prepositions (for exmaple, 'in' and 'at') quantifiers (for example, 'some' and 'all').
 
-    Note: If you see that word or sentence has already been wrapped with sequence number("1like that1"), '#' mark, '^' mark, or '-': you simply skip it and do not wrap it again.
+    Step 1 - In the given essay text identify all of the repetitive words throughout the whole text, even if they have already been identified, and wrap them with the '^' mark. 
 
-    Step 1 - In the given essay text identify all of the repetitive words throughout the whole text, even if they have already been identified. Then wrap them with the '^' mark. 
-    
-    Save the modified essay text into the 'modified_text' key.
+    Store the modified essay text as a value into the 'essay_repetitive_words' dictionary key.
 
     Step 2 - Store all of the found repetitive words into the 'repetitive_words' list wrapped with the '^', as shown in the following example: "repetitive_words": ["^list^", "^of^", "^all^", "^repetitive^", "^words^"]. 
     
-    Include the 'repetitive_words' key and values inside the 'words_update' dictionary.
+    Include the 'repetitive_words' and 'essay_repetitive_words' as keys and values inside the 'update' dictionary.
 
-    Finally, return those two dictionaries 'words_update' and 'modified_text' in a single dictionary.
+    Finally, return the 'update' dictionary.
     '''
 
     #Note: Ingore the sequential numbers, '#' and '^' marks in the essay text, as those are your doings from the previous iteration.
@@ -103,19 +103,16 @@ def run_essay_grading(topic, essay_text, submitted_by):
     Example: "Our duty was to clean and to wash." to "We cleaned and washed." 
     Circumlocutions: Avoid lengthy phrases that can be said in fewer words. 
     Example: "Owing to the fact that..." to "Since..." In short, aim for direct, simplified wording by cutting out filler expressions.'
-    Do not confuse unnecessary words with linking words that were wrapped with '#' mark. Unnecessary words are those that you can surely get rid of and they won't change the context, structure or grammar of the text.
 
-    Note: If you see that word or sentence has already been wrapped with sequence number("1like that1"), '#' mark, '^' mark, or '-': you simply skip it and do not wrap it again.
+    Step 1 - In the given essay text identify all of the possible unnecessary words that you would get rid of to increase the overall clarity and make the essay better, and wrap them with the '-' mark. 
 
-    Step 1 - In the given essay text identify some of the unnecessary words that you would get rid of to increase the overall clarity and make the essay better. Then wrap them with the '-' mark. 
-
-    Save the modified essay text into the 'modified_text' key.
+    Store the modified essay text as a value into the 'essay_unnecessary_words' dictionary key.
 
     Step 2 - Store all of the found unnecessary words into the 'unnecessary_words' list wrapped with the '-', as shown in the following example: "unnecessary_words": ["-list-", "-of-", "-all-", "-unnecessary-", "-words-"]. 
 
-    Include the 'unnecessary_words' key and values inside the 'words_update' dictionary.
+    Include the 'unnecessary_words' and 'essay_unnecessary_words' as keys and values inside the 'update' dictionary.
 
-    Finally, return those two dictionaries 'words_update' and 'modified_text' in a single dictionary.
+    Finally, return the 'update' dictionary.
     '''
 
     band_score = '''
@@ -125,11 +122,9 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
     Step 3 - Provide the number of paragraphs in the the essay and store this value into the "paragraphs_count" key.
 
-    Include the 'overall_band_score' and 'paragraphs_count' in the 'words_update' dictionary.
+    Include the 'corrected_essay', 'overall_band_score' and 'paragraphs_count' as keys and values inside the 'update' dictionary.
 
-    Store the untouched essay text into the 'modified_text' key as a value.
-
-    Finally, return the 'words_update' and 'modified_text' in a single dictionary.
+    Finally, return the 'update' dictionary.
     '''
 
     final_prompt = '''
@@ -141,10 +136,11 @@ def run_essay_grading(topic, essay_text, submitted_by):
     Return the adjusted dictionary.
     '''
 
-    prompts = [band_score, prompt_1, prompt_2, prompt_3, prompt_4]
+    prompts = [prompt_1, prompt_2, prompt_3, prompt_4, band_score]
 
     final_dict = {
         "original_topic": topic,
+        "original_text": essay_text,
         "submitted_by": submitted_by,
     }
 
@@ -166,11 +162,14 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
         response = loads(strip_text(result))
 
-        final_dict.update(response["words_update"])
+        print(response)
+
+        final_dict.update(response["update"])
 
     print(f"Final dictionary: {final_dict}") # test
 
     return final_dict
+
 
 def run_summary_report(prompt, content):
 

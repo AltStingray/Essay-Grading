@@ -1,7 +1,10 @@
 import smtplib
+import os
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
+
+OET_EMAIL_PASSWORD = os.environ.get("OET_EMAIL_PASSWORD")
 
 def send_email(user_email, html_content):
     
@@ -9,12 +12,7 @@ def send_email(user_email, html_content):
 
     smtp.starttls()
 
-    email_password = "u99W1dmIHBPLslPX"
-    #oetspeakingsummary@mail
-    #email_password = "ccvsaldikydyktgk"
-    #altstingray@gmail.com
-
-    smtp.login("oetspeakingsummary", email_password)
+    smtp.login("oetspeakingsummary", OET_EMAIL_PASSWORD)
  
     msg = MIMEMultipart("related")
     msg["Subject"] = "Your OET Summary Report"
@@ -24,15 +22,6 @@ def send_email(user_email, html_content):
     html = MIMEText(html_content, "html")
 
     msg.attach(html)
-
-    # Image
-    #logo = "static/finalblue.jpeg"
-
-    #with open(logo, "rb") as img:
-    #    image = MIMEImage(img.read())
-    #    image.add_header("Content-ID", "header_image")
-    #    image.add_header("Content-Disposition", "inline", filename=logo)
-    #    msg.attach(image)
 
     smtp.send_message(msg)
 

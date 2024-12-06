@@ -20,16 +20,20 @@
                     <!--Select option dropdown-->
                     <div class="dropdown">
                         <button type="button" class="btn nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            Show: Grammar Mistakes
+                            Show: {{words_category}}
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ url_for('words-category', show='linking-words')}}">Linking words</a></li>
+                            {% if words_category != "Grammar Mistakes" %}
+                                <li><a class="dropdown-item" href="{{ url_for('view_logs', show='grammar-mistakes', id=id)}}">Grammar Mistakes</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                            {% endif %}
+                            <li><a class="dropdown-item" href="{{ url_for('view_logs', show='linking-words', id=id)}}">Linking words</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="{{ url_for('words-category', show='repetitive-words')}}">Repetitive words</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('view_logs', show='repetitive-words', id=id)}}">Repetitive words</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="{{ url_for('words-category', show='unnecessary-words')}}"></a>Unnecessary words</li>
+                            <li><a class="dropdown-item" href="{{ url_for('view_logs', show='unnecessary-words', id=id)}}">Unnecessary words</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="{{ url_for('words-category', show='corrected-essay')}}"></a>Corrected essay</li>
+                            <li><a class="dropdown-item" href="{{ url_for('view_logs', show='corrected-essay', id=id)}}">Corrected essay</a></li>
                         </ul>
                     </div>
 
