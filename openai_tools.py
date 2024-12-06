@@ -164,13 +164,14 @@ def run_essay_grading(topic, essay_text, submitted_by):
         print(f"\nResult before strip:\n\n{result}")
 
         strip_response = strip_text(result)
+        print(f"\nResult after strip:\n\n{strip_response}")
         if strip_response.startswith("{"):
             response = loads(strip_response)
         else:
-            response = loads("{" + strip_response + "}")
-
-        print(f"\nResult after strip:\n\n{response}")
-
+            response = loads({strip_response})
+        
+        print(f"\nResult after json load: {response}")
+        
         final_dict.update(response["update"])
 
     print(f"Final dictionary: {final_dict}") # test
