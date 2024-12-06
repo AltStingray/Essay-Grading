@@ -103,7 +103,7 @@ def db(command):
     elif command == "delete_data":
 
         cursor.execute(f"DELETE FROM Logs WHERE id IN ('4')") #'2', '3', '4', '5'
-        cursor.execute(f"DELETE FROM essay_logs WHERE id IN ('4')")
+        cursor.execute(f"DELETE FROM essay_logs WHERE id IN ('4', '5', '6', '7', '8', '9', '10')")
         #cursor.execute(f"DELETE FROM temp_storage WHERE id IN ('1', '2', '3', '4')")
 
         db_conn.commit()
