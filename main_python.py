@@ -66,21 +66,18 @@ def process_essay(result):
 
         for word in words:
             
-            r_word = re.search(word, text)
-            print(r_word)
+            if word in text:
+                original_word = word
 
-            try:
-                if word == r_word.group():
+                print(original_word) #test
 
-                    html_word = html_line.format(word.strip(marker))
+                html_word = html_line.format(original_word.strip(marker))
 
-                    text = text.replace(r_word.group(), html_word)
-                    
-                    if word not in already_exists:
-                        already_exists += word
-                        words_count += 1
-            except AttributeError as err:
-                print(err)
+                text = text.replace(original_word, html_word)
+                
+                if word not in already_exists:
+                    already_exists += word
+                    words_count += 1
 
         return words_count, text
 

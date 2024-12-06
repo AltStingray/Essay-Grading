@@ -577,3 +577,25 @@ Image for email. Just in case.
     #    image.add_header("Content-ID", "header_image")
     #    image.add_header("Content-Disposition", "inline", filename=logo)
     #    msg.attach(image)
+
+
+
+
+
+for word in words:
+            
+            r_word = re.search(word, text)
+            print(r_word)
+
+            try:
+                if word == r_word.group():
+
+                    html_word = html_line.format(word.strip(marker))
+
+                    text = text.replace(r_word.group(), html_word)
+                    
+                    if word not in already_exists:
+                        already_exists += word
+                        words_count += 1
+            except AttributeError as err:
+                print(err)

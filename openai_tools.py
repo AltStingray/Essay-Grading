@@ -104,7 +104,6 @@ def run_essay_grading(topic, essay_text, submitted_by):
     Example: "Our duty was to clean and to wash." to "We cleaned and washed." 
     Circumlocutions: Avoid lengthy phrases that can be said in fewer words. 
     Example: "Owing to the fact that..." to "Since..." In short, aim for direct, simplified wording by cutting out filler expressions.'
-    Generally speaking, unnecessary words are those which you can get rid of easily, and the text clearance won't be impacted or even will be changed to a better, more constructive and clear way.
 
     Step 1 - In the given essay text identify all of the unnecessary words throughout the whole text, and wrap each of them with the '-' mark. 
 
