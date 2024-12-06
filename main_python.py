@@ -74,7 +74,7 @@ def process_essay(result):
 
                     html_word = html_line.format(word.strip(marker))
 
-                    text = text.replace(r_word, html_word)
+                    text = text.replace(r_word.group(), html_word)
                     
                     if word not in already_exists:
                         already_exists += word
