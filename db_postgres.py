@@ -69,7 +69,7 @@ def db(command):
 
         cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 4""")
         
-        cursor.execute("""ALTER SEQUENCE essay_logs_id_seq RESTART WITH 4""")
+        cursor.execute("""ALTER SEQUENCE essay_logs_id_seq RESTART WITH 5""")
 
         #cursor.execute("""ALTER SEQUENCE temp_storage_id_seq RESTART WITH 1""")
 
