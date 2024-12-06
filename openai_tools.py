@@ -36,6 +36,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
     You will be given multiple steps. In each step you will be given example dictionaries, how each key and it's value should be structured, in which format and how every word should be wrapped.
     Every word/sentence placed in a list should exactly match word/sentence in the essay, either it's lower or upper case, and it should be marked/enclosed properly as well.
     Enclose the dict, all of the keys and values into double quotes, not single.
+    Create an empty dictionary with an "update" key, in which you will store the following results.
     Do not include anything else except the things you are being prompted. No additional commments or notes.
     Do not rush with your answer. Take your time and process each of the following steps sequentially.
     '''
@@ -50,7 +51,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
     Step 3 - Provide corrected versions of the words containing grammar mistakes as shown in the following example: "corrected_words": ["corrected version of the word 1 (grammar rule 1)", "corrected version of the word 2 (grammar rule 2)", "..."]. You should display the corrected word and next to it in the parentheses () briefly describe the cause of the mistake, like so: "a (Missing an article)", "restricted (Passive form)", "areas (Spelling)", "and (Word choice)", etc.
     
-    Include 'essay_grammar_mistakes', 'grammar_mistakes' and 'corrected_words' as keys and values inside the 'update' dictionary.
+    Include 'essay_grammar_mistakes', 'grammar_mistakes' and 'corrected_words' keys and values inside the 'update' key dictionary.
 
     Finally, return the 'update' dictionary.
     '''
@@ -67,7 +68,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
     Step 2 - Store all of the found linking words into the 'linking_words' list wrapped with the '#', as following: "linking_words": ["#list#", "#of#", "#all#", "#linking#", "#words#"].
     
-    Include the 'linking_words' and 'essay_linking_words' as keys and values inside the 'update' dictionary.
+    Include the 'linking_words' and 'essay_linking_words' keys and values inside the 'update' key dictionary.
 
     Finally, return the 'update' dictionary.
     '''
@@ -83,7 +84,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
     Step 2 - Store all of the found repetitive words into the 'repetitive_words' list wrapped with the '^', as shown in the following example: "repetitive_words": ["^list^", "^of^", "^all^", "^repetitive^", "^words^"]. 
     
-    Include the 'repetitive_words' and 'essay_repetitive_words' as keys and values inside the 'update' dictionary.
+    Include the 'repetitive_words' and 'essay_repetitive_words' keys and values inside the 'update' key dictionary.
 
     Finally, return the 'update' dictionary.
     '''
@@ -110,7 +111,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
     Step 2 - Store all of the found unnecessary words into the 'unnecessary_words' list wrapped with the '-', as shown in the following example: "unnecessary_words": ["-list-", "-of-", "-all-", "-unnecessary-", "-words-"]. 
 
-    Include the 'unnecessary_words' and 'essay_unnecessary_words' as keys and values inside the 'update' dictionary.
+    Include the 'unnecessary_words' and 'essay_unnecessary_words' keys and values inside the 'update' key dictionary.
 
     Finally, return the 'update' dictionary.
     '''
@@ -122,7 +123,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
     Step 3 - Provide the number of paragraphs in the the essay and store this value into the "paragraphs_count" key.
 
-    Include the 'corrected_essay', 'overall_band_score' and 'paragraphs_count' as keys and values inside the 'update' dictionary.
+    Include the 'corrected_essay', 'overall_band_score' and 'paragraphs_count' keys and values inside the 'update' key dictionary.
 
     Finally, return the 'update' dictionary.
     '''
