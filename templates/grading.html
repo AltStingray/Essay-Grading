@@ -23,7 +23,6 @@
                             Show: {{words_category}}
                         </button>
                         <ul class="dropdown-menu">
-                            {% set route = {{route}} %}
                             {% set categories = {
                                 "Grammar Mistakes": "grammar-mistakes",
                                 "Linking Words": "linking-words",
@@ -34,7 +33,7 @@
                             %}
                             {% for name, slug in categories.items() %}
                                 {% if words_category != name %}
-                                    <li><a class="dropdown-item" href="{{ url_for(route=route, show=slug, id=id)}}">{{name}}</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for(route, show=slug, id=id)}}">{{name}}</a></li>
                                     {% if not loop.last %}
                                         <li><hr class="dropdown-divider"></li>
                                     {% endif %}
