@@ -168,8 +168,8 @@ def run_essay_grading(topic, essay_text, submitted_by):
         if strip_response.startswith("{"):
             response = loads(strip_response)
         else:
-            response = loads("{" + f"{strip_response}" + "}")
-            
+            response = loads("{" + str(strip_response) + "}")
+
         print(f"\nResult after json load: {response}")
 
         final_dict.update(response["update"])
