@@ -50,13 +50,13 @@ def process_essay(result):
                 stripped_word = word.strip(nums_str)
 
                 html_word = f"<span class='highlight' data-comment='comment{n + 1}'>{stripped_word}({n + 1})</span>"
-                updated_essay_grammar_mistakes = essay_grammar_mistakes.replace(re_word.group(), html_word)
+                essay_grammar_mistakes = essay_grammar_mistakes.replace(re_word.group(), html_word)
                 grammar_mistakes_count += 1
 
         except AttributeError as err:
             print(err)
 
-        print(updated_essay_grammar_mistakes) # test
+    print(essay_grammar_mistakes) # test
 
     #linking and repetitive words
     def count_and_replace(words, html_line, text, marker):
@@ -73,13 +73,13 @@ def process_essay(result):
 
                 html_word = html_line.format(original_word.strip(marker))
 
-                updated_text = text.replace(original_word, html_word)
+                text = text.replace(original_word, html_word)
                 
                 if word not in already_exists:
                     already_exists += word
                     words_count += 1
 
-        return words_count, updated_text
+        return words_count, text
 
     linking_words_count, updated_essay_linking_words = count_and_replace(linking_words, "<span class='jsx-2885589388 linking-words'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{}</span><span class='jsx-1879403401'></span></div></span>", essay_linking_words, "#")
     repetitive_words_count, updated_essay_repetitive_words = count_and_replace(repetitive_words, "<span class='jsx-2310580937 repeated-word'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{}</span><span class='jsx-1879403401'></span></div></span>", essay_repetitive_words, "^")
@@ -106,7 +106,7 @@ def process_essay(result):
         
         sidebar_comments.append(html_line)
     
-    data = (topic, original_text, paragraphs_count, words_count, grammar_mistakes_count, linking_words_count, repetitive_words_count, submitted_by, band_score, sidebar_comments, current_date, unnecessary_words_count, updated_essay_grammar_mistakes, updated_essay_linking_words, updated_essay_repetitive_words, updated_essay_unnecessary_words, corrected_essay)
+    data = (topic, original_text, paragraphs_count, words_count, grammar_mistakes_count, linking_words_count, repetitive_words_count, submitted_by, band_score, sidebar_comments, current_date, unnecessary_words_count, essay_grammar_mistakes, updated_essay_linking_words, updated_essay_repetitive_words, updated_essay_unnecessary_words, corrected_essay)
     
     return data
 

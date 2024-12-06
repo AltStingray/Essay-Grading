@@ -105,7 +105,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
     Circumlocutions: Avoid lengthy phrases that can be said in fewer words. 
     Example: "Owing to the fact that..." to "Since..." In short, aim for direct, simplified wording by cutting out filler expressions.'
 
-    Step 1 - In the given essay text identify all of the possible unnecessary words that you would get rid of to increase the overall clarity and make the essay better, and wrap them with the '-' mark. 
+    Step 1 - In the given essay text identify all of the unnecessary words throughout the whole text, and wrap each of them with the '-' mark. 
 
     Store the modified essay text as a value into the 'essay_unnecessary_words' dictionary key.
 
