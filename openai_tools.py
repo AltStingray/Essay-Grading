@@ -36,7 +36,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
     You will be given multiple steps. In each step you will be given example dictionaries, how each key and it's value should be structured, in which format and how every word should be wrapped.
     Every word/sentence placed in a list should exactly match word/sentence in the essay, either it's lower or upper case, and it should be marked/enclosed properly as well.
     Enclose the dict, all of the keys and values into double quotes, not single.
-    Create an empty dictionary with an "update" key, in which you will store the following results.
+    Create an empty dictionary with an "update" key in which value you will then store the following results.
     Do not include anything else except the things you are being prompted. No additional commments or notes.
     Do not rush with your answer. Take your time and process each of the following steps sequentially.
     '''
@@ -62,7 +62,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
     
     Step 1 - In the given essay text identify all of the linking words throughout the whole text, then wrap all of them with the '#' mark. (Note: If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#').
 
-    Store the modified essay text as a value into the 'essay_linking_words' dictionary ket.
+    Store the modified essay text as a value into the 'essay_linking_words' dictionary key.
 
     Save the modified essay text as a value into the 'modified_text' key.
 
@@ -163,7 +163,11 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
         print(f"\nResult before strip:\n\n{result}")
 
-        response = loads(strip_text(result))
+        strip_response = strip_text(result)
+        if strip_response.startswith("{"):
+            response = loads(strip_response)
+        else:
+            response = loads("{" + strip_response + "}")
 
         print(f"\nResult after strip:\n\n{response}")
 
