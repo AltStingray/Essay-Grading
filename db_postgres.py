@@ -37,7 +37,13 @@ def db(command):
                     overall_band_score FLOAT NOT NULL,
                     sidebar_comments TEXT NOT NULL,
                     time DATE NOT NULL,
-                    unnecessary_words_count SMALLINT NOT NULL)"""
+                    unnecessary_words_count SMALLINT NOT NULL,
+                    essay_grammar_mistakes BYTEA,
+                    essay_linking_words BYTEA,
+                    essay_repetitive_words BYTEA,
+                    essay_unnecessary_words BYTEA,
+                    corrected_essay BYTEA,
+                    )"""
 
         cursor.execute(create_essay_logs)
             
@@ -55,11 +61,11 @@ def db(command):
         #cursor.execute("""ALTER TABLE Logs ADD client_email VARCHAR(255)""")
         #cursor.execute("""ALTER TABLE Logs ADD time DATE""")
 
-        cursor.execute("""ALTER TABLE essay_logs ADD essay_grammar_mistakes BYTEA""")
-        cursor.execute("""ALTER TABLE essay_logs ADD essay_linking_words BYTEA""")
-        cursor.execute("""ALTER TABLE essay_logs ADD essay_repetitive_words BYTEA""")
-        cursor.execute("""ALTER TABLE essay_logs ADD essay_unnecessary_words BYTEA""")
-        cursor.execute("""ALTER TABLE essay_logs ADD corrected_essay BYTEA""")
+        #cursor.execute("""ALTER TABLE essay_logs ADD essay_grammar_mistakes BYTEA""")
+        #cursor.execute("""ALTER TABLE essay_logs ADD essay_linking_words BYTEA""")
+        #cursor.execute("""ALTER TABLE essay_logs ADD essay_repetitive_words BYTEA""")
+        #cursor.execute("""ALTER TABLE essay_logs ADD essay_unnecessary_words BYTEA""")
+        #cursor.execute("""ALTER TABLE essay_logs ADD corrected_essay BYTEA""")
 
         cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 4""")
         
@@ -110,7 +116,7 @@ def db(command):
     elif command == "print":
 
         cursor.execute("SELECT * FROM Logs")
-        #cursor.execute("SELECT * FROM essay_logs")
+        cursor.execute("SELECT * FROM essay_logs")
         #cursor.execute("SELECT * FROM temp_storage")
 
         rows = cursor.fetchall()
