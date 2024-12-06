@@ -37,7 +37,7 @@ def process_essay(result):
     grammar_mistakes_count = 0
     for n, word in enumerate(grammar_mistakes):
 
-        re_word = re.search(word, grammar_mistakes)
+        re_word = re.search(word, essay_grammar_mistakes)
         print(re_word)
 
         try:
@@ -66,7 +66,7 @@ def process_essay(result):
             
             if word in text:
                 original_word = word
-                
+
                 print(original_word) #test
 
                 html_word = html_line.format(original_word.strip(marker))

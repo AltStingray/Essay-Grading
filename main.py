@@ -368,11 +368,11 @@ def grading():
 @app.route('/grading/queue')
 def grading_queue():
 
-    topic = escape(request.args.get("topic"))
+    topic = request.args.get("topic")
 
-    essay = escape(request.args.get("essay"))
+    essay = request.args.get("essay")
 
-    submitted_by = escape(request.args.get("submitted_by"))
+    submitted_by = request.args.get("submitted_by")
 
     job_queue = q.enqueue(run_essay_grading, topic, essay, submitted_by)
 
