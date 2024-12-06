@@ -428,7 +428,7 @@ def grading_results():
         essay = data[12]
         words_category = "Grammar Mistakes"
 
-    return render_template('grading.html', name="finish", topic=data[0], essay=essay, paragraphs_count=data[2], words_count=data[3], corrected_words=data[9], submitted_by=data[7], current_date=data[10], linking_words_count=data[5], repetitive_words_count=data[6], grammar_mistakes_count=data[4], band_score=data[8], unnecessary_words_count=data[11], id=0, words_category=words_category)
+    return render_template('grading.html', name="finish", topic=data[0], essay=essay, paragraphs_count=data[2], words_count=data[3], corrected_words=data[9], submitted_by=data[7], current_date=data[10], linking_words_count=data[5], repetitive_words_count=data[6], grammar_mistakes_count=data[4], band_score=data[8], unnecessary_words_count=data[11], id=0, words_category=words_category, route="grading_results")
 
 @app.route('/grading/log')
 def grading_logs():
@@ -487,7 +487,7 @@ def view_logs(id):
         essay = essay_grammar_mistakes
         words_category = "Grammar Mistakes"
 
-    return render_template('grading.html', name="finish", topic=topic, essay=essay, paragraphs_count=paragraphs_count, words_count=words_count, corrected_words=sidebar_comments, submitted_by=submitted_by, current_date=current_date, linking_words_count=linking_words_count, repetitive_words_count=repetitive_words_count, grammar_mistakes_count=grammar_mistakes_count, band_score=band_score, unnecessary_words_count=unnecessary_words_count, id=id, words_category=words_category)
+    return render_template('grading.html', name="finish", topic=topic, essay=essay, paragraphs_count=paragraphs_count, words_count=words_count, corrected_words=sidebar_comments, submitted_by=submitted_by, current_date=current_date, linking_words_count=linking_words_count, repetitive_words_count=repetitive_words_count, grammar_mistakes_count=grammar_mistakes_count, band_score=band_score, unnecessary_words_count=unnecessary_words_count, id=id, words_category=words_category, route="view_log")
 
 
 

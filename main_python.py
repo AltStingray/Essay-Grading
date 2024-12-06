@@ -56,7 +56,7 @@ def process_essay(result):
         except AttributeError as err:
             print(err)
 
-    print(essay_grammar_mistakes) # test
+    #print(essay_grammar_mistakes) # test
 
     #linking and repetitive words
     def count_and_replace(words, html_line, text, marker):
@@ -66,18 +66,21 @@ def process_essay(result):
 
         for word in words:
             
-            if word in text:
-                original_word = word
+            r_word = re.search(word, text)
+            print(r_word)
 
-                print(original_word) #test
+            try:
+                if word == r_word.group():
 
-                html_word = html_line.format(original_word.strip(marker))
+                    html_word = html_line.format(word.strip(marker))
 
-                text = text.replace(original_word, html_word)
-                
-                if word not in already_exists:
-                    already_exists += word
-                    words_count += 1
+                    text = text.replace(r_word, html_word)
+                    
+                    if word not in already_exists:
+                        already_exists += word
+                        words_count += 1
+            except AttributeError as err:
+                print(err)
 
         return words_count, text
 
