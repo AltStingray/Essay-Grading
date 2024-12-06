@@ -127,7 +127,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
     Finally, return the 'update' dictionary.
     '''
-
+ 
     final_prompt = '''
     You are a helpful assistant. You are specialized in essay grading.
     In the given dictionary you can see different sections. One of them is modified essay text in 'original_text'. 
