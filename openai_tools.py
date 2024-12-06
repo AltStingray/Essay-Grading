@@ -169,7 +169,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
         final_dict.update(response["update"])
 
-    print(f"Final dictionary: {final_dict}") # test
+    print(f"\n\nFinal dictionary: {final_dict}") # test
 
     return final_dict
 
