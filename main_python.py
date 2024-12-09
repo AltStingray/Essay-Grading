@@ -138,7 +138,7 @@ def main_summary_report(link, specified_date, teacher, client_name, client_email
 
         specified_date = datetime.now().strftime("%d-%m-%Y")
     else:
-        date = datetime(str(specified_date)).strip("-")
+        date = datetime("-".join(str(specified_date)))
         print(date)
         specified_date = date.strftime("%d-%m-%Y")
 

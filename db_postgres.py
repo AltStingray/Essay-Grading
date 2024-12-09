@@ -254,7 +254,7 @@ def db_retrieve(file_id, db):
         if file:
 
             lst = []
-            for n in range(17):
+            for n in range(15):
                 one = file[n]
                 lst.append(one)
 
