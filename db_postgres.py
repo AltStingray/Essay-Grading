@@ -37,11 +37,9 @@ def db(command):
                     overall_band_score FLOAT NOT NULL,
                     sidebar_comments TEXT NOT NULL,
                     time DATE NOT NULL,
-                    unnecessary_words_count SMALLINT NOT NULL,
                     essay_grammar_mistakes BYTEA,
                     essay_linking_words BYTEA,
                     essay_repetitive_words BYTEA,
-                    essay_unnecessary_words BYTEA,
                     corrected_essay BYTEA,
                     )"""
 
@@ -76,6 +74,9 @@ def db(command):
         #cursor.execute("""ALTER TABLE essay_logs RENAME COLUMN date TO time""")
 
         #cursor.execute("""ALTER TABLE Logs ALTER COLUMN uploat_time TYPE DATE""")
+
+        cursor.execute("ALTER TABLE essay_logs DROP COLUMN essay_unnecessary_words")
+        cursor.execute("ALTER TABLE essay_logs DROP COLUMN unnecessary_words_count")
 
         #cursor.execute("""UPDATE Logs SET id = 1 WHERE id = 2;""")
 

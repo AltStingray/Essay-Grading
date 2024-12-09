@@ -405,16 +405,12 @@ p {
 }
 .strikethrough {
   text-decoration: line-through;
-  color:#3498db;
-}
-
-.red {
   color: red;
+  background-color: #ffdd57;
 }
 
 .del {
   color: red;
-  background-color: yellow;
 }
 
 .green {

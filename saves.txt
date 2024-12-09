@@ -623,3 +623,32 @@ if __name__ == '__main__':
 
     for p in processes:
         p.join()
+
+
+
+
+ prompt_4 = '''
+    Unnecessary words defininion: 
+    'Four types of unnecessary words and phrases to avoid for conciseness: 
+
+    Dummy Subjects: Avoid words like "there is/are" and "it is/was" that add no meaning. 
+    Example: "There are great skiing resorts in Colorado." to "Colorado has great skiing resorts." 
+
+    Nominalizations: Use verbs instead of nouns made from verbs (e.g., "decision" vs. "decide"). 
+    Example: "The conjugation of verbs is difficult." to "Conjugating verbs is difficult." 
+    
+    Infinitive Phrases: Replace "to + verb" phrases with direct verbs. 
+    Example: "Our duty was to clean and to wash." to "We cleaned and washed." 
+    Circumlocutions: Avoid lengthy phrases that can be said in fewer words. 
+    Example: "Owing to the fact that..." to "Since..." In short, aim for direct, simplified wording by cutting out filler expressions.'
+
+    Step 1 - In the given essay text identify all of the unnecessary words throughout the whole text, and wrap each of them with the '-' mark. 
+
+    Store the modified essay text as a value into the 'essay_unnecessary_words' dictionary key.
+
+    Step 2 - Store all of the found unnecessary words into the 'unnecessary_words' list wrapped with the '-', as shown in the following example: "unnecessary_words": ["-list-", "-of-", "-all-", "-unnecessary-", "-words-"]. 
+
+    Include the 'unnecessary_words' and 'essay_unnecessary_words' keys and values inside the 'update' key in the empty dictionary created previously.
+
+    Finally, return the 'update' dictionary.
+    '''

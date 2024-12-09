@@ -2,7 +2,7 @@
 {% block content %}
     {% if name == "finish" %}
         <div class="row">
-            <div class="col-xs-9 col-s-9 col-md-9 col-lg-6" style="padding: 10px 70px 10px 130px;">
+            <div class="col-xs-9 col-s-9 col-md-9 col-lg-9" style="padding: 10px 70px 10px 130px;">
                 <style>
                     * {
                         box-sizing: border-box;
@@ -27,8 +27,7 @@
                                 "Grammar Mistakes": "grammar-mistakes",
                                 "Linking Words": "linking-words",
                                 "Repetitive Words": "repetitive-words",
-                                "Unnecessary Words": "unnecessary-words",
-                                "Corrected Words": "corrected-essay"
+                                "Corrected Essay": "corrected-essay"
                             }
                             %}
                             {% for name, slug in categories.items() %}
@@ -79,12 +78,6 @@
                             <span class="jsx-2993038294 highlight-legends__item-counter">{{grammar_mistakes_count}}</span>
                             <div class="jsx-2993038294">
                                 <div class="jsx-2993038294 highlight-legends__item-name">Grammar mistakes</div>
-                            </div>
-                        </div>
-                        <div class="jsx-2993038294 highlight-legends__item highlight-legends__item_unnecessary">
-                            <span class="jsx-2993038294 highlight-legends__item-counter">{{unnecessary_words_count}}</span>
-                            <div class="jsx-2993038294">
-                                <div class="jsx-2993038294 highlight-legends__item-name">Unnecessary words</div>
                             </div>
                         </div>
                     </div>

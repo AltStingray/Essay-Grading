@@ -42,8 +42,8 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
     prompt_1 = '''
 
-    Step 1 - In the provided essay text identify all of the grammar mistakes. Then, wrap each word/sentence that contains grammar mistake with the sequence number(i.e. 1example1). So the each next identified grammar mistake increments the sequence number by 1. (Note: If one mistake contains two or more words, enclose them altogether with a single pair of a sequence number(i.e. 2enclose like that2)).
-    If you spot an unnecessary word, just cross it out with a red line using <del> tag.
+    Step 1 - In the provided essay text identify all of the grammar mistakes. If word or punctuation is missing, wrap it with the html class="del". Then, wrap each word/sentence that contains grammar mistake with the sequence number(i.e. 1example1). So the each next identified grammar mistake increments the sequence number by 1. (Note: If one mistake contains two or more words, enclose them altogether with a single pair of a sequence number(i.e. 2enclose like that2)).
+    If you spot an unnecessary word, just cross it out with a red line using class="strikethrough". 
     
     Store the modified essay text as a value into the 'essay_grammar_mistakes' dictionary key.
 
@@ -60,7 +60,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
     prompt_2 = '''
     Linking words definition: 'Linking words, also known as transition words, are words and phrases like 'however', 'on the other hand', 'besides' or 'in conclusion' that connect clauses, sentences, paragraphs, or other words.'
     
-    Step 1 - In the given essay text identify all of the linking words throughout the whole text, then wrap all of them with the '#' mark. (Note: If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#').
+    Step 1 - In the given essay text identify all of the linking words throughout the whole text, then wrap all of them with the '#' mark. (Note: If linking word contains punctuation sign, just separate them with one whitespace and wrap the linking word with '#'. If two words are counted as linking word, wrap them with # together. I.e. "#In conclusion#").
 
     Store the modified essay text as a value into the 'essay_linking_words' dictionary key.
 
@@ -90,31 +90,6 @@ def run_essay_grading(topic, essay_text, submitted_by):
     '''
 
     #Note: Ingore the sequential numbers, '#' and '^' marks in the essay text, as those are your doings from the previous iteration.
-    prompt_4 = '''
-    Unnecessary words defininion: 
-    'Four types of unnecessary words and phrases to avoid for conciseness: 
-
-    Dummy Subjects: Avoid words like "there is/are" and "it is/was" that add no meaning. 
-    Example: "There are great skiing resorts in Colorado." to "Colorado has great skiing resorts." 
-
-    Nominalizations: Use verbs instead of nouns made from verbs (e.g., "decision" vs. "decide"). 
-    Example: "The conjugation of verbs is difficult." to "Conjugating verbs is difficult." 
-    
-    Infinitive Phrases: Replace "to + verb" phrases with direct verbs. 
-    Example: "Our duty was to clean and to wash." to "We cleaned and washed." 
-    Circumlocutions: Avoid lengthy phrases that can be said in fewer words. 
-    Example: "Owing to the fact that..." to "Since..." In short, aim for direct, simplified wording by cutting out filler expressions.'
-
-    Step 1 - In the given essay text identify all of the unnecessary words throughout the whole text, and wrap each of them with the '-' mark. 
-
-    Store the modified essay text as a value into the 'essay_unnecessary_words' dictionary key.
-
-    Step 2 - Store all of the found unnecessary words into the 'unnecessary_words' list wrapped with the '-', as shown in the following example: "unnecessary_words": ["-list-", "-of-", "-all-", "-unnecessary-", "-words-"]. 
-
-    Include the 'unnecessary_words' and 'essay_unnecessary_words' keys and values inside the 'update' key in the empty dictionary created previously.
-
-    Finally, return the 'update' dictionary.
-    '''
 
     band_score = '''
     Step 1 - Evaluate the given candidate's essay text based on the IELTS standarts and return the corrected version of it. Store the result as a value in the "corrected_essay" key.
@@ -137,7 +112,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
     Return the adjusted dictionary.
     '''
 
-    prompts = [prompt_1, prompt_2, prompt_3, prompt_4, band_score]
+    prompts = [prompt_1, prompt_2, prompt_3, band_score]
 
     final_dict = {
         "original_topic": topic,

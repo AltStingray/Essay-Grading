@@ -24,8 +24,8 @@ def process_essay(result):
     essay_repetitive_words = result["essay_repetitive_words"]
     repetitive_words = result["repetitive_words"]
 
-    essay_unnecessary_words = result["essay_unnecessary_words"]
-    unnecessary_words = result["unnecessary_words"]
+    #essay_unnecessary_words = result["essay_unnecessary_words"]
+    #unnecessary_words = result["unnecessary_words"]
 
     corrected_essay = result["corrected_essay"]
     paragraphs_count = result["paragraphs_count"]
@@ -83,7 +83,7 @@ def process_essay(result):
 
     linking_words_count, updated_essay_linking_words = count_and_replace(linking_words, "<span class='jsx-2885589388 linking-words'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{}</span><span class='jsx-1879403401'></span></div></span>", essay_linking_words, "#")
     repetitive_words_count, updated_essay_repetitive_words = count_and_replace(repetitive_words, "<span class='jsx-2310580937 repeated-word'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{}</span><span class='jsx-1879403401'></span></div></span>", essay_repetitive_words, "^")
-    unnecessary_words_count, updated_essay_unnecessary_words = count_and_replace(unnecessary_words, "<span class='jsx-2310580937 unnecessary-word'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{}</span><span class='jsx-1879403401'></span></div></span>", essay_unnecessary_words, "-")
+    #unnecessary_words_count, updated_essay_unnecessary_words = count_and_replace(unnecessary_words, "<span class='jsx-2310580937 unnecessary-word'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{}</span><span class='jsx-1879403401'></span></div></span>", essay_unnecessary_words, "-")
 
     sidebar_comments = []
 
@@ -106,7 +106,7 @@ def process_essay(result):
         
         sidebar_comments.append(html_line)
     
-    data = (topic, original_text, paragraphs_count, words_count, grammar_mistakes_count, linking_words_count, repetitive_words_count, submitted_by, band_score, sidebar_comments, current_date, unnecessary_words_count, essay_grammar_mistakes, updated_essay_linking_words, updated_essay_repetitive_words, updated_essay_unnecessary_words, corrected_essay)
+    data = (topic, original_text, paragraphs_count, words_count, grammar_mistakes_count, linking_words_count, repetitive_words_count, submitted_by, band_score, sidebar_comments, current_date, essay_grammar_mistakes, updated_essay_linking_words, updated_essay_repetitive_words, corrected_essay)
     
     return data
 
@@ -138,7 +138,9 @@ def main_summary_report(link, specified_date, teacher, client_name, client_email
 
         specified_date = datetime.now().strftime("%d-%m-%Y")
     else:
-        specified_date = datetime.strptime(str(specified_date), '%d-%m-%Y')
+        date = datetime(str(specified_date)).strip("-")
+        print(date)
+        specified_date = date.strftime("%d-%m-%Y")
 
     if user_prompt != None:
         prompt = user_prompt + f"At the beginning of the report specify the header title 'OET Speaking Mock Test Session's Summary'; below specify 'Date: {specified_date}' and teacher's name(who acts as a patient): '{teacher}'. If 'None' specified, get teacher name coming from the dialogue analysis. Add the following line at the end of the report in italic style: 'AI-generated content may be inaccurate or misleading. Always check for accuracy.' You are not limited by a particular range of words, so provide detailed report with at least 4000 charaters. Provide two versions of the report. First one is a simple text respond. Second one is a structured HTML (Note: Do not include <style> tag). Wrap those two versions and teacher's name as values in a single dictionary with the following keys: text, html and teacher. Return the dictionary."
