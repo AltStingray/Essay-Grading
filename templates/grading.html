@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
     {% if name == "finish" %}
-        <div class="row">
-            <div class="col-md-9 col-lg-8 col-xl-8" style="padding: 10px 70px 10px 130px;">
+        <div class="row justify-content-center">
+            <div class="col-md-9 col-lg-8 col-xl-6" style="padding: 10px 70px 10px 130px;">
                 <style>
                     * {
                         box-sizing: border-box;
@@ -52,7 +52,7 @@
                     </div>
                 </article>
             </div>
-            <div class="col-md-3 col-lg-4 col-xl-4">
+            <div class="col-md-3 col-lg-4 col-xl-2">
                 <aside class="sidebar" style="place-items: right;">
                     <div class="sidebar-comments">
                         {% for one in corrected_words %}

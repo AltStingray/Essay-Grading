@@ -424,7 +424,7 @@ def grading_results():
         essay = data[13]
         words_category = "Repetitive Words"
     elif show == "corrected-essay":
-        essay = data[15]
+        essay = data[14]
         words_category = "Corrected Essay"
     else:
         essay = data[11]
