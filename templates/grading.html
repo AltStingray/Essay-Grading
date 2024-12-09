@@ -2,7 +2,7 @@
 {% block content %}
     {% if name == "finish" %}
         <div class="row">
-            <div class="col-md-9" style="padding: 10px 70px 10px 130px;">
+            <div class="col-xs-9 col-s-9 col-md-9 col-lg-9" style="padding: 10px 70px 10px 130px;">
                 <style>
                     * {
                         box-sizing: border-box;
@@ -53,7 +53,7 @@
                     </div>
                 </article>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 col-lg-3">
                 <aside class="sidebar" style="place-items: right;">
                     <div class="sidebar-comments">
                         {% for one in corrected_words %}
@@ -135,9 +135,9 @@
                 <h1>Essay Grading</h1><br>
                 <form action="/grading/queue" method="get">
                     <h2>Paste your topic and essay text:</h2>
-                    <textarea type="text" name="topic" rows="4", cols="100" placeholder="Your topic:"></textarea><br><br>
-                    <textarea type="text" name="essay" rows="10", cols="100" placeholder="Your essay:"></textarea><br><br>
-                    <input type="text" name="submitted_by" placeholder="Your name: "><br><br>
+                    <textarea type="text" name="topic" rows="4", cols="100" placeholder="Your topic:" required></textarea><br><br>
+                    <textarea type="text" name="essay" rows="10", cols="100" placeholder="Your essay:" required></textarea><br><br>
+                    <input type="text" name="submitted_by" placeholder="Your name: " required><br><br>
                     <input type="submit" class="button2" value="Submit">
                 </form>
             </div>

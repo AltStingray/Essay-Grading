@@ -160,6 +160,8 @@ def processing():
 
         date = retrieve_cache[1]
 
+        print(F"\nDate after the table retrieve: {date}\n") # test
+
         teacher_name = retrieve_cache[2]
 
         client_name = retrieve_cache[3]
@@ -340,9 +342,7 @@ def email_to():
 
     logs = db_retrieve(file_id=id, db="Logs")
 
-    #plain_text = (str(logs[0], "utf-8"))
-
-    date = datetime.now().strftime("%d-%m-%Y")
+    date = logs[5]
 
     summary_report = (logs[3].tobytes().decode('utf-8')).strip("{ }")
 

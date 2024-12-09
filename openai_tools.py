@@ -30,20 +30,20 @@ def run_essay_grading(topic, essay_text, submitted_by):
     Introduction: 
     You are an IETLS teacher and professional grammar checker that provides feedback on candidate's essays. 
     You are given a topic and an essay text based on this topic. 
-    Provide the grading based on the IELTS standards. Your primary task is finding grammar mistakes, linking words, repetative words and unnecessary words in the candidate's essay.
+    Provide the grading based on the IELTS standards.
 
     Instruction:
     You will be given multiple steps. In each step you will be given example dictionaries, how each key and it's value should be structured, in which format and how every word should be wrapped.
     Every word/sentence placed in a list should exactly match word/sentence in the essay, either it's lower or upper case, and it should be marked/enclosed properly as well.
     Enclose the dict, all of the keys and values into double quotes, not single.
     Create an empty dictionary with an "update" key in it, in which value you will then store the results.
-    Do not include anything else except the things you are being prompted. No additional commments or notes.
-    Do not rush with your answer. Take your time and process each of the following steps sequentially.
+    No additional commments or notes.
     '''
 
     prompt_1 = '''
 
-    Step 1 - In the provided essay text take at least 30 seconds to identify all of the words that contain grammar mistakes. Then, wrap each word/sentence that contains grammar mistake with the sequence number(i.e. 1example1). So the each next identified grammar mistake increments the sequence number by 1. (Note: If one mistake contains two or more words, enclose them altogether with a single pair of a sequence number(i.e. 2enclose like that2)).
+    Step 1 - In the provided essay text identify all of the grammar mistakes. Then, wrap each word/sentence that contains grammar mistake with the sequence number(i.e. 1example1). So the each next identified grammar mistake increments the sequence number by 1. (Note: If one mistake contains two or more words, enclose them altogether with a single pair of a sequence number(i.e. 2enclose like that2)).
+    If you spot an unnecessary word, just cross it out with a red line using html.
     
     Store the modified essay text as a value into the 'essay_grammar_mistakes' dictionary key.
 

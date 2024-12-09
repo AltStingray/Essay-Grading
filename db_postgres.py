@@ -67,7 +67,7 @@ def db(command):
         #cursor.execute("""ALTER TABLE essay_logs ADD essay_unnecessary_words BYTEA""")
         #cursor.execute("""ALTER TABLE essay_logs ADD corrected_essay BYTEA""")
 
-        cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 4""")
+        cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 5""")
         
         cursor.execute("""ALTER SEQUENCE essay_logs_id_seq RESTART WITH 5""")
 
@@ -81,14 +81,11 @@ def db(command):
 
         #cursor.execute("""UPDATE Logs SET teacher = 'Carol' WHERE id = 2;""")
 
-        add_clients = """ 
-        UPDATE Logs SET client_email = 'drlamiaazizova@gmail.com' WHERE id = 1;
-        UPDATE Logs SET client_name = 'Lamia' WHERE id = 1;
-        UPDATE Logs SET client_email = 'dr.shqazi@gmail.com' WHERE id = 2;
-        UPDATE Logs SET client_name = 'Kazia' WHERE id = 2;
-        UPDATE Logs SET client_email = 'lion3148@naver.com' WHERE id = 3;
-        UPDATE Logs SET client_name = 'Lee' WHERE id = 3;
-        """
+        #add_clients = """ 
+        #UPDATE Logs SET client_email = 'drlamiaazizova@gmail.com' WHERE id = 1;
+        #UPDATE Logs SET client_name = 'Lamia' WHERE id = 1;
+        #"""
+
         #cursor.execute(add_clients)
 
         #cursor.execute("""UPDATE Logs SET link = 'https://www.dropbox.com/scl/fi/kkh4urusbik9mcvjcl1al/dr.shqazi-gmail.com_D_US_Carol_migraine_croup_Session1_16Nov24.mp4?rlkey=vqey0t1sgzmptrkhs4rs8h1yj&e=17&dl=0' WHERE id = 1;""")
@@ -102,7 +99,7 @@ def db(command):
     
     elif command == "delete_data":
 
-        cursor.execute(f"DELETE FROM Logs WHERE id IN ('4')") #'2', '3', '4', '5'
+        cursor.execute(f"DELETE FROM Logs WHERE id IN ('5')") #'2', '3', '4', '5'
         cursor.execute(f"DELETE FROM essay_logs WHERE id IN ('5', '6', '7', '8', '9')")
         #cursor.execute(f"DELETE FROM temp_storage WHERE id IN ('1', '2', '3', '4')")
 
