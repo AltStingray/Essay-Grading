@@ -39,11 +39,11 @@ def run_essay_grading(topic, essay_text, submitted_by):
     Create an empty dictionary with an "update" key in it, in which value you will then store the results.
     No additional commments or notes.
     '''
-
+    #If word or punctuation is missing, wrap it with the html class="del".
     prompt_1 = '''
 
-    Step 1 - In the provided essay text identify all of the grammar mistakes. If word or punctuation is missing, wrap it with the html class="del". Then, wrap each word/sentence that contains grammar mistake with the sequence number(i.e. 1example1). So the each next identified grammar mistake increments the sequence number by 1. (Note: If one mistake contains two or more words, enclose them altogether with a single pair of a sequence number(i.e. 2enclose like that2)).
-    If you spot an unnecessary word, just cross it out with a red line using class="strikethrough". 
+    Step 1 - In the provided essay text identify all of the grammar mistakes. Then, wrap each word/sentence that contains grammar mistake with the sequence number(i.e. 1example1). So the each next identified grammar mistake increments the sequence number by 1. (Note: If one mistake contains two or more words, enclose them altogether with a single pair of a sequence number(i.e. 2enclose like that2)).
+    If you spot an unnecessary word, just wrap it with an html "<span class="strikethrough"></span>". 
     
     Store the modified essay text as a value into the 'essay_grammar_mistakes' dictionary key.
 
