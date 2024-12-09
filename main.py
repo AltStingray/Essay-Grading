@@ -418,16 +418,16 @@ def grading_results():
     data = process_essay(result) # fix this, man
 
     if show == "linking-words":
-        essay = data[13]
+        essay = data[12]
         words_category = "Linking Words"
     elif show == "repetitive-words":
-        essay = data[14]
+        essay = data[13]
         words_category = "Repetitive Words"
     elif show == "corrected-essay":
-        essay = data[16]
+        essay = data[15]
         words_category = "Corrected Essay"
     else:
-        essay = data[12]
+        essay = data[11]
         words_category = "Grammar Mistakes"
 
     return render_template('grading.html', name="finish", topic=data[0], essay=essay, paragraphs_count=data[2], words_count=data[3], corrected_words=data[9], submitted_by=data[7], current_date=data[10], linking_words_count=data[5], repetitive_words_count=data[6], grammar_mistakes_count=data[4], band_score=data[8], id=0, words_category=words_category, route="grading_results")
@@ -466,12 +466,10 @@ def view_logs(id):
     band_score = logs[8] 
     sidebar_comments = [logs[9].strip("{ }").strip('"').replace('","', "")]
     current_date = logs[10]
-    unnecessary_words_count = logs[11]
-    essay_grammar_mistakes = logs[12].tobytes().decode('utf-8')
-    essay_linking_words = logs[13].tobytes().decode('utf-8')
-    essay_repetitive_words = logs[14].tobytes().decode('utf-8')
-    essay_unnecessary_words = logs[15].tobytes().decode('utf-8')
-    corrected_essay = logs[16].tobytes().decode('utf-8')
+    essay_grammar_mistakes = logs[11].tobytes().decode('utf-8')
+    essay_linking_words = logs[12].tobytes().decode('utf-8')
+    essay_repetitive_words = logs[13].tobytes().decode('utf-8')
+    corrected_essay = logs[14].tobytes().decode('utf-8')
 
     if show == "linking-words":
         essay = essay_linking_words
@@ -479,9 +477,6 @@ def view_logs(id):
     elif show == "repetitive-words":
         essay = essay_repetitive_words
         words_category = "Repetitive Words"
-    elif show == "unnecessary-words":
-        essay = essay_unnecessary_words
-        words_category = "Unnecessary Words"
     elif show == "corrected-essay":
         essay = corrected_essay
         words_category = "Corrected Essay"
@@ -489,7 +484,7 @@ def view_logs(id):
         essay = essay_grammar_mistakes
         words_category = "Grammar Mistakes"
 
-    return render_template('grading.html', name="finish", topic=topic, essay=essay, paragraphs_count=paragraphs_count, words_count=words_count, corrected_words=sidebar_comments, submitted_by=submitted_by, current_date=current_date, linking_words_count=linking_words_count, repetitive_words_count=repetitive_words_count, grammar_mistakes_count=grammar_mistakes_count, band_score=band_score, unnecessary_words_count=unnecessary_words_count, id=id, words_category=words_category, route="view_logs")
+    return render_template('grading.html', name="finish", topic=topic, essay=essay, paragraphs_count=paragraphs_count, words_count=words_count, corrected_words=sidebar_comments, submitted_by=submitted_by, current_date=current_date, linking_words_count=linking_words_count, repetitive_words_count=repetitive_words_count, grammar_mistakes_count=grammar_mistakes_count, band_score=band_score, id=id, words_category=words_category, route="view_logs")
 
 
 
