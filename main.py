@@ -160,8 +160,6 @@ def processing():
 
         date = retrieve_cache[1]
 
-        print(F"\nDate after the table retrieve: {date}\n") # test
-
         teacher_name = retrieve_cache[2]
 
         client_name = retrieve_cache[3]

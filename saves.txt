@@ -599,3 +599,27 @@ for word in words:
                         words_count += 1
             except AttributeError as err:
                 print(err)
+
+
+import multiprocessing
+from rq import Worker, Queue, Connection
+from redis import Redis
+
+redis_conn = Redis()
+queue_name = 'default'
+num_workers = 4  # Adjust based on your needs and Redis plan
+
+def start_worker():
+    with Connection(redis_conn):
+        worker = Worker(Queue(queue_name))
+        worker.work()
+
+if __name__ == '__main__':
+    processes = []
+    for _ in range(num_workers):
+        p = multiprocessing.Process(target=start_worker)
+        p.start()
+        processes.append(p)
+
+    for p in processes:
+        p.join()

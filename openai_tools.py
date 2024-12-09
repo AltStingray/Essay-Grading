@@ -43,11 +43,11 @@ def run_essay_grading(topic, essay_text, submitted_by):
     prompt_1 = '''
 
     Step 1 - In the provided essay text identify all of the grammar mistakes. Then, wrap each word/sentence that contains grammar mistake with the sequence number(i.e. 1example1). So the each next identified grammar mistake increments the sequence number by 1. (Note: If one mistake contains two or more words, enclose them altogether with a single pair of a sequence number(i.e. 2enclose like that2)).
-    If you spot an unnecessary word, just cross it out with a red line using html.
+    If you spot an unnecessary word, just cross it out with a red line using <del> tag.
     
     Store the modified essay text as a value into the 'essay_grammar_mistakes' dictionary key.
 
-    Step 2 - Store all of the found grammar mistakes each wrapped in a sequence number into the 'grammar_mistakes' list. Example: "grammar_mistakes": ["1list1", "2of2", "3words3", "4that4", "5contain5", "6a6", "7mistake7", "8and8", "9wrapped9", "10in10", "11sequence11", "12number12"]
+    Step 2 - Store all of the found grammar mistakes each wrapped in a sequence number into the 'grammar_mistakes' list. The sequence number should exactly match every word in the modified essay text. Example: "grammar_mistakes": ["1list1", "2of2", "3words3", "4that4", "5contain5", "6a6", "7mistake7", "8and8", "9wrapped9", "10in10", "11sequence11", "12number12"]
 
     Step 3 - Provide corrected versions of the words containing grammar mistakes as shown in the following example: "corrected_words": ["corrected version of the word 1 (grammar rule 1)", "corrected version of the word 2 (grammar rule 2)", "..."]. You should display the corrected word and next to it in the parentheses () briefly describe the cause of the mistake, like so: "a (Missing an article)", "restricted (Passive form)", "areas (Spelling)", "and (Word choice)", etc.
     

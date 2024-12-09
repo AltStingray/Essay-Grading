@@ -407,8 +407,14 @@ p {
   text-decoration: line-through;
   color:#3498db;
 }
+
 .red {
   color: red;
+}
+
+.del {
+  color: red;
+  background-color: yellow;
 }
 
 .green {
@@ -420,7 +426,7 @@ p {
 .sidebar-comments {
   padding: 20px 0px 20px;
   border-bottom: 1px dashed rgb(193, 193, 193);
-  height: 500px; 
+  height: 1000px; 
   overflow-y: scroll;
 }
 
