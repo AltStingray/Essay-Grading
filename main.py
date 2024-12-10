@@ -34,7 +34,7 @@ q = Queue(connection=conn)
 #db("create")
 
 #db("delete_data")
-#db("alter")
+db("alter")
 
 db("print")
 
@@ -464,7 +464,7 @@ def view_logs(id):
     repetitive_words_count = logs[6]
     submitted_by = logs[7].tobytes().decode('utf-8')
     band_score = logs[8] 
-    sidebar_comments = logs[9].tobytes().decode('utf-8').strip("{ }").strip('"').replace('","', "")
+    sidebar_comments = [logs[9].tobytes().decode('utf-8').strip("{ }").strip('"').replace('","', "")]
     current_date = logs[10]
     essay_grammar_mistakes = logs[11].tobytes().decode('utf-8')
     essay_linking_words = logs[12].tobytes().decode('utf-8')

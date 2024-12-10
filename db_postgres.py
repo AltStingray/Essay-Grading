@@ -84,7 +84,7 @@ def db(command):
 
         #cursor.execute("""ALTER TABLE essay_logs RENAME COLUMN date TO time""")
 
-        #cursor.execute("""ALTER TABLE essay_logs ALTER COLUMN sidebar_comments TYPE BYTEA USING sidebar_comments::bytea""")
+        cursor.execute("""ALTER TABLE essay_logs ALTER COLUMN sidebar_comments TYPE TEXT USING sidebar_comments::TEXT""")
 
         #cursor.execute("""UPDATE Logs SET id = 1 WHERE id = 2;""")
 
