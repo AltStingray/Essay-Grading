@@ -30,8 +30,8 @@ def db(command):
                      time DATE NOT NULL, 
                      teacher VARCHAR(255), 
                      client_email VARCHAR(255),
-                     client_name VARCHAR(255),
-                             )"""
+                     client_name VARCHAR(255)
+                    )"""
 
         create_essay_logs = """CREATE TABLE essay_logs(
                     id SERIAL PRIMARY KEY,
