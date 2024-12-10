@@ -405,7 +405,7 @@ p {
 }
 .strikethrough {
   text-decoration: line-through;
-  color: red;
+  text-decoration-color: red;
   background-color: #ffdd57;
 }
 
