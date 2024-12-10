@@ -43,7 +43,7 @@ def run_essay_grading(topic, essay_text, submitted_by):
     prompt_1 = '''
 
     Step 1 - In the provided essay text identify all of the grammar mistakes. Then, wrap each word/sentence that contains grammar mistake with the sequence number(i.e. 1example1). So the each next identified grammar mistake increments the sequence number by 1. (Note: If one mistake contains two or more words, enclose them altogether with a single pair of a sequence number(i.e. 2enclose like that2)).
-    If you spot an unnecessary word, just wrap it with an html "<span class="strikethrough"></span>". 
+    If you spot an unnecessary word, just wrap it with an html "<span class="strikethrough">"(i.e. <span class="strikethrough">example</span>). 
     
     Store the modified essay text as a value into the 'essay_grammar_mistakes' dictionary key.
 
@@ -132,7 +132,6 @@ def run_essay_grading(topic, essay_text, submitted_by):
             model="gpt-4o-2024-08-06",
             messages=messages,
             max_tokens=16000,
-            temperature=0.8,
             )
         
         result = response.choices[0].message.content

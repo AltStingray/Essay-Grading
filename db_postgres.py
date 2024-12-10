@@ -78,13 +78,13 @@ def db(command):
 
         #cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 5""")
         
-        #cursor.execute("""ALTER SEQUENCE essay_logs_id_seq RESTART WITH 5""")
+        cursor.execute("""ALTER SEQUENCE essay_logs_id_seq RESTART WITH 5""")
 
         #cursor.execute("""ALTER SEQUENCE temp_storage_id_seq RESTART WITH 1""")
 
         #cursor.execute("""ALTER TABLE essay_logs RENAME COLUMN date TO time""")
 
-        cursor.execute("""ALTER TABLE essay_logs ALTER COLUMN sidebar_comments TYPE TEXT USING sidebar_comments::TEXT""")
+        #cursor.execute("""ALTER TABLE essay_logs ALTER COLUMN sidebar_comments TYPE TEXT USING sidebar_comments::TEXT""")
 
         #cursor.execute("""UPDATE Logs SET id = 1 WHERE id = 2;""")
 
@@ -109,7 +109,7 @@ def db(command):
     elif command == "delete_data":
 
         #cursor.execute(f"DELETE FROM Logs WHERE id IN ('5')") #'2', '3', '4', '5'
-        #cursor.execute(f"DELETE FROM essay_logs WHERE id IN ('5', '6', '7', '8', '9')")
+        cursor.execute(f"DELETE FROM essay_logs WHERE id IN ('5', '6', '7', '8', '9')")
         #cursor.execute(f"DELETE FROM temp_storage WHERE id IN ('1', '2', '3', '4')")
 
         db_conn.commit()
