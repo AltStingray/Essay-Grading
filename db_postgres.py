@@ -2,7 +2,12 @@ import psycopg2
 import os
 
 # Get environmental variable URL from Heroku
-DATABASE = os.environ.get("DATABASE_URL")
+ENVIRONENT = os.environ.get("ENVIRONMENT")
+
+if ENVIRONENT == "production":
+    DATABASE = os.environ.get("DATABASE_URL")
+elif ENVIRONENT == "test":
+    DATABASE = os.environ.get("TEST_DATABASE_URL")
 
 def db(command):
 
@@ -20,7 +25,12 @@ def db(command):
                      summary BYTEA NOT NULL,
                      transcription BYTEA NOT NULL,
                      filename VARCHAR(255) NOT NULL,
-                     upload_time DATE NOT NULL,
+                     summary_html BYTEA, 
+                     link VARCHAR(255), 
+                     time DATE NOT NULL, 
+                     teacher VARCHAR(255), 
+                     client_email VARCHAR(255),
+                     client_name VARCHAR(255),
                              )"""
 
         create_essay_logs = """CREATE TABLE essay_logs(
@@ -35,7 +45,7 @@ def db(command):
                     repetative_words_count SMALLINT NOT NULL,
                     submitted_by BYTEA NOT NULL,
                     overall_band_score FLOAT NOT NULL,
-                    sidebar_comments TEXT NOT NULL,
+                    sidebar_comments BYTEA,
                     time DATE NOT NULL,
                     essay_grammar_mistakes BYTEA,
                     essay_linking_words BYTEA,
@@ -73,7 +83,7 @@ def db(command):
 
         #cursor.execute("""ALTER TABLE essay_logs RENAME COLUMN date TO time""")
 
-        #cursor.execute("""ALTER TABLE Logs ALTER COLUMN uploat_time TYPE DATE""")
+        cursor.execute("""ALTER TABLE essay_logs ALTER COLUMN sidebar_comments TYPE BYTEA""")
 
         #cursor.execute("""UPDATE Logs SET id = 1 WHERE id = 2;""")
 
