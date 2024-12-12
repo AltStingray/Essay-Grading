@@ -31,7 +31,7 @@ app.config["SESSION_USE_SIGNER"] = True
 q = Queue(connection=conn)
 
 #delete_table("temp_storage")
-#db("create")
+db("create")
 
 #db("delete_data")
 #db("alter")
