@@ -41,7 +41,7 @@
 
                                     <!--Modal Body-->
                                     <div class="modal-body">
-                                        <form action="/authorize" onsubmit="handleFormSubmission(event, 'success-message-modal')" method="get">
+                                        <form action="/authorize" onsubmit="handleFormSubmission(event, 'success-message-modal'); tableLoading(event)" method="get">
                                             <div class="form">
                                                 <h1>Provide data for the following fields:</h1>
                                                 <br><br>
@@ -88,6 +88,9 @@
                                 <th>Transcript</th>
                                 <th>Send to</th>
                                 <th></th>
+                            </tr>
+                            <tr id="loading-row" style="display: none;">
+                                <td>Loading new report...<div class="loader"></div></td>
                             </tr>
                         </thead>
                         {% for one in reports %}

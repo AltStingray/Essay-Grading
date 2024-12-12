@@ -9,7 +9,7 @@ from openai_tools import *
 from rq import Queue
 from rq.job import Job
 from worker import conn
-from flask import Flask, request, render_template, url_for, redirect, send_file, session
+from flask import Flask, request, render_template, url_for, redirect, send_file, session, jsonify
 from markupsafe import escape
 from db_postgres import *
 from jinja2 import Template
@@ -486,7 +486,18 @@ def view_logs(id):
 
     return render_template('grading.html', name="finish", topic=topic, essay=essay, paragraphs_count=paragraphs_count, words_count=words_count, corrected_words=sidebar_comments, submitted_by=submitted_by, current_date=current_date, linking_words_count=linking_words_count, repetitive_words_count=repetitive_words_count, grammar_mistakes_count=grammar_mistakes_count, band_score=band_score, id=id, words_category=words_category, route="view_logs")
 
+@app.route("/job-status")
+def job_status():
+    job_id = session["job_id"]
 
+    job = Job.fetch(job_id, connection=conn)
+
+    if job.is_finished():
+        return jsonify({"status": "finished"}), 200
+    elif job.is_failed():
+        return jsonify({"status": "failed"}), 200
+    else:
+        return jsonify({"status": "in-progress"}), 200
 
 @app.route('/about')
 def about():

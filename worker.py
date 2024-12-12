@@ -2,7 +2,12 @@ import redis
 import os
 from rq import Worker, Queue, Connection
 
-REDIS_CONN = os.environ.get("REDISCLOUD_URL")
+ENVIRONENT = os.environ.get("ENVIRONMENT")
+
+if ENVIRONENT == "production":
+    REDIS_CONN = os.environ.get("REDISCLOUD_URL")
+elif ENVIRONENT == "test":
+    REDIS_CONN = os.environ.get("TEST_REDISCLOUD_URL")
 
 listen = ['default']
 
