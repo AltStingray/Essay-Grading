@@ -33,8 +33,8 @@ q = Queue(connection=conn)
 #delete_table("temp_storage")
 #db("create")
 
-db("delete_data")
-db("alter")
+#db("delete_data")
+#db("alter")
 
 db("print")
 
