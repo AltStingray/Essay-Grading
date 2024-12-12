@@ -19,3 +19,11 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
+
+
+function handleFormSubmission(event, messageid){
+    const successMessage = document.getElementById(messageid);
+    successMessage.style.display = 'block';
+}
+
+
