@@ -53,8 +53,8 @@ def db(command):
                     corrected_essay BYTEA
                     )"""
 
-        cursor.execute(create_summary_report_logs)
-        cursor.execute(create_essay_logs)
+        #cursor.execute(create_summary_report_logs)
+        #cursor.execute(create_essay_logs)
             
         db_conn.commit() # Commiting to make changes persistent 
 
