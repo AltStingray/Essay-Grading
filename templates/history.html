@@ -62,7 +62,7 @@
                                             </div>
                                             <!--Modal footer-->
                                             <div class="modal-footer">
-                                                <input type="submit" class="btn btn-primary" value="Submit"></input>
+                                                <input type="submit" id="submit-btn" class="btn btn-primary" value="Submit"></input>
                                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                                             </div>
                                         </form>
@@ -88,9 +88,6 @@
                                 <th>Transcript</th>
                                 <th>Send to</th>
                                 <th></th>
-                            </tr>
-                            <tr id="loading-row" style="display: none;">
-                                <td>Loading new report...<div class="loader"></div></td>
                             </tr>
                         </thead>
                         {% for one in reports %}
@@ -127,6 +124,17 @@
                             Email has been sent successfully!
                         </div>
                     </table>
+                    <tr id="loading-row" style="display: none;">
+                        <div class="loading loading01">
+                            <span>L</span>
+                            <span>O</span>
+                            <span>A</span>
+                            <span>D</span>
+                            <span>I</span>
+                            <span>N</span>
+                            <span>G</span>
+                        </div>
+                    </tr>
                 {% elif log == "essay_grading" %}
                     <h1 style="margin: 10px;">Essay Grading Logs</h1>
                     <table class="table table-hover">

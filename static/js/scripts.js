@@ -24,10 +24,10 @@ document.addEventListener("DOMContentLoaded", function() {
 function handleFormSubmission(event, messageid){
     const successMessage = document.getElementById(messageid);
     successMessage.style.display = 'block';
-}
+};
 
 
-function tableLoading(event){
+document.getElementById("submit-btn").addEventListener("click", function(){
     // Show the loading row
     const loadingRow = document.getElementById('loading-row');
     loadingRow.style.display = "table-row";
@@ -52,4 +52,4 @@ function tableLoading(event){
                 loadingRow.style.display = "none";
             });
     }, 1000);
-}
+});

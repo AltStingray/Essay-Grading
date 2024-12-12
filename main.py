@@ -33,8 +33,8 @@ q = Queue(connection=conn)
 #delete_table("temp_storage")
 #db("create")
 
-#db("delete_data")
-#db("alter")
+db("delete_data")
+db("alter")
 
 db("print")
 
@@ -166,7 +166,11 @@ def processing():
 
         client_email = retrieve_cache[4]
 
-        q.enqueue(main_summary_report, link, date, teacher_name, client_name, client_email, access_token, prompt)
+        job = q.enqueue(main_summary_report, link, date, teacher_name, client_name, client_email, access_token, prompt)
+
+        job_id=job.get_id() # get id of the job that is in process 
+
+        session["job_id"] = job_id
 
         return redirect(url_for("history"))
     else:
@@ -488,6 +492,7 @@ def view_logs(id):
 
 @app.route("/job-status")
 def job_status():
+
     job_id = session["job_id"]
 
     job = Job.fetch(job_id, connection=conn)

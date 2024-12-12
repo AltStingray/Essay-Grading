@@ -652,3 +652,9 @@ if __name__ == '__main__':
 
     Finally, return the 'update' dictionary.
     '''
+
+
+@app.route("/start-background-job", methods=["POST"])
+def start_job():
+    job = queue.enqueue(background_task)
+    return jsonify({"job_id": job.id}), 200
