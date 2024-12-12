@@ -50,10 +50,10 @@ def db(command):
                     essay_grammar_mistakes BYTEA,
                     essay_linking_words BYTEA,
                     essay_repetitive_words BYTEA,
-                    corrected_essay BYTEA,
+                    corrected_essay BYTEA
                     )"""
 
-        cursor.execute(create_summary_report_logs)
+        #cursor.execute(create_summary_report_logs)
         cursor.execute(create_essay_logs)
             
         db_conn.commit() # Commiting to make changes persistent 
