@@ -20,7 +20,7 @@ def db(command):
     # Creating a PostgreSQL table to store the data in
     if command == "create":
 
-        create_summary_report_logs = """CREATE TABLE Logs(
+        create_summary_report_logs = """CREATE TABLE logs(
                      id SERIAL PRIMARY KEY,
                      summary BYTEA NOT NULL,
                      transcription BYTEA NOT NULL,
