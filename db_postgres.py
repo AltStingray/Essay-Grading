@@ -3,7 +3,7 @@ import os
 
 # Get environmental variable URL from Heroku
 ENVIRONENT = os.environ.get("ENVIRONMENT")
-print(ENVIRONENT) # test
+
 if ENVIRONENT == "production":
     DATABASE = os.environ.get("DATABASE_URL")
 elif ENVIRONENT == "test":
@@ -53,7 +53,7 @@ def db(command):
                     )"""
 
         #cursor.execute(create_summary_report_logs)
-        cursor.execute(create_essay_logs)
+        #cursor.execute(create_essay_logs)
             
         db_conn.commit() # Commiting to make changes persistent 
 
