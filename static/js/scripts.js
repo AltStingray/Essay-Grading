@@ -27,13 +27,7 @@ function handleFormSubmission(event, messageid){
 };
 
 
-document.getElementById("submit-btn").addEventListener("click", () =>{
-    if (window.location.pathname === '/history') {
-        loadingRowFunc();
-    }
-});
-
-function loadingRowFunc(){
+document.getElementById("submit-btn").addEventListener("click", function(){
     // Show the loading row
     const loadingRow = document.getElementById('loading-row');
     loadingRow.style.display = "table-row";
@@ -58,4 +52,4 @@ function loadingRowFunc(){
                 loadingRow.style.display = "none";
             });
     }, 1000);
-};
+});
