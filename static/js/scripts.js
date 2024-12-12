@@ -27,7 +27,13 @@ function handleFormSubmission(event, messageid){
 };
 
 
-document.getElementById("submit-btn").addEventListener("click", function(){
+document.getElementById("submit-btn").addEventListener("click", () =>{
+    if (window.location.pathname === '/history') {
+        loadingRowFunc();
+    }
+});
+
+function loadingRowFunc(){
     // Show the loading row
     const loadingRow = document.getElementById('loading-row');
     loadingRow.style.display = "table-row";
@@ -52,4 +58,4 @@ document.getElementById("submit-btn").addEventListener("click", function(){
                 loadingRow.style.display = "none";
             });
     }, 1000);
-});
+};
