@@ -37,7 +37,6 @@ def db(command):
                     id SERIAL PRIMARY KEY,
                     topic BYTEA NOT NULL,   
                     essay BYTEA NOT NULL,
-                    essay_grammar_mistakes TEXT,
                     paragraphs_count SMALLINT NOT NULL,
                     words_count SMALLINT NOT NULL,
                     grammar_mistakes SMALLINT NOT NULL,
