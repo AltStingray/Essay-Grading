@@ -29,8 +29,8 @@ function handleFormSubmission(event, messageid){
 
 document.getElementById("submit-btn").addEventListener("click", function(){
     // Show the loading row
-    const loadingRow = document.getElementById('loading-row');
-    loadingRow.style.display = "table-row";
+    const loadingRow = document.getElementById(messageid);
+    loadingRow.style.display = tabletype;
 
     // Poll the job status
     const interval = setInterval(() => {
