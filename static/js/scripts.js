@@ -30,32 +30,34 @@ function handleFormSubmission(event, messageid){
 
 console.log(document.getElementById("submit-btn"));
 
-document.getElementById("submit-btn").addEventListener("click", () => {
-    // Show the loading row
-    const loadingRow = document.getElementById('submit-btn');
-    loadingRow.style.display = "table-row";
-    setTimeout(checkJobStatus, 5000);
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("submit-btn").addEventListener("click", () => {
+        // Show the loading row
+        const loadingRow = document.getElementById('submit-btn');
+        loadingRow.style.display = "table-row";
+        setTimeout(checkJobStatus, 5000);
 
-    // Poll the job status
-    function checkJobStatus(){
-        const interval = setInterval(() => {
-            fetch('/job-status')
-                .then(response => response.json())
-                .then(statusData => {
-                    if (statusData.status === "finished"){
-                        clearInterval(interval); // Stop polling
-                        window.location.reload();
-                    } else if (statusData.status === "failed"){
-                        clearInterval(interval);
-                        alert("The job failed. Please try again.");
-                        loadingRow.style.display = "none"; // Hide the loading row
-                    }
-                })
-                .catch(error => {
-                    console.error("Error checking job status:", error);
-                    clearInterval(interval)
-                    loadingRow.style.display = "none";
-                });
-        }, 1000);
-    }
+        // Poll the job status
+        function checkJobStatus(){
+            const interval = setInterval(() => {
+                fetch('/job-status')
+                    .then(response => response.json())
+                    .then(statusData => {
+                        if (statusData.status === "finished"){
+                            clearInterval(interval); // Stop polling
+                            window.location.reload();
+                        } else if (statusData.status === "failed"){
+                            clearInterval(interval);
+                            alert("The job failed. Please try again.");
+                            loadingRow.style.display = "none"; // Hide the loading row
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error checking job status:", error);
+                        clearInterval(interval)
+                        loadingRow.style.display = "none";
+                    });
+            }, 1000);
+        }
+    });
 });
