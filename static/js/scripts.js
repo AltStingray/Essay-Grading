@@ -27,29 +27,32 @@ function handleFormSubmission(event, messageid){
 };
 
 
-document.getElementById("submit-btn").addEventListener("click", function(){
+document.getElementById("submit-btn").addEventListener("click", () => {
     // Show the loading row
-    const loadingRow = document.getElementById(messageid);
-    loadingRow.style.display = tabletype;
-
+    const loadingRow = document.getElementById('loading-row');
+    loadingRow.style.display = "table-row";
+    const waitForTimeout = setTimeout(checkJobStatus(), 5000)
+    
     // Poll the job status
-    const interval = setInterval(() => {
-        fetch('/job-status')
-            .then(response => response.json())
-            .then(statusData => {
-                if (statusData.status === "finished"){
-                    clearInterval(interval); // Stop polling
-                    window.location.reload();
-                } else if (statusData.status === "failed"){
-                    clearInterval(interval);
-                    alert("The job failed. Please try again.");
-                    loadingRow.style.display = "none"; // Hide the loading row
-                }
-            })
-            .catch(error => {
-                console.error("Error checking job status:", error);
-                clearInterval(interval)
-                loadingRow.style.display = "none";
-            });
-    }, 1000);
+    function checkJobStatus(){
+        const interval = setInterval(() => {
+            fetch('/job-status')
+                .then(response => response.json())
+                .then(statusData => {
+                    if (statusData.status === "finished"){
+                        clearInterval(interval); // Stop polling
+                        window.location.reload();
+                    } else if (statusData.status === "failed"){
+                        clearInterval(interval);
+                        alert("The job failed. Please try again.");
+                        loadingRow.style.display = "none"; // Hide the loading row
+                    }
+                })
+                .catch(error => {
+                    console.error("Error checking job status:", error);
+                    clearInterval(interval)
+                    loadingRow.style.display = "none";
+                });
+        }, 1000);
+    }
 });
