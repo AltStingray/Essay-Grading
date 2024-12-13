@@ -497,9 +497,9 @@ def job_status():
 
     job = Job.fetch(job_id, connection=conn)
 
-    if job.is_finished():
+    if job.is_finished:
         return jsonify({"status": "finished"}), 200
-    elif job.is_failed():
+    elif job.is_failed:
         return jsonify({"status": "failed"}), 200
     else:
         return jsonify({"status": "in-progress"}), 200

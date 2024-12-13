@@ -1,3 +1,5 @@
+console.log("Javascript is loaded and running!") // Test
+
 document.addEventListener("DOMContentLoaded", function() {
     const highlights = document.querySelectorAll(".highlight");
 
@@ -29,10 +31,10 @@ function handleFormSubmission(event, messageid){
 
 document.getElementById("submit-btn").addEventListener("click", () => {
     // Show the loading row
-    const loadingRow = document.getElementById('loading-row');
+    const loadingRow = document.getElementById('submit-btn');
     loadingRow.style.display = "table-row";
-    const waitForTimeout = setTimeout(checkJobStatus(), 5000)
-    
+    const waitForTimeout = setTimeout(checkJobStatus, 5000);
+
     // Poll the job status
     function checkJobStatus(){
         const interval = setInterval(() => {
