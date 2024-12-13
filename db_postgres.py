@@ -217,6 +217,8 @@ def db_get_ids(table_name):
     cursor.execute(f"SELECT id FROM {table_name}")
 
     ids = cursor.fetchall()
+    
+    print(ids)
 
     ids_lst = []
     for id in ids:
