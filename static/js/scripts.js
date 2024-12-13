@@ -30,34 +30,22 @@ function handleFormSubmission(event, messageid){
 
 console.log(document.getElementById("submit-btn"));
 
-document.addEventListener("DOMContentLoaded", () => {
-    const submitButton = document.getElementById("submit-btn");
-    const loadingRow = document.getElementById('loading-row'); // Replace with correct ID for the loading row
-    
-    // Check if elements exist
-    if (!submitButton || !loadingRow) {
-        console.error("Required elements (submit button or loading row) are missing from the DOM.");
-        return;
-    }
+document.getElementById("submit-btn").addEventListener("click", () => {
+    // Show the loading row
+    const loadingRow = document.getElementById('submit-btn');
+    loadingRow.style.display = "table-row";
+    setTimeout(checkJobStatus, 5000);
 
-    submitButton.addEventListener("click", () => {
-        // Show the loading row
-        loadingRow.style.display = "table-row";
-
-        // Wait 5 seconds before starting polling
-        setTimeout(checkJobStatus, 5000);
-    });
-
-    // Function to check job status
-    function checkJobStatus() {
+    // Poll the job status
+    function checkJobStatus(){
         const interval = setInterval(() => {
             fetch('/job-status')
                 .then(response => response.json())
                 .then(statusData => {
-                    if (statusData.status === "finished") {
+                    if (statusData.status === "finished"){
                         clearInterval(interval); // Stop polling
                         window.location.reload();
-                    } else if (statusData.status === "failed") {
+                    } else if (statusData.status === "failed"){
                         clearInterval(interval);
                         alert("The job failed. Please try again.");
                         loadingRow.style.display = "none"; // Hide the loading row
@@ -65,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 })
                 .catch(error => {
                     console.error("Error checking job status:", error);
-                    clearInterval(interval);
+                    clearInterval(interval)
                     loadingRow.style.display = "none";
                 });
         }, 1000);
