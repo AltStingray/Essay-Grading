@@ -217,7 +217,7 @@ def db_get_ids(table_name):
     cursor.execute(f"SELECT id FROM {table_name}")
 
     ids = cursor.fetchall()
-    
+
     print(ids)
 
     ids_lst = []
@@ -237,8 +237,8 @@ def db_retrieve(file_id, db):
     cursor = db_conn.cursor()
 
     if db == "Logs":
-
-        cursor.execute("SELECT summary, transcription, filename, summary_html, link, time, teacher, client_email, client_name, sent FROM Logs WHERE id = %s", (str(file_id)))
+        print(file_id, type(file_id))
+        cursor.execute("SELECT summary, transcription, filename, summary_html, link, time, teacher, client_email, client_name, sent FROM Logs WHERE id = %s", (str(file_id),))
 
         file = cursor.fetchone()
 
@@ -272,6 +272,7 @@ def db_retrieve(file_id, db):
 
             return lst
     else:
+
         cursor.execute("SELECT link, time, teacher_name, client_name, client_email FROM temp_storage WHERE id = %s", str(file_id))
 
         file = cursor.fetchone()
