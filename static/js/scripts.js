@@ -1,5 +1,3 @@
-console.log("Javascript is loaded and running!") // Test
-
 document.addEventListener("DOMContentLoaded", function() {
     const highlights = document.querySelectorAll(".highlight");
 
@@ -28,36 +26,31 @@ function handleFormSubmission(event, messageid){
     successMessage.style.display = 'block';
 };
 
-console.log(document.getElementById("submit-btn"));
-
-document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("submit-btn").addEventListener("click", () => {
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("submit-btn").addEventListener("click", function() {
         // Show the loading row
         const loadingRow = document.getElementById('submit-btn');
         loadingRow.style.display = "table-row";
-        setTimeout(checkJobStatus, 5000);
 
         // Poll the job status
-        function checkJobStatus(){
-            const interval = setInterval(() => {
-                fetch('/job-status')
-                    .then(response => response.json())
-                    .then(statusData => {
-                        if (statusData.status === "finished"){
-                            clearInterval(interval); // Stop polling
-                            window.location.reload();
-                        } else if (statusData.status === "failed"){
-                            clearInterval(interval);
-                            alert("The job failed. Please try again.");
-                            loadingRow.style.display = "none"; // Hide the loading row
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Error checking job status:", error);
-                        clearInterval(interval)
-                        loadingRow.style.display = "none";
-                    });
-            }, 1000);
-        }
+        const interval = setInterval(() => {
+            fetch('https://benchmark-tools-test-env-99cb41517051.herokuapp.com/job-status')
+                .then(response => response.json())
+                .then(statusData => {
+                    if (statusData.status === "finished"){
+                        clearInterval(interval); // Stop polling
+                        window.location.reload();
+                    } else if (statusData.status === "failed"){
+                        clearInterval(interval);
+                        alert("The job failed. Please try again.");
+                        loadingRow.style.display = "none"; // Hide the loading row
+                    }
+                })
+                .catch(error => {
+                    console.error("Error checking job status:", error);
+                    clearInterval(interval)
+                    loadingRow.style.display = "none";
+                })
+        }, 1000);
     });
 });
