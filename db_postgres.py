@@ -75,7 +75,7 @@ def db(command):
         #cursor.execute("""ALTER TABLE essay_logs ADD essay_unnecessary_words BYTEA""")
         #cursor.execute("""ALTER TABLE essay_logs ADD corrected_essay BYTEA""")
 
-        cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 10""")
+        cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 14""")
         
         cursor.execute("""ALTER SEQUENCE essay_logs_id_seq RESTART WITH 5""")
 
