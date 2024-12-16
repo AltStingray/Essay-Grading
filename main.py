@@ -33,7 +33,7 @@ q = Queue(connection=conn)
 #db("create")
 
 #db("delete_data")
-#db("alter")
+# db("alter")
 
 db("print")
 
@@ -190,21 +190,6 @@ def processing():
 
         session["job_id"] = job_id
 
-        return redirect(url_for("results"))
-
-
-@app.route('/results', methods=["GET", "POST"])
-def results():
-    '''Waiting for the completion of the queried job.'''
-    
-    job_id = session["job_id"]
-
-    job = Job.fetch(job_id, connection=conn)
-
-    if job.is_finished:
-        return render_template('results.html')
-    else:
-        time.sleep(1)
         return render_template('processing.html')
 
 @app.route('/download', methods=["GET"])
@@ -525,7 +510,7 @@ def register():
 
 @app.errorhandler(500)
 def internal_error(error):
-    return jsonify({"error": "Something went wrong"}), 500
+    return jsonify({"error": f"Something went wrong: {error}"}), 500
 
 # These two lines tell Python to start Flask’s development server when the script is executed from the command line. 
 # It’ll be used only when you run the script locally.
