@@ -15,9 +15,8 @@ from db_postgres import *
 from jinja2 import Template
 
 PASSWORD = os.environ.get("CUSTOM_PROMPT_PASSWORD")
-
 FLASK_SESSION_SECRET = os.environ.get("FLASK_SESSION_SECRET")
-
+ENVIRONENT = os.environ.get("ENVIRONMENT")
 
 # Web application fundament
 app = Flask(__name__)
@@ -33,8 +32,8 @@ q = Queue(connection=conn)
 #delete_table("temp_storage")
 #db("create")
 
-db("delete_data")
-db("alter")
+#db("delete_data")
+#db("alter")
 
 db("print")
 
@@ -531,7 +530,7 @@ def internal_error(error):
 # These two lines tell Python to start Flask’s development server when the script is executed from the command line. 
 # It’ll be used only when you run the script locally.
 if __name__ == "__main__":
-    
+
     if ENVIRONENT == "production":
         app.run(host="127.0.0.1", port=8080, debug=False)
     elif ENVIRONENT == "test":
