@@ -26,12 +26,12 @@ function handleFormSubmission(event, messageid){
     successMessage.style.display = 'block';
 };
 
-document.addEventListener("DOMContentLoaded", (event) => {
+document.addEventListener("DOMContentLoaded", () => {
 
     // Show the loading row
     const loadingRow = document.getElementById('submit-btn');
     if (loadingRow) {
-        loadingRow.addEventListener('click', MouseEvent)
+        loadingRow.addEventListener('click');
     }
     loadingRow.style.display = "table-row";
 
