@@ -26,16 +26,19 @@ function handleFormSubmission(event, messageid){
     successMessage.style.display = 'block';
 };
 
-window.addEventListener("DOMContentLoaded", (event) => {
+window.addEventListener("DOMContentLoaded", () => {
 
     const loadingRow = document.getElementById('submit-btn');
 
     if (loadingRow) {
-        loadingRow.addEventListener('click', false);
+        loadingRow.addEventListener('click');
+    }
+    else {
+        console.error("submit-btn element not found in the DOM!");
     }
 
     loadingRow.style.display = "table-row";
-    
+
     // Poll the job status
     const interval = setInterval(() => {
         fetch('/job-status')
