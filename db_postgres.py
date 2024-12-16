@@ -237,7 +237,7 @@ def db_retrieve(file_id, db):
     cursor = db_conn.cursor()
 
     if db == "Logs":
-        print(file_id, type(file_id))
+
         cursor.execute("SELECT summary, transcription, filename, summary_html, link, time, teacher, client_email, client_name, sent FROM Logs WHERE id = %s", (str(file_id),))
 
         file = cursor.fetchone()

@@ -4,8 +4,6 @@ from rq import Worker, Queue, Connection
 
 REDIS_CONN = os.environ.get("REDISCLOUD_URL")
 
-print(REDIS_CONN)
-
 listen = ['default']
 
 conn = redis.from_url(REDIS_CONN)

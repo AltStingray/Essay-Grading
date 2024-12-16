@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Poll the job status
         const interval = setInterval(() => {
-            fetch('https://benchmark-tools-test-env-99cb41517051.herokuapp.com/job-status')
+            fetch('/job-status')
                 .then(response => response.json())
                 .then(statusData => {
                     if (statusData.status === "finished"){

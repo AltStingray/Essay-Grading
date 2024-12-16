@@ -24,9 +24,9 @@ app = Flask(__name__)
 
 app.secret_key = FLASK_SESSION_SECRET
 
-app.config['SESSION_TYPE'] = 'redis'
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_USE_SIGNER"] = True
+#app.config['SESSION_TYPE'] = 'redis'
+#app.config["SESSION_PERMANENT"] = False
+#app.config["SESSION_USE_SIGNER"] = True
 
 q = Queue(connection=conn)
 
@@ -524,9 +524,16 @@ def register():
 
     return render_template('register.html')
 
+@app.errorhandler(500)
+def internal_error(error):
+    return jsonify({"error": "Something went wrong"}), 500
+
 # These two lines tell Python to start Flask’s development server when the script is executed from the command line. 
 # It’ll be used only when you run the script locally.
 if __name__ == "__main__":
-
-    app.run(host="127.0.0.1", port=8080, debug=True)
+    
+    if ENVIRONENT == "production":
+        app.run(host="127.0.0.1", port=8080, debug=False)
+    elif ENVIRONENT == "test":
+        app.run(host="127.0.0.1", port=5000, debug=True)
     
