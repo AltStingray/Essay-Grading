@@ -190,6 +190,21 @@ def processing():
 
         session["job_id"] = job_id
 
+        return redirect(url_for("results"))
+
+
+@app.route('/results', methods=["GET", "POST"])
+def results():
+    '''Waiting for the completion of the queried job.'''
+    
+    job_id = session["job_id"]
+
+    job = Job.fetch(job_id, connection=conn)
+
+    if job.is_finished:
+        return render_template('results.html')
+    else:
+        time.sleep(1)
         return render_template('processing.html')
 
 @app.route('/download', methods=["GET"])
@@ -486,7 +501,6 @@ def job_status():
     elif job.is_failed:
         return jsonify({"status": "failed"}), 200
     else:
-        print("Job in progress.")
         return jsonify({"status": "in-progress"}), 200
 
 @app.route('/about')
