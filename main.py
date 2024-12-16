@@ -486,6 +486,7 @@ def job_status():
     elif job.is_failed:
         return jsonify({"status": "failed"}), 200
     else:
+        print("Job in progress.")
         return jsonify({"status": "in-progress"}), 200
 
 @app.route('/about')
