@@ -26,8 +26,11 @@ function handleFormSubmission(event, messageid){
     successMessage.style.display = 'block';
 };
 
-document.getElementById("submit-btn").addEventListener("click", () => {
+document.getElementById("submit-btn").addEventListener("click", (event) => {
+    console.log("Click event triggered!");
 
+    event.preventDefault(); // Prevent page reload
+    
     // Show the loading row
     const loadingRow = document.getElementById('loading-row');
     loadingRow.style.display = "table-row";
@@ -35,10 +38,11 @@ document.getElementById("submit-btn").addEventListener("click", () => {
     // Wait for a short delay for session to set up
     setTimeout(() => {
         // Poll the job status
+        console.log("Polling the job status!");
         const interval = setInterval(() => {
         fetch('/job-status')
-            .then(response => response.json())
-            .then(statusData => {
+            .then((response) => response.json())
+            .then((statusData) => {
                 if (statusData.status === "finished"){
                     clearInterval(interval); // Stop polling
                     window.location.reload();
