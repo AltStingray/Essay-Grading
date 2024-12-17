@@ -426,7 +426,7 @@ def grading_results():
 
     result = job_result
 
-    data = process_essay(result) # fix this, man
+    data = process_essay(result)
 
     if show == "linking-words":
         essay = data[12]
