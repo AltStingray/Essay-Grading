@@ -122,26 +122,24 @@
                                     </td>
                                 </tr>
                                 <tr class="menu-row hidden">
-                                    <td colspan="3">Time:{{one["precise_time"]}}</td>
-                                    <td colspan="9">Sent to:{{one["emails"]}}</td>
+                                    <td colspan="6">Time:{{one["precise_time"]}}</td>
+                                    <td colspan="6">Sent to:{{one["emails"]}}</td>
                                 </tr>
                             </tbody>
                         {% endfor %}
-                        <tbody>
-                            <tr id="loading-row" style="display: none;">
-                                <td colspan="12">
-                                    <div class="loading loading01">
-                                        <span>L</span>
-                                        <span>O</span>
-                                        <span>A</span>
-                                        <span>D</span>
-                                        <span>I</span>
-                                        <span>N</span>
-                                        <span>G</span>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
+                        <tr id="loading-row" style="display: none;">
+                            <td colspan="12">
+                                <div class="loading loading01">
+                                    <span>L</span>
+                                    <span>O</span>
+                                    <span>A</span>
+                                    <span>D</span>
+                                    <span>I</span>
+                                    <span>N</span>
+                                    <span>G</span>
+                                </div>
+                            </td>
+                        </tr>
                         <!-- Success message -->
                         <div id="success-message-email" style="display: none; color: green;">
                             Email has been sent successfully!

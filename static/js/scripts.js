@@ -32,8 +32,10 @@ document.getElementById("loading-row").addEventListener("click", () => {
     const loadingRow = document.getElementById('loading-row');
     loadingRow.style.display = "table-row";
     
-    // Poll the job status
-    const interval = setInterval(() => {
+    // Wait for a short delay for session to set up
+    setTimeout(() => {
+        // Poll the job status
+        const interval = setInterval(() => {
         fetch('/job-status')
             .then(response => response.json())
             .then(statusData => {
@@ -50,8 +52,9 @@ document.getElementById("loading-row").addEventListener("click", () => {
                 console.error("Error checking job status:", error);
                 clearInterval(interval)
                 loadingRow.style.display = "none";
-            })
-    }, 1000);
+            });
+        }, 1000); // Polling interval of 1 second
+    }, 1000); // Initial delay of 1 second before polling starts
 });
 
 

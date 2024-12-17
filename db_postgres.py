@@ -69,7 +69,6 @@ def db(command):
         #cursor.execute("""ALTER TABLE essay_logs ADD unnecessary_words_count BYTEA NOT NULL""")
 
         #cursor.execute("""ALTER TABLE Logs ADD client_email VARCHAR(255)""")
-        #cursor.execute("""ALTER TABLE Logs ADD precise_time DATE""")
         #cursor.execute("""ALTER TABLE Logs ADD sent_array TEXT[]""")
 
         #cursor.execute("""ALTER TABLE essay_logs ADD essay_grammar_mistakes BYTEA""")
@@ -87,7 +86,7 @@ def db(command):
         #cursor.execute("""ALTER TABLE essay_logs RENAME COLUMN date TO time""")
 
         #cursor.execute("""ALTER TABLE essay_logs ALTER COLUMN sidebar_comments TYPE TEXT USING sidebar_comments::TEXT""")
-
+        cursor.execute("""ALTER TABLE essay_logs ALTER COLUMN precise_time TYPE VARCHAR(255)""")
         #cursor.execute("""UPDATE Logs SET id = 1 WHERE id = 2;""")
 
         #cursor.execute("""UPDATE Logs SET teacher = 'Carol' WHERE id = 2;""")
