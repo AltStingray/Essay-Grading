@@ -26,10 +26,10 @@ function handleFormSubmission(event, messageid){
     successMessage.style.display = 'block';
 };
 
-document.getElementById("submit-btn").addEventListener("click", function() {
+document.getElementById("loading-row").addEventListener("click", function() {
 
     // Show the loading row
-    const loadingRow = document.getElementById('submit-btn');
+    const loadingRow = document.getElementById('loading-row');
     loadingRow.style.display = "table-row";
     
     // Poll the job status
