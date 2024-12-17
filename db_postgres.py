@@ -107,8 +107,9 @@ def db(command):
     
     elif command == "delete_data":
 
-        for n in range(16, 47):
-            cursor.execute(f"DELETE FROM Logs WHERE id IN ('{n}')")
+        #for n in range(16, 47):
+        
+        cursor.execute(f"DELETE FROM Logs WHERE id IN ('47')")
 
         #cursor.execute(f"DELETE FROM essay_logs WHERE id IN ('5')")
 
