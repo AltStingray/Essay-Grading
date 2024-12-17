@@ -62,7 +62,7 @@
                                             </div>
                                             <!--Modal footer-->
                                             <div class="modal-footer">
-                                                <input type="submit" id="loading-row" class="btn btn-primary" value="Submit"></input>
+                                                <input type="submit" id="submit-btn" class="btn btn-primary" value="Submit"></input>
                                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                                             </div>
                                         </form>
@@ -91,10 +91,10 @@
                                 <th>Show details</th>
                             </tr>
                         </thead>
-                        {% for one in reports %}
-                            {% set id = one["id"] %}
-                            {% set url = one["url"] %}
                             <tbody>
+                                {% for one in reports %}
+                                {% set id = one["id"] %}
+                                {% set url = one["url"] %}
                                 <tr>
                                     <td>#{{id}}</td>
                                     <td>{{one["date"]}}</td>
@@ -125,21 +125,22 @@
                                     <td colspan="6">Time:{{one["precise_time"]}}</td>
                                     <td colspan="6">Sent to:{{one["emails"]}}</td>
                                 </tr>
+                                {% endfor %}
+
+                                <tr id="loading-row" style="display: none;">
+                                    <td colspan="12">
+                                        <div class="loading loading01">
+                                            <span>L</span>
+                                            <span>O</span>
+                                            <span>A</span>
+                                            <span>D</span>
+                                            <span>I</span>
+                                            <span>N</span>
+                                            <span>G</span>
+                                        </div>
+                                    </td>
+                                </tr>
                             </tbody>
-                        {% endfor %}
-                        <tr id="loading-row" style="display: none;">
-                            <td colspan="12">
-                                <div class="loading loading01">
-                                    <span>L</span>
-                                    <span>O</span>
-                                    <span>A</span>
-                                    <span>D</span>
-                                    <span>I</span>
-                                    <span>N</span>
-                                    <span>G</span>
-                                </div>
-                            </td>
-                        </tr>
                         <!-- Success message -->
                         <div id="success-message-email" style="display: none; color: green;">
                             Email has been sent successfully!

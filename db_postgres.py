@@ -149,7 +149,7 @@ def sent_email(id, email):
     cursor.execute(f"UPDATE Logs SET sent = 'True' WHERE id = {id}")
     #cursor.execute(f"UPDATE Logs SET sent = 'False' WHERE id = 1")
 
-    cursor.execute(f"UPDATE Logs SET sent_array = array_append(sent_erray, '{email}') WHERE id = {id}")
+    cursor.execute(f"UPDATE Logs SET sent_array = array_append(sent_array, '{email}') WHERE id = {id}")
 
     db_conn.commit()
 
