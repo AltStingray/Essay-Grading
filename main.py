@@ -18,6 +18,11 @@ PASSWORD = os.environ.get("CUSTOM_PROMPT_PASSWORD")
 FLASK_SESSION_SECRET = os.environ.get("FLASK_SESSION_SECRET")
 ENVIRONENT = os.environ.get("ENVIRONMENT")
 
+if ENVIRONENT == "production":
+    website_link = "https://benchmark-summary-report-eae227664887.herokuapp.com"
+elif ENVIRONENT == "test":
+    website_link = "https://benchmark-tools-test-env-99cb41517051.herokuapp.com"
+
 # Web application fundament
 app = Flask(__name__)
 
@@ -205,7 +210,7 @@ def results():
         return render_template('results.html')
     else:
         time.sleep(1)
-        return render_template('processing.html')
+        return render_template('processing.html', website=website_link)
 
 @app.route('/download', methods=["GET"])
 def download():
@@ -403,7 +408,7 @@ def grading_processing():
         return redirect(url_for("grading_results"))
     else:
         time.sleep(1)
-        return render_template('grading.html', name="wait")
+        return render_template('grading.html', name="wait", website=website_link)
     
 @app.route('/grading/results')
 def grading_results():
