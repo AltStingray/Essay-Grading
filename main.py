@@ -23,9 +23,9 @@ app = Flask(__name__)
 
 app.secret_key = FLASK_SESSION_SECRET
 
-#app.config['SESSION_TYPE'] = 'redis'
-#app.config["SESSION_PERMANENT"] = False
-#app.config["SESSION_USE_SIGNER"] = True
+app.config['SESSION_TYPE'] = 'redis'
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_USE_SIGNER"] = True
 
 q = Queue(connection=conn)
 

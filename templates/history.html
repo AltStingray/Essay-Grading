@@ -88,6 +88,7 @@
                                 <th>Transcript</th>
                                 <th>Send to</th>
                                 <th></th>
+                                <th>Show details</th>
                             </tr>
                         </thead>
                         {% for one in reports %}
@@ -116,6 +117,17 @@
                                             <td><input type="submit" class="button2" value="Send"></td>
                                         {% endif %}
                                     </form>
+                                    <td>
+                                        <button class="arrow-btn" onclick="toggleMenu()">▶</button>
+                                    </td>
+                                </tr>
+                                <tr class="menu-row hidden">
+                                    <td colspan="2">
+                                        <div class="slide-menu">
+                                            <p>Time: </p>
+                                            <p>Has been sent to: </p>
+                                        </div>
+                                    </td>
                                 </tr>
                             </tbody>
                         {% endfor %}

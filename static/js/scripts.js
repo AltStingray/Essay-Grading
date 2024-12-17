@@ -53,3 +53,19 @@ document.getElementById("loading-row").addEventListener("click", function() {
             })
     }, 1000);
 });
+
+
+function toggleMenu(button) {
+    // Find the next row (menu row)
+    const menuRow = button.closest('tr').nextElementSibling;
+
+    if (menuRow.classList.contains('hidden')) {
+        // Show the menu row
+        menuRow.classList.remove('hidden');
+        button.textContent = "▼"; // Change the button to a down arrow
+    } else {
+        // Hide the menu row
+        menuRow.classList.add('hidden');
+        button.textContent = "▶"; // Change the button to a right arrow
+    }
+}
