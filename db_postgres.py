@@ -180,7 +180,7 @@ def db_store(data, db_name):
     cursor = db_conn.cursor()
     
     if db_name == "logs":
-        insert_sql = f"""INSERT INTO {db_name}(summary, transcription, filename, summary_html, link, time, teacher, client_email, client_name) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"""
+        insert_sql = f"""INSERT INTO {db_name}(summary, transcription, filename, summary_html, link, time, teacher, client_email, client_name, precise_time) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"""
     elif db_name == "essay_logs":
         insert_sql = f"""INSERT INTO {db_name}(topic, essay, paragraphs_count, words_count, grammar_mistakes, linking_words_count, repetative_words_count, submitted_by, overall_band_score, sidebar_comments, time, essay_grammar_mistakes, essay_linking_words, essay_repetitive_words, corrected_essay) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
 

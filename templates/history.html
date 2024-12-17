@@ -62,7 +62,7 @@
                                             </div>
                                             <!--Modal footer-->
                                             <div class="modal-footer">
-                                                <input type="submit" id="submit-btn" class="btn btn-primary" value="Submit"></input>
+                                                <input type="submit" id="loading-row" class="btn btn-primary" value="Submit"></input>
                                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                                             </div>
                                         </form>
@@ -122,16 +122,11 @@
                                     </td>
                                 </tr>
                                 <tr class="menu-row hidden">
-                                    <td colspan="2">Time:{{one["precise_time"]}}</td>
+                                    <td colspan="3">Time:{{one["precise_time"]}}</td>
                                     <td colspan="9">Sent to:{{one["emails"]}}</td>
                                 </tr>
                             </tbody>
                         {% endfor %}
-                        <thead>
-                            <tr>
-                                <th>Loading</th>
-                            </tr>
-                        </thead>
                         <tbody>
                             <tr id="loading-row" style="display: none;">
                                 <td colspan="12">
