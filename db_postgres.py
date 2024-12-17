@@ -30,7 +30,9 @@ def db(command):
                      time DATE NOT NULL, 
                      teacher VARCHAR(255), 
                      client_email VARCHAR(255),
-                     client_name VARCHAR(255)
+                     client_name VARCHAR(255),
+                     sent VARCHAR(255),
+                     sent_array TEXT[]
                     )"""
 
         create_essay_logs = """CREATE TABLE essay_logs(
@@ -67,7 +69,8 @@ def db(command):
         #cursor.execute("""ALTER TABLE essay_logs ADD unnecessary_words_count BYTEA NOT NULL""")
 
         #cursor.execute("""ALTER TABLE Logs ADD client_email VARCHAR(255)""")
-        #cursor.execute("""ALTER TABLE Logs ADD time DATE""")
+        cursor.execute("""ALTER TABLE Logs ADD precise_time DATE""")
+        cursor.execute("""ALTER TABLE Logs ADD sent_array TEXT[]""")
 
         #cursor.execute("""ALTER TABLE essay_logs ADD essay_grammar_mistakes BYTEA""")
         #cursor.execute("""ALTER TABLE essay_logs ADD essay_linking_words BYTEA""")
@@ -109,7 +112,7 @@ def db(command):
 
         #for n in range(16, 47):
         
-        cursor.execute(f"DELETE FROM Logs WHERE id IN ('47')")
+        cursor.execute(f"DELETE FROM Logs WHERE id IN ('16')")
 
         #cursor.execute(f"DELETE FROM essay_logs WHERE id IN ('5')")
 
@@ -138,7 +141,7 @@ def db(command):
     else:
         pass
 
-def sent_email(id):
+def sent_email(id, email):
 
     db_conn = psycopg2.connect(DATABASE)
 
@@ -146,6 +149,8 @@ def sent_email(id):
 
     cursor.execute(f"UPDATE Logs SET sent = 'True' WHERE id = {id}")
     #cursor.execute(f"UPDATE Logs SET sent = 'False' WHERE id = 1")
+
+    cursor.execute(f"UPDATE Logs SET sent_array = array_append(sent_erray, '{email}') WHERE id = {id}")
 
     db_conn.commit()
 
@@ -240,7 +245,7 @@ def db_retrieve(file_id, db):
 
     if db == "Logs":
 
-        cursor.execute("SELECT summary, transcription, filename, summary_html, link, time, teacher, client_email, client_name, sent FROM Logs WHERE id = %s", (str(file_id),))
+        cursor.execute("SELECT summary, transcription, filename, summary_html, link, time, teacher, client_email, client_name, sent, precise_time, sent_array FROM Logs WHERE id = %s", (str(file_id),))
 
         file = cursor.fetchone()
 
@@ -255,9 +260,11 @@ def db_retrieve(file_id, db):
             teacher = file[6]
             client_email = file[7]
             client_name = file[8]
-            send = file[9]
+            sent = file[9]
+            precise_time = file[10]
+            sent_array = file[11]
 
-            return [summary, transcription, filename, summary_html, link, time, teacher, client_email, client_name, send]
+            return [summary, transcription, filename, summary_html, link, time, teacher, client_email, client_name, sent, precise_time, sent_array]
         
     elif db == "essay_logs":
 

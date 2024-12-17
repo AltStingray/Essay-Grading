@@ -122,14 +122,19 @@
                                     </td>
                                 </tr>
                                 <tr class="menu-row hidden">
-                                    <td colspan="6">Time:</td>
-                                    <td colspan="6">Sent to:</td>
+                                    <td colspan="2">Time:{{one["precise_time"]}}</td>
+                                    <td colspan="9">Sent to:{{one["emails"]}}</td>
                                 </tr>
                             </tbody>
                         {% endfor %}
+                        <thead>
+                            <tr>
+                                <th>Loading</th>
+                            </tr>
+                        </thead>
                         <tbody>
                             <tr id="loading-row" style="display: none;">
-                                <td>
+                                <td colspan="12">
                                     <div class="loading loading01">
                                         <span>L</span>
                                         <span>O</span>

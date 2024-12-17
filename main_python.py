@@ -135,13 +135,14 @@ def main_summary_report(link, specified_date, teacher, client_name, client_email
     print(specified_date) # test
 
     if specified_date == None or specified_date == "":
-
         specified_date = datetime.now().strftime("%d-%m-%Y")
     else:
         try:
             specified_date = datetime.strptime(specified_date, "%Y-%m-%d")
         except Exception:
             specified_date = specified_date.strftime("%d-%m-%Y")
+
+    time = datetime.now().strftime("%H:%M:%S")
 
     if user_prompt != None:
         prompt = user_prompt + f"At the beginning of the report specify the header title 'OET Speaking Mock Test Session's Summary'; below specify 'Date: {specified_date}' and teacher's name(who acts as a patient): '{teacher}'. If 'None' specified, get teacher name coming from the dialogue analysis. Add the following line at the end of the report in italic style: 'AI-generated content may be inaccurate or misleading. Always check for accuracy.' You are not limited by a particular range of words, so provide detailed report with at least 4000 charaters. Provide two versions of the report. First one is a simple text respond. Second one is a structured HTML (Note: Do not include <style> tag). Wrap those two versions and teacher's name as values in a single dictionary with the following keys: text, html and teacher. Return the dictionary."
@@ -159,7 +160,7 @@ def main_summary_report(link, specified_date, teacher, client_name, client_email
     if teacher == "":
         teacher = summary_report["teacher"]
 
-    data = (summary_report["text"], transcription, filename, summary_report["html"], link, specified_date, teacher, client_email, client_name)
+    data = (summary_report["text"], transcription, filename, summary_report["html"], link, specified_date, teacher, client_email, client_name, time)
 
     db_store(data, "logs")
 

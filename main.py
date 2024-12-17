@@ -270,6 +270,9 @@ def history():
         report_dict.update({"client_email": logs[7]})
         report_dict.update({"client_name": logs[8]})
         report_dict.update({"sent": logs[9]})
+        report_dict.update({"precise_time": logs[10]})
+        report_dict.update({"sent_array": logs[11]})
+
 
         reports.append(report_dict)
 
@@ -362,7 +365,7 @@ def email_to():
 
     send_email(user_email, html)
 
-    sent_email(id)
+    sent_email(id, user_email)
 
     return redirect("/summary/log")
 
