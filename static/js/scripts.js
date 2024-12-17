@@ -29,8 +29,6 @@ function handleFormSubmission(event, messageid){
 document.getElementById("submit-btn").addEventListener("click", (event) => {
     console.log("Click event triggered!");
 
-    event.preventDefault(); // Prevent page reload
-    
     // Show the loading row
     const loadingRow = document.getElementById('loading-row');
     loadingRow.style.display = "table-row";
@@ -58,7 +56,7 @@ document.getElementById("submit-btn").addEventListener("click", (event) => {
                 loadingRow.style.display = "none";
             });
         }, 1000); // Polling interval of 1 second
-    }, 1000); // Initial delay of 1 second before polling starts
+    }, 4000); // Initial delay of 1 second before polling starts
 });
 
 
