@@ -175,9 +175,7 @@ def processing():
         job_id=job.get_id() # get id of the job that is in process 
 
         session["job_id"] = job_id
-
-        session["show_loader"] = True
-
+        
         return redirect(url_for("history"))
     else:
 
@@ -512,11 +510,6 @@ def job_status():
         return jsonify({"status": "failed"}), 200
     else:
         return jsonify({"status": "in-progress"}), 200
-    
-@app.route('/loader-status', methods=['GET'])
-def get_loader_status():
-    return {"show_loader": session.get("show_loader", False)}
-
 
 @app.route('/about')
 def about():
