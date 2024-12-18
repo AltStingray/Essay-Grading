@@ -29,34 +29,44 @@ function handleFormSubmission(event, messageid){
 document.getElementById("submit-btn").addEventListener("click", (event) => {
     console.log("Click event triggered!");
 
+    event.preventDefault();
+    sessionStorage.setItem("showLoader", "true"); // Setting a flag
+
     // Show the loading row
     const loadingRow = document.getElementById('loading-row');
     loadingRow.style.display = "table-row";
+
+    window.location.reload();
     
     // Wait for a short delay for session to set up
     setTimeout(() => {
-        // Poll the job status
-        console.log("Polling the job status!");
-        const interval = setInterval(() => {
-        fetch('/job-status')
-            .then((response) => response.json())
-            .then((statusData) => {
-                if (statusData.status === "finished"){
-                    clearInterval(interval); // Stop polling
-                    window.location.reload();
-                } else if (statusData.status === "failed"){
-                    clearInterval(interval);
-                    alert("The job failed. Please try again.");
-                    loadingRow.style.display = "none"; // Hide the loading row
-                }
-            })
-            .catch(error => {
-                console.error("Error checking job status:", error);
-                clearInterval(interval)
-                loadingRow.style.display = "none";
-            });
-        }, 1000); // Polling interval of 1 second
-    }, 4000); // Initial delay of 1 second before polling starts
+        if (sessionStorage.getItem("showLoader") === "true") {
+            sessionStorage.removeItem("showLoader"); // Clearing the flag
+            document.getElementById("loading-row").style.display = "table-row"; // Show loader again
+
+            // Poll the job status
+            console.log("Polling the job status!");
+            const interval = setInterval(() => {
+            fetch('/job-status')
+                .then((response) => response.json())
+                .then((statusData) => {
+                    if (statusData.status === "finished"){
+                        clearInterval(interval); // Stop polling
+                        window.location.reload();
+                    } else if (statusData.status === "failed"){
+                        clearInterval(interval);
+                        alert("The job failed. Please try again.");
+                        loadingRow.style.display = "none"; // Hide the loading row
+                    }
+                })
+                .catch(error => {
+                    console.error("Error checking job status:", error);
+                    clearInterval(interval)
+                    loadingRow.style.display = "none";
+                });
+            }, 1000); // Polling interval of 1 second
+        }
+    }, 1000); // Initial delay of 1 second before polling starts
 });
 
 
