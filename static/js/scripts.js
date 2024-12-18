@@ -26,32 +26,30 @@ function handleFormSubmission(event, messageid){
     successMessage.style.display = 'block';
 };
 
-document.getElementById("submit-btn").addEventListener("click", () => {
 
-    window.onload = function(){
-        // Show the loading row
-        const loadingRow = document.getElementById('loading-row');
-        loadingRow.style.display = "table-row";
-        
-        // Wait for a short delay for session to set up
-        // Poll the job status
-        console.log("Polling the job status!");
-        const interval = setInterval(() => {
-        fetch('/job-status')
-            .then((response) => response.json())
-            .then((statusData) => {
-                if (statusData.status === "finished"){
-                    clearInterval(interval); // Stop polling
-                    window.location.reload();
-                } else if (statusData.status === "failed"){
-                    clearInterval(interval);
-                    alert("The job failed. Please try again.");
-                    loadingRow.style.display = "none"; // Hide the loading row
-                }
-            })
-        }, 1000); // Polling interval of 1 second
-    }
-});
+window.onload = function(){
+    
+    // Poll the job status
+    console.log("Polling the job status!");
+    const interval = setInterval(() => {
+    fetch('/job-status')
+        .then((response) => response.json())
+        .then((statusData) => {
+            if (statusData.status === "finished"){
+                clearInterval(interval); // Stop polling
+                window.location.reload();
+            } else if (statusData.status === "failed"){
+                clearInterval(interval);
+                alert("The job failed. Please try again.");
+                loadingRow.style.display = "none"; // Hide the loading row
+            } else if (statusData.status === "in-progress"){
+                // Show the loading row
+                const loadingRow = document.getElementById('loading-row');
+                loadingRow.style.display = "table-row";
+            }
+        })
+    }, 1000); // Polling interval of 1 second
+}
 
 
 function toggleMenu(button) {
