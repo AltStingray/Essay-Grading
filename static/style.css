@@ -503,15 +503,11 @@ p {
 
 /* Loader for the logs history  */
 .loading {
-  font-size: 84px;
+  font-size: 44px;
   font-family: "Montserrat", sans-serif;
   font-weight: 800;
   text-align: center;
   background: white;
-}
-.loading span {
-  display: inline-block;
-  margin: 0 -0.05em;
 }
 
 /* code #1 */

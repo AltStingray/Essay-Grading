@@ -175,6 +175,8 @@ def processing():
         job_id=job.get_id() # get id of the job that is in process 
 
         session["job_id"] = job_id
+
+        session["show_loader"] = True
         
         return redirect(url_for("history"))
     else:
@@ -497,6 +499,7 @@ def view_logs(id):
 
     return render_template('grading.html', name="finish", topic=topic, essay=essay, paragraphs_count=paragraphs_count, words_count=words_count, corrected_words=sidebar_comments, submitted_by=submitted_by, current_date=current_date, linking_words_count=linking_words_count, repetitive_words_count=repetitive_words_count, grammar_mistakes_count=grammar_mistakes_count, band_score=band_score, id=id, words_category=words_category, route="view_logs")
 
+
 @app.route("/job-status")
 def job_status():
 
@@ -510,6 +513,16 @@ def job_status():
         return jsonify({"status": "failed"}), 200
     else:
         return jsonify({"status": "in-progress"}), 200
+    
+@app.route('/loader-status', methods=['GET'])
+def get_loader_status():
+    return {"show_loader": session.get("show_loader", False)}
+
+@app.route('/clear-loader-flag', methods=['POST'])
+def clear_loader_flag():
+    session.pop("show_loader", None)
+    return '', 204 # Return a no-content response
+
 
 @app.route('/about')
 def about():

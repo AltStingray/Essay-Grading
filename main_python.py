@@ -153,7 +153,10 @@ def main_summary_report(link, specified_date, teacher, client_name, client_email
 
     filename = filename.replace(".mp4", "")
     print(f"\nBefore strip: {summary_report}\n\n") # test just in case
-    strip_summary = strip_text(summary_report)
+
+    try:
+        strip_summary = strip_text(summary_report)
+    except: json.decoder.JSONDecodeError
 
     summary_report = json.loads(strip_summary)
     
