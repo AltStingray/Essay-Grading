@@ -140,6 +140,7 @@ def db(command):
     else:
         pass
 
+
 def sent_email(id, email):
 
     db_conn = psycopg2.connect(DATABASE)
@@ -156,6 +157,7 @@ def sent_email(id, email):
     cursor.close()
     db_conn.close()
 
+
 def delete_table(table_name):
 
     db_conn = psycopg2.connect(DATABASE)
@@ -171,6 +173,7 @@ def delete_table(table_name):
     db_conn.close()
 
     return print("Table deleted successfully!")
+
 
 def db_store(data, db_name):
 
@@ -191,6 +194,7 @@ def db_store(data, db_name):
     db_conn.close()
 
     return "Data uploaded to the database successfully!"
+
 
 def cache(data):
 
@@ -215,6 +219,22 @@ def cache(data):
         INSERT INTO temp_storage(link, time, teacher_name, client_name, client_email) VALUES(%s, %s, %s, %s, %s);""", data)
 
     db_conn.commit()
+
+    cursor.close()
+    db_conn.close()
+
+def del_cache():
+
+    db_conn = psycopg2.connect(DATABASE)
+
+    cursor = db_conn.cursor()
+
+    cursor.execute("DROP TABLE temp_storage")
+
+    print("TABLE HAS BEEN DELETED")
+
+    db_conn.commit()
+
 
 def db_get_ids(table_name):
 
@@ -284,12 +304,6 @@ def db_retrieve(file_id, db):
         cursor.execute("SELECT link, time, teacher_name, client_name, client_email FROM temp_storage WHERE id = %s", str(file_id))
 
         file = cursor.fetchone()
-
-        cursor.execute("DROP TABLE temp_storage")
-
-        print("TABLE HAS BEEN DELETED")
-
-        db_conn.commit()
 
         return file
     

@@ -126,9 +126,15 @@
                                     <td colspan="6">Sent to:{{one["sent_array"]}}</td>
                                 </tr>
                                 {% endfor %}
-
+                                {% for one in last_report %}
                                 <tr id="loading-row" style="display: none;">
-                                    <td colspan="12">
+                                    <td>#{{one["id"]}}</td>
+                                    <td>{{one["date"]}}</td>
+                                    <td><td><a href="{{ url_for('redirect_to', url=one['url']) }}" target="_blank">Dropbox Link</a></td>
+                                    <td>{{one["teacher"]}}</td>
+                                    <td>{{one["client_name"]}}</td>
+                                    <td>{{one[client_email]}}</td>
+                                    <td colspan="6">
                                         <div class="loading loading01">
                                             <span>L</span>
                                             <span>O</span>
@@ -140,6 +146,7 @@
                                         </div>
                                     </td>
                                 </tr>
+                                {% endfor %}
                             </tbody>
                         <!-- Success message -->
                         <div id="success-message-email" style="display: none; color: green;">

@@ -44,30 +44,29 @@ window.onload = function(){
             if (showLoaderStatus) {
 
                 // Poll the job status
-                console.log("Polling the job status!");
                 const interval = setInterval(() => {
-                fetch('/job-status')
-                    .then((response) => response.json())
-                    .then((statusData) => {
-                        if (statusData.status === "finished"){
+                    fetch('/job-status')
+                        .then((response) => response.json())
+                        .then((statusData) => {
+                            if (statusData.status === "finished"){
 
-                            clearInterval(interval); // Stop polling
-                            window.location.reload();
-                            fetch('/clear-loader-flag', { method: 'POST'}) // Clear the server-side flag
+                                clearInterval(interval); // Stop polling
+                                window.location.reload();
+                                fetch('/clear-loader-flag', { method: 'POST'}) // Clear the server-side flag
 
-                        } else if (statusData.status === "failed"){
+                            } else if (statusData.status === "failed"){
 
-                            clearInterval(interval);
-                            alert("The job failed. Please try again.");
-                            loadingRow.style.display = "none"; // Hide the loading row
-                            fetch('/clear-loader-flag', { method: 'POST'}) // Clear the server-side flag
+                                clearInterval(interval);
+                                alert("The job failed. Please try again.");
+                                loadingRow.style.display = "none"; // Hide the loading row
+                                fetch('/clear-loader-flag', { method: 'POST'}) // Clear the server-side flag
 
-                        } else if (statusData.status === "in-progress"){
+                            } else if (statusData.status === "in-progress"){
 
-                            // Show the loading row
-                            loadingRow.style.display = "table-row";
-                        }
-                    })
+                                // Show the loading row
+                                loadingRow.style.display = "table-row";
+                            }
+                        })
                 }, 1000); // Polling interval of 1 second
             }
         })

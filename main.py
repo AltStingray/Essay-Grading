@@ -259,7 +259,7 @@ def history():
 
     reports = []
 
-    for id in ids:
+    for n, id in enumerate(ids):
 
         report_dict = {}
 
@@ -275,8 +275,30 @@ def history():
         report_dict.update({"precise_time": logs[10]})
         report_dict.update({"sent_array": logs[11]})
 
-
         reports.append(report_dict)
+
+        last_id = n
+
+    last_id += 1
+
+    last_report = []
+
+    for id2 in db_get_ids(table_name="temp_storage"):
+
+        report_dict2 = {}
+
+        logs2 = db_retrieve(file_id=id2)
+
+        report_dict2.update({"id": last_id})
+        report_dict2.update({"url": logs2[0]})
+        report_dict2.update({"date":logs2[1]})
+        report_dict2.update({"teacher": logs2[2]})
+        report_dict2.update({"client_email": logs2[3]})
+        report_dict2.update({"client_name": logs2[4]})
+        
+        last_report.append(report_dict2)
+
+    del_cache()
 
     if sort_by == "high-low":
 
@@ -286,7 +308,7 @@ def history():
         
         reports.sort(reverse=True, key=high_low)
         
-        return render_template("history.html", log="summary_report", reports=reports, sort_by="High-Low")
+        return render_template("history.html", log="summary_report", reports=reports, last_report=last_report, sort_by="High-Low")
     
     elif sort_by == "date-new":
 
@@ -296,7 +318,7 @@ def history():
         
         reports.sort(reverse=True, key=sort_by_new)
 
-        return render_template("history.html", log="summary_report", reports=reports, sort_by="Date-New")
+        return render_template("history.html", log="summary_report", reports=reports, last_report=last_report, sort_by="Date-New")
     
     elif sort_by == "date-old":
 
@@ -306,7 +328,7 @@ def history():
         
         reports.sort(key=sort_by_new)
 
-        return render_template("history.html", log="summary_report", reports=reports, sort_by="Date-Old")
+        return render_template("history.html", log="summary_report", reports=reports, last_report=last_report, sort_by="Date-Old")
     else:
 
         def low_high(e):
@@ -315,7 +337,7 @@ def history():
         
         reports.sort(key=low_high)
 
-        return render_template("history.html", log="summary_report", reports=reports, sort_by="Low-High")
+        return render_template("history.html", log="summary_report", reports=reports, last_report=last_report, sort_by="Low-High")
 
 @app.route('/logs_download/<id>/<name>')
 def logs_download(id, name):
