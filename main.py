@@ -174,8 +174,8 @@ def processing():
 
         job_id=job.get_id() # get id of the job that is in process 
 
-        queries = session.pop("queries", None)
-        
+        queries = session.pop("queries", int)
+
         queries += 1
 
         session["job_id"] = job_id
