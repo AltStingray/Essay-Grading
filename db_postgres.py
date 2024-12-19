@@ -241,8 +241,9 @@ def db_get_ids(table_name):
     db_conn = psycopg2.connect(DATABASE)
 
     cursor = db_conn.cursor()
-
-    cursor.execute(f"SELECT id FROM {table_name}")
+    try:
+        cursor.execute(f"SELECT id FROM {table_name} IF EXISTS")
+    except: psycopg2.errors.UndefinedTable
 
     ids = cursor.fetchall()
 
