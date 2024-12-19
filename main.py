@@ -289,7 +289,7 @@ def history():
 
             report_dict2 = {}
 
-            logs2 = db_retrieve(file_id=id2)
+            logs2 = db_retrieve(file_id=id2, db="temp_storage")
 
             report_dict2.update({"id": last_id})
             report_dict2.update({"url": logs2[0]})
