@@ -303,7 +303,7 @@ def history():
         del_cache()
 
     else:
-        last_report = None
+        last_report = []
 
     if sort_by == "high-low":
 
