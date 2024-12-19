@@ -259,7 +259,7 @@ def history():
 
     reports = []
 
-    for n, id in enumerate(ids):
+    for id in ids:
 
         report_dict = {}
 
@@ -277,7 +277,7 @@ def history():
 
         reports.append(report_dict)
 
-        last_id = n
+        last_id = id
 
     if table_exists("temp_storage"):
 
@@ -295,8 +295,8 @@ def history():
             report_dict2.update({"url": logs2[0]})
             report_dict2.update({"date":logs2[1]})
             report_dict2.update({"teacher": logs2[2]})
-            report_dict2.update({"client_email": logs2[3]})
-            report_dict2.update({"client_name": logs2[4]})
+            report_dict2.update({"client_name": logs2[3]})
+            report_dict2.update({"client_email": logs2[4]})
             
             last_report.append(report_dict2)
 

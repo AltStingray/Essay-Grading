@@ -52,7 +52,12 @@
                                                 <br><br>
                                                 <input type="text" name="date" placeholder="Date(dd-mm-yyyy):" size="30">
                                                 <br><br>
-                                                <input type="text" name="teacher" placeholder="Teacher's name:" size="20">
+                                                <input list="option-list" id="options" type="text" name="teacher" placeholder="Teacher's name:" size="20">
+                                                <datalist id="option-list">
+                                                    <option value="Carol">Carol</option>
+                                                    <option value="Nishita">Nishita</option>
+                                                </datalist>
+                                                </div>
                                                 <br><br>
                                                 <input type="text" name="client_email" placeholder="Client's email:" size="20">
                                                 <br><br>
@@ -130,10 +135,10 @@
                                 <tr id="loading-row" style="display: none;">
                                     <td>#{{one["id"]}}</td>
                                     <td>{{one["date"]}}</td>
-                                    <td><td><a href="{{ url_for('redirect_to', url=one['url']) }}" target="_blank">Dropbox Link</a></td>
+                                    <td><a href="{{ url_for('redirect_to', url=one['url']) }}" target="_blank">Dropbox Link</a></td>
                                     <td>{{one["teacher"]}}</td>
                                     <td>{{one["client_name"]}}</td>
-                                    <td>{{one[client_email]}}</td>
+                                    <td>{{one["client_email"]}}</td>
                                     <td colspan="6">
                                         <div class="loading loading01">
                                             <span>L</span>
