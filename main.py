@@ -561,7 +561,7 @@ def get_loader_status():
 def clear_loader_flag():
 
     session.pop("show_loader", None)
-    queries_num = session.pop("queries")
+    queries_num = session.pop("queries", 0)
     queries_num -= 1
     session["queries"] = queries_num
 

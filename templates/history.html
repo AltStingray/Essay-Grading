@@ -130,11 +130,7 @@
                                     <td colspan="6">Sent to:{{one["sent_array"]}}</td>
                                 </tr>
                                 {% endfor %}
-                                {% for one in last_report %}
-                                <script>
-                                    const id = "{{one['id']}}"
-                                </script>
-                                <tr id="loading-row-{{ one['id'] }}" style="display: none;">
+                                <tr id="loading-row" style="display: none;">
                                     <td>#{{one["id"]}}</td>
                                     <td>{{one["date"]}}</td>
                                     <td><a href="{{ url_for('redirect_to', url=one['url']) }}" target="_blank">Dropbox Link</a></td>
