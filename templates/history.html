@@ -130,10 +130,10 @@
                                     <td colspan="6">Sent to:{{one["sent_array"]}}</td>
                                 </tr>
                                 {% endfor %}
-                                <script>
-                                    const reportData = "{{ last_report | tojson }}"
-                                </script>
                                 {% for one in last_report %}
+                                <script>
+                                    const id = "{{one['id']}}"
+                                </script>
                                 <tr id="loading-row-{{ one['id'] }}" style="display: none;">
                                     <td>#{{one["id"]}}</td>
                                     <td>{{one["date"]}}</td>
