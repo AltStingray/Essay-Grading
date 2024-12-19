@@ -174,9 +174,15 @@ def processing():
 
         job_id=job.get_id() # get id of the job that is in process 
 
+        queries = 0
+
+        queries += 1
+
         session["job_id"] = job_id
 
         session["show_loader"] = True
+
+        session["queries"] = queries
         
         return redirect(url_for("history"))
     else:
@@ -281,11 +287,11 @@ def history():
 
     if table_exists("temp_storage"):
 
-        last_id += 1
-
         last_report = []
 
         for id2 in db_get_ids(table_name="temp_storage"):
+
+            last_id += id2
 
             report_dict2 = {}
 
@@ -300,8 +306,10 @@ def history():
             
             last_report.append(report_dict2)
 
-        del_cache()
-
+        session_status = session.get("show_loader", False)
+        print(session_status)
+        if session_status == False:
+            del_cache()
     else:
         last_report = []
 
@@ -543,14 +551,35 @@ def job_status():
     
 @app.route('/loader-status', methods=['GET'])
 def get_loader_status():
+
     return {"show_loader": session.get("show_loader", False)}
 
 @app.route('/clear-loader-flag', methods=['POST'])
 def clear_loader_flag():
+
     session.pop("show_loader", None)
+    queries_num = session["queries"]
+    queries_num -= 1
+    session["queries"] = queries_num
+
     return '', 204 # Return a no-content response
 
+@app.route('/cancel-job')
+def cancel_job():
 
+    queries = session["queries"]
+    if queries > 1:
+
+        job_id = session["job_id"]
+        job = Job.fetch(job_id)
+
+        if job:
+            job.cancel()
+            print(f"Job {job_id} canceled.")
+        else:
+            print(f"Job {job_id} not found.")
+
+            
 @app.route('/about')
 def about():
 

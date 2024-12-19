@@ -59,6 +59,7 @@ window.onload = function(){
                                 clearInterval(interval);
                                 alert("The job failed. Please try again.");
                                 loadingRow.style.display = "none"; // Hide the loading row
+                                
                                 fetch('/clear-loader-flag', { method: 'POST'}) // Clear the server-side flag
 
                             } else if (statusData.status === "in-progress"){
