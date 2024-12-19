@@ -302,6 +302,9 @@ def history():
 
         del_cache()
 
+    else:
+        last_report = None
+
     if sort_by == "high-low":
 
         def high_low(e):
