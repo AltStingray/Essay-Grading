@@ -130,6 +130,7 @@
                                     <td colspan="6">Sent to:{{one["sent_array"]}}</td>
                                 </tr>
                                 {% endfor %}
+                                {% for one in last_report %}
                                 <tr id="loading-row" style="display: none;">
                                     <td>#{{one["id"]}}</td>
                                     <td>{{one["date"]}}</td>
