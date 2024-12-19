@@ -149,7 +149,9 @@
                                             <span>G</span>
                                         </div>
                                     </td>
-                                    <td><button type="button" class="btn btn-danger">Cancel</button></td>
+                                    {% if one["id"] >= 2 and one["query"] >= 2 %}
+                                        <td><button type="button" class="btn btn-danger">Cancel</button></td>
+                                    {% endif %}
                                 </tr>
                                 {% endfor %}
                             </tbody>
