@@ -178,6 +178,8 @@ def processing():
 
         queries += 1
 
+        print(queries) # test
+
         session["job_id"] = job_id
 
         session["show_loader"] = True
@@ -308,7 +310,7 @@ def history():
             last_report.append(report_dict2)
 
         session_status = session.get("show_loader", False)
-        print(session_status)
+        print(session_status) # Test
         if session_status == False:
             del_cache()
     else:
@@ -559,7 +561,7 @@ def get_loader_status():
 def clear_loader_flag():
 
     session.pop("show_loader", None)
-    queries_num = session["queries"]
+    queries_num = session.pop("queries")
     queries_num -= 1
     session["queries"] = queries_num
 

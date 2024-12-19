@@ -34,39 +34,38 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 window.onload = function(){
-    
-    const loadingRow = document.getElementById('loading-row');
-
     fetch("/loader-status")
         .then(response => response.json())
         .then(data => {
             const showLoaderStatus = data.show_loader; // This will be True or False
             if (showLoaderStatus) {
-
                 // Poll the job status
                 const interval = setInterval(() => {
                     fetch('/job-status')
                         .then((response) => response.json())
                         .then((statusData) => {
-                            if (statusData.status === "finished"){
+                            reportData.forEach((entry) => {
+                                const loadingRow = document.getElementById('loading-row-${entry.id]}');
+                                if (statusData.status === "finished"){
 
-                                clearInterval(interval); // Stop polling
-                                window.location.reload();
-                                fetch('/clear-loader-flag', { method: 'POST'}) // Clear the server-side flag
-
-                            } else if (statusData.status === "failed"){
-
-                                clearInterval(interval);
-                                alert("The job failed. Please try again.");
-                                loadingRow.style.display = "none"; // Hide the loading row
-                                
-                                fetch('/clear-loader-flag', { method: 'POST'}) // Clear the server-side flag
-
-                            } else if (statusData.status === "in-progress"){
-
-                                // Show the loading row
-                                loadingRow.style.display = "table-row";
-                            }
+                                    clearInterval(interval); // Stop polling
+                                    window.location.reload();
+                                    fetch('/clear-loader-flag', { method: 'POST'}) // Clear the server-side flag
+    
+                                } else if (statusData.status === "failed"){
+    
+                                    clearInterval(interval);
+                                    alert("The job failed. Please try again.");
+                                    loadingRow.style.display = "none"; // Hide the loading row
+                                    
+                                    fetch('/clear-loader-flag', { method: 'POST'}) // Clear the server-side flag
+    
+                                } else if (statusData.status === "in-progress"){
+    
+                                    // Show the loading row
+                                    loadingRow.style.display = "table-row";
+                                }
+                            });
                         })
                 }, 1000); // Polling interval of 1 second
             }
