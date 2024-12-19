@@ -279,26 +279,28 @@ def history():
 
         last_id = n
 
-    last_id += 1
-
-    last_report = []
-
-    for id2 in db_get_ids(table_name="temp_storage"):
-
-        report_dict2 = {}
-
-        logs2 = db_retrieve(file_id=id2)
-
-        report_dict2.update({"id": last_id})
-        report_dict2.update({"url": logs2[0]})
-        report_dict2.update({"date":logs2[1]})
-        report_dict2.update({"teacher": logs2[2]})
-        report_dict2.update({"client_email": logs2[3]})
-        report_dict2.update({"client_name": logs2[4]})
+    if table_exists():
         
-        last_report.append(report_dict2)
+        last_id += 1
 
-    del_cache()
+        last_report = []
+
+        for id2 in db_get_ids(table_name="temp_storage"):
+
+            report_dict2 = {}
+
+            logs2 = db_retrieve(file_id=id2)
+
+            report_dict2.update({"id": last_id})
+            report_dict2.update({"url": logs2[0]})
+            report_dict2.update({"date":logs2[1]})
+            report_dict2.update({"teacher": logs2[2]})
+            report_dict2.update({"client_email": logs2[3]})
+            report_dict2.update({"client_name": logs2[4]})
+            
+            last_report.append(report_dict2)
+
+        del_cache()
 
     if sort_by == "high-low":
 

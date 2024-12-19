@@ -235,15 +235,26 @@ def del_cache():
 
     db_conn.commit()
 
+def table_exists():
+
+    db_conn = psycopg2.connect(DATABASE)
+
+    cursor = db_conn.cursor()
+
+    cursor.execute("""SELECT EXISTS(SELECT 1 FROM information_schema.tables WHERE table_name = temp_storage)""")
+
+    table_exists = cursor.fetchone()[0]
+
+    return table_exists
+
 
 def db_get_ids(table_name):
 
     db_conn = psycopg2.connect(DATABASE)
 
     cursor = db_conn.cursor()
-    try:
-        cursor.execute(f"SELECT id FROM {table_name} IF EXISTS")
-    except: psycopg2.errors.UndefinedTable
+    
+    cursor.execute(f"SELECT id FROM {table_name} IF EXISTS")
 
     ids = cursor.fetchall()
 
