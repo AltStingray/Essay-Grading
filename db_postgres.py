@@ -254,7 +254,7 @@ def db_get_ids(table_name):
 
     cursor = db_conn.cursor()
     
-    cursor.execute(f"SELECT id FROM {table_name} IF EXISTS")
+    cursor.execute(f"SELECT id FROM {table_name}")
 
     ids = cursor.fetchall()
 
