@@ -279,8 +279,8 @@ def history():
 
         last_id = n
 
-    if table_exists():
-        
+    if table_exists("temp_storage"):
+
         last_id += 1
 
         last_report = []

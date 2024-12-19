@@ -235,13 +235,13 @@ def del_cache():
 
     db_conn.commit()
 
-def table_exists():
+def table_exists(table_name):
 
     db_conn = psycopg2.connect(DATABASE)
 
     cursor = db_conn.cursor()
 
-    cursor.execute("""SELECT EXISTS(SELECT 1 FROM information_schema.tables WHERE table_name = temp_storage)""")
+    cursor.execute("""SELECT EXISTS(SELECT 1 FROM information_schema.tables WHERE table_name = %s)""", (table_name,))
 
     table_exists = cursor.fetchone()[0]
 
