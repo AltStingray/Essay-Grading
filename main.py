@@ -548,8 +548,11 @@ def job_status():
     job = Job.fetch(job_id, connection=conn)
 
     report_ids = []
-    
-    for n, id in enumerate(session[f"report_id_{n}"]):
+
+    for n in range(5):
+        try:
+            id = session[f"report_id_{n}"]
+        except: Exception
         report_ids.append(id)
 
     if job.is_finished:
