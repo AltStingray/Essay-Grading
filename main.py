@@ -40,7 +40,7 @@ q = Queue(connection=conn)
 
 db("delete_data")
 db("alter")
-del_cache()
+
 db("print")
 
 
