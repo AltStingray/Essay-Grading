@@ -315,10 +315,10 @@ def history():
             last_report.append(report_dict2)
 
         # Deletes the table every time
-        #session_status = session.get("show_loader", False)
-        #print(session_status) # Test
-        #if session_status == False or session_status == None:
-        #    del_cache()
+        session_status = session.get("show_loader", False)
+        print(session_status) # Test
+        if session_status == False or session_status == None:
+            del_cache()
     else:
         last_report = []
 
@@ -551,9 +551,9 @@ def job_status():
 
     job = Job.fetch(job_id, connection=conn)
 
-    report_ids = session["report_ids"]
+    report_ids = session["report_ids"] # needs to be cleaned up 
     print(report_ids) # test
-
+    
     if job.is_finished:
         return jsonify({"status": "finished"}), 200
     elif job.is_failed:
@@ -570,7 +570,7 @@ def get_loader_status():
 def clear_loader_flag():
 
     session.pop("show_loader", None)
-    del_cache()
+    session.pop("report_ids", None)
     queries_num = session.pop("queries", 0)
     queries_num -= 1
     session["queries"] = queries_num
