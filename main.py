@@ -291,11 +291,14 @@ def history():
 
         last_report = []
 
-        for n, id2 in enumerate(db_get_ids(table_name="temp_storage")):
+        for id2 in db_get_ids(table_name="temp_storage"):
+            
+            session["report_ids"] = []
 
             last_id += id2
 
-            session[f"report_id_{n}"] = last_id
+            session["report_ids"].append(last_id)
+            session.modified = True
 
             report_dict2 = {}
 
@@ -547,11 +550,7 @@ def job_status():
 
     job = Job.fetch(job_id, connection=conn)
 
-    report_ids = []
-
-    for n in range(2):
-        id = session[f"report_id_{n}"]
-        report_ids.append(id)
+    report_ids = session["report_ids"]
 
     if job.is_finished:
         return jsonify({"status": "finished"}), 200
