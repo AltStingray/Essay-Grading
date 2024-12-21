@@ -44,9 +44,7 @@ window.onload = function(){
                     fetch('/job-status')
                         .then((response) => response.json())
                         .then((statusData) => {
-                            statusData.ids.forEach((id) => {
-                                const loadingRow = document.getElementById('loading-row-${id}');
-                            });
+                            
                             if (statusData.status === "finished"){
 
                                 clearInterval(interval); // Stop polling
