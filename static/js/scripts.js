@@ -44,33 +44,44 @@ window.onload = function(){
                     fetch('/job-status')
                         .then((response) => response.json())
                         .then((statusData) => {
-                            statusData.ids.forEach((id) => {
+                            if (!statusData || !statusData.ids || !statusData.status) {
+                                console.error("Invalid statusData:", statusData);
+                                clearInterval(interval);
+                                return;
+                            }
+
+                            let allFinished = true; //Check if all rows are finished
+                            
+                            statusData.ids.forEach(id => {
                                 const loadingRow = document.getElementById(`loading-row-${id}`);
                                 if (!loadingRow){
                                     console.warn(`Row with ID ${id} not found`);
                                     return;
                                 }
-                                
+
                                 if (statusData.status === "finished"){
 
-                                    clearInterval(interval); // Stop polling
-                                    window.location.reload();
-                                    fetch('/clear-loader-flag', { method: 'POST'}) // Clear the server-side flag
+                                    loadingRow.style.display = "none";
     
                                 } else if (statusData.status === "failed"){
     
-                                    clearInterval(interval);
                                     alert("The job failed. Please try again.");
                                     loadingRow.style.display = "none"; // Hide the loading row
-                                    
-                                    fetch('/clear-loader-flag', { method: 'POST'}) // Clear the server-side flag
     
                                 } else if (statusData.status === "in-progress"){
     
                                     // Show the loading row
                                     loadingRow.style.display = "table-row";
+                                    allFinished = false;
                                 }
-                            })
+                            });
+                            // Stop polling if all rows are finished
+                            if (allFinished) {
+                                clearInterval(interval);
+                                fetch('/clear-loader-flag', { method: 'POST' })
+                                    .catch(err => console.error("Error clearing loader flag:", err));
+                                window.location.reload(); // Optionally reload the page
+                            }
                         })
                     .catch(err => {
                         console.error("Error fetching job status", err)
