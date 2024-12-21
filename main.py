@@ -554,13 +554,6 @@ def job_status():
     elif job.is_failed:
         return jsonify({"status": "failed"}), 200
     else:
-
-        for n in range(5):
-            try:
-                id = session[f"report_id_{n}"]
-            except: Exception
-        report_ids.append(id)
-
         return jsonify({"status": "in-progress", "ids": report_ids}), 200
     
 @app.route('/loader-status', methods=['GET'])
