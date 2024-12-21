@@ -8,6 +8,7 @@ from email_to import send_email
 from openai_tools import *
 from rq import Queue
 from rq.job import Job
+from rq.exceptions import NoSuchJobError
 from worker import conn
 from flask import Flask, request, render_template, url_for, redirect, send_file, session, jsonify
 from markupsafe import escape
@@ -549,8 +550,15 @@ def job_status():
 
     job_id = session["job_id"]
 
-    job = Job.fetch(job_id, connection=conn)
+    if not job_id:
+        return jsonify({"status": "no-job-id"}), 404
 
+    try:
+        job = Job.fetch(job_id, connection=conn)
+    except NoSuchJobError:
+        session.pop("job_id", None)
+        return jsonify({"status": "job-not-found"}), 404
+    
     report_ids = session["report_ids"] # needs to be cleaned up 
     print(report_ids) # test
     
