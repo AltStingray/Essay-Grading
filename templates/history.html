@@ -131,7 +131,7 @@
                                 </tr>
                                 {% endfor %}
                                 {% for one in last_report %}
-                                <tr id="loading-row" style="display: none;">
+                                <tr id="loading-row-{{one['id']}}" style="display: none;">
                                     <td>#{{one["id"]}}</td>
                                     <td>{{one["date"]}}</td>
                                     <td><a href="{{ url_for('redirect_to', url=one['url']) }}" target="_blank">Dropbox Link</a></td>

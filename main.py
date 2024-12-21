@@ -291,9 +291,11 @@ def history():
 
         last_report = []
 
-        for id2 in db_get_ids(table_name="temp_storage"):
+        for n, id2 in enumerate(db_get_ids(table_name="temp_storage")):
 
             last_id += id2
+
+            session[f"report_id_{n}"] = last_id
 
             report_dict2 = {}
 
@@ -545,12 +547,16 @@ def job_status():
 
     job = Job.fetch(job_id, connection=conn)
 
+    report_ids = []
+    for n, id in enumerate(session[f"report_id_{n}"]):
+        report_ids.append(id)
+
     if job.is_finished:
         return jsonify({"status": "finished"}), 200
     elif job.is_failed:
         return jsonify({"status": "failed"}), 200
     else:
-        return jsonify({"status": "in-progress"}), 200
+        return jsonify({"status": "in-progress", "ids": report_ids}), 200
     
 @app.route('/loader-status', methods=['GET'])
 def get_loader_status():
