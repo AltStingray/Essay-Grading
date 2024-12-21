@@ -22,7 +22,7 @@ if ENVIRONENT == "production":
     website_link = "https://benchmark-summary-report-eae227664887.herokuapp.com"
 elif ENVIRONENT == "test":
     website_link = "https://benchmark-tools-test-env-99cb41517051.herokuapp.com"
-session.pop("report_ids", None)
+
 # Web application fundament
 app = Flask(__name__)
 
