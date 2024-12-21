@@ -543,11 +543,15 @@ def view_logs(id):
 @app.route("/job-status")
 def job_status():
 
-    #job_id = session["job_id"]
+    job_id = session["job_id"]
 
-    #job = Job.fetch(job_id, connection=conn)
+    job = Job.fetch(job_id, connection=conn)
 
     report_ids = []
+
+    for n in range(2):
+        id = session[f"report_id_{n}"]
+        report_ids.append(id)
 
     if job.is_finished:
         return jsonify({"status": "finished"}), 200
