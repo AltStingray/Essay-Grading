@@ -292,11 +292,11 @@ def history():
         last_report = []
 
         for id2 in db_get_ids(table_name="temp_storage"):
-            
-            session["report_ids"] = []
 
             last_id += id2
 
+            if "report_ids" not in session:
+                session["report_ids"] = []
             session["report_ids"].append(last_id)
             session.modified = True
 
@@ -314,10 +314,11 @@ def history():
             
             last_report.append(report_dict2)
 
-        session_status = session.get("show_loader", False)
-        print(session_status) # Test
-        if session_status == False:
-            del_cache()
+        # Deletes the table every time
+        #session_status = session.get("show_loader", False)
+        #print(session_status) # Test
+        #if session_status == False or session_status == None:
+        #    del_cache()
     else:
         last_report = []
 
@@ -551,6 +552,7 @@ def job_status():
     job = Job.fetch(job_id, connection=conn)
 
     report_ids = session["report_ids"]
+    print(report_ids) # test
 
     if job.is_finished:
         return jsonify({"status": "finished"}), 200
@@ -568,6 +570,7 @@ def get_loader_status():
 def clear_loader_flag():
 
     session.pop("show_loader", None)
+    del_cache()
     queries_num = session.pop("queries", 0)
     queries_num -= 1
     session["queries"] = queries_num
