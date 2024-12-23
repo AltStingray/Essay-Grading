@@ -77,7 +77,7 @@ def db(command):
         #cursor.execute("""ALTER TABLE essay_logs ADD essay_unnecessary_words BYTEA""")
         #cursor.execute("""ALTER TABLE essay_logs ADD corrected_essay BYTEA""")
 
-        cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 18""")
+        cursor.execute("""ALTER SEQUENCE logs_id_seq RESTART WITH 19""")
         
         #cursor.execute("""ALTER SEQUENCE essay_logs_id_seq RESTART WITH 5""")
 
@@ -112,7 +112,7 @@ def db(command):
 
         #for n in range(16, 47):
         
-        cursor.execute(f"DELETE FROM Logs WHERE id IN ('18', '19')")
+        cursor.execute(f"DELETE FROM Logs WHERE id IN ('19', '20')")
 
         #cursor.execute(f"DELETE FROM essay_logs WHERE id IN ('5')")
 

@@ -83,7 +83,7 @@ def authorize():
         if "cache_id" not in session:
             session["cache_id"] = 0
         session["cache_id"] += 1
-        
+        print(f"Cache id: {session["cache_id"]}")
 
         return redirect(dropbox_module.redirect_link_summary_logs)
     else:
@@ -556,6 +556,7 @@ def job_status():
         return jsonify({"status": "no-job-found"}), 404
 
     report_ids = session["report_ids"] # needs to be cleaned up 
+    session["report_ids"] = []
     print(report_ids) # test
     
     if job.is_finished:
@@ -573,15 +574,14 @@ def get_loader_status():
 @app.route('/clear-loader-flag', methods=['POST'])
 def clear_loader_flag():
 
-    del_cache()
-
-    session["cache_id"] = 0
-    session["report_ids"] = []
     session["queries"] -= 1
     print(f"Remove one query: {session["queries"]}")
 
     if session["queries"] == 0:
+        session["report_ids"] = []
         session["show_loader"] = False
+        session["cache_id"] = 0
+        del_cache()
 
     return '', 204 # Return a no-content response
 
