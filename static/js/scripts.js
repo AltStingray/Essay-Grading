@@ -62,11 +62,13 @@ window.onload = function(){
                                 if (statusData.status === "finished"){
 
                                     loadingRow.style.display = "none";
+                                    allFinished = true;
     
                                 } else if (statusData.status === "failed"){
     
                                     alert("The job failed. Please try again.");
                                     loadingRow.style.display = "none"; // Hide the loading row
+                                    allFinished = true;
     
                                 } else if (statusData.status === "in-progress"){
     
@@ -77,10 +79,11 @@ window.onload = function(){
                             });
                             // Stop polling if all rows are finished
                             if (allFinished) {
+                                alert("Job is finished")
                                 clearInterval(interval);
                                 fetch('/clear-loader-flag', { method: 'POST' })
                                     .catch(err => console.error("Error clearing loader flag:", err));
-                                window.location.reload(); // Optionally reload the page
+                                window.location.reload();
                             }
                         })
                     .catch(err => {

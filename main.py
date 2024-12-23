@@ -59,19 +59,19 @@ def summary_report():
 @app.route('/authorize')
 def authorize():
 
-    auth_from = escape(request.args.get("auth"))
+    auth_from = request.args.get("auth")
 
     if auth_from == "summary_logs":
 
         link = request.args.get("link")
 
-        date = escape(request.args.get("date"))
+        date = request.args.get("date")
 
-        teacher_name = escape(request.args.get("teacher"))
+        teacher_name = request.args.get("teacher")
 
-        client_name = escape(request.args.get("client"))
+        client_name = request.args.get("client")
 
-        client_email = escape(request.args.get("client_email"))
+        client_email = request.args.get("client_email")
 
         if date == "":
             date = datetime.now().strftime("%d-%m-%Y")
@@ -79,6 +79,11 @@ def authorize():
         data = (link, date, teacher_name, client_name, client_email)
             
         cache(data)
+
+        if "cache_id" not in session:
+            session["cache_id"] = 0
+        session["cache_id"] += 1
+        
 
         return redirect(dropbox_module.redirect_link_summary_logs)
     else:
@@ -159,7 +164,8 @@ def processing():
 
     if process == "background":
 
-        retrieve_cache = db_retrieve(file_id=1, db="temp_storage")
+        cache_id = session["cache_id"]
+        retrieve_cache = db_retrieve(file_id=cache_id, db="temp_storage")
 
         link = retrieve_cache[0]
 
@@ -314,12 +320,6 @@ def history():
             report_dict2.update({"query": session.pop("queries", 0)})
             
             last_report.append(report_dict2)
-
-        # Deletes the table every time
-        session_status = session.get("show_loader", False)
-        print(session_status) # Test
-        if session_status == False or session_status == None:
-            del_cache()
     else:
         last_report = []
 
@@ -577,11 +577,15 @@ def get_loader_status():
 @app.route('/clear-loader-flag', methods=['POST'])
 def clear_loader_flag():
 
-    session.pop("show_loader", None)
-    session.pop("report_ids", None)
-    queries_num = session.pop("queries", 0)
-    queries_num -= 1
-    session["queries"] = queries_num
+    session_status = session.get("show_loader", False)
+    print(session_status) # Test
+    if session_status == False or session_status == None:
+        del_cache()
+
+    session["show_loader"] = False
+    session["cache_id"] = 0
+    session["report_ids"] = []
+    session["queries"] -= 1
 
     return '', 204 # Return a no-content response
 
