@@ -88,7 +88,7 @@ def db(command):
         #cursor.execute("""ALTER TABLE essay_logs ALTER COLUMN sidebar_comments TYPE TEXT USING sidebar_comments::TEXT""")
         #cursor.execute("""ALTER TABLE Logs ALTER COLUMN precise_time TYPE VARCHAR(255)""")
 
-        cursor.execute("""UPDATE Logs SET id = 16 WHERE id = 18;""")
+        #cursor.execute("""UPDATE Logs SET id = 16 WHERE id = 18;""")
 
         #cursor.execute("""UPDATE Logs SET teacher = 'Carol' WHERE id = 2;""")
 
@@ -112,7 +112,7 @@ def db(command):
 
         #for n in range(16, 47):
         
-        cursor.execute(f"DELETE FROM Logs WHERE id IN ('16', '17', '19', '20', '21')")
+        cursor.execute(f"DELETE FROM Logs WHERE id IN ('17', '19')")
 
         #cursor.execute(f"DELETE FROM essay_logs WHERE id IN ('5')")
 

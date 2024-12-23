@@ -62,29 +62,27 @@ window.onload = function(){
                                 if (statusData.status === "finished"){
 
                                     loadingRow.style.display = "none";
-                                    allFinished = true;
+                                    alert("Job is finished")
+                                    clearInterval(interval);
+                                    fetch('/clear-loader-flag', { method: 'POST' })
+                                        .catch(err => console.error("Error clearing loader flag:", err));
+                                    window.location.reload();
     
                                 } else if (statusData.status === "failed"){
     
                                     alert("The job failed. Please try again.");
+                                    clearInterval(interval);
+                                    fetch('/clear-loader-flag', { method: 'POST' })
+                                        .catch(err => console.error("Error clearing loader flag:", err));
                                     loadingRow.style.display = "none"; // Hide the loading row
-                                    allFinished = true;
+                                    window.location.reload();
     
                                 } else if (statusData.status === "in-progress"){
     
                                     // Show the loading row
                                     loadingRow.style.display = "table-row";
-                                    allFinished = false;
                                 }
                             });
-                            // Stop polling if all rows are finished
-                            if (allFinished) {
-                                alert("Job is finished")
-                                clearInterval(interval);
-                                fetch('/clear-loader-flag', { method: 'POST' })
-                                    .catch(err => console.error("Error clearing loader flag:", err));
-                                window.location.reload();
-                            }
                         })
                     .catch(err => {
                         console.error("Error fetching job status", err)

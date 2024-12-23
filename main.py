@@ -548,16 +548,12 @@ def view_logs(id):
 @app.route("/job-status")
 def job_status():
 
-    job_id = session["job_id"]
+    job_id = session.pop("job_id", None)
 
     if not job_id:
         return jsonify({"status": "no-job-id"}), 404
 
-    try:
-        job = Job.fetch(job_id, connection=conn)
-    except NoSuchJobError:
-        session.pop("job_id", None)
-        return jsonify({"status": "job-not-found"}), 404
+    job = Job.fetch(job_id, connection=conn)
     
     report_ids = session["report_ids"] # needs to be cleaned up 
     print(report_ids) # test
