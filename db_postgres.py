@@ -112,7 +112,7 @@ def db(command):
 
         #for n in range(16, 47):
         
-        cursor.execute(f"DELETE FROM Logs WHERE id IN ('17', '19')")
+        cursor.execute(f"DELETE FROM Logs WHERE id IN ('18', '19')")
 
         #cursor.execute(f"DELETE FROM essay_logs WHERE id IN ('5')")
 

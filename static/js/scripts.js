@@ -44,11 +44,11 @@ window.onload = function(){
                     fetch('/job-status')
                         .then((response) => response.json())
                         .then((statusData) => {
-                            if (!statusData || !statusData.ids || !statusData.status) {
-                                console.error("Invalid statusData:", statusData);
-                                clearInterval(interval);
-                                return;
-                            }
+                            //if (!statusData || !statusData.ids || !statusData.status) {
+                            //    console.error("Invalid statusData:", statusData);
+                            //    clearInterval(interval);
+                            //    return;
+                            //}
 
                             let allFinished = true; //Check if all rows are finished
                             

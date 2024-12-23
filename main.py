@@ -317,7 +317,6 @@ def history():
             report_dict2.update({"teacher": logs2[2]})
             report_dict2.update({"client_name": logs2[3]})
             report_dict2.update({"client_email": logs2[4]})
-            report_dict2.update({"query": session.pop("queries", 0)})
             
             last_report.append(report_dict2)
     else:
@@ -548,12 +547,16 @@ def view_logs(id):
 @app.route("/job-status")
 def job_status():
 
-    job_id = session.pop("job_id", None)
+    job_id = session["job_id"]
 
     if not job_id:
         return jsonify({"status": "no-job-id"}), 404
 
-    job = Job.fetch(job_id, connection=conn)
+    try:
+        job = Job.fetch(job_id, connection=conn)
+    except NoSuchJobError:
+        session.pop("job_id", None)
+        return jsonify({"status": "job-not-found"}), 404
     
     report_ids = session["report_ids"] # needs to be cleaned up 
     print(report_ids) # test
@@ -573,15 +576,15 @@ def get_loader_status():
 @app.route('/clear-loader-flag', methods=['POST'])
 def clear_loader_flag():
 
-    session_status = session.get("show_loader", False)
-    print(session_status) # Test
-    if session_status == False or session_status == None:
-        del_cache()
+    del_cache()
 
-    session["show_loader"] = False
     session["cache_id"] = 0
     session["report_ids"] = []
     session["queries"] -= 1
+    print(f"Remove one query: {session["queries"]}")
+
+    if session["queries"] == 0:
+        session["show_loader"] = False
 
     return '', 204 # Return a no-content response
 
