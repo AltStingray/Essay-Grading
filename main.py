@@ -84,7 +84,6 @@ def authorize():
             session["cache_id"] = 0
         session["cache_id"] += 1
         print(f"Cache id: {session["cache_id"]}")
-        session["cache_id"] = 0
 
         return redirect(dropbox_module.redirect_link_summary_logs)
     else:
