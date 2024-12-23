@@ -43,6 +43,8 @@ db("alter")
 
 db("print")
 
+session["report_ids"] = []
+
 
 @app.route('/') #Use the route() decorator to bind a function to a URL.
 def index():
@@ -554,7 +556,7 @@ def job_status():
     except KeyError and NoSuchJobError:
         session.pop("job_id", None)
         return jsonify({"status": "no-job-found"}), 404
- 
+
     report_ids = session["report_ids"] # needs to be cleaned up 
     print(report_ids) # test
     print(job_id)
