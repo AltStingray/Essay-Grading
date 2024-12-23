@@ -54,10 +54,6 @@ window.onload = function(){
                             
                             statusData.ids.forEach(id => {
                                 const loadingRow = document.getElementById(`loading-row-${id}`);
-                                if (!loadingRow){
-                                    console.warn(`Row with ID ${id} not found`);
-                                    return;
-                                }
 
                                 if (statusData.status === "finished"){
 
@@ -65,16 +61,14 @@ window.onload = function(){
                                     alert("Job is finished")
                                     clearInterval(interval);
                                     fetch('/clear-loader-flag', { method: 'POST' })
-                                        .catch(err => console.error("Error clearing loader flag:", err));
                                     window.location.reload();
     
                                 } else if (statusData.status === "failed"){
-    
+                                    
+                                    loadingRow.style.display = "none"; // Hide the loading row
                                     alert("The job failed. Please try again.");
                                     clearInterval(interval);
                                     fetch('/clear-loader-flag', { method: 'POST' })
-                                        .catch(err => console.error("Error clearing loader flag:", err));
-                                    loadingRow.style.display = "none"; // Hide the loading row
                                     window.location.reload();
     
                                 } else if (statusData.status === "in-progress"){

@@ -556,9 +556,9 @@ def job_status():
         return jsonify({"status": "no-job-found"}), 404
 
     report_ids = session["report_ids"] # needs to be cleaned up 
-    session["report_ids"] = []
     print(report_ids) # test
-    
+    print(job_id)
+    print(job)
     if job.is_finished:
         return jsonify({"status": "finished"}), 200
     elif job.is_failed:
