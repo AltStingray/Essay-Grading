@@ -274,8 +274,6 @@ def history():
 
     reports = []
 
-    del_cache()
-    
     for id in ids:
 
         report_dict = {}
