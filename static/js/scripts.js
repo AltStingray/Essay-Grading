@@ -50,7 +50,7 @@ window.onload = function(){
                             //    return;
                             //}
 
-                            let allFinished = true; //Check if all rows are finished
+                            //let allFinished = true; //Check if all rows are finished
                             
                             statusData.ids.forEach(id => {
                                 const loadingRow = document.getElementById(`loading-row-${id}`);
