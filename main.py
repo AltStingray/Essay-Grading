@@ -318,10 +318,12 @@ def history():
             report_dict2.update({"client_name": logs2[3]})
             report_dict2.update({"client_email": logs2[4]})
             report_dict2.update({"query": session.pop("queries", 0)})
-            
+
             last_report.append(report_dict2)
     else:
         last_report = []
+
+    del_cache()
 
     if sort_by == "high-low":
 
