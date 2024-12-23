@@ -317,7 +317,7 @@ def history():
             report_dict2.update({"teacher": logs2[2]})
             report_dict2.update({"client_name": logs2[3]})
             report_dict2.update({"client_email": logs2[4]})
-            report_dict2.update({"query": session["queries"]})
+            report_dict2.update({"query": session.pop("queries", 0)})
             
             last_report.append(report_dict2)
     else:
