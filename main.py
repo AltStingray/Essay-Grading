@@ -274,6 +274,8 @@ def history():
 
     reports = []
 
+    del_cache()
+    
     for id in ids:
 
         report_dict = {}
@@ -322,8 +324,6 @@ def history():
             last_report.append(report_dict2)
     else:
         last_report = []
-
-    del_cache()
 
     if sort_by == "high-low":
 
