@@ -43,8 +43,6 @@ db("alter")
 
 db("print")
 
-session["report_ids"] = []
-
 
 @app.route('/') #Use the route() decorator to bind a function to a URL.
 def index():
