@@ -561,6 +561,7 @@ def job_status():
     print(job)
     if job.is_finished:
         print("Job is finished!")
+        print(session["show_loader"]) # test
         return jsonify({"status": "finished"}), 200
     elif job.is_failed:
         print("Job is failed!")
@@ -572,7 +573,7 @@ def job_status():
 @app.route('/loader-status', methods=['GET'])
 def get_loader_status():
 
-    return {"show_loader": session.get("show_loader", False)}
+    return {"show_loader": session.get("show_loader", True)}
 
 @app.route('/clear-loader-flag', methods=['POST'])
 def clear_loader_flag():
