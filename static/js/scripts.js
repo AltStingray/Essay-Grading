@@ -47,32 +47,31 @@ window.onload = function(){
                             
                             statusData.ids.forEach(id => {
                                 const loadingRow = document.getElementById(`loading-row-${id}`);
-
-                                if (statusData.status === "finished"){
-                                    print("Job is finished!");
-                                    loadingRow.style.display = "none";
-                                    alert("Job is finished");
-                                    clearInterval(interval);
-                                    fetch('/clear-loader-flag', { method: 'POST' })
-                                        .then(() => {
-                                            window.location.reload();
-                                        })
-                                } else if (statusData.status === "failed"){
-                                    
-                                    loadingRow.style.display = "none"; // Hide the loading row
-                                    alert("The job failed. Please try again.");
-                                    clearInterval(interval);
-                                    fetch('/clear-loader-flag', { method: 'POST' })
-                                        .then(() => {
-                                            window.location.reload();
-                                        })
-    
-                                } else if (statusData.status === "in-progress"){
-    
-                                    // Show the loading row
-                                    loadingRow.style.display = "table-row";
-                                }
+                                loadingRow.style.display = "table-row";
                             });
+                            if (statusData.status === "finished"){
+                                print("Job is finished!");
+                                loadingRow.style.display = "none";
+                                alert("Job is finished");
+                                clearInterval(interval);
+                                fetch('/clear-loader-flag', { method: 'POST' })
+                                    .then(() => {
+                                        window.location.reload();
+                                    })
+                            } else if (statusData.status === "failed"){
+                                
+                                loadingRow.style.display = "none"; // Hide the loading row
+                                alert("The job failed. Please try again.");
+                                clearInterval(interval);
+                                fetch('/clear-loader-flag', { method: 'POST' })
+                                    .then(() => {
+                                        window.location.reload();
+                                    })
+                            } else if (statusData.status === "in-progress"){
+
+                                // Show the loading row
+                                loadingRow.style.display = "table-row";
+                            }
                         })
                     .catch(err => {
                         console.error("Error fetching job status", err)
