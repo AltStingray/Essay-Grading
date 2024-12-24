@@ -268,6 +268,8 @@ def download():
 def history():
     '''Displaying the logs of the submitted summary reports'''
 
+    session["report_ids"] = []
+
     sort_by = escape(request.args.get("sort_by"))
 
     ids = db_get_ids(table_name="Logs")

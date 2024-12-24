@@ -70,7 +70,7 @@ window.onload = function(){
                                     loadingRow.style.display = "table-row";
                                 }
                             });
-                    })
+                        })
                     .catch(err => {
                         console.error("Error fetching job status", err)
                         clearInterval(interval)
