@@ -45,10 +45,10 @@ window.onload = function(){
                         .then((response) => response.json())
                         .then((statusData) => {
                             
-                            statusData.ids.forEach(id => {
-                                const loadingRow = document.getElementById(`loading-row-${id}`);
-                                loadingRow.style.display = "table-row";
-                            });
+                            //statusData.ids.forEach(id => {
+                            //    const loadingRow = document.getElementById(`loading-row-${id}`);
+                            //    loadingRow.style.display = "table-row";
+                            //});
                             if (statusData.status === "finished"){
                                 print("Job is finished!");
                                 loadingRow.style.display = "none";
