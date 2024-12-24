@@ -44,23 +44,16 @@ window.onload = function(){
                     fetch('/job-status')
                         .then((response) => response.json())
                         .then((statusData) => {
-                            //if (!statusData || !statusData.ids || !statusData.status) {
-                            //    console.error("Invalid statusData:", statusData);
-                            //    clearInterval(interval);
-                            //    return;
-                            //}
-
-                            //let allFinished = true; //Check if all rows are finished
                             
                             statusData.ids.forEach(id => {
                                 const loadingRow = document.getElementById(`loading-row-${id}`);
 
                                 if (statusData.status === "finished"){
-
+                                    print("Job is finished!");
                                     loadingRow.style.display = "none";
-                                    alert("Job is finished")
+                                    alert("Job is finished");
                                     clearInterval(interval);
-                                    fetch('/clear-loader-flag', { method: 'POST' })
+                                    fetch('/clear-loader-flag', { method: 'POST' });
                                     window.location.reload();
     
                                 } else if (statusData.status === "failed"){
@@ -68,7 +61,7 @@ window.onload = function(){
                                     loadingRow.style.display = "none"; // Hide the loading row
                                     alert("The job failed. Please try again.");
                                     clearInterval(interval);
-                                    fetch('/clear-loader-flag', { method: 'POST' })
+                                    fetch('/clear-loader-flag', { method: 'POST' });
                                     window.location.reload();
     
                                 } else if (statusData.status === "in-progress"){
@@ -77,7 +70,7 @@ window.onload = function(){
                                     loadingRow.style.display = "table-row";
                                 }
                             });
-                        })
+                    })
                     .catch(err => {
                         console.error("Error fetching job status", err)
                         clearInterval(interval)

@@ -560,10 +560,13 @@ def job_status():
     print(job_id)
     print(job)
     if job.is_finished:
+        print("Job is finished!")
         return jsonify({"status": "finished"}), 200
     elif job.is_failed:
+        print("Job is failed!")
         return jsonify({"status": "failed"}), 200
     else:
+        print("Job is in progress!")
         return jsonify({"status": "in-progress", "ids": report_ids}), 200
     
 @app.route('/loader-status', methods=['GET'])
