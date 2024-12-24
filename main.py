@@ -573,7 +573,7 @@ def job_status():
 @app.route('/loader-status', methods=['GET'])
 def get_loader_status():
 
-    return {"show_loader": session.get("show_loader", True)}
+    return {"show_loader": session.get("show_loader", False)}
 
 @app.route('/clear-loader-flag', methods=['POST'])
 def clear_loader_flag():

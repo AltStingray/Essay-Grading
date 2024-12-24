@@ -53,16 +53,19 @@ window.onload = function(){
                                     loadingRow.style.display = "none";
                                     alert("Job is finished");
                                     clearInterval(interval);
-                                    fetch('/clear-loader-flag', { method: 'POST' });
-                                    window.location.reload();
-    
+                                    fetch('/clear-loader-flag', { method: 'POST' })
+                                        .then(() => {
+                                            window.location.reload();
+                                        })
                                 } else if (statusData.status === "failed"){
                                     
                                     loadingRow.style.display = "none"; // Hide the loading row
                                     alert("The job failed. Please try again.");
                                     clearInterval(interval);
-                                    fetch('/clear-loader-flag', { method: 'POST' });
-                                    window.location.reload();
+                                    fetch('/clear-loader-flag', { method: 'POST' })
+                                        .then(() => {
+                                            window.location.reload();
+                                        })
     
                                 } else if (statusData.status === "in-progress"){
     
