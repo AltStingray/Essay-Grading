@@ -268,8 +268,6 @@ def download():
 def history():
     '''Displaying the logs of the submitted summary reports'''
 
-    session["report_ids"] = []
-
     sort_by = escape(request.args.get("sort_by"))
 
     ids = db_get_ids(table_name="Logs")
@@ -550,10 +548,10 @@ def view_logs(id):
 @app.route("/job-status")
 def job_status():
 
-    try:
-        job_id = session["job_id"]
-        job = Job.fetch(job_id, connection=conn)
-    except KeyError and NoSuchJobError:
+    job_id = session["job_id"]
+    job = Job.fetch(job_id, connection=conn)
+
+    if not job:
         session.pop("job_id", None)
         return jsonify({"status": "no-job-found"}), 404
 
@@ -586,6 +584,7 @@ def clear_loader_flag():
         session["report_ids"] = []
         session["show_loader"] = False
         session["cache_id"] = 0
+        session["job_id"] = None
         del_cache()
 
     return '', 204 # Return a no-content response
