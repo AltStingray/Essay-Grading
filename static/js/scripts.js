@@ -51,18 +51,18 @@ window.onload = function(){
                                 
                                 if (statusData.status === "finished"){
 
+                                    clearInterval(interval);
                                     fetch('/clear-loader-flag', { method: 'POST' });
                                     loadingRow.style.display = "none";
                                     alert("Job is finished");
-                                    clearInterval(interval);
                                     window.location.reload();
     
                                 } else if (statusData.status === "failed"){
-    
+                                    
+                                    clearInterval(interval);
                                     fetch('/clear-loader-flag', { method: 'POST' });
                                     loadingRow.style.display = "none"; // Hide the loading row
                                     alert("The job failed. Please try again.");
-                                    clearInterval(interval);
                                     window.location.reload();
     
                                 } else if (statusData.status === "in-progress"){
@@ -73,10 +73,10 @@ window.onload = function(){
                             });
 
                         })
-                    //.catch(err => {
-                    //    console.error("Error fetching job status", err)
-                    //    clearInterval(interval)
-                    //});
+                    .catch(err => {
+                        console.error("Error fetching job status", err)
+                        clearInterval(interval)
+                    });
                 }, 1000); // Polling interval of 1 second
             }
         })
