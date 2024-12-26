@@ -267,6 +267,12 @@ def download():
 @app.route('/summary/log')
 def history():
     '''Displaying the logs of the submitted summary reports'''
+
+    session["report_ids"] = []
+    session["show_loader"] = False
+    session["cache_id"] = 0
+    session["job_id"] = None
+    del_cache()
     
     sort_by = escape(request.args.get("sort_by"))
 
@@ -317,7 +323,7 @@ def history():
             report_dict2.update({"teacher": logs2[2]})
             report_dict2.update({"client_name": logs2[3]})
             report_dict2.update({"client_email": logs2[4]})
-            report_dict2.update({"query": session.pop("queries", 0)})
+            report_dict2.update({"query": session["queries"]})
 
             last_report.append(report_dict2)
     else:
