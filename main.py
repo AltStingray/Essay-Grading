@@ -300,18 +300,20 @@ def history():
 
         for id2 in db_get_ids(table_name="temp_storage"):
 
-            last_id += id2
+            cache_last_id = last_id[:] # Creating another instance/copy of last id, so the original varible is not overwritten every iteration
+
+            cache_last_id += id2
 
             if "report_ids" not in session:
                 session["report_ids"] = []
-            session["report_ids"].append(last_id)
+            session["report_ids"].append(cache_last_id)
             session.modified = True
 
             report_dict2 = {}
 
             logs2 = db_retrieve(file_id=id2, db="temp_storage")
 
-            report_dict2.update({"id": last_id})
+            report_dict2.update({"id": cache_last_id})
             report_dict2.update({"url": logs2[0]})
             report_dict2.update({"date":logs2[1]})
             report_dict2.update({"teacher": logs2[2]})
@@ -606,9 +608,11 @@ def cancel_job():
         job_id = session["job_id"]
         job = Job.fetch(job_id)
 
-        if job:
+        if job.is_started:
+            print(f"Job {job_id} can't be canceled as it is already running!")
+        elif job.is_queued:
             job.cancel()
-            print(f"Job {job_id} canceled.")
+            print(f"Job {job_id} is canceled.")
         else:
             print(f"Job {job_id} not found.")
 

@@ -70,6 +70,7 @@ window.onload = function(){
                                     // Show the loading row
                                     loadingRow.style.display = "table-row";
                                 }
+                                //fetch('/cancel-job')
                             });
 
                         })

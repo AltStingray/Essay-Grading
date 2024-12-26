@@ -151,6 +151,8 @@
                                     </td>
                                     {% if one["id"] >= 2 and one["query"] >= 2 %}
                                         <td><button type="button" class="btn btn-danger">Cancel</button></td>
+                                    {% else %}
+                                        <td><button type="button" class="btn btn-danger" style="display: none;">None</button></td>
                                     {% endif %}
                                 </tr>
                                 {% endfor %}
