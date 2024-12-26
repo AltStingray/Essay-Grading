@@ -52,7 +52,7 @@ window.onload = function(){
                                 if (statusData.status === "finished"){
 
                                     clearInterval(interval);
-                                    fetch('/clear-loader-flag', { method: 'POST' });
+                                    fetch('/clear-flags', { method: 'POST' });
                                     loadingRow.style.display = "none";
                                     alert("Job is finished");
                                     window.location.reload();
@@ -60,7 +60,7 @@ window.onload = function(){
                                 } else if (statusData.status === "failed"){
                                     
                                     clearInterval(interval);
-                                    fetch('/clear-loader-flag', { method: 'POST' });
+                                    fetch('/clear-flags', { method: 'POST' });
                                     loadingRow.style.display = "none"; // Hide the loading row
                                     alert("The job failed. Please try again.");
                                     window.location.reload();

@@ -267,6 +267,12 @@ def download():
 @app.route('/summary/log')
 def history():
     '''Displaying the logs of the submitted summary reports'''
+
+    session["report_ids"] = []
+    session["show_loader"] = False
+    session["cache_id"] = 0
+    session["job_id"] = None
+    del_cache()
     
     sort_by = escape(request.args.get("sort_by"))
 
@@ -575,10 +581,17 @@ def get_loader_status():
     print(f"\nloader status: {session.get("show_loader", False)}\n") # test
     return {"show_loader": session.get("show_loader", False)}
 
-@app.route('/clear-loader-flag', methods=['POST'])
-def clear_loader_flag():
+@app.route('/clear-flags', methods=['POST'])
+def clear_flags():
 
-    session["queries"] -= 1
+    queries = session["queries"]
+
+    print(queries)
+
+    queries -= 1
+
+    session["queries"] = queries
+
     print(f"Remove one query: {session["queries"]}")
 
     if session["queries"] == 0:
