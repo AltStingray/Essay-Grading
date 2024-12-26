@@ -187,11 +187,11 @@ def processing():
 
         print(queries) # test
 
-        session["job_id"] = job_id
+        session["queries"] = queries # Current number of queries, either 0, 1 or more at a time.
 
-        session["show_loader"] = True
+        session["job_id"] = job_id # Id of the current running job in the background
 
-        session["queries"] = queries
+        session["show_loader"] = True # Flag to tell the program when to display the loader
         
         return redirect(url_for("history"))
     else:
@@ -561,7 +561,6 @@ def job_status():
     print(job)
     if job.is_finished:
         print("Job is finished!")
-        print(session["show_loader"]) # test
         return jsonify({"status": "finished"}), 200
     elif job.is_failed:
         print("Job is failed!")
@@ -572,7 +571,7 @@ def job_status():
     
 @app.route('/loader-status', methods=['GET'])
 def get_loader_status():
-    print(session.get("show_loader", False)) # test
+    print(f"\nloader status: {session.get("show_loader", False)}\n") # test
     return {"show_loader": session.get("show_loader", False)}
 
 @app.route('/clear-loader-flag', methods=['POST'])
