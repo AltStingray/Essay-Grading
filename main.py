@@ -267,6 +267,12 @@ def download():
 @app.route('/summary/log')
 def history():
     '''Displaying the logs of the submitted summary reports'''
+
+    session["report_ids"] = []
+    session["show_loader"] = False
+    session["cache_id"] = 0
+    session["job_id"] = None
+    del_cache()
     
     sort_by = escape(request.args.get("sort_by"))
 
@@ -562,10 +568,10 @@ def job_status():
     if job.is_finished:
         print("Job is finished!")
         session.pop("job_id", None)
-        return jsonify({"status": "finished"}), 200
+        return jsonify({"status": "finished", "ids": report_ids}), 200
     elif job.is_failed:
         print("Job is failed!")
-        return jsonify({"status": "failed"}), 200
+        return jsonify({"status": "failed", "ids": report_ids}), 200
     else:
         print("Job is in progress!")
         return jsonify({"status": "in-progress", "ids": report_ids}), 200
