@@ -561,6 +561,7 @@ def job_status():
     print(job)
     if job.is_finished:
         print("Job is finished!")
+        session.pop("job_id", None)
         return jsonify({"status": "finished"}), 200
     elif job.is_failed:
         print("Job is failed!")
