@@ -73,10 +73,10 @@ window.onload = function(){
                             });
 
                         })
-                    .catch(err => {
-                        console.error("Error fetching job status", err)
-                        clearInterval(interval)
-                    });
+                    //.catch(err => {
+                    //    console.error("Error fetching job status", err)
+                    //    clearInterval(interval)
+                    //});
                 }, 1000); // Polling interval of 1 second
             }
         })
