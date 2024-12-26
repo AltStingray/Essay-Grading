@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 window.onload = function(){
-    fetch("/loader-status")
+    fetch('/loader-status')
         .then(response => response.json())
         .then(data => {
             const showLoaderStatus = data.show_loader; // This will be True or False
