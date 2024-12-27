@@ -268,6 +268,13 @@ def download():
 def history():
     '''Displaying the logs of the submitted summary reports'''
 
+    session["queries"] = 0
+    session["report_ids"] = []
+    session["show_loader"] = False
+    session["cache_id"] = 0
+    session["job_id"] = None
+    del_cache()
+
     if "job_id" in session:
         job_id = session["job_id"]
         try:
@@ -569,7 +576,7 @@ def job_status():
 
     report_ids = session["report_ids"] # needs to be cleaned up 
     print(report_ids)
-    report_ids = report_ids.reverse()
+    report_ids = report_ids[::-1]
     print(report_ids) # test
     print(job_id)
     print(job)
