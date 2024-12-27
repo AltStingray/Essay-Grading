@@ -270,7 +270,9 @@ def history():
     
     if "job_id" in session:
         job_id = session["job_id"]
-        job = Job.fetch(job_id, connection=conn)
+        try:
+            job = Job.fetch(job_id, connection=conn)
+        except: NoSuchJobError
         job_status = job.is_queued
     else:
         job_status = None
