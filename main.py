@@ -317,7 +317,7 @@ def history():
                 session["report_ids"] = []
             session["report_ids"].append(cache_last_id)
             session.modified = True
-
+ 
             report_dict2 = {}
 
             logs2 = db_retrieve(file_id=id2, db="temp_storage")
@@ -568,8 +568,8 @@ def job_status():
         return jsonify({"status": "no-job-found"}), 404
 
     report_ids = session["report_ids"] # needs to be cleaned up 
-    print(report_ids)
-    report_ids = report_ids[::-1]
+    #print(report_ids)
+    #report_ids = report_ids[::-1]
     print(report_ids) # test
     print(job_id)
     print(job)

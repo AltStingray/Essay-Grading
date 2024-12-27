@@ -54,7 +54,7 @@ window.onload = function(){
                                     clearInterval(interval);
                                     fetch('/clear-flags', { method: 'POST' });
                                     loadingRow.style.display = "none";
-                                    alert("Job is finished");
+                                    //alert("Job is finished");
                                     window.location.reload();
     
                                 } else if (statusData.status === "failed"){
