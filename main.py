@@ -269,8 +269,9 @@ def history():
     '''Displaying the logs of the submitted summary reports'''
 
     job_id = session["job_id"]
-
-    job = Job.fetch(job_id, connection=conn)
+    try:
+        job = Job.fetch(job_id, connection=conn)
+    except: NoSuchJobError
     
     sort_by = escape(request.args.get("sort_by"))
 
