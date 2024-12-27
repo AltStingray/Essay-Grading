@@ -268,14 +268,19 @@ def download():
 def history():
     '''Displaying the logs of the submitted summary reports'''
     
-    if "job_id" in session:
-        job_id = session["job_id"]
-        try:
-            job = Job.fetch(job_id, connection=conn)
-        except: NoSuchJobError
-        job_status = job.is_queued
-    else:
-        job_status = None
+    session["queries"] = 0
+    session["report_ids"] = []
+    session["show_loader"] = False
+    session["cache_id"] = 0
+    session["job_id"] = None
+    del_cache()
+    
+    #if "job_id" in session:
+    #    job_id = session["job_id"]
+    #    job = Job.fetch(job_id, connection=conn)
+    #    job_status = job.is_queued
+    #else:
+    #    job_status = None
     
     sort_by = escape(request.args.get("sort_by"))
 
