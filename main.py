@@ -325,7 +325,8 @@ def history():
             report_dict2.update({"client_name": logs2[3]})
             report_dict2.update({"client_email": logs2[4]})
             report_dict2.update({"query": session["queries"]})
-            report_dict2.update({"job_status": job.is_queued})
+            if job:
+                report_dict2.update({"job_status": job.is_queued})
 
             last_report.append(report_dict2)
     else:
