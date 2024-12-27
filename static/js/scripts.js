@@ -90,7 +90,7 @@ function cancelJob(id){
             cancelButton.style.display = 'block';
             if (dataStatus.status === "success"){
                 cancelButton.style.display = 'none';
-                window.location.reaload();
+                window.location.reload();
             }
             else {
                 const errorMessage = document.getElementById('error-msg');
