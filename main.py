@@ -268,10 +268,10 @@ def download():
 def history():
     '''Displaying the logs of the submitted summary reports'''
 
-    job_id = session["job_id"]
     try:
+        job_id = session["job_id"]
         job = Job.fetch(job_id, connection=conn)
-    except: NoSuchJobError
+    except: NoSuchJobError, KeyError
     
     sort_by = escape(request.args.get("sort_by"))
 
