@@ -70,7 +70,6 @@ window.onload = function(){
                                     // Show the loading row
                                     loadingRow.style.display = "table-row";
                                 }
-                                //fetch('/cancel-job')
                             });
 
                         })
@@ -83,6 +82,22 @@ window.onload = function(){
         })
 }
 
+function cancelJob(id){
+    fetch('/cancel-job')
+        .then(response => response.json())
+        .then(dataStatus =>{
+            const cancelButton = document.getElementById(`cancel-btn`);
+            cancelButton.style.display = 'block';
+            if (dataStatus.status === "success"){
+                cancelButton.style.display = 'none';
+                window.location.reaload();
+            }
+            else {
+                const errorMessage = document.getElementById('error-msg');
+                errorMessage.style.display = 'block';
+            }
+        })
+};
 
 function toggleMenu(button) {
     // Find the next row (menu row)

@@ -267,6 +267,10 @@ def download():
 @app.route('/summary/log')
 def history():
     '''Displaying the logs of the submitted summary reports'''
+
+    job_id = session["job_id"]
+
+    job = Job.fetch(job_id)
     
     sort_by = escape(request.args.get("sort_by"))
 
@@ -320,20 +324,21 @@ def history():
             report_dict2.update({"client_name": logs2[3]})
             report_dict2.update({"client_email": logs2[4]})
             report_dict2.update({"query": session["queries"]})
+            report_dict2.update({"job_status": job.is_queued})
 
             last_report.append(report_dict2)
     else:
         last_report = []
 
-    if sort_by == "high-low":
-
-        def high_low(e):
+    if sort_by == "low-high":
+    
+        def low_high(e):
             
             return e["id"]
         
-        reports.sort(reverse=True, key=high_low)
-        
-        return render_template("history.html", log="summary_report", reports=reports, last_report=last_report, sort_by="High-Low")
+        reports.sort(key=low_high)
+
+        return render_template("history.html", log="summary_report", reports=reports, last_report=last_report, sort_by="Low-High")
     
     elif sort_by == "date-new":
 
@@ -356,13 +361,13 @@ def history():
         return render_template("history.html", log="summary_report", reports=reports, last_report=last_report, sort_by="Date-Old")
     else:
 
-        def low_high(e):
+        def high_low(e):
             
             return e["id"]
         
-        reports.sort(key=low_high)
-
-        return render_template("history.html", log="summary_report", reports=reports, last_report=last_report, sort_by="Low-High")
+        reports.sort(reverse=True, key=high_low)
+        
+        return render_template("history.html", log="summary_report", reports=reports, last_report=last_report, sort_by="High-Low")
 
 @app.route('/logs_download/<id>/<name>')
 def logs_download(id, name):
@@ -610,11 +615,14 @@ def cancel_job():
 
         if job.is_started:
             print(f"Job {job_id} can't be canceled as it is already running!")
+            return jsonify({"status": "failed"}), 200
         elif job.is_queued:
             job.cancel()
             print(f"Job {job_id} is canceled.")
+            return jsonify({"status": "success"}), 200
         else:
             print(f"Job {job_id} not found.")
+            return jsonify({"status": "job not found"}), 200
 
 
 @app.route('/about')
