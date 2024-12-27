@@ -268,10 +268,12 @@ def download():
 def history():
     '''Displaying the logs of the submitted summary reports'''
 
-    try:
+    if "job_id" in session:
         job_id = session["job_id"]
         job = Job.fetch(job_id, connection=conn)
-    except: NoSuchJobError, KeyError
+        job_status = job.is_queued
+    else:
+        job_status = None
     
     sort_by = escape(request.args.get("sort_by"))
 
@@ -325,8 +327,7 @@ def history():
             report_dict2.update({"client_name": logs2[3]})
             report_dict2.update({"client_email": logs2[4]})
             report_dict2.update({"query": session["queries"]})
-            if job:
-                report_dict2.update({"job_status": job.is_queued})
+            report_dict2.update({"job_status": job_status})
 
             last_report.append(report_dict2)
     else:
