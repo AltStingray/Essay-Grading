@@ -268,9 +268,6 @@ def download():
 def history():
     '''Displaying the logs of the submitted summary reports'''
 
-    print(session) # test
-    print(session["job_id"])
-
     if "job_id" in session:
         job_id = session["job_id"]
         try:
@@ -570,7 +567,9 @@ def job_status():
         session.pop("job_id", None)
         return jsonify({"status": "no-job-found"}), 404
 
-    report_ids = session["report_ids"].reverse() # needs to be cleaned up 
+    report_ids = session["report_ids"] # needs to be cleaned up 
+    print(report_ids)
+    report_ids = report_ids.reverse()
     print(report_ids) # test
     print(job_id)
     print(job)
