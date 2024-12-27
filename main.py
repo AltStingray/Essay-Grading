@@ -267,11 +267,16 @@ def download():
 @app.route('/summary/log')
 def history():
     '''Displaying the logs of the submitted summary reports'''
-    
+
+    print(session) # test
+    print(session["job_id"])
+
     if "job_id" in session:
         job_id = session["job_id"]
-        job = Job.fetch(job_id, connection=conn)
-        job_status = job.is_queued
+        try:
+            job = Job.fetch(job_id, connection=conn)
+            job_status = job.is_queued
+        except: Exception
     else:
         job_status = None
     
