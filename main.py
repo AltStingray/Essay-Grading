@@ -270,7 +270,7 @@ def history():
 
     job_id = session["job_id"]
 
-    job = Job.fetch(job_id)
+    job = Job.fetch(job_id, connection=conn)
     
     sort_by = escape(request.args.get("sort_by"))
 
