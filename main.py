@@ -192,6 +192,8 @@ def processing():
         session["job_id"] = job_id # Id of the current running job in the background
 
         session["show_loader"] = True # Flag to tell the program when to display the loader
+
+        # We can add job id to the unique cache_id in temp_table, and then retrieve it
         
         return redirect(url_for("history"))
     else:
@@ -371,10 +373,11 @@ def history():
             return e["id"]
         
         reports.sort(reverse=True, key=high_low)
+        last_report.sort(reverse=True, key=high_low)
         
         return render_template("history.html", log="summary_report", reports=reports, last_report=last_report, sort_by="High-Low")
 
-@app.route('/logs_download/<id>/<name>')
+@app.route('/summary/preview/<id>/<name>')
 def logs_download(id, name):
 
     logs = db_retrieve(file_id=id, db="Logs")
@@ -390,9 +393,15 @@ def logs_download(id, name):
 
         html_data = (html.tobytes().decode('utf-8')).strip("{ }") #decoding the memory value from database into a string
 
-        return render_template("preview_report.html", html=html_data)
+        return render_template("preview_report.html", html=html_data, id=id)
     else:
         return logs
+    
+@app.route('/summary/save/<html>/<id>')
+def preview_save(html, id):
+    
+    return save_change(html, id)
+
 
 @app.route('/redirect')
 def redirect_to():
@@ -618,7 +627,7 @@ def cancel_job():
     queries = session["queries"]
     if queries > 1:
 
-        job_id = session["job_id"]
+        job_id = session["job_id"][queries]
         job = Job.fetch(job_id)
 
         if job.is_started:

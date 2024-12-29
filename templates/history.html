@@ -24,7 +24,6 @@
 
                         <!--Create Summary button-->
                         <div class="create_summary_button">
-                            <!--<a href="{{ url_for('authorize', auth='summary_logs') }}" class="button2">Create Summary Report</a>-->
                             <button type="button" class="button2" data-bs-toggle="modal" data-bs-target="#GenerateReport">Generate Summary Report</button>
                         </div>
 
@@ -115,7 +114,7 @@
                                             <span>G</span>
                                         </div>
                                     </td>
-                                    {% if one["id"] >= 2 and one["query"] >= 2 and one["job_status"] == True %}
+                                    {% if one["query"] >= 2 and one["job_status"] == True %}
                                         <td><button type="button" id="cancel-btn" onclick="cancelJob(id=one['id'])" class="btn btn-danger">Cancel</button></td>
                                     {% else %}
                                         <div id="error-msg" style="display: none; color: red;">Error, selected report is already being processed!</div>

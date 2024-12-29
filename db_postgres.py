@@ -268,6 +268,19 @@ def db_get_ids(table_name):
 
     return ids_lst
 
+def save_change(html, id):
+    '''Saving changes in selected summary report'''
+
+    db_conn = psycopg2.connect(DATABASE)
+
+    cursor = db_conn.cursor()
+
+    cursor.execute("UPDATE TABLE Logs set summary_html = %s WHERE id = %s;", html, id)
+
+    cursor.close()
+    db_conn.close()
+
+    return "Change have been saved successfully!", 200
 
 def db_retrieve(file_id, db):
 
