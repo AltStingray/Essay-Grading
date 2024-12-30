@@ -34,10 +34,10 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 // Save changes to edited summary report 
-document.addEventListener("click", 'save-button', (event) =>{
+document.getElementById('save-button').addEventListener("click", (event) =>{
     const successMessage = document.getElementById(messageid);
-    const html = document.getElementById("html-data");
-    const id = document.getElementById("report-id");
+    const html = button.getAttribute("data-html");
+    const id = button.getAttribute("data-id");
     saveSummaryReportChange(successMessage, html, id)
 })
 
