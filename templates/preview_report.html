@@ -4,7 +4,7 @@
         <div contenteditable="true">
             {{ html|safe }}
         </div>
-        <button type="button" id="save-button" class="button2" data-html={{html|safe}} data-id="{{id}}">Save</button>
+        <button type="button" id="save-button" class="button2" data-html="{{html|safe}}" data-id="{{id}}">Save</button>
         <div id="success-save" style="display: none; color: green;">Changes saved!</div>
     </div>
 {% endblock content %}
