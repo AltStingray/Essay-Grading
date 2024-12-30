@@ -2,7 +2,7 @@
 {% block content %}
     <div contenteditable="true" class="container" style="padding: 10px 130px;">
         {{ html|safe }}
+        <a type="button" class="button2" onclick="saveSummaryReportChange(event, 'success-save', html, id)">Save</a>
+        <div id="success-save" style="display: none; color: green;">Changes saved!</div>
     </div>
-    <a type="button" class="button2" href="{{ url_for('preview_save', html=html, id=id) }}" style="padding: 10px 130px;" onclick="handleFormSubmission(event, 'success-save')">Save</a>
-    <div id="success-save" style="display: none; color: green;">Changes saved!</div>
 {% endblock content %}

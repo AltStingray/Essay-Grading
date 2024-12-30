@@ -398,10 +398,14 @@ def logs_download(id, name):
     else:
         return logs
     
-@app.route('/summary/save/<html>/<id>')
-def preview_save(html, id):
+@app.route('/summary/save')
+def preview_save():
+
+    data = request.get_json()
+    updated_summary = data.get("html")
+    id = data.get("id")
     
-    return save_change(html, id)
+    return save_change(updated_summary, id)
 
 
 @app.route('/redirect')

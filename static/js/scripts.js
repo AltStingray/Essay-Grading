@@ -33,6 +33,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 })
 
+function saveSummaryReportChange(event, messageid, html, id){
+    const successMessage = document.getElementById(messageid);
+    fetch('/summary/save', {
+        method: 'POST',
+        body: JSON.stringify({summary: html, id: id})
+    })
+    .then(response => {
+        if (response.ok){
+            successMessage.style.display = 'block';
+        } else {
+            alert('Failed to update summary.')
+        }
+    })
+};
+
 window.onload = function(){
     fetch('/loader-status')
         .then(response => response.json())
