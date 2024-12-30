@@ -33,8 +33,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 })
 
-function saveSummaryReportChange(event, messageid, html, id){
+// Save changes to edited summary report 
+document.addEventListener("click", 'save-button', (event) =>{
     const successMessage = document.getElementById(messageid);
+    const html = document.getElementById("html-data");
+    const id = document.getElementById("report-id");
+    saveSummaryReportChange(successMessage, html, id)
+})
+
+function saveSummaryReportChange(successMessage, html, id){
+
     fetch('/summary/save', {
         method: 'POST',
         body: JSON.stringify({summary: html, id: id})

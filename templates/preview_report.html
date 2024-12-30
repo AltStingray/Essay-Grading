@@ -4,7 +4,7 @@
         <div contenteditable="true">
             {{ html|safe }}
         </div>
-        <button type="button" class="button2" onclick="saveSummaryReportChange(event, 'success-save', '{{html|safe}}', '{{id|safe}}')">Save</button>
+        <button type="button" id="save-button" class="button2" html-data="{{html|safe}}", report-id="{{id}}">Save</button>
         <div id="success-save" style="display: none; color: green;">Changes saved!</div>
     </div>
 {% endblock content %}
