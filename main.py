@@ -38,8 +38,8 @@ q = Queue(connection=conn)
 #delete_table("temp_storage")
 #db("create")
 
-db("delete_data")
-db("alter")
+#db("delete_data")
+#db("alter")
 
 db("print")
 
@@ -404,7 +404,7 @@ def preview_save():
     data = request.get_json()
     updated_summary = data.get("html")
     id = data.get("id")
-    
+
     return save_change(updated_summary, id)
 
 
