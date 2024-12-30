@@ -1,10 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div contenteditable="true" class="container" style="padding: 10px 130px;">
-        {{ html|safe }}
-    </div>
-    <div class="save-button" style="padding: 10px 130px;">
-        <button type="button" class="button2" onclick="saveSummaryReportChange(event, 'success-save', html, id)">Save</button>
+    <div class="container" style="padding: 10px 130px;">
+        <div contenteditable="true">
+            {{ html|safe }}
+        </div>
+        <button type="button" class="button2" onclick="saveSummaryReportChange(event, 'success-save', '{{html|safe}}', '{{id|safe}}')">Save</button>
         <div id="success-save" style="display: none; color: green;">Changes saved!</div>
     </div>
 {% endblock content %}
