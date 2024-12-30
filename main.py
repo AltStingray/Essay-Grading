@@ -275,7 +275,8 @@ def history():
         try:
             job = Job.fetch(job_id, connection=conn)
             job_status = job.is_queued
-        except: Exception
+        except Exception:
+            job_status = None
     else:
         job_status = None
     
