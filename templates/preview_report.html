@@ -2,7 +2,9 @@
 {% block content %}
     <div contenteditable="true" class="container" style="padding: 10px 130px;">
         {{ html|safe }}
-        <a type="button" class="button2" onclick="saveSummaryReportChange(event, 'success-save', html, id)">Save</a>
+    </div>
+    <div class="save-button" style="padding: 10px 130px;">
+        <button type="button" class="button2" onclick="saveSummaryReportChange(event, 'success-save', html, id)">Save</button>
         <div id="success-save" style="display: none; color: green;">Changes saved!</div>
     </div>
 {% endblock content %}
