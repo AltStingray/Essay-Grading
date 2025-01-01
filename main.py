@@ -38,8 +38,8 @@ q = Queue(connection=conn)
 #delete_table("temp_storage")
 #db("create")
 
-#db("delete_data")
-#db("alter")
+db("delete_data")
+db("alter")
 
 db("print")
 
@@ -269,13 +269,6 @@ def download():
 @app.route('/summary/log')
 def history():
     '''Displaying the logs of the submitted summary reports'''
-
-    session["queries"] = 0
-    session["show_loader"] = False
-    session.pop("report_ids", None)
-    session.pop("cache_id", None)
-    session.pop("job_id", None)
-    del_cache()
 
     if "job_id" in session:
         job_id = session["job_id"]
