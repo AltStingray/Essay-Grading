@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const successMessage = document.getElementById(messageid);
             const html = document.getElementById('html-text').innerHTML;
             const id = button.getAttribute("data-id");
-            saveSummaryReportChange(successMessage, html, id)
+            saveSummaryReportChange(successMessage, html, id);
         });
     };
 });

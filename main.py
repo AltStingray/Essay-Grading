@@ -270,6 +270,13 @@ def download():
 def history():
     '''Displaying the logs of the submitted summary reports'''
 
+    session["queries"] = 0
+    session["show_loader"] = False
+    session.pop("report_ids", None)
+    session.pop("cache_id", None)
+    session.pop("job_id", None)
+    del_cache()
+
     if "job_id" in session:
         job_id = session["job_id"]
         try:
@@ -577,6 +584,7 @@ def job_status():
     job_id = session["job_id"]
     job = Job.fetch(job_id, connection=conn)
 
+    # Do I need this one?
     if not job:
         session.pop("job_id", None)
         return jsonify({"status": "no-job-found"}), 404
