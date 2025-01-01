@@ -536,7 +536,7 @@ def grading_logs():
 def view_logs(id):
 
     show = request.args.get("show")
-
+    
     logs = db_retrieve(file_id=id, db="essay_logs")
 
     topic = logs[0].tobytes().decode('utf-8')
