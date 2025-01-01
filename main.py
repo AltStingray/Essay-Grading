@@ -604,10 +604,9 @@ def get_loader_status():
 
 @app.route('/clear-flags', methods=['POST'])
 def clear_flags():
+    '''Cleaning up the temporary data(flags)'''
 
-    print(session["queries"])
     session["queries"] = 0
-    print(session["queries"])
     session["show_loader"] = False
     session.pop("report_ids", None)
     session.pop("cache_id", None)
