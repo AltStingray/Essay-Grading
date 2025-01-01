@@ -605,24 +605,14 @@ def get_loader_status():
 @app.route('/clear-flags', methods=['POST'])
 def clear_flags():
 
-    queries = session["queries"]
-
-    print(queries)
-
-    queries -= 1
-
-    session["queries"] = queries
-
-    print(f"Remove one query: {session["queries"]}")
-
-    if session["queries"] <= 0:
-        #Cleaning up the temporary data(flags)
-        session["queries"] = 0
-        session["show_loader"] = False
-        session.pop("report_ids", None)
-        session.pop("cache_id", None)
-        session.pop("job_id", None)
-        del_cache()
+    print(session["queries"])
+    session["queries"] = 0
+    print(session["queries"])
+    session["show_loader"] = False
+    session.pop("report_ids", None)
+    session.pop("cache_id", None)
+    session.pop("job_id", None)
+    del_cache()
 
     return '', 204 # Return a no-content response
 
