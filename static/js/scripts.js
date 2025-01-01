@@ -34,12 +34,17 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 // Save changes to edited summary report 
-document.getElementById('save-button').addEventListener("click", (event, messageid) =>{
-    const successMessage = document.getElementById(messageid);
-    const html = document.getElementById('html-text').innerHTML;
-    const id = button.getAttribute("data-id");
-    saveSummaryReportChange(successMessage, html, id)
-})
+document.addEventListener("DOMContentLoaded", () => {
+    const saveBtn = document.getElementById('save-button')
+    if (saveBtn) {
+        document.getElementById('save-button').addEventListener("click", (event, messageid) => {
+            const successMessage = document.getElementById(messageid);
+            const html = document.getElementById('html-text').innerHTML;
+            const id = button.getAttribute("data-id");
+            saveSummaryReportChange(successMessage, html, id)
+        });
+    };
+});
 
 function saveSummaryReportChange(successMessage, html, id){
 
