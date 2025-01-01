@@ -312,7 +312,7 @@ def history():
 
         for id2 in db_get_ids(table_name="temp_storage"):
 
-            cache_last_id = last_id # Creating another instance/copy of last id, so the original varible is not overwritten every iteration
+            cache_last_id = last_id
 
             cache_last_id += id2
 

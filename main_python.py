@@ -83,7 +83,6 @@ def process_essay(result):
 
     linking_words_count, updated_essay_linking_words = count_and_replace(linking_words, "<span class='jsx-2885589388 linking-words'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{}</span><span class='jsx-1879403401'></span></div></span>", essay_linking_words, "#")
     repetitive_words_count, updated_essay_repetitive_words = count_and_replace(repetitive_words, "<span class='jsx-2310580937 repeated-word'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{}</span><span class='jsx-1879403401'></span></div></span>", essay_repetitive_words, "^")
-    #unnecessary_words_count, updated_essay_unnecessary_words = count_and_replace(unnecessary_words, "<span class='jsx-2310580937 unnecessary-word'><div class='jsx-1879403401 root '><span contenteditable='false' class='jsx-1879403401 text'>{}</span><span class='jsx-1879403401'></span></div></span>", essay_unnecessary_words, "-")
 
     sidebar_comments = []
 
