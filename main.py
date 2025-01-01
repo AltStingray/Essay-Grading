@@ -270,6 +270,13 @@ def download():
 def history():
     '''Displaying the logs of the submitted summary reports'''
 
+    session["queries"] = 0
+    session["show_loader"] = False
+    session.pop("report_ids", None)
+    session.pop("cache_id", None)
+    session.pop("job_id", None)
+    del_cache()
+
     if "job_id" in session:
         job_id = session["job_id"]
         try:
@@ -582,8 +589,6 @@ def job_status():
         return jsonify({"status": "no-job-found"}), 404
 
     report_ids = session["report_ids"] # needs to be cleaned up 
-    #print(report_ids)
-    #report_ids = report_ids[::-1]
     print(report_ids) # test
     print(job_id)
     print(job)
@@ -617,11 +622,12 @@ def clear_flags():
     print(f"Remove one query: {session["queries"]}")
 
     if session["queries"] <= 0:
+        #Cleaning up the temporary data(flags)
         session["queries"] = 0
-        session["report_ids"] = []
         session["show_loader"] = False
-        session["cache_id"] = 0
-        session["job_id"] = None
+        session.pop("report_ids", None)
+        session.pop("cache_id", None)
+        session.pop("job_id", None)
         del_cache()
 
     return '', 204 # Return a no-content response
