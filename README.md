@@ -1,8 +1,8 @@
-This program web application is developed using Flask and Python programming language.
+This program web application is developed using Python programming language and Flask app.
 
 The program contains the following API functionality: Flask, Dropbox, MoviePy, AssemblyAI, OpenAI, requests, MarkupSafe, Gunicorn, RQ, Redis.
 
-1.Flask - The main web framework used to connect backend logic and frontend HTML+CSS of the applicaton.
+1.Flask - The main web framework used to connect backend logic and frontend HTML, CSS and JS of the applicaton.
 
 2.Dropbox - The cloud storage provider. User will need to authorize into his valid Dropbox account and proceed by clicking on the continue buttons. Then, copy the link of the video from the Dropbox website and pass it to the program. The program will download the video from the link, again using Dropbox API.
 
