@@ -148,21 +148,6 @@ def run_essay_grading(topic, essay_text, submitted_by):
 
     return final_dict
 
-
-def run_summary_report(prompt, content):
-
-    response = client.chat.completions.create(
-        model="gpt-4o-2024-08-06",
-        messages=[
-            {"role": "system", "content": prompt},
-            {"role": "user", "content": f'''{content}'''}],
-        max_tokens=16000,
-        )
-    
-    response = response.choices[0].message.content
-
-    return response
-
 def strip_text(text):
 
     if text.startswith("```python"):
